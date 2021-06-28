@@ -1,0 +1,354 @@
+﻿@using System.Web.Helpers
+@inject IJsonHelper Json;
+
+
+@model CRM_Core.Application.ViewModels.People.peopleViewModel
+@{
+    bool isEdit = (bool)ViewBag.isEdit;
+
+    <div class="titleForm">@ViewBag.Title</div>
+    <br />
+
+    <div class="col-lg-12 detailFields">
+        <ul class="nav nav-tabs nav-rtl">
+            <li class="active"><a data-toggle="tab" href="#GeneralInfo">@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople </a></li>
+            <li><a data-toggle="tab" href="#PeopleRelations"> @UI_Presentation.wwwroot.Resources.People.Title.PeopleRelations </a> </li>
+            <li><a data-toggle="tab" href="#PeopleVirtual"> @UI_Presentation.wwwroot.Resources.People.Title.PeopleVirutal </a> </li>
+            <li><a data-toggle="tab" href="#OtherInfo">@UI_Presentation.wwwroot.Resources.People.Title.OtherInfo </a></li>
+            <li><a data-toggle="tab" href="#documentInfo">@UI_Presentation.wwwroot.Resources.People.Title.UploadFile </a></li>
+        </ul>
+
+        <div class="divformControl">
+            <div class="tab-content">
+
+                <div id="GeneralInfo" class="tab-pane fade in active">
+                    <table class="table table-condensed table table-condensed tblFields">
+                        <tr>
+                            @Html.Hidden("PeopleID", (int?)ViewBag.PeopleID)
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.ManualCode, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtManualCode", isEdit ? Model.People.ManualCode : null, new { @class = "form-control", required = "true", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.ManualCode })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Name, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtName", isEdit ? Model.People.FirstName : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Name })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Family, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtFamily", isEdit ? Model.People.LastName : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Family })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Job, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtJob", isEdit ? Model.People.Job : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Job })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.BirthDay, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtBirthDay", isEdit ? Model.People.P_Birthday : null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.BirthDay })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Graduation, null, new { @class = "labelWidget" }) </td>
+                            <td><select class="comboBox" id="cmbGraduaction" style="width:180px !important;" asp-for="TBASGraduation.Id" asp-items="@(new SelectList(Model.GraduationItems,"Id","Name" , isEdit ? (string)ViewBag.graduationSelected : "0"))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                        </tr>
+
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
+                            <td colspan="5">@Html.TextBox("txtDescription", isEdit ? Model.People.Description : null, new { @class = "TextArea", style = "width:845px !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Province, null, new { @class = "labelWidget" }) </td>
+                            <td colspan="5">
+                                @Html.TextBox("txtProvince", isEdit ? Model.Address.Province : null, new { @class = "form-control", style = "width:118px !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Province })
+                                &nbsp; / &nbsp; @Html.TextBox("txtCity", isEdit ? Model.Address.City : null, new { @class = "form-control", style = "width:118px !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.City })
+                                &nbsp; / &nbsp;  @Html.TextBox("txtArea", isEdit ? Model.Address.Area : null, new { @class = "form-control", style = "width:118px !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Area })
+                                &nbsp; / &nbsp;  @Html.TextBox("txtStreet", isEdit ? Model.Address.Street : null, new { @class = "form-control", style = "width:200px  !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Street })
+                                &nbsp; / &nbsp;  @Html.TextBox("txtAlley", isEdit ? Model.Address.Alley : null, new { @class = "form-control", style = "width:200px  !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Alley })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                @Html.TextBox("txtOtherAddress", isEdit ? Model.Address.OtherAddress : null, new { @class = "form-control", style = "width:735px  !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.OtherAddress })
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="PeopleRelations" class="tab-pane fade">
+                    <div id="divTels" style="width:1125px;background-color:transparent ;border:none ; margin-top:110px;" class="portlet box border shadow">
+                        <div class="portlet-heading">
+                            <div class="portlet-title">
+                                <h3 class="title">@UI_Presentation.wwwroot.Resources.General.Title.RegisterPhones</h3>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="lblChkBox"><input id="chbCheckRepeatedTels" class="chkBoxFields" type="checkbox">@UI_Presentation.wwwroot.Resources.General.Title.CheckRepeatedTels</label>
+                        </div>
+
+                        <div class="input-group">
+                            <a href="#" class="btn btn-success" style="margin-bottom:7px;" data-toggle="dropdown" onclick="AddNewRowTel()">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+
+                        <div id="divFields1" class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone-square"></i>
+                            </span>
+                            <input class="form-control" id="txtCode1" type="text" maxlength="3" style="width:70px !important; margin-left: 7px ; " placeholder="@UI_Presentation.wwwroot.Resources.General.Title.Code">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </span>
+                            <input class="form-control" id="txtTel1" style="margin-left:7px;width:128px !important ;" type="text" maxlength="8" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Tel">
+                            <span class="input-group-addon">
+                                <i class="fa fa-comment"></i>
+                            </span>
+                            <input class="form-control" id="txtComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description" style="width:695px !important">
+                        </div>
+                    </div>
+
+                    <div id="divMobiles" style="width:1125px;background-color:transparent ;border:none ; margin-top:30px;" class="portlet box border shadow">
+                        <div class="portlet-heading">
+                            <div class="portlet-title">
+                                <h3 class="title">@UI_Presentation.wwwroot.Resources.General.Title.RegisterPhones</h3>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="lblChkBox"><input id="chbCheckRepeatedMobiles" class="chkBoxFields" type="checkbox">@UI_Presentation.wwwroot.Resources.General.Title.CheckRepeatedMobiles</label>
+                        </div>
+
+
+                        <div class="input-group">
+                            <a href="#" class="btn btn-success" style="margin-bottom:7px;" data-toggle="dropdown" onclick="AddNewRowMobile()">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-mobile"></i>
+                            </span>
+                            <input class="form-control" id="txtMobile1" style="margin-left:7px;width:128px !important ;" type="text" maxlength="11" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Mobile">
+                            <span class="input-group-addon">
+                                <i class="fa fa-comment"></i>
+                            </span>
+                            <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description" style="width:836px !important">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="PeopleVirtual" class="tab-pane fade">
+                    <table class="table table-condensed tblFields">
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WebSite, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtWebSite", isEdit ? Model.PeopleVirtual.WebSite : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WebSite, required = "required" })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Telegram, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtTelegram", isEdit ? Model.PeopleVirtual.Telegram : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Telegram })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtWhatsApp", isEdit ? Model.PeopleVirtual.WhatsApp : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WhatsApp })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Email, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtEmail", isEdit ? Model.PeopleVirtual.Email : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Email })</td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Instagram, null, new { @class = "labelWidget" }) </td>
+                            <td>@Html.TextBox("txtInstagram", isEdit ? Model.PeopleVirtual.Instagram : null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Instagram })</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div id="OtherInfo" class="tab-pane fade">
+                    <table class="table table-condensed table table-condensed tblFields">
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.IsMarried, null, new { @class = "labelWidget" }) </td>
+                            <td colspan="2" style="padding-left:50px !important;"><select class="comboBox" id="cmbMarriedType" onchange="checkMariedStateDate()" style="width:180px !important;" asp-for="People.MarriedType" asp-items="@(new SelectList(ViewBag.marriedItems,"Value", "Text"))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.MariedDate, null, new { @class = "labelWidget" }) </td>
+                            <td style="text-align: right;">@Html.TextBox("txtMariedDate", isEdit ? Model.People.P_MariedDate : null, new { @class = "form-control txtDate", style = "width: 150px !important; margin-right : 4px;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.MariedDate })</td>
+                            <td colspan="2">@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode, null, new { @class = "labelWidget" }) </td>
+                            <td style="text-align: right;">@Html.TextBox("txtCertificateCode", isEdit ? Model.People.CertificateCode : null, new { @class = "form-control", style = "width: 150px !important", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.CertificateCode })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Potential, null, new { @class = "labelWidget" }) </td>
+                            <td><select class="comboBox" id="cmbPotential" style="width:180px !important;" asp-for="TBASPotential.Id" asp-items="@(new SelectList(Model.PotentialItems,"Id","Name",isEdit ? (string)ViewBag.potentialSelected : "0" ))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                            <td>
+                                <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Intorduction, null, new { @class = "labelWidget" }) </td>
+                            <td> <input type="text" id="productName" placeholder="Input your keyword" /></td>
+                            <td>
+                                <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="btnOpenEditIntroduce()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType, null, new { @class = "labelWidget" }) </td>
+                            <td><select id="cmbIntroductionType" style="width:180px !important;" asp-for="TBASIntroductionType.Id" asp-items="@(new SelectList(Model.TBASIntroductionTypeItems,"Id","Name",isEdit ? (string)ViewBag.introductionTypeSelected: null ))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                            <td>
+                                <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Prefix, null, new { @class = "labelWidget" }) </td>
+                            <td><select class="comboBox" id="cmbPrefix" style="width:180px !important;" asp-for="TBASPrefix.Id" asp-items="@(new SelectList(Model.PrefixItems,"Id","Name",isEdit ? (string)ViewBag.prefixSelected : null ))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                            <td>
+                                <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                            <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Category, null, new { @class = "labelWidget" }) </td>
+                            <td><select class="comboBox" id="cmbCategory" style="width:180px !important;" asp-for="TBASCategory.Id" asp-items="@(new SelectList(Model.CategoriyItem,"Id","Name",isEdit ? (string)ViewBag.categorySelected :null ))"> <option>@UI_Presentation.wwwroot.Resources.General.Title.PleaseSelectOneItem</option> </select> </td>
+                            <td>
+                                <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div id="documentInfo" class="tab-pane fade">
+
+                    <div id="divImg" style="width:500px;background-color:transparent ; float:left; height:570px;  border:none ; margin-top:71px;" class="portlet box border shadow">
+                        <div class="portlet-heading">
+                            <div class="portlet-title">
+                                <h3 class="title">@UI_Presentation.wwwroot.Resources.General.Title.RegisterPhones</h3>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <a href="#" class="btn btn-success" style="margin-bottom:7px;border-radius : 27px; " data-toggle="dropdown" onclick="AddNewRowTel()">
+                                <i class="fa fa-plus">@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile</i>
+                            </a>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="imgPerson" style="height:400px; width:400px;">
+                                <div style="width:400px; height : 400px;" id="divImgPeople">
+                                    <img style="padding-bottom:5px;" height="350" width="350" alt="@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile" src="~/image/ButtonImage/PeopleProfile.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="divDocuments" style="width:620px;position:relative;float:left;margin-left:20px; height:570px; margin-top:29px;  background-color:transparent ;border:none ;" class="portlet box border shadow">
+                        <div class="portlet-heading">
+                            <div class="portlet-title">
+                                <h3 class="title">@UI_Presentation.wwwroot.Resources.General.Title.RegisterPhones</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="file" class="form-control">*@
+                            <div class="input-group round">
+                                <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UploadName" style="width:145px !important">
+                                <input type="text" class="form-control file-input" style="float:left;width : 231px !important ;" placeholder="@UI_Presentation.wwwroot.Resources.Mesages.ClickForUpload">
+                                <span class="input-group-btn input-group-sm">
+                                    <button type="button" class="btn btn-success" style="border-radius:0px !important;">
+                                        <i style="margin-left:10px;" class="fa fa-file-image-o"></i>@UI_Presentation.wwwroot.Resources.General.Title.ShowFile
+                                    </button>
+                                    <button type="button" class="btn btn-info">
+                                        <i style="margin-left:10px;" class="icon-picture"></i>@UI_Presentation.wwwroot.Resources.General.Title.UploadFile
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="file" class="form-control">*@
+                            <div class="input-group round">
+                                <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UploadName" style="width:145px !important">
+                                <input type="text" class="form-control file-input" style="float:left;width : 231px !important ;" placeholder="@UI_Presentation.wwwroot.Resources.Mesages.ClickForUpload">
+                                <span class="input-group-btn input-group-sm">
+                                    <button type="button" class="btn btn-success" style="border-radius:0px !important;">
+                                        <i style="margin-left:10px;" class="fa fa-file-image-o"></i>@UI_Presentation.wwwroot.Resources.General.Title.ShowFile
+                                    </button>
+                                    <button type="button" class="btn btn-info">
+                                        <i style="margin-left:10px;" class="icon-picture"></i>@UI_Presentation.wwwroot.Resources.General.Title.UploadFile
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="file" class="form-control">*@
+                            <div class="input-group round">
+                                <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UploadName" style="width:145px !important">
+                                <input type="text" class="form-control file-input" style="float:left;width : 231px !important ;" placeholder="@UI_Presentation.wwwroot.Resources.Mesages.ClickForUpload">
+                                <span class="input-group-btn input-group-sm">
+                                    <button type="button" class="btn btn-success" style="border-radius:0px !important;">
+                                        <i style="margin-left:10px;" class="fa fa-file-image-o"></i>@UI_Presentation.wwwroot.Resources.General.Title.ShowFile
+                                    </button>
+                                    <button type="button" class="btn btn-info">
+                                        <i style="margin-left:10px;" class="icon-picture"></i>@UI_Presentation.wwwroot.Resources.General.Title.UploadFile
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="file" class="form-control">*@
+                            <div class="input-group round">
+                                <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UploadName" style="width:145px !important">
+                                <input type="text" class="form-control file-input" style="float:left;width : 231px !important ;" placeholder="@UI_Presentation.wwwroot.Resources.Mesages.ClickForUpload">
+                                <span class="input-group-btn input-group-sm">
+                                    <button type="button" class="btn btn-success" style="border-radius:0px !important;">
+                                        <i style="margin-left:10px;" class="fa fa-file-image-o"></i>@UI_Presentation.wwwroot.Resources.General.Title.ShowFile
+                                    </button>
+                                    <button type="button" class="btn btn-info">
+                                        <i style="margin-left:10px;" class="icon-picture"></i>@UI_Presentation.wwwroot.Resources.General.Title.UploadFile
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="file" class="form-control">*@
+                            <div class="input-group round">
+                                <input class="form-control" id="txtMobComment1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UploadName" style="width:145px !important">
+                                <input type="text" class="form-control file-input" style="float:left;width : 231px !important ;" placeholder="@UI_Presentation.wwwroot.Resources.Mesages.ClickForUpload">
+                                <span class="input-group-btn input-group-sm">
+                                    <button type="button" class="btn btn-success" style="border-radius:0px !important;">
+                                        <i style="margin-left:10px;" class="fa fa-file-image-o"></i>@UI_Presentation.wwwroot.Resources.General.Title.ShowFile
+                                    </button>
+                                    <button type="button" class="btn btn-info">
+                                        <i style="margin-left:10px;" class="icon-picture"></i>@UI_Presentation.wwwroot.Resources.General.Title.UploadFile
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <table class="tblButons">
+            <tr>
+                <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
+                <td><button type="button" id="btnAddEditPeopleContinue" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.AddWithContinue</button></td>
+                <td><button type="button" id="btnCloseAddEditPeople" onclick="btnCloseAddEditPeople()" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+
+}
+<script>
+
+    var canNotEmptyTel = '@UI_Presentation.wwwroot.Resources.Mesages.FillTheEmptyFieldTels';
+    var canNotEmptyMobile = '@UI_Presentation.wwwroot.Resources.Mesages.FillTheEmptyFieldMobiles';
+
+    concatColonToLables();
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var peopleId = $("#PeopleID").val();
+        if (peopleId > 0)
+             getPeopleTelsAndMobile(e, peopleId);
+    });
+</script>

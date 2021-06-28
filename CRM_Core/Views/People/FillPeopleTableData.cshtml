@@ -1,0 +1,114 @@
+﻿@using System.Data
+@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.People
+
+@model DataGridViewModel<PeopleModel>  
+
+<div class="table-responsive">
+    <table id="tblPeople" class="table table-bordered table-striped table-hover tblFomrData">
+        <thead>
+            <tr>
+                <th><i class="icon-energy"></i></th>
+                <th>@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.PeopleProperty</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.ManualCode</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.SystemCode</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Category</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Tel</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Mobile</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.BirthDay</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Address</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Age</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Graduation</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Potential</th>
+                <th>@UI_Presentation.wwwroot.Resources.People.Title.Intorduction</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyPeople">
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Records.ToList())
+                {
+                    <tr>
+                        <td class="specialTd">
+                            <span id="PeopleId" class="specialFields">@item.Id</span>
+                            <span>1</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-round btnAction" onclick="btnOpenEditPeople()" href="#">
+                                <i class="icon-note"></i>
+                                @UI_Presentation.wwwroot.Resources.Buttons.Title.Edit
+                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                            </a>
+                            <a class="btn btn-danger btn-round btnAction" href="#" onclick="btnDeletePeople()">
+                                <i class="icon-trash"></i>
+                                @UI_Presentation.wwwroot.Resources.Buttons.Title.Delete
+                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                            </a>
+                        </td>
+                        <td>
+                            <img class="img-person img-circle" src="~/image/images/user/32.png">
+                            <span>@item.FullName</span>
+                        </td>
+
+                        <td>@item.ManualCode</td>
+                        <td>@item.SystemCode</td>
+                        <td>@item.TBASCategoryName</td>
+                        <td>@item.Tel</td>
+                        <td>@item.Mobile</td>
+                        <td>@item.P_Birthday</td>
+                        <td>@item.Address </td>
+                        <td>@item.MarriedType </td>
+                        <td>@item.TBASGraduationName</td>
+                        <td>@item.TBASPotentialName</td>
+                        <td>@item.TBASIntroduceName</td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div><!-- /.table-responsive -->
+
+<div class="text-center" style="margin-top:-36px;">
+    <ul class="pagination round">
+        <li>
+            <a href="#">
+                <i class="icon-control-end"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-arrow-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">1</a>
+        </li>
+        <li>
+            <span class="active" href="#">2</span>
+        </li>
+        <li>
+            <a href="#">3</a>
+        </li>
+        <li>
+            <a href="#">4</a>
+        </li>
+        <li>
+            <a href="#">5</a>
+        </li>
+        <li>
+            <a href="#">6</a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-arrow-left"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-control-start"></i>
+            </a>
+        </li>
+    </ul>
+</div><!-- /.text-center -->

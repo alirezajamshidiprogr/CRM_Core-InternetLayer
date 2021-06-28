@@ -1,0 +1,144 @@
+﻿.body {
+    background-color: #fff;
+}
+
+.loginBackground {
+    background-color: red;
+}
+
+@font-face {
+    font-family: IranianSans;
+    src: url('../Fonts/Iranian Sans.eot');
+    src: url('../Fonts/Iranian-Sans.eot?#iefix') format('embedded-opentype'), url('../Fonts/Iranian Sans.ttf') format('truetype');
+    font-weight: normal;
+}
+
+.row{
+direction:rtl;
+}
+
+.form-group{
+    direction:rtl ;
+}
+.col-lg-3 {
+    border-radius: 30px 0 0 30px;
+    direction: rtl;
+}
+
+
+.col-lg-3 {
+    text-align: right !important;
+}
+.container-fluid{
+    font-family:'A Iranian Sans' ;
+    font-size:19px;
+}
+
+.label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    color: #1c0000 !important;
+    font-size: 16px;
+    text-align: right;
+}
+
+.col-lg-12 {
+    margin-top: 30px;
+}
+.divLogin {
+    background-color: rgb(0, 198, 153) !important;
+}
+.form-controls {
+    /*display: block;*/
+    font-family: 'A Iranian Sans';
+    width: 180px !important;
+    height: calc(2.65rem + 2px);
+    padding-right: 10px !important;
+    line-height: 1.5;
+    color: black !important;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    font-size: 19px !important;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.header{
+    height:150px;
+    width:100%;
+    text-align:center;
+    margin-top:30px;
+}
+
+.form-controls {
+    /*display: block;*/
+    font-family: 'A Iranian Sans';
+    width: 180px !important;
+    height: calc(2.25rem + 2px);
+    padding: unset !important;
+    font-size: 15px !important;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.fields{
+    width:50%;
+}
+
+.btn {
+    width:100%;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #57c9f4;
+    border-color: #17a2b8;
+}
+
+.fieldSet{
+    border:1px solid white ;
+    padding-top:50px;
+    padding-bottom:10px;
+    border-radius:4px;
+    box-shadow:initial;
+}
+
+.title {
+    margin-top: -60px;
+    background-color: white;
+    border-radius: 4px;
+    width: 100px;
+}
+
+.col-lg-8{
+    /*background-color:pink ;*/
+}
+
+.info {
+    margin-top: 60px;
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    background-color: rgb(0, 198, 153) !important;
+    border: rgb(1, 77, 59) !important;
+    border-radius: 7px;
+}
+
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    background: #098c99;
+    border-radius: 23px;
+}
+
+#imgBackground{
+   /* margin-right:30px;
+    margin-top:10px;*/
+   width:115%;
+   height:100%;
+   margin-left:-90px;
+}

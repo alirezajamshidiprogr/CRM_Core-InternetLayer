@@ -1,0 +1,350 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+#formContainer {
+   /* background-color: #fbfbfb;
+    margin-top: 10px;*/
+    height: 900px;
+    overflow-y:scroll ;
+    overflow-x:hidden;
+    /*width: 75%;*/
+    /*float: left;*/
+    /*margin-left: 25px;*/
+    /*margin-top:30px;*/
+    /*box-shadow: 5px 1px gainsboro;*/
+}
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    border-radius: 33px;
+}
+
+.btn-danger {
+    border-radius: 33px;
+    width: 75px;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #37023c !important;
+    /*background-color: #364077 !important;*/
+}
+
+@font-face {
+    font-family: 'shabnam';
+    src: url('../fonts/Shabnam.ttf');
+}
+
+#accordionMenu {
+    margin-top: 10px;
+    box-shadow: 5px 5px 5px 2px #ded8d8;
+}
+
+table {
+    border-collapse: unset !important;
+}
+
+.imgHeader{
+    cursor:pointer ;
+}
+
+#footer {
+    background: #364077;
+    box-shadow: 10px 10px 10px black;
+    opacity: 1;
+}
+
+.imgMenu{
+    margin-left:10px;
+}
+
+.imgSubMenu{
+    margin-left:5px;
+}
+
+.card-link {
+    text-shadow: 0.5px 0.5px #5d5d5d !important;
+}
+
+.titleForm {
+    width: 283px;
+    text-align: center;
+    color: #024032;
+    font-size: 20px;
+    border-radius: 8px;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 10px;
+    box-shadow: 2px 2px 2px 1px #939393;
+}
+
+#header {
+    direction: rtl !important;
+    height: 90px !important;
+    box-shadow: 2px 2px #d4d0d0 !important;
+    background-color: #430a48 !important;
+}
+
+.nav-tabs {
+    float: right !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+.nav-tabs {
+    text-align: right;
+}
+
+.nav-tabs > li {
+        display: inline-block;
+        float: none;
+}
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        color: #fff;
+        cursor: default;
+        background-color: #212529;
+        border: 1px solid #ddd;
+        border-bottom-color: rgb(221, 221, 221);
+        border-bottom-color: rgb(221, 221, 221);
+        border-bottom-color: transparent;
+    }
+
+.btn-primary {
+    color: #fff;
+    background-color: #00c79a !important;
+    border-color: #00c79a;
+}
+label {
+    font-weight: normal !important;
+}
+
+.messageBody {
+    width: 500px !important;
+    height: auto !important;
+    background: rgb(0, 198, 153);
+    color: #101037 !important;
+    text-align: center !important;
+    padding-top: 10px !important;
+    font-size: 1.2em !important;
+    position: absolute;
+    margin-left: 395px;
+    margin-top: 150px;
+    border-radius: 19px;
+    padding: 10px;
+    border: 1px solid #006c54;
+}
+
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #430a48 !important;
+    font-family: 'shabnam' !important;
+    border: 1px solid #038e6f;
+    border-radius: 12px 12px 0px 0px;
+    margin-bottom: 3px !important;
+}
+
+.card-header a {
+        color: white;
+        font-size: 16px;
+}
+
+.card-body {
+    background: #cffbf1 !important;
+    border: 1px solid #b9d9d2;
+    border-radius: 0px 0px 12px 12px;
+    margin-bottom: 5px;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
+    float: right !important;
+}
+
+.maskBackground {
+    z-index: 10000;
+    opacity: .5;
+}
+/*#1E2850*/
+
+/*4B5270*/
+
+.form-controls {
+    /*display: block;*/
+    font-family: 'A Iranian Sans';
+    width: 208px !important;
+    height: calc(2.25rem + 2px);
+    padding-right: 7px;
+    font-size: 15px !important;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+#imgBackground {
+    width: 123%;
+}
+
+.ui-datepicker table {
+    font-family: shabnam !important;
+    background: #e0f0e2 !important;
+    color: black !important;
+    direction:rtl !important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+    background-color: #f5f5f5 !important;
+    color: #fff !important;
+    background: #b1a2b3 !important;
+    font-family: shabnam !important;
+}
+
+#data-table{
+overflow-y: auto;
+overflow-x: auto;
+height: 100px;
+}
+
+#data-table thead th {
+        position: sticky;
+        top: 0;
+    }
+
+/* Just common table stuff. Really. */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px 16px;
+}
+
+th {
+    background: #eee;
+}
+
+tr td{
+    text-align:center ;
+}
+
+tr th{
+    text-align:center;
+}
+
+/*برای غیر فعال کردن دیو
+pointer-events: none;
+opacity: 0.4;*/
+
+.clockpicker-plate {
+    background: #eeede9 !important;
+}
+
+.popover-title {
+    background: #385e71 !important;
+}
+
+.page-content {
+    background: #f6fffd !important;
+}
+
+.detailFields {
+    border: 1px solid #bfbfbf !important;
+    border-radius: 20px;
+    padding: 5px !important;
+    box-shadow: -3px 3px 7px 3px #373333 !important;
+    width: 1158px !important;
+}
+
+#page-content {
+    background: #f6fffd;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="search"], input[type="url"], input[type="password"], .ui-autocomplete-input, textarea, .uneditable-input {
+    font-family: IranSans, Tahoma !important;
+}
+
+.peopleSelectorPopup {
+    width: 1050px !important ;
+}
+
+.peopleSelectorBody{
+    height:582px;
+}
+
+.peopleSelectorItemsSearch {
+    width: 100%;
+    height: 112px;
+    border-radius: 16px;
+    border: 1px solid #e1d6d6;
+    padding: 13px;
+}
+
+.peopleSelectorTable {
+    background: #e8e8d0;
+    width: 100%;
+    height: 73%;
+    margin-top:7px;
+    border: 1px solid #ccc5c5;
+}

@@ -1,0 +1,99 @@
+﻿
+<div class="titleForm">@ViewBag.Title</div>
+<br />
+
+<div class="modal-page shadow" style="width:1100px;">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <p class="text-center m-t-30 m-b-40">
+                    <i class="icon-user-following border img-circle font-xxxlg p-20"></i>
+                </p>
+                <hr>
+
+                <form id="advanced-form" action="#" method="post" novalidate="novalidate">
+                    <div style="float: left; text-align: right; width: 317px; margin-right: 40px; border: 1px solid #d2cfcf; text-align: center; height: 317px;">
+                        <a style="color: black; text-decoration: underline;" href="#" title=@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile> <img style="padding-bottom:5px;" height="317" width="317" src="~/image/images/user/256.png" />@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile</a>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only control-label" for="firstname">نام</label>
+                        <div class="input-group round">
+                            <span class="input-group-addon">
+                                <i class="icon-note"></i>
+                            </span>
+                            <input name="firstname" class="form-control round profileFields" id="firstname" type="text" placeholder="نام">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="sr-only control-label" for="lastname">نام خانوادگی</label>
+                        <div class="input-group round">
+                            <span class="input-group-addon">
+                                <i class="icon-note"></i>
+                            </span>
+                            <input name="lastname" class="form-control round profileFields" id="lastname" type="text" placeholder="نام خانوادگی">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="sr-only control-label" for="username">نام کاربری</label>
+                        <div class="input-group round">
+                            <span class="input-group-addon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <input name="username" class="form-control round profileFields" id="username" type="text" placeholder="نام کاربری">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="sr-only control-label" for="password">رمز عبور</label>
+                        <div class="input-group round">
+                            <span class="input-group-addon">
+                                <i class="icon-key"></i>
+                            </span>
+                            <input name="password" class="form-control round ltr text-left profileFields" id="password" type="password" placeholder="رمز عبور">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="sr-only control-label" for="confirm_password">تکرار رمز عبور</label>
+                        <div class="input-group round">
+                            <span class="input-group-addon">
+                                <i class="icon-key"></i>
+                            </span>
+                            <input name="confirm_password" class="form-control round ltr text-left profileFields" id="confirm_password" type="password" placeholder="تکرار رمز عبور">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <div class="input-group round">
+                        </div><!-- /.input-group-->
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <button name="signup" class="btn btn-success btn-round btn-block" type="submit" value="Sign up">
+                            <i class="icon-check"></i>
+                            @UI_Presentation.wwwroot.Resources.Buttons.Title.Register
+                            <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                        </button>
+                    </div><!-- /.form-group -->
+                </form>
+
+                <hr class="m-b-30">
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<style>
+    .profileFields {
+        width: 250px !important;
+        height: 43px !important;
+    }
+</style>
+
+<script>
+
+    concatColonToLables();
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+</script>

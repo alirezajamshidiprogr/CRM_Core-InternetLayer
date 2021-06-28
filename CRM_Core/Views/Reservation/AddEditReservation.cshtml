@@ -1,0 +1,124 @@
+﻿<link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+<script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+<script src="~/js/pages/clock.js"></script>
+@{ ViewData["peopleId"] = 1;
+
+
+<div class="titleForm">@ViewBag.Title</div>
+ <br />
+    <partial name="~/Views/People/ShowPeopleSelectorPopup.cshtml" action="ShowPeopleSelectorPopup" view-data="ViewData" />
+    @*@await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", TempData["test"]);*@
+
+<div class="col-lg-12 detailFields">
+<ul class="nav nav-tabs nav-rtl">
+    <li class="active"><a data-toggle="tab" href="#Reservation">@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople </a></li>
+    <li><a data-toggle="tab" href="#Services"> @UI_Presentation.wwwroot.Resources.Reservation.Title.Services </a> </li>
+</ul>
+
+
+<div class="divformControl" style="margin-top:20px;">
+    <div class="tab-content">
+
+        <div id="Reservation" class="tab-pane fade in active col-lg-12">
+            <table class="tblFields" style="margin-right:-23px !important;">
+                <tr>
+                    @Html.Hidden("ReservationId", null)
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reservation.Title.OrderDate, null, new { @class = "labelWidget" }) </td>
+                    <td>@Html.TextBox("txtOrderDate", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.Reservation.Title.OrderDate })</td>
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder, null, new { @class = "labelWidget clockpicker-autoclose" })</td>
+                    <td><div class="input-group"><span class="input-group-addon"><i class="icon-clock"></i></span>@Html.TextBox("txtFromTimeOrder", null, new { @class = "form-control clockpicker-autoclose", placeholder = @UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder })</div></td>
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder, null, new { @class = "labelWidget" }) </td>
+                    <td><div class="input-group"><span class="input-group-addon"><i class="icon-clock"></i></span>@Html.TextBox("txtToTimeOrder", null, new { @class = "form-control clockpicker-autoclose", placeholder = @UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder })</div></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reservation.Title.Fee, null, new { @class = "labelWidget" }) </td>
+                    <td>@Html.TextBox("txtFee", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Reservation.Title.Fee })</td>
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType, null, new { @class = "labelWidget" }) </td>
+                    <td><select class="form-control" id="cmbPaidType" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType </option></select></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
+                    <td colspan="6">@Html.TextBox("txtDescription", null, new { @class = "TextArea", style = "width:909px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
+                </tr>
+            </table>
+
+            <div class="col-lg-10 summaryAddEditForm">
+                <div class="row summeryRowAddEdit">
+                    <div class="col-lg-3" style="margin-right:123px;">
+                        <p id="countOfComming">@UI_Presentation.wwwroot.Resources.Reservation.Title.CountOfComing : 25مراجعه </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p id="PeopleType">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType : خوش حساب </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p id="PeopleType">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType : خوش حساب </p>
+                    </div>
+                </div>
+                <div class="row summeryRowAddEdit">
+                    <div class="col-lg-3" style="margin-right:123px;">
+                        <p id="countOfComming">@UI_Presentation.wwwroot.Resources.Reservation.Title.CountOfComing : 25مراجعه </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p id="PeopleType">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType : خوش حساب </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p id="PeopleType">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType : خوش حساب </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="Services" class="tab-pane fade">
+            <div style="margin-top: 53px;">
+                <div style="width:300px;margin-bottom:12px;">
+                    <select class="comboBox" id="cmbClerk" onchange="loadItemsSalonServicesDiv()"> <option>@UI_Presentation.wwwroot.Resources.General.Title.AllItems</option> </select>
+                    <p style="float:right;margin-left :5px;">خدمات کارمند :</p>
+                </div>
+                <div>
+                    <p style="font-size: 17px; color: #e6e6ea; width:506px ; opacity:0.75 ; background: #212529;border-radius:41px; margin-bottom: 11px; text-align: center;">خدمات سالن</p>
+                    <p style="font-size: 17px; color: #e6e6ea; float: left; margin-top: -42px;opacity:0.75 ; width: 588px; margin-bottom: 11px; text-align: center; background: #212529; border-radius: 41px;">خدمات مشتری</p>
+                </div>
+            </div>
+                <div id="salonServices" class="portlet box border shadow divGetServices">
+                  
+                </div>
+
+                <div id="customerServices" class="portlet box border shadow divGetServices" style="float:left!important;width:598px;">
+                  
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <table class="tblButons" style="height:76px !important;">
+            <tr>
+                <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditReservation()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
+                <td><button type="button" id="btnCloseAddEditCusomter" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
+            </tr>
+        </table>
+
+
+    </div>
+</div> }
+<script>
+
+    loadItemsSalonServicesDiv();
+    
+    concatColonToLables();
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            getClerkCombo(e);
+    });
+</script>

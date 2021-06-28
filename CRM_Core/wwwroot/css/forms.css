@@ -1,0 +1,454 @@
+﻿
+.tblFields {
+    direction: rtl;
+    float: right;
+    margin-right: 50px;
+    margin-top: 30px;
+    height: auto !important;
+}
+
+
+    .tblFields tr td {
+        font-size: 16px;
+        padding-left: 20px;
+        padding-bottom: 10px;
+    }
+
+.divButtons {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.form-control {
+    width: 180px !important;
+    font-family: A Iranian Sans;
+}
+
+.formFields {
+    float: right;
+    direction: rtl;
+    width: 90%;
+    text-align: right;
+}
+
+.TextArea {
+    font-family: 'A Iranian Sans';
+    width: 779px !important;
+    height: calc(2.25rem + 2px);
+    padding-right: 7px;
+    font-size: 15px !important;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    resize: none;
+    overflow: auto;
+}
+
+.imgPerson {
+    float: right;
+    text-align: right;
+    width: 170px;
+    margin-right: 40px;
+    margin-top: 55px;
+    border: 1px solid #d2cfcf;
+    text-align: center;
+    height: 170px;
+}
+
+.tblButons {
+    float: right;
+    text-align: right;
+    margin-right: 80px;
+    margin-bottom: 20px;
+    direction: rtl;
+    float: right;
+    width: 570px;
+}
+
+    .tblButons tr td {
+        padding-right: 6px;
+    }
+
+.tblData {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 2000px !important;
+    border: 1px solid #ddd;
+}
+
+    .tblData tr th {
+        width: 500px;
+    }
+
+    .tblData thead th {
+        position: sticky;
+        top: 0;
+    }
+
+
+    .tblData th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+.divTableData {
+    overflow-x: auto;
+    height: 360px;
+    margin-top: -12px;
+}
+
+.tbldesc {
+    width: 700px;
+}
+
+
+.tblButtonAction {
+    width: 35px;
+}
+
+.tblDataheader {
+    background: #430a48 !important;
+    color: white !important;
+    text-align: center !important;
+    direction: rtl !important;
+}
+
+.tblData tr td {
+    vertical-align: middle !important;
+}
+
+.tblData tr:nth-child(odd) {
+    background-color: #f7edf1;
+    color: #000;
+}
+
+.tblData tr:nth-child(even) {
+    background-color: #feffd3;
+    color: #000;
+}
+
+.btn-Search {
+    color: white;
+    background-color: #212529 !important;
+    border-color: #119a8e;
+    height: 40px;
+    width: 122px;
+    margin-top: 10px;
+    border-radius: 24px;
+}
+
+    .btn-Search:hover {
+        background-color: #4b5055 !important;
+    }
+
+.footerPage {
+    background-color: #2b032f;
+    height: 75px;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 1px 1px 2px 1px gray;
+    border-radius: 1px 0px 23px 23px;
+    padding: 16px 16px 3px 3px;
+}
+
+.tblFooterSummery {
+    color: white;
+    float: right;
+    text-align: center;
+    font-size: 14px;
+}
+
+.titleSummery {
+    width: 100px;
+}
+
+.divformControl {
+    margin-top: -56px;
+}
+
+.summaryAddEditForm {
+    float: right;
+    direction: rtl;
+    text-align: center;
+    border: 1px solid #870693;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 0px;
+    margin-right: 74px;
+    padding: 15px;
+    height: 124px;
+}
+
+.summeryRowAddEdit {
+    margin-bottom: 21px;
+}
+
+.loginDiv {
+    position: absolute;
+    z-index: 1000;
+    background-color: #200922;
+    color: #FFFFFF;
+    width: 700px;
+    margin-right: 209px;
+    margin-top: 98px;
+    height: 344px;
+    border-radius: 26px;
+    box-shadow: 0px 12px 10px -4px gray;
+}
+
+.rightloginDiv {
+    border-bottom: 1px solid white;
+    background: #58345b;
+    width: 37%;
+    padding: -8px;
+    margin-right: -5px;
+    height: 344px;
+    border-radius: 0px 22px 22px 0px;
+    padding-top: 31px;
+}
+
+.loginTitle {
+    margin-right: px;
+    margin-top: -3px;
+    background: #16a687;
+    width: 100%;
+    margin-right: 0px;
+    text-align: center;
+    height: 38px;
+    padding: 9px;
+}
+
+.leftloginDiv {
+    float: left;
+    position: relative;
+    margin-top: -343px;
+    border-radius: 22px 0px 0px 22px;
+}
+
+.loginTitle1 {
+    width: 446px;
+    background: #1c4242;
+    margin-top: 27px;
+    height: 38px;
+    text-align: center;
+    padding: 8px;
+}
+
+.loginTextBox {
+    margin-right: 76px;
+    margin-top: 20px;
+}
+
+.btnLogin {
+    width: 211px;
+    margin-right: 72px;
+    height: 51px;
+    border-radius: 36px;
+    border: 1px solid #337184;
+}
+
+/*.detailFields {
+    background-color: #f7f7f7;
+    border-radius: 7px;
+}*/
+
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 700px !important;
+}
+
+.clockpicker-autoclose {
+    width: 139px !important;
+}
+
+.ui-datepicker-calendar {
+    height: 265px !important;
+}
+
+.TelFields {
+    margin-top: 10px;
+}
+
+.chkBoxFields {
+    margin-left: 10px !important;
+}
+
+.lblChkBox {
+    color: darkblue !important;
+}
+
+.table-wrapper {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.table-firstcolon {
+    display: inline-block;
+    vertical-align: top;
+    width: auto !important;
+}
+
+    .table-firstcolon td,
+    .table-firstcolon th {
+        width: 60px;
+    }
+
+.table-content-wrapper {
+    width: 900px !important;
+    display: inline-block;
+    /*overflow-x: scroll;*/
+    vertical-align: top;
+    max-width: calc(100% - 60px);
+}
+
+    .table-content-wrapper > table {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+
+Page Setup
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+.divTableGrid {
+    /*width: 994px;*/
+    width: auto
+}
+
+.TableDataDiv {
+    /*width: 778px !important;*/
+}
+
+.divHeaderSearch {
+    text-align: center;
+}
+
+.tableGrdData {
+    height: 500px !important;
+}
+
+.btnSearchGrid {
+    width: 100px;
+}
+
+.btnGridActions {
+    position: inherit;
+}
+
+.peopleSelector {
+    border: 4px solid #ccc9c9;
+    height: 131px;
+    /*background: #dee8e6;*/
+    border-radius: 31px;
+    margin-top: 9px !important;
+    margin-top: 10px;
+    padding: 15px;
+    width: 1173px;
+    margin-right: -1px;
+    margin-bottom: 18px;
+}
+
+.btnPeopleSelector {
+    position: relative !important;
+    margin-top: -59px !important;
+    width: 176px !important;
+    background: #3d9ec4 !important;
+    border-radius: 33px !important;
+    color: white !important;
+}
+
+.btnPeopleSelector:hover {
+        background: #0a826b !important;
+}
+
+.tdPeopleSelector {
+    width: 270px;
+    text-align: right;
+    color: darkblue;
+}
+
+.tblPeopleSelector {
+    margin-top: -29px;
+    margin-right: 68px;
+}
+
+.divServices {
+    width: 500px;
+    overflow-y: scroll;
+    height: 500px;
+    background-color: transparent;
+    border: none;
+    float: right;
+    margin-right: -121px;
+    margin-top: 64px;
+}
+
+.divGetServices {
+    width: 500px;
+    height: 500px;
+    background-color: transparent;
+    border: none;
+    float: right;
+    /*margin-right: -121px;*/
+    margin-top: -6px;
+    overflow-y: scroll;
+}
+
+.divServiceDetails {
+    /*width: 450px;*/
+    border: 1px solid #d2d2d2;
+    height: 62px;
+    border-radius: 25px;
+    padding: 14px;
+    margin-top: 5px;
+}
+
+.btn btn-danger {
+    border-radius: 50px !important;
+}
+
+.comboBox {
+    width: 180px !important;
+    border: .5px solid #bbbbca;
+    height: 38px;
+    text-align: center
+}
+
+.cmbCustomerServiceType {
+    width: 168px !important;
+    margin-left: 18px;
+    border: .5px solid #bbbbca;
+    height: 38px;
+    text-align: center;
+}
+
+.divSetCustomerServices {
+    border: 1px solid #d2d2d2;
+    height: 62px;
+    border-radius: 25px;
+    padding: 14px;
+    margin-top: 5px;
+    width: 547px;
+}
+
+.popover.bottom {
+    margin-top: 168px !important;
+}
+
+.tblFomrData {
+    height: 400px !important;
+}
+
+.specialFields {
+    display: none;
+}

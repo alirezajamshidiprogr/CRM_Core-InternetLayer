@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRM_Core.DataAccessLayer\CRM_Core.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CRM_Core.Entities\CRM_Core.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

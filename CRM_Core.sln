@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI_Presentation", "CRM_Core\UI_Presentation.csproj", "{C1F01BD9-8492-40A5-A5A6-CE1CD4EFD49A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM_Core.DataAccessLayer", "CRM_Core.DataAccessLayer\CRM_Core.DataAccessLayer.csproj", "{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Core", "01.Core", "{11F08332-4F60-4B13-BD63-6C6D5B0768D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM_Core.Entities", "CRM_Core.Entities\CRM_Core.Entities.csproj", "{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.DataAccess", "02.DataAccess", "{12DDF8F7-6640-4A4E-BFE7-6A151DB82851}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM_Core.Infrastructure", "CRM_Core.Infrastructure\CRM_Core.Infrastructure.csproj", "{63AB95AC-94A5-4165-B3C5-3CCA4AD84297}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.Application", "03.Application", "{521B46AB-D531-44AD-9E51-88810638C3A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM_Core.Application", "CRM_Core.Application\CRM_Core.Application.csproj", "{EE6B1B17-504E-4A8A-9A88-EA7B40236454}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.Infrastructure.IoC", "04.Infrastructure.IoC", "{C1130A9B-756D-446D-8FC2-7737580E4C5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.IoC", "Infrastructure.IoC\Infrastructure.IoC.csproj", "{8A50D7B1-07DB-4A83-A602-5B99366E3FFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.DayaLayer", "05.DayaLayer", "{291B6D99-C0BB-4AD9-85AE-D2CCAA499C61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM_Core.DataLayer", "CRM_Core.DataLayer\CRM_Core.DataLayer.csproj", "{32DA5D1A-8622-4630-A2E4-39B23624B70B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1F01BD9-8492-40A5-A5A6-CE1CD4EFD49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F01BD9-8492-40A5-A5A6-CE1CD4EFD49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F01BD9-8492-40A5-A5A6-CE1CD4EFD49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F01BD9-8492-40A5-A5A6-CE1CD4EFD49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63AB95AC-94A5-4165-B3C5-3CCA4AD84297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63AB95AC-94A5-4165-B3C5-3CCA4AD84297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63AB95AC-94A5-4165-B3C5-3CCA4AD84297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63AB95AC-94A5-4165-B3C5-3CCA4AD84297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6B1B17-504E-4A8A-9A88-EA7B40236454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6B1B17-504E-4A8A-9A88-EA7B40236454}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6B1B17-504E-4A8A-9A88-EA7B40236454}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6B1B17-504E-4A8A-9A88-EA7B40236454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A50D7B1-07DB-4A83-A602-5B99366E3FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A50D7B1-07DB-4A83-A602-5B99366E3FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A50D7B1-07DB-4A83-A602-5B99366E3FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A50D7B1-07DB-4A83-A602-5B99366E3FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DA5D1A-8622-4630-A2E4-39B23624B70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DA5D1A-8622-4630-A2E4-39B23624B70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DA5D1A-8622-4630-A2E4-39B23624B70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DA5D1A-8622-4630-A2E4-39B23624B70B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1861C89F-FCFA-4CDB-8DAB-6CB9CDC819B8} = {12DDF8F7-6640-4A4E-BFE7-6A151DB82851}
+		{F6F083D0-475B-4087-9CFD-2FEB7DD8DC03} = {11F08332-4F60-4B13-BD63-6C6D5B0768D3}
+		{63AB95AC-94A5-4165-B3C5-3CCA4AD84297} = {11F08332-4F60-4B13-BD63-6C6D5B0768D3}
+		{EE6B1B17-504E-4A8A-9A88-EA7B40236454} = {521B46AB-D531-44AD-9E51-88810638C3A8}
+		{8A50D7B1-07DB-4A83-A602-5B99366E3FFB} = {C1130A9B-756D-446D-8FC2-7737580E4C5E}
+		{32DA5D1A-8622-4630-A2E4-39B23624B70B} = {291B6D99-C0BB-4AD9-85AE-D2CCAA499C61}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C65750B2-D7C2-47F7-99BE-5228F5FB81E1}
+	EndGlobalSection
+EndGlobal

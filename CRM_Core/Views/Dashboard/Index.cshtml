@@ -1,0 +1,79 @@
+﻿
+
+<div class="titleForm">@ViewBag.Title</div>
+<div class="col-md-12">
+    <div class="breadcrumb-box border shadow">
+        <ul class="breadcrumb">
+            <li><a href="dashboard.html">@UI_Presentation.wwwroot.Resources.General.Title.Dashboard</a></li>
+        </ul>
+        <div class="breadcrumb-left">
+            سه شنبه، 1396/12/1                                <i class="icon-calendar"></i>
+        </div><!-- /.breadcrumb-left -->
+    </div><!-- /.breadcrumb-box -->
+</div><!-- /.col-md-12 -->
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 col-xs-6 xxs-full-width">
+            <div class="stat-box bg-darkblue shadow">
+                <a href="#">
+                    <div class="stat">
+                        <div class="counter-down" data-value="2048"></div>
+                        <div class="h3">@UI_Presentation.wwwroot.Resources.People.Title.PeopleCount</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-people"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3 col-xs-6 xxs-full-width">
+            <div class="stat-box bg-blue shadow">
+                <a href="#">
+                    <div class="stat">
+                        <div class="counter-down" data-value="1024"></div>
+                        <div class="h3">محصول</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-present"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3 col-xs-6 xxs-full-width">
+            <div class="stat-box bg-orange shadow">
+                <a href="#">
+                    <div class="stat">
+                        <div class="counter-down" data-value="512"></div>
+                        <div class="h3">@UI_Presentation.wwwroot.Resources.People.Title.TodayReservation</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-diamond"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3 col-xs-6 xxs-full-width">
+            <div class="stat-box bg-red shadow">
+                <a href="#">
+                    <div class="stat">
+                        <div class="counter-down" data-value="256"></div>
+                        <div class="h3">پیام</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-bubbles"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-md-3 -->
+    </div><!-- /.row -->
+</div><!-- /.col-md-12 -->
+
+
+
+
+<script src="~/plugins/chart.js/dist/Chart.bundle.min.js"></script>
+<script src="~/plugins/jquery-incremental-counter/jquery.incremental-counter.min.js"></script>
+<script src="~/plugins/ammap3/ammap/ammap.js"></script>
+@*<script src="assets/plugins/ammap3/ammap/maps/js/iranHighFa.js"></script>*@
+<script src="~/js/pages/dashboard2.js"></script>

@@ -1,0 +1,163 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helpers\**" />
+    <Content Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+    <Content Remove="C:\Users\Alireza\.nuget\packages\bootstrap\4.6.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
+    <Content Remove="wwwroot\Resources\Mesages.resx" />
+    <Content Remove="wwwroot\Resources\Role\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Role\Title.resx" />
+    <Content Remove="wwwroot\Resources\Reminder\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Reminder\Title.resx" />
+    <Content Remove="wwwroot\Resources\Buttons\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Buttons\Title.resx" />
+    <Content Remove="wwwroot\Resources\Personel\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Personel\Title.resx" />
+    <Content Remove="wwwroot\Resources\People\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\People\Title.resx" />
+    <Content Remove="wwwroot\Resources\Reservation\Title.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Reservation\Title.resx" />
+    <Content Remove="wwwroot\Resources\Title.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="wwwroot\Resources\Role\Title.Designer.cs">
+      <DependentUpon>Title.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="wwwroot\Resources\Reminder\Title.Designer.cs">
+      <DependentUpon>Title.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="wwwroot\Resources\Buttons\Title.Designer.cs">
+      <DependentUpon>Title.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="wwwroot\Resources\Personel\Title.Designer.cs">
+      <DependentUpon>Title.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="wwwroot\Resources\People\Title.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Title.resx</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\Resources\Reservation\Title.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Title.resx</DependentUpon>
+    </Compile>
+    <Compile Include="wwwroot\Resources\General\Title.Designer.cs" />
+    <Compile Include="wwwroot\Resources\Mesages.Designer.cs">
+      <DependentUpon>Mesages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Resources\Role\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Reminder\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Buttons\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Personel\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\People\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Reservation\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\General\Title.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Mesages.resx">
+      <LastGenOutput>Mesages.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="4.6.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nancy" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRM_Core.DataAccessLayer\CRM_Core.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\CRM_Core.Infrastructure\CRM_Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastructure.IoC\Infrastructure.IoC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Omu.Awem">
+      <HintPath>..\..\..\..\Downloads\MinSetupCore\MinSetupCore\libs\Omu.Awem.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.AwesomeMvc">
+      <HintPath>..\..\..\..\Downloads\MinSetupCore\MinSetupCore\libs\Omu.AwesomeMvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\General\Title.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Title.resx</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Resources\General\Title.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Resources\Mesages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mesages.resx</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+</Project>

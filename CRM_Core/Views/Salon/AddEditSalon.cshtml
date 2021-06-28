@@ -1,0 +1,59 @@
+﻿
+<div class="titleForm">@ViewBag.Title</div>
+<br />
+<div class="divformControl">
+    <div class="col-lg-12 detailFields">
+        <div class="imgPerson">
+            <a href="#" title=@UI_Presentation.wwwroot.Resources.General.Title.SelectLogo> <img src="~/image/ButtonImage/salonLogo.png" style="padding-bottom:5px;" height="143" width="143" />@UI_Presentation.wwwroot.Resources.General.Title.SelectLogo</a>
+        </div>
+
+        <table class="tblFields">
+            <tr>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.Salon, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtSalon", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.Salon })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.SalonManager, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtSalonManager", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.SalonManager })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Tel, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtTel", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Tel })</td>
+            </tr>
+            <tr>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Mobile, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtMobile", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Mobile })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Telegram, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtTelegram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Telegram })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtWhatsApp", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WhatsApp })</td>
+            </tr>
+            <tr>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Instagram, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtInstagram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Instagram })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WebSite, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtWebSite", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WebSite })</td>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.LisenceNumber, null, new { @class = "labelWidget" }) </td>
+                <td>@Html.TextBox("txtLisenceNumber", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.LisenceNumber })</td>
+            </tr>
+            <tr>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
+                <td colspan="5">@Html.TextBox("txtDescription", null, new { @class = "TextArea", style = "width:883px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
+            </tr>
+            <tr>
+                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Address, null, new { @class = "labelWidget" }) </td>
+                <td colspan="5">@Html.TextArea("txtAddress", null, new { @class = "TextArea", style = "width:883px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Address })</td>
+            </tr>
+
+        </table>
+    </div>
+
+
+    <table class="tblButons">
+        <tr>
+            <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
+            <td><button type="button" id="btnCloseAddEditCusomter" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+    concatColonToLables();
+</script>
