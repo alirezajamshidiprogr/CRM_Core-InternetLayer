@@ -1,0 +1,12 @@
+<LogInfo>
+    <Time>1400-5-28_12-5-22</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.InternalEntityEntry.SetEntityState(EntityState oldState, EntityState newState, Boolean acceptChanges, Boolean modifyProperties)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.InternalEntityEntry.SetEntityState(EntityState entityState, Boolean acceptChanges, Boolean modifyProperties, Nullable`1 forceStateWhenUnknownKey)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.set_State(EntityState value)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.Remove(TEntity entity)
+   at CRM_Core.DataAccessLayer.Repositories.RepositoryBase`1.Delete(T entity) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.DataAccessLayer\Repositories\RepositoryBase.cs:line 49
+   at CRM_Core.Application.Services.Ef_UserMenuService.DeleteUserMenu(List`1 userMenu) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Application\Services\Ef_UserMenuService.cs:line 29
+   at UI_Presentation.Controllers.ManagmentController.AddUserMenu(List`1 userMenu) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ManagmentController.cs:line 158</Target>
+    <ErrorMessage>The property 'UserMenu.Id' has a temporary value while attempting to change the entity's state to 'Deleted'. Either set a permanent value explicitly, or ensure that the database is configured to generate values for this property.</ErrorMessage>
+</LogInfo>

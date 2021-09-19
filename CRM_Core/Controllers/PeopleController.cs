@@ -6,16 +6,19 @@ using CRM_Core.DataAccessLayer;
 using CRM_Core.DomainLayer;
 using UI_Presentation.Models;
 using CRM_Core.Infrastructure;
-using System.Web.WebPages.Html;
 using System.Data;
 using CRM_Core.Application.Interfaces;
 using CRM_Core.Application.GridViewModels;
 using CRM_Core.Application.ViewModels.People;
 using MyCRM.Layered.Model.Utility;
+using Microsoft.AspNetCore.Authorization;
+using CRM_Core.Application.Services;
+using CRM_Core.Entities.Models.General;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CRM_Core.Controllers
 {
-    //[Log]
+    [Authorize]
     public class PeopleController : Controller
     {
         #region CONSTANT
@@ -28,9 +31,10 @@ namespace CRM_Core.Controllers
         private IAddressService _addressService;
         private IPeopleVirtualService _peopleVirtualService;
         private IPeoplePropertyService _peoplePropertyService;
+        private IGeneratedNumberService _generetedNumberService;
         #endregion
 
-        public PeopleController(IPeopleService peopleService, ICategoryService categoryService, IPotentialService potentialService, IPrefixService prefixService, IIntroductionTypeService introductionService, IGraduationService graduationService, IAddressService addressService, IPeopleVirtualService peopleVirtualService, IPeoplePropertyService peoplePropertyService)
+        public PeopleController(IPeopleService peopleService, ICategoryService categoryService, IPotentialService potentialService, IPrefixService prefixService, IIntroductionTypeService introductionService, IGraduationService graduationService, IAddressService addressService, IPeopleVirtualService peopleVirtualService, IPeoplePropertyService peoplePropertyService, IGeneratedNumberService generetedNumberService)
         {
             _peopleService = peopleService;
             _categoryService = categoryService;
@@ -41,6 +45,7 @@ namespace CRM_Core.Controllers
             _addressService = addressService;
             _peopleVirtualService = peopleVirtualService;
             _peoplePropertyService = peoplePropertyService;
+            _generetedNumberService = generetedNumberService;
         }
 
         #region Action
@@ -48,18 +53,61 @@ namespace CRM_Core.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var a = SessionProperty.UserID;
-            var aa = SessionProperty.UserName;
-            ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.ShowPeople;
-            return PartialView("People");
+            string errorMessage = string.Empty;
+            try
+            {
+                ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.ShowPeople;
+
+                List<SelectListItem> PotentialsItems = _potentialService.GetPotentials().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+                List<SelectListItem> GradationsItems = _graduationService.GetGraduations().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+                List<SelectListItem> CategoriesItems = _categoryService.GetCategories().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+                List<SelectListItem> PrefixesItems = _prefixService.GetPrefixes().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+                List<SelectListItem> IntroductionTypesItems = _introductionTypeService.GetIntroductionTypes().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+
+                PotentialsItems.Insert(0, new SelectListItem() { Text = UI_Presentation.wwwroot.Resources.General.Title.SelectItem, Value = null });
+                GradationsItems.Insert(0, new SelectListItem() { Text = UI_Presentation.wwwroot.Resources.General.Title.SelectItem, Value = null });
+                CategoriesItems.Insert(0, new SelectListItem() { Text = UI_Presentation.wwwroot.Resources.General.Title.SelectItem, Value = null });
+                PrefixesItems.Insert(0, new SelectListItem() { Text = UI_Presentation.wwwroot.Resources.General.Title.SelectItem, Value = null });
+                IntroductionTypesItems.Insert(0, new SelectListItem() { Text = UI_Presentation.wwwroot.Resources.General.Title.SelectItem, Value = null });
+
+                List<SelectListItem> MarriedItems = new List<SelectListItem>()
+                {
+                        new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.General.Title.AllItems, Value = null , Selected = false },
+                        new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Single, Value = "1", Selected = false },
+                        new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Married, Value = "2", Selected = false },
+                        new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.divorced, Value = "3", Selected = false },
+                };
+
+                ViewBag.MarriedItems = MarriedItems;
+                ViewBag.PotentialItems = PotentialsItems;
+                ViewBag.GradationsItems = GradationsItems;
+                ViewBag.CategoriesItems = CategoriesItems;
+                ViewBag.PrefixesItems = PrefixesItems;
+                ViewBag.IntroductionTypesItems = IntroductionTypesItems;
+
+                return PartialView("People");
+            }
+            catch (Exception ex)
+            {
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
+         
         }
 
-        //[System.Web.Mvc.ChildActionOnly]
-        public IActionResult FillPeopleTableData(bool quickSearch,string fullName)
+        public IActionResult FillPeopleTableData(bool quickSearch, string fullName, peopleViewModelSearch searchParams, string state)
         {
             string errorMessage = string.Empty;
-            DataGridViewModel<Application.ViewModels.People.PeopleModel> peopleList = new Application.GridViewModels.DataGridViewModel<Application.ViewModels.People.PeopleModel>();
-            DataTable dt = new DataTable();
+
+            if (state == "isEditMode")
+                ViewBag.isEditMode = true;
+            else if (state == "isSelectedMode")
+                ViewBag.isSelectedMode = true;
+            else if (state == "isPrintMode")
+                ViewBag.isPrintMode = true;
+
+            DataGridViewModel<PeopleModel> peopleList = new DataGridViewModel<PeopleModel>();
             try
             {
                 string[] searchParameter;
@@ -67,18 +115,56 @@ namespace CRM_Core.Controllers
 
                 if (quickSearch)
                 {
-                    searchParameter = new string[] { "@FullName"};
-                    searchValues = new object[] { fullName};
+                    searchParameter = new string[] { "@FullName" };
+                    searchValues = new object[] { fullName };
                 }
-                searchParameter = new string[] { "@SystemCode", "@ManualCode", "@FirstName", "@LastName", "@Age" };
-                searchValues  = new object[] { "2554", "144", "asdg", "aagas", 1 };
-                peopleList.Records = _peopleService.GetPeopleByADO("[dbo].[People_Search]", null, null);
+                else
+                {
+                    searchParameter = new string[]
+                    {
+                     "@FirstName"
+                    ,"@LastName"
+                    ,"@Age"
+                    ,"@Birthday"
+                    ,"@TBASPotentialId"
+                    ,"@TBASIntroduceId"
+                    ,"@TBASIntroductionTypeId"
+                    ,"@MariedType"
+                    ,"@TBASGradationsId"
+                    ,"@TBASCategoriyId"
+                    ,"@TBASPrefixID"
+                    ,"@CertificateCode"
+                    ,"@ManualCode"
+                    ,"@SystemCode"
+                    };
+
+                    searchValues = new object[]
+                    {
+                    searchParams.FirstName
+                   ,searchParams.LastName
+                   ,searchParams.Age
+                   ,searchParams.Birthday.ToMiladiDate()
+                   ,searchParams.TBASPotentialId
+                   ,searchParams.TBASIntroduceId
+                   ,searchParams.TBASIntroductionTypeId
+                   ,searchParams.MariedType
+                   ,searchParams.TBASGradationsId
+                   ,searchParams.TBASCategoriyId
+                   ,searchParams.TBASPrefixID
+                   ,searchParams.CertificateCode
+                   ,searchParams.ManualCode
+                   ,searchParams.SystemCode
+                    };
+                }
+               
+                peopleList.Records = _peopleService.GetPeopleByADO("[dbo].[People_Search]", searchParameter, searchValues);
                 peopleList.TotalCount = peopleList.Records.Count();
             }
             catch (Exception ex)
             {
                 errorMessage = string.Empty;
-                return Json(new { errorMessage = ex.Message == string.Empty || ex.Message == null ? UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation : ex.Message });
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
             return PartialView(peopleList);
         }
@@ -86,51 +172,62 @@ namespace CRM_Core.Controllers
         [HttpPost]
         public IActionResult AddEditPeople(int? peopleId)
         {
+            string errorMessage = string.Empty;
             ViewBag.isEdit = false;
-            peopleViewModel peopleViewModel = new peopleViewModel();
 
-            peopleViewModel.GraduationItems = _graduationService.GetGraduations();
-            peopleViewModel.CategoriyItem = _categoryService.GetCategories();
-            peopleViewModel.PotentialItems = _potentialService.GetPotentials();
-            peopleViewModel.PrefixItems = _prefixService.GetPrefixes();
-            peopleViewModel.TBASIntroductionTypeItems = _introductionTypeService.GetIntroductionTypes();
-
-            List<SelectListItem> marriedItems = new List<SelectListItem>()
+            try
             {
-                    new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Single, Value = "1", Selected = false },
-                    new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Married, Value = "2", Selected = false },
-                    new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.divorced, Value = "3", Selected = false },
-            };
+                peopleViewModel peopleViewModel = new peopleViewModel();
+                peopleViewModel.GraduationItems = _graduationService.GetGraduations();
+                peopleViewModel.CategoriyItem = _categoryService.GetCategories();
+                peopleViewModel.PotentialItems = _potentialService.GetPotentials();
+                peopleViewModel.PrefixItems = _prefixService.GetPrefixes();
+                peopleViewModel.TBASIntroductionTypeItems = _introductionTypeService.GetIntroductionTypes();
 
-            ViewBag.marriedItems = marriedItems;
+                List<SelectListItem> marriedItems = new List<SelectListItem>()
+                    {
+                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Single, Value = "1", Selected = false },
+                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Married, Value = "2", Selected = false },
+                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.divorced, Value = "3", Selected = false },
+                    };
 
-            if (peopleId.HasValue)
-            {
-                ViewBag.isEdit = true;
+                ViewBag.marriedItems = marriedItems;
 
-                ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.EditPeople;
-                ViewBag.PeopleID = peopleId;
-                var people = _peopleService.GetPeopleById(peopleId.Value);
-                ViewBag.graduationSelected = people.FirstOrDefault().TBASGraduationId.ToString();
-                ViewBag.introduceSelected = people.FirstOrDefault().IntroduceId.ToString();
-                ViewBag.categorySelected = people.FirstOrDefault().TBASCategoryId.ToString();
-                ViewBag.prefixSelected = people.FirstOrDefault().TBASPrefixId.ToString();
-                ViewBag.potentialSelected = people.FirstOrDefault().TBASPrefixId.ToString();
-                ViewBag.introductionTypeSelected = people.FirstOrDefault().TBASIntroductionTypeId.ToString();
+                if (peopleId.HasValue)
+                {
+                    ViewBag.isEdit = true;
 
-                int addressId = _addressService.GetAddressByPeopleId(people.FirstOrDefault().Id).FirstOrDefault().Id;
-                int peopleVirtualId = _peopleVirtualService.GetPeopleVirtualByPeopleId(people.FirstOrDefault().Id).FirstOrDefault().Id;
+                    ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.EditPeople;
+                    ViewBag.PeopleID = peopleId;
+                    var people = _peopleService.GetPeopleById(peopleId.Value);
+                    ViewBag.graduationSelected = people.FirstOrDefault().TBASGraduationId.ToString();
+                    ViewBag.introduceSelected = people.FirstOrDefault().IntroduceId.ToString();
+                    ViewBag.categorySelected = people.FirstOrDefault().TBASCategoryId.ToString();
+                    ViewBag.prefixSelected = people.FirstOrDefault().TBASPrefixId.ToString();
+                    ViewBag.potentialSelected = people.FirstOrDefault().TBASPrefixId.ToString();
+                    ViewBag.introductionTypeSelected = people.FirstOrDefault().TBASIntroductionTypeId.ToString();
 
-                peopleViewModel.People = _peopleService.GetPeopleById(peopleId.Value).FirstOrDefault();
-                peopleViewModel.Address = _addressService.GetAddressById(addressId).FirstOrDefault();
-                peopleViewModel.PeopleVirtual = _peopleVirtualService.GetPeopleVirtualById(peopleVirtualId).FirstOrDefault();
+                    int addressId = _addressService.GetAddressByPeopleId(people.FirstOrDefault().Id).FirstOrDefault().Id;
+                    var peopleVirtual = _peopleVirtualService.GetPeopleVirtualByPeopleId(people.FirstOrDefault().Id).FirstOrDefault();
+
+                    peopleViewModel.People = _peopleService.GetPeopleById(peopleId.Value).FirstOrDefault();
+                    peopleViewModel.Address = _addressService.GetAddressById(addressId).FirstOrDefault();
+                    peopleViewModel.PeopleVirtual = peopleVirtual != null ? _peopleVirtualService.GetPeopleVirtualById(peopleVirtual.Id).FirstOrDefault() : null;
+                }
+                else
+                {
+                    ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddPeople;
+                }
+
+                return PartialView(peopleViewModel);
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddPeople;
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
 
-            return PartialView(peopleViewModel);
         }
 
         public IActionResult AddEditIntroducePopup()
@@ -149,7 +246,7 @@ namespace CRM_Core.Controllers
         #region Methods
 
         //[RangeExceptionOn]
-        [Authorization]
+        //[Authorization]
         [HttpPost]
         public ActionResult AddEditPeopleMethod(bool isEdit, bool checkRepeatedTels, bool checkRepeatedMobiles, List<TempTels> tels, List<TempMobiles> mobiles, PeopleVirtual peopleVirtual, Address address, People people)
         {
@@ -157,27 +254,40 @@ namespace CRM_Core.Controllers
             string errorMessage = string.Empty;
             //ModelState["people.Category"].Errors.Clear();
             ModelState["address.People"].Errors.Clear();
+            ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            ModelState["people.TBASPrefixId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            ModelState["people.TBASIntroductionTypeId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            ModelState["address.People"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
 
-            //if (!ModelState.IsValid)
-            //throw new CustomeException("Model Is Not Valid", true, null);
+            if (!ModelState.IsValid)
+                throw new CustomeException("Model Is Not Valid", true, null);
+
             try
             {
                 people.M_Birthday = people.P_Birthday != null ? people.P_Birthday.ToDateTime() : (DateTime?)null;
                 people.M_MariedDate = people.P_MariedDate != null ? people.P_MariedDate.ToDateTime() : (DateTime?)null;
-                people.SystemCode = !isEdit ? (Convert.ToInt64("00100000001") + 1).ToString() : people.SystemCode;
+                people.SystemCode = _generetedNumberService.NewGenerateNumber(SessionProperty.UserID, (int)Enums.states.People);
 
-                //var resulssst = context.People.FromSqlRaw("People_Search1");
+                if (_peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0 )
+                    throw new CustomeException("ManualCode Is Exists In Table People...", true, null);
 
                 if (isEdit)
                 {
+                    if (people.Id == people.IntroduceId) // PEOPLE_ID CAN NOT BE SAME AS INTRODUCE ID 
+                        throw new CustomeException("PeopleID CanNot Be Same As IntroduceId...", true, null);
+
                     PeopleVirtual peopleVirtualOld = _peopleVirtualService.GetPeopleVirtualByPeopleId(people.Id).FirstOrDefault();
                     Address addressOld = _addressService.GetAddressByPeopleId(people.Id).FirstOrDefault();
 
-                    peopleVirtualOld.Email = peopleVirtual.Email;
-                    peopleVirtualOld.WebSite = peopleVirtual.WebSite;
-                    peopleVirtualOld.Telegram = peopleVirtual.Telegram;
-                    peopleVirtualOld.Instagram = peopleVirtual.Instagram;
-                    peopleVirtualOld.WhatsApp = peopleVirtual.WhatsApp;
+                    if (peopleVirtualOld != null)
+                    {
+                        peopleVirtualOld.Email = peopleVirtual.Email;
+                        peopleVirtualOld.WebSite = peopleVirtual.WebSite;
+                        peopleVirtualOld.Telegram = peopleVirtual.Telegram;
+                        peopleVirtualOld.Instagram = peopleVirtual.Instagram;
+                        peopleVirtualOld.WhatsApp = peopleVirtual.WhatsApp;
+                    }
+
 
                     addressOld.Province = address.Province;
                     addressOld.City = address.City;
@@ -186,10 +296,17 @@ namespace CRM_Core.Controllers
                     addressOld.Alley = address.Alley;
                     addressOld.OtherAddress = address.OtherAddress;
 
-                    _peopleService.UpdatePeople(people);
-                    //_peopleService.PeopleVirtual.Update(peopleVirtualOld);
-                    _peopleVirtualService.UpdatePeopleVirtual(peopleVirtualOld);
-                    //context.Address.Update(addressOld);
+                    People oldPeople = _peopleService.GetPeopleById(people.Id).FirstOrDefault();
+
+                    oldPeople.FirstName = people.FirstName;
+                    oldPeople.ManualCode = people.ManualCode;
+
+                    _peopleService.UpdatePeople(oldPeople);
+
+                    if (peopleVirtualOld != null)
+                        _peopleVirtualService.UpdatePeopleVirtual(peopleVirtualOld);
+
+
                     _addressService.UpdateAddress(addressOld);
 
                     // Delete Previous Data For Tels
@@ -209,7 +326,7 @@ namespace CRM_Core.Controllers
                                 string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
                                 _peoplePropertyService.AddPeopleProperty(new PeopleProperty
                                 {
-                                    People = people,
+                                    People = oldPeople,
                                     TBASPeopleTypeField = j,
                                     Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
                                     Order = i,
@@ -235,7 +352,7 @@ namespace CRM_Core.Controllers
                                 string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
                                 _peoplePropertyService.AddPeopleProperty(new PeopleProperty
                                 {
-                                    People = people,
+                                    People = oldPeople,
                                     TBASPeopleTypeField = j,
                                     Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
                                     Order = i,
@@ -245,9 +362,10 @@ namespace CRM_Core.Controllers
                     }
 
                 }
+
                 else
                 {
-
+                    people.IsActive = true; // Here i set This Fields Manually 
                     _peopleService.AddPeople(people);
 
                     if (peopleVirtual.Email != null || peopleVirtual.WebSite != null || peopleVirtual.Telegram != null || peopleVirtual.Instagram != null || peopleVirtual.WhatsApp != null)
@@ -308,13 +426,18 @@ namespace CRM_Core.Controllers
 
                 message = UI_Presentation.wwwroot.Resources.Mesages.TheActionEndedWithSuccess;
 
+                ActivityNumber activityNumber = new ActivityNumber { TBASStateId = (int)Enums.states.People, RelatedNumber = people.SystemCode };
+                if (!isEdit)
+                    _generetedNumberService.InsertNumberInActivity(activityNumber);
                 _peopleService.SaveChanges();
             }
             catch (Exception ex)
             {
                 errorMessage = string.Empty;
-                return Json(new { errorMessage = ex.Message == string.Empty || ex.Message == null ? UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation : ex.Message });
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
+
             return Json(new { message = message, errorMessage = errorMessage });
         }
 
@@ -330,11 +453,15 @@ namespace CRM_Core.Controllers
             try
             {
                 People people = _peopleService.GetPeopleById(peopleId).FirstOrDefault();
-                _peopleService.DeletePeople(people);
+                people.IsActive = false;
+                _peopleService.UpdatePeople(people);
+                _peopleService.SaveChanges();
+                //  _peopleService.DeletePeople(people);
                 message = UI_Presentation.wwwroot.Resources.Mesages.DeleteSuccessfullyApplied;
             }
             catch (Exception ex)
             {
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
                 result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
             }
             return Json(new
@@ -386,7 +513,7 @@ namespace CRM_Core.Controllers
             return repeatedTel;
         }
 
-        [NonAction]
+        [HttpPost]
         public ActionResult GetPeopleTelsAndMobiles(int peopleId)
         {
             string result = string.Empty;
@@ -446,36 +573,24 @@ namespace CRM_Core.Controllers
         [HttpPost]
         public JsonResult GetPeoplePropertyById(int peopleId)
         {
+            string errorMessage = string.Empty;
             string result = string.Empty;
-            //GetPeopleByValue people = new GetPeopleByValue();
-            string people = string.Empty;
-            DataTable dt = new DataTable();
+            IEnumerable<PeopleModel> peopleModel = new List<PeopleModel>();
             try
             {
-                //using (var context = new CRM_CoreDB())
-                //{
-                //    var cmd = context.Database.GetDbConnection().CreateCommand();
-                //    var param = cmd.CreateParameter();
-                //    cmd.CommandText = "[dbo].[People_GetPropertyById]";
-                //    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                //    param.ParameterName = "@PeopleId";
-                //    param.Value = peopleId;
-                //    cmd.Parameters.Add(param);
-                //    context.Database.OpenConnection();
-                //    var dataReader = cmd.ExecuteReader();
-                //    dt.Load(dataReader);
-                //    people = JsonConvert.SerializeObject(dt);
-
-                //}
+                peopleModel = _peopleService.GetPeopleByAdoById(peopleId);
             }
             catch (Exception ex)
             {
-                result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
+
             return Json(new
             {
-                people = people,
-                result = result,
+                errorMessage = errorMessage,
+                peopleModel = peopleModel,
             });
         }
 

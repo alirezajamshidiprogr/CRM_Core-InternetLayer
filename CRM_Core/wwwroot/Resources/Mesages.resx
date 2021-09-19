@@ -123,6 +123,9 @@
   <data name="ClickForUpload" xml:space="preserve">
     <value>برای آپلود کلیک کنید</value>
   </data>
+  <data name="CustomerServiceInfoIsEmpty" xml:space="preserve">
+    <value>برای مشتری انتتخاب شده هیچ خدماتی انتخاب نشده است !</value>
+  </data>
   <data name="DeleteSuccessfullyApplied" xml:space="preserve">
     <value>حذف با موفقیت انجام شد .</value>
   </data>
@@ -138,8 +141,20 @@
   <data name="FillTheEmptyFieldTels" xml:space="preserve">
     <value>یک یا برخی از فیلدهای شماره تلفن خالی است </value>
   </data>
+  <data name="ForThisMenuThereAreSomeActiveSubMenu" xml:space="preserve">
+    <value>برای منوی انتخاب شده یک یا چند زیر منو فعال است ابتدا زیر منوها را غیر فعال کنید!</value>
+  </data>
+  <data name="FromDateAndToDateMenuAccessInNull" xml:space="preserve">
+    <value>مقادیر ازتاریخ تا تاریخ را وارد کنید !</value>
+  </data>
   <data name="TheActionEndedWithSuccess" xml:space="preserve">
     <value>تغییرات با موفقیت ثبت شد </value>
+  </data>
+  <data name="thereIsNotAnyActiveMenu" xml:space="preserve">
+    <value>برای کاربر انتخاب شده هیچ منوی فعالی انتخاب نشده است آیا ادامه می دهید ؟</value>
+  </data>
+  <data name="ThisItemHasAddedAleadyToServiceCustomer" xml:space="preserve">
+    <value>آیتم انتخاب شده تکراری است !</value>
   </data>
   <data name="TryLoginMoreThanThreeTimes" xml:space="preserve">
     <value>دسترسی شما به مدت 15 دقیقه مسدود شد لطفا بعد از این مدت دوباره تلاش کنید </value>

@@ -20,7 +20,6 @@ namespace Infrastructure.IoC
             // services.AddScoped<IPeopleRepository, PeopleRepository>();
             // services.AddScoped<IPeopleService, PeopleService>();
              services.AddScoped<IPeopleService, Ef_PeopleService>();
-             services.AddScoped<IUserService, Ef_UserService>();
              services.AddScoped<IGraduationService, Ef_GraduaionService>();
              services.AddScoped<IPrefixService, Ef_PrefixService>();
              services.AddScoped<IIntroductionTypeService, Ef_IntroductionTypeService>();
@@ -29,6 +28,16 @@ namespace Infrastructure.IoC
              services.AddScoped<IAddressService, Ef_AddressService>();
              services.AddScoped<IPeopleVirtualService, Ef_PeopleVirtualService>();
              services.AddScoped<IPeoplePropertyService, Ef_PeoplePropertyService>();
+             services.AddScoped<IApplicationUserService, Ef_ApplicationUserService>();
+             services.AddScoped<IGeneratedNumberService, Ef_GeneralService>();
+             services.AddScoped<IMenuService, Ef_MenuService>();
+             services.AddScoped<IUserMenuService, Ef_UserMenuService>();
+             services.AddScoped<IClerkServiceService, Ef_ClerkServiceService>();
+             services.AddScoped<ITBASServiceService, Ef_TBASServicesService>();
+             services.AddScoped<IPeopleServiceService, Ef_PeopleServiceService>();
+             services.AddScoped<IReservationService, Ef_ReservationService>();
+             services.AddScoped<ITBASPayTypeService, Ef_TBASPayTypeService>();
+             //services.AddTransient<IMyRepository, MyRepository>();
 
             return services;
 

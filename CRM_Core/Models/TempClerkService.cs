@@ -7,8 +7,9 @@ namespace UI_Presentation.Models
 {
     public class TempClerkService
     {
-        public int Id { get; set; }
+        public int TbasServiceId { get; set; }
+        public int ClerkServiceId { get; set; }
         public int ClerkId { get; set; }
-        public string Name { get; set; }
+        public string ServiceName { get; set; }
     }
 }

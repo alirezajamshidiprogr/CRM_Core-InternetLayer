@@ -1,65 +1,5 @@
 /*--------------------------- Fonts Start -------------------------*/
-@font-face {
-    font-family: IranSansEn;
-    font-style: normal;
-    font-weight: normal;
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn).eot');
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn).eot?#iefix') format('embedded-opentype'),
-        url('../fonts/iransans/woff2/IRANSansWeb(NoEn).woff2') format('woff2'),
-        url('../fonts/iransans/woff/IRANSansWeb(NoEn).woff') format('woff'),
-        url('../fonts/iransans/ttf/IRANSansWeb(NoEn).ttf') format('truetype');
-}
-@font-face {
-    font-family: IranSansEn;
-    font-style: normal;
-    font-weight: bold;
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn)_Bold.eot');
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn)_Bold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/iransans/woff2/IRANSansWeb(NoEn)_Bold.woff2') format('woff2'),
-        url('../fonts/iransans/woff/IRANSansWeb(NoEn)_Bold.woff') format('woff'),
-        url('../fonts/iransans/ttf/IRANSansWeb(NoEn)_Bold.ttf') format('truetype');
-}
-@font-face {
-    font-family: IranSansEn;
-    font-style: normal;
-    font-weight: 300;
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn)_Light.eot');
-    src: url('../fonts/iransans/eot/IRANSansWeb(NoEn)_Light.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-        url('../fonts/iransans/woff2/IRANSansWeb(NoEn)_Light.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-        url('../fonts/iransans/woff/IRANSansWeb(NoEn)_Light.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-        url('../fonts/iransans/ttf/IRANSansWeb(NoEn)_Light.ttf') format('truetype');
-}
 
-@font-face {
-    font-family: IranSans;
-    font-style: normal;
-    font-weight: normal;
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum).eot');
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
-        url('../fonts/iransans-fanum/woff2/IRANSansWeb(FaNum).woff2') format('woff2'),
-        url('../fonts/iransans-fanum/woff/IRANSansWeb(FaNum).woff') format('woff'),
-        url('../fonts/iransans-fanum/ttf/IRANSansWeb(FaNum).ttf') format('truetype');
-}
-@font-face {
-    font-family: IranSans;
-    font-style: normal;
-    font-weight: bold;
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum)_Bold.eot');
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/iransans-fanum/woff2/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),
-        url('../fonts/iransans-fanum/woff/IRANSansWeb(FaNum)_Bold.woff') format('woff'),
-        url('../fonts/iransans-fanum/ttf/IRANSansWeb(FaNum)_Bold.ttf') format('truetype');
-}
-@font-face {
-    font-family: IranSans;
-    font-style: normal;
-    font-weight: lighter;
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum)_Light.eot');
-    src: url('../fonts/iransans-fanum/eot/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/iransans-fanum/woff2/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),
-        url('../fonts/iransans-fanum/woff/IRANSansWeb(FaNum)_Light.woff') format('woff'),
-        url('../fonts/iransans-fanum/ttf/IRANSansWeb(FaNum)_Light.ttf') format('truetype');
-}
 /*---------------------------- Fonts End --------------------------*/
 
 
@@ -1495,6 +1435,7 @@ h1.page-error sup{
     width: 32px;
     height: 32px;
     display: inline-block;
+    float:right ;
 }
 
 .comments-box{
@@ -1810,9 +1751,9 @@ h1.page-error sup{
     width: 50%;
     height: 50%;
     position: relative;
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1); 
+    -webkit-transform: scale(4.1);
+    -ms-transform: scale(4.1);
+    transform: scale(4.1); 
 }
 .folding-cube .cube:before {
     content: '';
@@ -1829,16 +1770,16 @@ h1.page-error sup{
     transform-origin: 100% 100%;
 }
 .folding-cube .cube2 {
-    -webkit-transform: scale(1.1) rotateZ(90deg);
-    transform: scale(1.1) rotateZ(90deg);
+    -webkit-transform: scale(4.1) rotateZ(90deg) !important;
+    transform: scale(4.1) rotateZ(90deg) !important;
 }
 .folding-cube .cube3 {
-    -webkit-transform: scale(1.1) rotateZ(180deg);
-    transform: scale(1.1) rotateZ(180deg);
+    -webkit-transform: scale(4.1) rotateZ(180deg)!important;
+    transform: scale(4.1) rotateZ(180deg) !important;
 }
 .folding-cube .cube4 {
-    -webkit-transform: scale(1.1) rotateZ(270deg);
-    transform: scale(1.1) rotateZ(270deg);
+    -webkit-transform: scale(4.1) rotateZ(270deg) !important;
+    transform: scale(4.1) rotateZ(270deg) !important;
 }
 .folding-cube .cube2:before {
     -webkit-animation-delay: 0.3s;
@@ -2147,7 +2088,7 @@ body, #page-content {
   background: #f5f5f5; 
 }
 #wrapper, #sidebar, .metismenu {
-  background: #212529; 
+  background: #f8bbd0; 
 }
 .theme-blue.sidebar-collapse .metismenu li.conditional-bg > a {
     background: #14B9D6;
@@ -2163,7 +2104,7 @@ body, #page-content {
 .theme-blue .double-bounce1, .theme-blue .double-bounce2, .theme-blue .scaleout, .theme-blue .bounces > div, .theme-blue .folding-cube .cube:before,
 .theme-blue .header-right,
 .theme-blue .metismenu a.current, .theme-blue .metismenu a:hover, .theme-blue .metismenu a:focus, .theme-blue .metismenu a:active {
-    background: #14B9D6; 
+    background: #dfb409!important; 
 }
 .theme-blue .pagination > .active > a, .theme-blue .pagination > .active > a:focus, .theme-blue .pagination > .active > a:hover, .theme-blue .pagination > .active > span, .theme-blue .pagination > .active > span:focus, .theme-blue .pagination > .active > span:hover {
     background-color: #14B9D6;
@@ -2421,5 +2362,15 @@ body, #page-content {
     .tabs-left>li>a, .tabs-right>li>a{
         padding: 5px 2px;
     }
+}
+.divManagment{
+    text-align:center ;
+    margin-top:30px;
+    font-size: 1.4em ;
+}
+
+.Menus {
+    border: 1px solid #d7d4d4;
+    height: 700px;
 }
 /*------------------------- Responsive End -------------------------*/

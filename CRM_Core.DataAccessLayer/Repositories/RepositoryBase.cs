@@ -23,23 +23,6 @@ namespace CRM_Core.DataAccessLayer.Repositories
             _dbSet = repositoryContext.Set<T>();
         }
 
-        //public IQueryable<T> GetModelByADO()
-        //{
-        //    DataTable dt = new DataTable();
-        //    var cmd = RepositoryContext.Database.GetDbConnection().CreateCommand();
-        //    var param = cmd.CreateParameter();
-        //    cmd.CommandText = "[dbo].[People_Search]";
-        //    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //    //param.ParameterName = "@PeopleId";
-        //    //param.Value = 3;
-        //    //cmd.Parameters.Add(param);
-        //    RepositoryContext.Database.OpenConnection();
-        //    var dataReader = cmd.ExecuteReader();
-        //    dt.Load(dataReader);
-        //    return MappingUtility.DataTableToList<T>(dt).AsQueryable();
-
-        //}
-
         public IQueryable<T> FindAll()
         {
             return _dbSet;
@@ -58,6 +41,7 @@ namespace CRM_Core.DataAccessLayer.Repositories
         public void Update(T entity)
         {
             _dbSet.Update(entity);
+            
         }
 
         public void Delete(T entity)

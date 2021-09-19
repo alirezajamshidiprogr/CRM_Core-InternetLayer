@@ -7,6 +7,6 @@ namespace CRM_Core.Entities.Interfaces
 {
    public interface IUserRepository
     {
-        IEnumerable<User> GetUsers();
+        //IEnumerable<User> GetUsers();
     }
 }

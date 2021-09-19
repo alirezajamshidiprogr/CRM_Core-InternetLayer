@@ -25,13 +25,11 @@ namespace CRM_Core.Application.Services
         public void AddPeople(People people)
         {
              Create(people);
-             //SaveChanges();
         }
 
         public void DeletePeople(People people)
         {
             Delete(people);
-            //SaveChanges();
         }
 
         public IEnumerable<People> GetPeople()
@@ -58,11 +56,11 @@ namespace CRM_Core.Application.Services
                 for (int i = 0; i < searchParameter.Length; i++)
                 {
                     setParam = cmd.CreateParameter();
-                    var getTypeSearchValue = searchValues[i].GetType().Name;
+                    var getTypeSearchValue = searchValues[i]== null ? "String" : searchValues[i].GetType().Name;
 
                     setParam.ParameterName = searchParameter[i];
                     if (getTypeSearchValue == "String")
-                        setParam.Value = searchValues[i].ToString() ;
+                        setParam.Value = searchValues[i] == null ? null : searchValues[i].ToString() ;
                     else if (getTypeSearchValue == "Int32")
                         setParam.Value = Convert.ToInt32(searchValues[i]);
                     else if (getTypeSearchValue == "Boolean")
@@ -83,15 +81,43 @@ namespace CRM_Core.Application.Services
             return (MappingUtility.DataTableToList<PeopleModel>(dt)).AsQueryable();
         }
 
+        public IEnumerable<PeopleModel> GetPeopleByAdoById(int peopleId)
+        {
+            DataTable dt = new DataTable();
+            var cmd = _context.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = "[dbo].[People_GetPropertyById]";
+            DbParameter param = cmd.CreateParameter();
+
+            param.ParameterName = "@PeopleId";
+            param.Value = peopleId;
+
+            cmd.Parameters.Add(param);
+            cmd.CommandType = CommandType.StoredProcedure;
+            _context.Database.OpenConnection();
+            var dataReader = cmd.ExecuteReader();
+            dt.Load(dataReader);
+            return (MappingUtility.DataTableToList<PeopleModel>(dt)).AsQueryable();
+
+        }
+
+        public IEnumerable<People> GetPeopleByCategoryId(int categoryId)
+        {
+            return FindByCondition(item => item.TBASCategoryId == categoryId);
+        }
+
         public IQueryable<People> GetPeopleById(int id)
         {
             return FindByCondition(item => item.Id == id);
         }
 
+        public IQueryable<People> GetPeopleByManualCode(string manualCode)
+        {
+            return FindByCondition(item => item.ManualCode == manualCode);
+        }
+
         public void UpdatePeople(People people)
         {
             Update(people);
-            //SaveChanges();
         }
 
 

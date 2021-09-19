@@ -165,6 +165,9 @@
   <data name="Family" xml:space="preserve">
     <value>فامیلی</value>
   </data>
+  <data name="FullName" xml:space="preserve">
+    <value>نام - نام خانوادگی</value>
+  </data>
   <data name="GeneralInfoPeople" xml:space="preserve">
     <value>اطلاعات کلی</value>
   </data>

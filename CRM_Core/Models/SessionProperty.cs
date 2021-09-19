@@ -7,7 +7,7 @@ namespace UI_Presentation.Models
 {
     public static class SessionProperty
     {
-        public static int UserID{ get; set; }
+        public static string UserID{ get; set; }
         public static string UserName{ get; set; }
         public static string FullName{ get; set; }
         public static string LoginTime{ get; set; }

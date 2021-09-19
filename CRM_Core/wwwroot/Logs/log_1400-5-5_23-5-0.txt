@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1400-5-5_23-5-0</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at CRM_Core.Controllers.PeopleController.AddEditPeopleMethod(Boolean isEdit, Boolean checkRepeatedTels, Boolean checkRepeatedMobiles, List`1 tels, List`1 mobiles, PeopleVirtual peopleVirtual, Address address, People people) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\PeopleController.cs:line 409</Target>
+    <ErrorMessage>یک یا برخی از شماره های همراه وارد شده تکراری هستند !</ErrorMessage>
+</LogInfo>

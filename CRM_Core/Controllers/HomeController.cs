@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRM_Core.Application.Interfaces;
+using CRM_Core.Application.ViewModels;
 using CRM_Core.DataAccessLayer;
 using CRM_Core.DomainLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,45 +14,66 @@ using UI_Presentation.Models;
 
 namespace CRM_Core.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         #region CONSTANT
-        private IUserService _userService;
+        private IMenuService _menuService;
+        private IUserMenuService _userMenuService;
+        List<MenuViewModel> menu = new List<MenuViewModel>();
         #endregion
-        public HomeController(IUserService peopleService)
+
+        public HomeController(IMenuService menuService , IUserMenuService userMenuService)
         {
-            _userService = peopleService;
+            _menuService = menuService;
+            _userMenuService = userMenuService;
         }
-
-        [HttpGet]
-        public IActionResult Index(User user)
+        public IActionResult Index()
         {
-            string result = string.Empty;
-            string message = string.Empty;
-            var list = _userService.GetUsers();
+            TempData["UserFullName"] = SessionProperty.FullName;
+            List<MenuViewModel> getUserMenu = new List<MenuViewModel>();
 
-            try
+            getUserMenu = (from m in _menuService.GetApplicationMenu().ToList()
+                            join u in _userMenuService.GetUserMenuByUserIdentity(SessionProperty.UserID) on m.MenuId equals u.TBASMenuId into menuUsers
+                            from userMenu in menuUsers.DefaultIfEmpty()
+                            orderby m.Order ascending
+                            where m.IsButton == false 
+                            select new MenuViewModel
+                            {
+                                MenuName = m.Name,
+                                Title = m.Title,
+                                Order = m.Order,
+                                Event = m.Event,
+                                MenuId = m.MenuId,
+                                ParentMenuId = m.ParentMenuId,
+                                IsActive = m.Active,
+                                IsButton = m.IsButton,
+                                IconClass = m.IconClass,
+                                IsVisible = m.Visible,
+                                hasAccess = userMenu != null ? userMenu.MenueState : 0 
+                            }).ToList();
+
+            foreach (var item in getUserMenu)
             {
-                var getUser = _userService.GetUserByUserNamePassword(user.UserName, user.Password).FirstOrDefault();
-                if (getUser != null)
+                this.menu.Add(new MenuViewModel
                 {
-                    SessionProperty.UserName = getUser.UserName;
-                    SessionProperty.FullName = getUser.FirstName+ " " + getUser.LastName;
-                    SessionProperty.UserID = getUser.Id;
-                    SessionProperty.LoginTime = DateTime.Now.ToShortTimeString() ;
-                    
-                   //HttpContext.Session.SetString("UserName", user.UserName);
-                    return View();
-                }
-                TempData["isValidUser"] = false;
-                return RedirectToAction("Index", "Login");
+                    MenuName = item.MenuName,
+                    Title = item.Title,
+                    Order = item.Order,
+                    Event = item.Event,
+                    MenuId = item.MenuId,
+                    ParentMenuId = item.ParentMenuId,
+                    IsActive = item.IsActive,
+                    IsButton = item.IsButton,
+                    IconClass = item.IconClass,
+                    IsVisible = item.IsVisible,
+                    hasAccess = item.hasAccess
+                });
             }
 
-            catch (Exception)
-            {
-
-                throw;
-            }
+            this.ViewData["MenuItems"] = this.menu;
+            return View();
         }
+
     }
 }

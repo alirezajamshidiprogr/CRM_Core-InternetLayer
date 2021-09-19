@@ -1,49 +1,61 @@
-﻿<!DOCTYPE html>
+﻿@using CRM_Core.Application.ViewModels;
+
+
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <title>مشاطه </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="قالب مدیریت ایرانی مدیران ">
-    <meta name="keywords" content="قالب مدیریت, قالب داشبورد, قالب ادمین, قالب مدیران, قالب مدیریت راستچین , قالب ایرانی مدیریت, پوسته مدیریت, قالب ادمین داشبورد سایت, قالب مدیریتی, مدیران, قالب مدیریت مدیران, پنل مدیریت, پنل مدیریت مدرن, قالب ادمین متریال, قالب مدیریت بوت استرپ, قالب ادمین بوتسترپ, قالب ادمین سایت, پوسته مدیریتی ایرانی, قالب مدیرتی مدیران ایرانی, بهترین قالب مدیریت, قالب مدیریت ریسپانسیو, قالب مدیریت ارزان, قالب admin">
     <meta name="fontiran.com:license" content="NE29X">
     <link rel="shortcut icon" href="~/image/images/favicon.png">
-    <!-- BEGIN CSS -->
-    <link href="~/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/plugins/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet" />
-    <link href="~/plugins/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
-    <link href="~/plugins/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet" />
-    <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
-    <link href="~/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
-    <link href="~/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
-    <link href="~/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet" />
-    <link href="~/plugins/iCheck/skins/square/_all.css" rel="stylesheet" />
-    <link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="~/css/colors.css" rel="stylesheet" />
-    <link href="~/css/forms.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
 
-   
+    <!-- BEGIN CSS -->
+
+    <environment include="Development">
+        <link href="~/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/plugins/bootstrap-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet" />
+        <link href="~/plugins/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
+        <link href="~/plugins/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet" />
+        <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+        <link href="~/plugins/switchery/dist/switchery.min.css" rel="stylesheet" />
+        <link href="~/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+        <link href="~/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet" />
+        <link href="~/plugins/iCheck/skins/square/_all.css" rel="stylesheet" />
+        <link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+
+        <link href="~/css/style.css" rel="stylesheet" />
+        <link href="~/css/colors.css" rel="stylesheet" />
+        <link href="~/css/forms.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+
+        @*<link href="~/bundles/CRM_CoreBootstrap.min.css" rel="stylesheet" />*@
+
+        <link href="~/css/font.css" rel="stylesheet" />
+        <link href="~/bundles/CRM_CoreBootstrap.min.css" rel="stylesheet" />
+        <link href="~/bundles/CRM_Core.min.css" rel="stylesheet" />
+    </environment>
+
+    <environment exclude="Development">
+        <link href="~/css/font.css" rel="stylesheet" />
+        <link href="~/bundles/CRM_CoreBootstrap.min.css" rel="stylesheet" />
+        <link href="~/bundles/CRM_Core.min.css" rel="stylesheet" />
+    </environment>
+
 
     <!-- END CSS -->
 
 </head>
 <body class="active-ripple theme-blue fix-header sidebar-extra">
-    <!-- BEGIN LOEADING -->
-    <div id="loader">
-        <div class="spinner"></div>
-    </div><!-- /loader -->
-    <!-- END LOEADING -->
-    <!-- BEGIN HEADER -->
     <div class="navbar navbar-fixed-top" id="main-navbar">
         <div class="header-right" style="background:#FDFCFC;">
             <a href="#" class="logo-con">
                 <img src="assets/images/logo.png" class="img-responsive center-block" alt="نرم افزار مشاطه">
             </a>
         </div><!-- /.header-right -->
-        <div class="header-left" style="background-color:#BF1363!important">
+        <div class="header-left" style="background-color: #f8bbd0!important">
             <div class="top-bar">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -245,7 +257,7 @@
 
                     <li class="dropdown dropdown-user">
                         <a href="#" class="dropdown-toggle dropdown-hover" data-toggle="dropdown">
-                            <img src="~/image/images/user/48.png" alt="عکس پرفایل" class="img-circle img-responsive">
+                            <img src="~/image/images/user/default48.png" alt="@UI_Presentation.wwwroot.Resources.General.Title.UserProfileImage" class="img-circle img-responsive">
                             <span style="color:black;">@TempData["UserFullName"]</span>
                             <i class="icon-arrow-down"></i>
                         </a>
@@ -253,7 +265,7 @@
                             <li>
                                 <a href="#">
                                     <i class="icon-note"></i>
-                                    ویرایش پروفایل
+                                    @UI_Presentation.wwwroot.Resources.General.Title.EditProfile
                                 </a>
                             </li>
                             <li>
@@ -278,7 +290,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="login.html" onclick="logOutApp()">
+                                <a href="#" onclick="logOutApp()">
                                     <i class="icon-power"></i>
                                     @UI_Presentation.wwwroot.Resources.Buttons.Title.LogOut
                                 </a>
@@ -339,319 +351,60 @@
                 </div><!-- /.user-box -->
             </div><!-- /.sidebar-top -->
             <div class="side-menu-container">
-                <ul class="metismenu" id="side-menu">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-home"></i>
-                            <span>پیشخوان</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="ShowDashboard()" class="">
-                                    <i class="fa fa-dashboard (alias)"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.Dashboard</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnAddEditProfile()" class="">
-                                    <i class="icon-home"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                @{
+                    List<MenuViewModel> menus = (List<MenuViewModel>)ViewData["MenuItems"];
+                    var query = menus.GroupBy(item => item.MenuId)
+                    .Select(grp => new
+                    {
+                        Min = grp.Min(item => item.MenuId),
+                        Max = grp.Max(item => item.MenuId)
+                    }).FirstOrDefault();
 
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-people"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.People</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-user-follow "></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateNewPeople</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnShowPeopleList()" class="">
-                                    <i class="fa fa-list-alt"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.PeopleList</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-user-unfollow "></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ForgetPeople</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    string html = "<ul class='metismenu' id='side-menu'>";
+                    string style = string.Empty;
 
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-info-circle"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.SalonInfo </span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditSalon()" class="">
-                                    <i class="fa fa-info"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.GeneralSalonInfo</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditReservation()" class="">
-                                    <i class="fa fa-cut (alias)"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateNewSalonService </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-columns"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateSalonDesk</span>
-                                </a>
-                            </li>
+                    List<MenuViewModel> getFirstChildParent = null;
+                    foreach (var item in menus)
+                    {
+                        style = string.Empty;
+                        if (item.ParentMenuId == null && item.MenuId == query.Min) // اگه منو اصلی هست و  اولین منو هست اینطور بساز
+                        {
+                            getFirstChildParent = menus.Where(a => a.ParentMenuId == item.MenuId).ToList();
+                            style = item.IsActive && item.hasAccess == 1 ? "" : "pointer-events:none;opacity:0.5;";
+                            style += !item.IsVisible ? "display:none;" : "";
+                            html += "<li style='" + style + "'> <a href='#' class='dropdown-toggle' data-toggle='dropdown'> <i class='" + item.IconClass + "'></i> <span>" + item.Title + "</span> </a>";
+                        }
+                        else if (item.ParentMenuId == null && item.MenuId != query.Min) // اگه اولین منو نیست ولی منو اصلی هست منوی قبلی رو ببند و منو اصلی جدید اضافه کن
+                        {
+                            getFirstChildParent = menus.Where(a => a.ParentMenuId == item.MenuId).ToList();
+                            style = item.IsActive && item.hasAccess == 1 ? "" : "pointer-events:none;opacity:0.5;";
+                            style += !item.IsVisible ? "display:none;" : "";
+                            html += "</ul></li><li style='" + style + "'><a href='#' class='dropdown-toggle' data-toggle='dropdown'> <i class='" + item.IconClass + "'> </i> <span>" + item.Title + "</span> </a>";
+                        }
+                        else if (item.MenuId == getFirstChildParent[0].MenuId) // در این حالت زیر منوها ساخته می شن منتها اگه اولین زیر منو هست باید کد زیر ساخته بشه در غیر اینصورت کد خط بعدی در شرط
+                        {
+                            style = item.IsActive && item.hasAccess == 1 ? "" : "pointer-events:none;opacity:0.5;";
+                            style += !item.IsVisible ? "display:none;" : "";
+                            html += "<ul><li style='" + style + "'><a href='#' onclick='" + item.Event + "' class=''> <i class='" + item.IconClass + "'></i><span>" + item.Title + "</span> </a> </li>";
+                        }
+                        else
+                        {
+                            style = item.IsActive && item.hasAccess == 1 ? "" : "pointer-events:none;opacity:0.5;";
+                            style += !item.IsVisible ? "display:none;" : "";
+                            html += "<li style='" + style + "'> <a href='#' onclick='" + item.Event + "' class=''> <i class='" + item.IconClass + "'></i><span>" + item.Title + "</span> </a> </li>";
+                        }
+                    }
 
-                        </ul>
-                    </li>
+                    html += "</ul></li></ul>";
+                    @Html.Raw(html)
+                }
 
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-clock"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Reservation</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditReservation()" class="">
-                                    <i class="fa fa-clock-o"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.AddReservation</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-list"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ReservationList</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-bell"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Reminder</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditReminder()" class="">
-                                    <i class="icon-note"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.AddReminder</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-list"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ReminderList</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-address-book"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Contacts</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditReminder()" class="">
-                                    <i class="fa fa-user-plus"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateNewContact</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-address-card-o"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ShowContactList</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-layers"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Role</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditRole()" class="">
-                                    <i class="fa fa-plus"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateNewRole</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-list-alt"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.RoleList</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-people"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Personel</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPersonel()" class="">
-                                    <i class="icon-user-female"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateNewPersonel</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-list-alt"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.PersonelList</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-calendar-check-o"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.Personel.Title.RegisterTime </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-bed"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.Personel.Title.Vacation </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-printer"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Reports</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-plus"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.PeopleReport</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-plus"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ReservationReport</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-calculator"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.IncomeReport</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-basket-loaded fa-flip-horizontal"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Store</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-plus"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateProducts</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-shopping-bag"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ProductsList</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-settings"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Settings</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-cogs"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-database"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.Backup</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-download"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.Restore</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-braille"></i>
-                            <span>@UI_Presentation.wwwroot.Resources.General.Title.Management</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-user-follow"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.CreateUser</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="icon-list"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.ShowUserList</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-id-card"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.DefineUserRole</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="btnOpenEditPeople()" class="">
-                                    <i class="fa fa-wrench"></i>
-                                    <span>@UI_Presentation.wwwroot.Resources.General.Title.UserSetting</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                </ul><!-- /#side-menu -->
             </div><!-- /.side-menu-container -->
         </div><!-- /#sidebar -->
-        <!-- END SIDEBAR -->
         <!-- BEGIN PAGE CONTENT -->
         <div id="page-content">
             <div class="row">
-                <div class="col-md-12" style="background:#f6fffd !important">
+                <div class="col-md-12" id="MainDivPage" style="background:#f6fffd !important">
                     <div class="portlet box border shadow" style="background:#f6fffd !important">
                         <div class="portlet-heading">
                             <div class="portlet-title">
@@ -685,7 +438,7 @@
                         </p>
                         <p class="pull-left ltr tahoma">
                             <span>©</span>
-                            <a href="http://1style.ir">1style</a>
+                            <a href="#">www.moshattehCRM.com</a>
                         </p>
                     </div><!-- /.copyright -->
                 </div><!-- /.col-md-12 -->
@@ -762,39 +515,60 @@
     <div class="col-lg-10">
         <main role="main" class="pb-3">
             <div id="Container">
+                <div id="divLoader" class="folding-cube" style="margin-top:303px;position:fixed;display:none; z-index:500000">
+                    <div class="cube1 cube" style=""></div>
+                    <div class="cube2 cube" style=""></div>
+                    <div class="cube4 cube" style=""></div>
+                    <div class="cube3 cube" style=""></div>
+                </div><!-- /.folding-cube -->
                 @RenderBody()
             </div>
         </main>
     </div>
 
-    <script src="~/js/jquery-1.12.4.min.js"></script>
-    <script src="~/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
-    <script src="~/js/holder.js"></script>
-    <script src="~/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/plugins/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="~/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
-    <script src="~/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
-    <script src="~/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="~/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="~/plugins/screenfull/dist/screenfull.min.js"></script>
-    <script src="~/plugins/iCheck/icheck.min.js"></script>
-    <script src="~/plugins/switchery/dist/switchery.js"></script>
-    <script src="~/js/core.js"></script>
-    <script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
-    <script src="~/js/pages/clock.js"></script>
-
-    <script src="~/js/Messages.js"></script>
-    <script src="~/js/General.js"></script>
-    <script src="~/js/People/People.js"></script>
-    <script src="~/js/Salon/Salon.js"></script>
-    <script src="~/js/Reservation/Reservation.js"></script>
-    <script src="~/js/Personel/Personel.js"></script>
-    <script src="~/js/Login/Login.js"></script>
-    <script src="~/js/Reminder/Reminder.js"></script>
 
 
-    <link href="~/js/PersianCalendar/css/persian-datepicker.css" rel="stylesheet" />
-    <script src="~/js/PersianCalendar/js/persian-datepicker.js"></script>
-    <script src="~/js/PersianCalendar/js/DateTimePicker.js"></script>
+    <environment include="Development">
+        <script src="~/js/jquery-1.12.4.min.js"></script>
+        <script src="~/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
+        <script src="~/js/holder.js"></script>
+        <script src="~/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/plugins/metisMenu/dist/metisMenu.min.js"></script>
+        <script src="~/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+        <script src="~/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
+        <script src="~/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="~/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script src="~/plugins/screenfull/dist/screenfull.min.js"></script>
+        <script src="~/plugins/iCheck/icheck.min.js"></script>
+        <script src="~/plugins/switchery/dist/switchery.js"></script>
+        <script src="~/js/core.js"></script>
+        <script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+        <script src="~/js/pages/clock.js"></script>
+        <script src="~/js/CRM/Messages.js"></script>
+        <script src="~/js/CRM/General.js"></script>
+        <script src="~/js/CRM/People.js"></script>
+        <script src="~/js/CRM/Salon.js"></script>
+        <script src="~/js/CRM/Reservation.js"></script>
+        <script src="~/js/CRM/Personel.js"></script>
+        <script src="~/js/Login/Login.js"></script>
+        <script src="~/js/CRM/Reminder.js"></script>
+        <script src="~/js/CRM/Management.js"></script>
+        <script src="~/js/PersianCalendar/js/persian-datepicker.js"></script>
+        <script src="~/js/PersianCalendar/js/DateTimePicker.js"></script>
+        @*<script src="~/bundles/CRM_Core.min.js"></script>*@
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/bundles/CRM_Core.min.js"></script>
+    </environment>
+
+    <script>
+        $(".txtDate").datepicker({
+            dateFormat: './dd/mm/yy.html',
+            dateFormat: 'yy/mm/dd',
+            altField: '#alternate2',
+            altFormat: 'DD، d MM yy'
+        });
+    </script>
 </body>
 </html>

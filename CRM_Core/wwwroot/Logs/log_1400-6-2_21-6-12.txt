@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1400-6-2_21-6-12</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 peopleServices, Reservation reservation)</Target>
+    <ErrorMessage>Model Is Not Valid</ErrorMessage>
+</LogInfo>

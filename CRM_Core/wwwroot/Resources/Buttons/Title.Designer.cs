@@ -151,6 +151,15 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بررسی.
+        /// </summary>
+        public static string Proccess {
+            get {
+                return ResourceManager.GetString("Proccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ثبت.
         /// </summary>
         public static string Register {
@@ -183,6 +192,15 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         public static string SelectCustomer {
             get {
                 return ResourceManager.GetString("SelectCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to انتخاب معرف.
+        /// </summary>
+        public static string SelectIntroduction {
+            get {
+                return ResourceManager.GetString("SelectIntroduction", resourceCulture);
             }
         }
     }

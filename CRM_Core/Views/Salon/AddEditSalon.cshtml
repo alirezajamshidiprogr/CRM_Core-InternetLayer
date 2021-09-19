@@ -10,7 +10,7 @@
         <table class="tblFields">
             <tr>
                 <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.Salon, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtSalon", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.Salon })</td>
+                <td>@Html.TextBox("txtSalon", null, new { @class = "form-control",required="required" , placeholder = @UI_Presentation.wwwroot.Resources.General.Title.Salon })</td>
                 <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.SalonManager, null, new { @class = "labelWidget" }) </td>
                 <td>@Html.TextBox("txtSalonManager", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.SalonManager })</td>
                 <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Tel, null, new { @class = "labelWidget" }) </td>

@@ -12,16 +12,9 @@ a {
   color: #0366d6;
 }
 #formContainer {
-   /* background-color: #fbfbfb;
-    margin-top: 10px;*/
     height: 900px;
-    overflow-y:scroll ;
+    overflow-y:hidden ;
     overflow-x:hidden;
-    /*width: 75%;*/
-    /*float: left;*/
-    /*margin-left: 25px;*/
-    /*margin-top:30px;*/
-    /*box-shadow: 5px 1px gainsboro;*/
 }
 .btn-primary {
     color: #fff;
@@ -158,13 +151,15 @@ table {
 }
 
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-        color: #fff;
+        color: #1a1a1a;
         cursor: default;
-        background-color: #212529;
+        background-color: #ffc400;
         border: 1px solid #ddd;
         border-bottom-color: rgb(221, 221, 221);
         border-bottom-color: rgb(221, 221, 221);
         border-bottom-color: transparent;
+        font-size: 1.2em;
+        border-radius:18px;
     }
 
 .btn-primary {
@@ -313,8 +308,9 @@ opacity: 0.4;*/
     border: 1px solid #bfbfbf !important;
     border-radius: 20px;
     padding: 5px !important;
-    box-shadow: -3px 3px 7px 3px #373333 !important;
-    width: 1158px !important;
+    box-shadow: 0px 3px 10px 1px #373333 !important;
+    width: 1140px !important;
+    height: 634px !important ;
 }
 
 #page-content {

@@ -1,80 +1,89 @@
-﻿@using System.Data
+﻿@using System.Data;
+@using CRM_Core.Infrastructure;
+@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.People
 
-@model DataTable
+@model DataGridViewModel<PeopleModel>
 
-@{ int peopleId = Convert.ToInt32(ViewData["peopleId"]);
+@{
+    string param = ViewData["param"].ToString();
+    string[] splitParam = param.Split(",");
+    int state = Convert.ToInt32(splitParam[0]);
+    int peopleId = Convert.ToInt32(splitParam[1]);
 
-<div class="peopleSelector" id="peopleSelector">
-    <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@UI_Presentation.wwwroot.Resources.Buttons.Title.SelectCustomer</button>
+    string buttionTitle = state == (int)Enums.states.People ? @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectIntroduction : @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectCustomer;
 
-    <table class="tblPeopleSelector">
-        <tr>
-            <td class="specialTd" style="display:none;">
-                <span id="PeopleId" class="specialFields"></span>
-            </td>
-            <td class="tdPeopleSelector">
-                <p id="fullName"></p>
-            </td>
-            <td class="tdPeopleSelector">
-                <p id="age"></p>
-            </td>
-            <td class="tdPeopleSelector">
-                <p id="birthday"></p>
-            </td>
-            <td class="tdPeopleSelector">
-                <p id="certificateCode"></p>
-            </td>
-        </tr>
-        <tr>
-            <td class="tdPeopleSelector">
-                <p id="graduation"></p>
-            </td>
-            <td colspan="3" class="tdPeopleSelector">
-                <p id="address"></p>
-            </td>
-        </tr>
-    </table>
-</div>
+    <div class="peopleSelector" id="peopleSelector">
+        <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@buttionTitle</button>
 
-            <div class="modal fade" id="PeopleSelectorModal" tabindex="-1" role="dialog"  aria-hidden="true">
-                <div class="modal-dialog peopleSelectorPopup" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background:#101214">
-                            <h5 class="modal-title"  style="color:white;">@UI_Presentation.wwwroot.Resources.People.Title.SelectPeople</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            </button>
-                        </div>
-                        <div class="modal-body peopleSelectorBody">
-                            <div class="peopleSelectorItemsSearch">
-                                <table>
-                                    <tr>
-                                        <td><label for="systemCode">@UI_Presentation.wwwroot.Resources.People.Title.SystemCode</label></td>
-                                        <td><input type="text" class="form-control" id="txtsystemCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></td>
-                                        <td> <label for="manualCode">@UI_Presentation.wwwroot.Resources.People.Title.ManualCode</label></td>
-                                        <td><input type="text" class="form-control" id="txtmanualCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></td>
-                                        <td> <label for="certificeCode">@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode</label></td>
-                                        <td><input type="text" class="form-control" id="txtCertificateCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></td>
-                                        <td><button type="button" onclick="btnShowPeoplePopupClick('@UI_Presentation.wwwroot.Resources.Buttons.Title.Select')" class="btn btn-primary" style="width:75px!important;">@UI_Presentation.wwwroot.Resources.Buttons.Title.Search</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="Name">@UI_Presentation.wwwroot.Resources.People.Title.Name</label></td>
-                                        <td> <input type="text" class="form-control" id="txtName" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Name"></td>
-                                        <td><label for="Family">@UI_Presentation.wwwroot.Resources.People.Title.Family</label></td>
-                                        <td> <input type="text" class="form-control" id="txtFamily" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Family"></td>
-                                        <td colspan="3" style="text-align:left;"> <button type="button" class="btn btn-danger" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Close</button></td>
-                                    </tr>
-                                   
-                                </table>
-                            </div>
+        <table class="tblPeopleSelector">
+            <tr>
+                <td class="specialTd" style="display:none;">
+                    <span id="PeopleSelector_Id" class="specialFields"></span>
+                </td>
+                <td class="tdPeopleSelector">
+                    <p id="PeopleSelector_fullName"></p>
+                </td>
+                <td class="tdPeopleSelector">
+                    <p id="PeopleSelector_age"></p>
+                </td>
+                <td class="tdPeopleSelector">
+                    <p id="PeopleSelector_birthday"></p>
+                </td>
+                <td class="tdPeopleSelector">
+                    <p id="PeopleSelector_certificateCode"></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdPeopleSelector">
+                    <p id="PeopleSelector_graduation"></p>
+                </td>
+                <td colspan="3" class="tdPeopleSelector">
+                    <p id="PeopleSelector_address"></p>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-                            <div class="peopleSelectorTable">
-                                @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml", Model)
-                            </div>
-                        </div>
+    <div class="modal fade" id="PeopleSelectorModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog peopleSelectorPopup" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#101214">
+                    <h5 class="modal-title" style="color:white;">@UI_Presentation.wwwroot.Resources.People.Title.SelectPeople</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body peopleSelectorBody">
+                    <div class="peopleSelectorItemsSearch">
+                        <table>
+                            <tr>
+                                <td><label for="systemCode">@UI_Presentation.wwwroot.Resources.People.Title.SystemCode</label></td>
+                                <td><input type="text" class="form-control" id="_txtsystemCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></td>
+                                <td> <label for="manualCode">@UI_Presentation.wwwroot.Resources.People.Title.ManualCode</label></td>
+                                <td><input type="text" class="form-control" id="_txtmanualCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></td>
+                                <td> <label for="certificeCode">@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode</label></td>
+                                <td><input type="text" class="form-control" id="_txtCertificateCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></td>
+                                <td><button type="button" onclick="showPeopleList(false,'isSelectedMode')" class="btn btn-primary" style="width:75px!important;">@UI_Presentation.wwwroot.Resources.Buttons.Title.Search</button></td>
+                            </tr>
+                            <tr>
+                                <td><label for="Name">@UI_Presentation.wwwroot.Resources.People.Title.Name</label></td>
+                                <td> <input type="text" class="form-control" id="_txtName" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Name"></td>
+                                <td><label for="Family">@UI_Presentation.wwwroot.Resources.People.Title.Family</label></td>
+                                <td> <input type="text" class="form-control" id="_txtFamily" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Family"></td>
+                                <td colspan="3" style="text-align:left;"> <button type="button" class="btn btn-danger" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Close</button></td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div id="peopleList" class="peopleSelectorTable">
+                        @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml", Model)
                     </div>
                 </div>
-            </div> }
+            </div>
+        </div>
+    </div> }
 
 <script>
-    refreshFieldsPeopleSelector();
+    getPeopleSelectorInfo('@peopleId');
 </script>

@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1400-6-2_21-6-4</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 peopleServices, Reservation reservation, Int32 payTypeId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 121</Target>
+    <ErrorMessage>Object reference not set to an instance of an object.</ErrorMessage>
+</LogInfo>

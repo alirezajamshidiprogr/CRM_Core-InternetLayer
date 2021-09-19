@@ -70,6 +70,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عملیات زیر منوها.
+        /// </summary>
+        public static string ActionMenu {
+            get {
+                return ResourceManager.GetString("ActionMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to افزودن کاربرجدید.
         /// </summary>
         public static string AddNewProfile {
@@ -304,6 +313,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to از تاریخ.
+        /// </summary>
+        public static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اطلاعات سالن.
         /// </summary>
         public static string GeneralSalonInfo {
@@ -363,6 +381,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string LoginIntoApplication {
             get {
                 return ResourceManager.GetString("LoginIntoApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to منوهای اصلی.
+        /// </summary>
+        public static string MainMenu {
+            get {
+                return ResourceManager.GetString("MainMenu", resourceCulture);
             }
         }
         
@@ -700,6 +727,24 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to زیر منوها.
+        /// </summary>
+        public static string SubMenu {
+            get {
+                return ResourceManager.GetString("SubMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تا تاریخ.
+        /// </summary>
+        public static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آپلود فایل.
         /// </summary>
         public static string UploadFile {
@@ -723,6 +768,24 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عکس پروفایل.
+        /// </summary>
+        public static string UserProfileImage {
+            get {
+                return ResourceManager.GetString("UserProfileImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربران.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
             }
         }
         

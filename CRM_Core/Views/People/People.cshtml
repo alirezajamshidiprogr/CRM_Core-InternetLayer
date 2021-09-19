@@ -1,96 +1,73 @@
 ﻿@using System.Data
 
-<div class="titleForm">@ViewBag.Title</div>
-<div>
-
-</div>
-
 <div id="form-peopleSearch" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 1150px;">
         <div class="modal-content">
             <div class="modal-header" style="background: #5f0931;color: white;">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch</h4>
-            </div><!-- /.modal-header -->
+            </div>
             <div class="modal-body" style="background: #f2f4eb;">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="text-center m-t-30 m-b-40">
-                            <i class="icon-user-following border border-primary img-circle text-primary font-xxxlg p-20"></i>
-                        </p>
-                    </div>
-                    <div class="col-md-12">
                         <form method="post" class="form-horizontal" role="form">
                             <div class="col-lg-11">
-                                <table class="tblFields">
+                                <table class="table table-fixed tblFields">
                                     <tr>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Name, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtName", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Name })</td>
+                                        <td>@Html.TextBox("txtNameSearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Name })</td>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Family, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtFamily", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Family })</td>
+                                        <td>@Html.TextBox("txtFamilySearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Family })</td>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Age, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtAge", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Age })</td>
+                                        <td>@Html.TextBox("txtAgeSearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Age })</td>
                                     </tr>
                                     <tr>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Potential, null, new { @class = "labelWidget" }) </td>
-                                        <td><select class="form-control" id="cmbPotential" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.People.Title.Potential </option></select></td>
+                                        <td>@Html.DropDownList("cmbPotentialSearch", new SelectList(ViewBag.PotentialItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.BirthDay, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtBirthDay", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.BirthDay })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Intorduction, null, new { @class = "labelWidget" }) </td>
-                                        <td><select class="form-control" id="cmbIntorduction" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
+                                        <td>@Html.TextBox("txtBirthDaySearch", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.BirthDay })</td>
+                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType, null, new { @class = "labelWidget" }) </td>
+                                        <td>@Html.DropDownList("cmbIntroductionTypeSearch", new SelectList(ViewBag.IntroductionTypesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
 
                                     </tr>
                                     <tr>
                                         <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType, null, new { @class = "labelWidget" }) </td>
-                                        <td><select class="form-control" id="cmbAcquaintanceType" name="AcquaintanceType"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
+                                        <td>@Html.DropDownList("cmbMariedTypeSearch", new SelectList(ViewBag.MarriedItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
+                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Graduation, null, new { @class = "labelWidget" }) </td>
+                                        <td>@Html.DropDownList("cmbGradationsSearch", new SelectList(ViewBag.GradationsItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
+                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Category, null, new { @class = "labelWidget" }) </td>
+                                        <td>@Html.DropDownList("cmbCategoriesSearch", new SelectList(ViewBag.CategoriesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Prefix, null, new { @class = "labelWidget" }) </td>
+                                        <td>@Html.DropDownList("cmbPrefixesSearch", new SelectList(ViewBag.PrefixesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
                                     </tr>
                                 </table>
 
                             </div><!-- /.col-sm-8 -->
                             <div class="col-lg-12 divHeaderSearch">
-                                <button type="button" onclick="showPeopleList(false)" class="btn btn-info btn-round btnSearchGrid">
+                                <button type="button" onclick="showPeopleList(false,'isEditMode')" class="btn btn-info btn-round btnSearchGrid">
                                     <i class="fa fa-search"></i>&nbsp; @UI_Presentation.wwwroot.Resources.General.Title.Search
                                 </button>
                                 <button type="button" class="btn btn-danger btn-round" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button>
-                            </div><!-- /.col-sm-8 -->
+                            </div>
                         </form>
-                    </div><!-- /col-md-12 -->
-                </div><!-- /.row -->
-            </div><!-- /.modal-body -->
-        </div><!-- /.modal-content -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <br />
-<div class="col-md-12">
+<div class="col-md-12" style="margin-top:-21px;" >
     <div class="portlet box border shadow">
-        <div class="portlet-heading">
-            <div class="portlet-title">
-                <h3 class="title">
-                    <i class="icon-basket-loaded fa-flip-horizontal"></i>
-                    @UI_Presentation.wwwroot.Resources.General.Title.PeopleList
-                </h3>
-            </div>
-            <div class="buttons-box">
-                <a title="" class="btn btn-sm btn-default btn-round btn-code" href="#" rel="tooltip" data-original-title="کدها">
-                    <i class="fa fa-code"></i>
-                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                </a>
-                <a title="" class="btn btn-sm btn-default btn-round btn-fullscreen" href="#" rel="tooltip" data-original-title="تمام صفحه">
-                    <i class="icon-size-fullscreen"></i>
-                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                </a>
-                <a title="" class="btn btn-sm btn-default btn-round btn-collapse" href="#" rel="tooltip" data-original-title="کوچک کردن">
-                    <i class="icon-arrow-up"></i>
-                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                </a>
-            </div><!-- /.buttons-box -->
-        </div><!-- /.portlet-heading -->
+        <div class="portlet-heading" style="font-size:1.2em ; color:#010246">@ViewBag.Title</div>
         <div class="portlet-body">
             <div class="row">
                 <div class="col-sm-4 m-b-20">
                     <a class="btn btn-success btn-round" onclick="showPeopleList" href="#">
                         <i class="icon-plus"></i>
-                        افزودن
+                        @UI_Presentation.wwwroot.Resources.Buttons.Title.Add
                         <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.0004;"></div><div class="paper-ripple__waves"></div></div>
                     </a>
 
@@ -105,7 +82,7 @@
                         <div class="input-group round">
                             <input class="form-control" type="text" style="width:313px !important;" id="txtPeopleSearch" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.SearchWithFirstNameFullName">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" onclick="showPeopleList(true)" type="button" style="margin-right:-34px !important;">
+                                <button class="btn btn-default" onclick="showPeopleList(true,'isEditMode')" type="button" style="margin-right:-34px !important;">
                                     <i class="icon-magnifier"></i>
                                     <div class="paper-ripple"></div><div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                                 </button>
@@ -114,7 +91,7 @@
                     </form>
                 </div>
             </div>
-            <div id="peopleList">>
+            <div id="peopleList">
                 @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml")
             </div>
         </div>

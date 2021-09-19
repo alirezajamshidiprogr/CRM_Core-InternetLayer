@@ -52,11 +52,13 @@
     float: right;
     text-align: right;
     width: 170px;
-    margin-right: 40px;
-    margin-top: 55px;
+    margin-right: 14px;
+    margin-top: 24px;
     border: 1px solid #d2cfcf;
     text-align: center;
     height: 170px;
+    height: 359px;
+    width: 400px;
 }
 
 .tblButons {
@@ -180,6 +182,7 @@
     margin-right: 74px;
     padding: 15px;
     height: 124px;
+    width:86% ;
 }
 
 .summeryRowAddEdit {
@@ -250,11 +253,6 @@
     border: 1px solid #337184;
 }
 
-/*.detailFields {
-    background-color: #f7f7f7;
-    border-radius: 7px;
-}*/
-
 table {
     display: block;
     overflow-x: auto;
@@ -263,7 +261,7 @@ table {
 }
 
 .clockpicker-autoclose {
-    width: 139px !important;
+    width: 109px !important;
 }
 
 .ui-datepicker-calendar {
@@ -353,7 +351,7 @@ Page Setup
     margin-top: 9px !important;
     margin-top: 10px;
     padding: 15px;
-    width: 1173px;
+    width: 1135px;
     margin-right: -1px;
     margin-bottom: 18px;
 }
@@ -362,14 +360,15 @@ Page Setup
     position: relative !important;
     margin-top: -59px !important;
     width: 176px !important;
-    background: #3d9ec4 !important;
+    background: #ffc400 !important;
     border-radius: 33px !important;
-    color: white !important;
+    color: black !important;
 }
 
-.btnPeopleSelector:hover {
-        background: #0a826b !important;
-}
+    .btnPeopleSelector:hover {
+        background: #d0a206 !important;
+        font-size: 1.1em;
+    }
 
 .tdPeopleSelector {
     width: 270px;
@@ -385,7 +384,7 @@ Page Setup
 .divServices {
     width: 500px;
     overflow-y: scroll;
-    height: 500px;
+    height: 420px;
     background-color: transparent;
     border: none;
     float: right;
@@ -395,7 +394,7 @@ Page Setup
 
 .divGetServices {
     width: 500px;
-    height: 500px;
+    height: 455px;
     background-color: transparent;
     border: none;
     float: right;
@@ -418,7 +417,7 @@ Page Setup
 }
 
 .comboBox {
-    width: 180px !important;
+    width: 160px !important;
     border: .5px solid #bbbbca;
     height: 38px;
     text-align: center
@@ -451,4 +450,185 @@ Page Setup
 
 .specialFields {
     display: none;
+}
+
+.spFullName {
+    float: right;
+    margin-right: 5px;
+}
+
+img-person img-circle {
+    float: right;
+    margin: 5px 10px 0px 0px;
+}
+
+table tr td {
+    width: 100px;
+}
+
+#mainMenu, #subMenu, #menuBottions {
+    display: none;
+    margin-left: 35px;
+    overflow: auto;
+}
+
+.subItems {
+    width: 98%;
+    text-align: right;
+    padding: 10px;
+    border-bottom: 1px solid #d5d5d5;
+    border-top: 1px solid #d5d5d5;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+    .subItems:hover {
+        background-color: #fbf8e7;
+        font-size: 1.3em;
+    }
+
+.specrialSpan {
+    display: none;
+}
+
+.headerMenus {
+    height: 50px !important;
+    text-align: center;
+    margin-left: 35px;
+    padding: 10px;
+    border-radius: 41px 40px 1px 2px
+}
+
+.divImg {
+    width: 457px;
+    background-color: transparent;
+    float: left;
+    height: 521px;
+    border: none;
+    margin-top: 71px;
+}
+
+.divDocuments {
+    width: 620px;
+    position: relative;
+    float: left;
+    margin-left: 20px;
+    height: 570px;
+    margin-top: 29px;
+    background-color: transparent;
+    border: none;
+}
+
+#divImgPeople {
+    width: 400px;
+    height: 400px;
+}
+
+.imgPersonProfile {
+    padding-bottom: 5px;
+    height: 350px;
+    width: 350px;
+}
+
+.pSalonService {
+    font-size: 17px;
+    color: #e6e6ea;
+    width: 506px;
+    opacity: 0.75;
+    background: #212529;
+    border-radius: 41px;
+    margin-bottom: 11px;
+    text-align: center;
+}
+
+.pCustomerService {
+    font-size: 17px;
+    color: #e6e6ea;
+    float: left;
+    margin-top: -42px;
+    opacity: 0.75;
+    width: 588px;
+    margin-bottom: 11px;
+    text-align: center;
+    background: #212529;
+    border-radius: 41px;
+}
+
+.shortWidget {
+    float:right ;
+    width : 25% ;
+}
+
+.Gridbody {
+    overflow: auto;
+    background: #fdfcfc;
+    height: 470px;
+    border: 1px solid #b5b2b2;
+    padding: 7px;
+    border-radius: 8px;
+    margin-top: 3px;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background: #6a1331;
+    text-align: center;
+    box-shadow: -1px 3px 3px 0px;
+    border-radius: 13px;
+    border-left: 1px solid #cacaca;
+    color: white;
+}
+
+.headerFields {
+    float: right;
+    border-left: 1px solid #c1baba;
+    padding: 9px;
+}
+
+.items {
+    float: right;
+    padding: 9px;
+}
+
+.divRow {
+    width: 100%;
+    height: 50px;
+    background: #fdfdfd;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 6px;
+    border-bottom: 3px solid #ecebeb;
+    border-bottom-color: rgb(236, 235, 235);
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+.GridFooter {
+    width: 100%;
+    height: 109px;
+    background: #e9f0ef;
+    border-radius: 12px;
+    box-shadow: 0px 1px 4px 1px;
+    margin-top: 8px;
+    border: 1px solid #b9acac;
+    padding: 14px;
+}
+
+.searchTextBox {
+    width: 46%;
+    float: right;
+}
+
+.searchButtom {
+    width: 26%;
+    float: right;
+    text-align: center;
+}
+
+.tabFields {
+    float: right;
+    width: 24%;
+    margin-bottom:15px;
+    text-align:left ;
 }

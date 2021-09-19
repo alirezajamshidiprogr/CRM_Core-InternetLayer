@@ -12,6 +12,10 @@ namespace CRM_Core.Application.Interfaces
         IEnumerable<People> GetPeople();
         IQueryable<People> GetPeopleById(int id);
 
+        IEnumerable<People> GetPeopleByCategoryId(int categoryId);
+        
+        IQueryable<People> GetPeopleByManualCode(string manualCode);
+        IEnumerable<PeopleModel> GetPeopleByAdoById(int peopleId);
         IEnumerable<PeopleModel> GetPeopleByADO(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true);
         void AddPeople(People people);
 

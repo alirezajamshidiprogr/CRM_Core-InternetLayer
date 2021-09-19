@@ -1,0 +1,73 @@
+[
+  {
+    "outputFileName": "wwwroot/bundles/CRM_Core.min.css",
+    "inputFiles": [
+      "wwwroot/css/style.css",
+      "wwwroot/css/colors.css",
+      "wwwroot/css/forms.css",
+      "wwwroot/css/site.css",
+      "wwwroot/js/PersianCalendar/css/persian-datepicker.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundles/CRM_CoreBootstrap.min.css",
+    "inputFiles": [
+      "wwwroot/plugins/bootstrap/dist/css/bootstrap.min.css",
+      "wwwroot/plugins/bootstrap-rtl/dist/css/bootstrap-rtl.min.css",
+      "wwwroot/plugins/metisMenu/dist/metisMenu.min.css",
+      "wwwroot/plugins/simple-line-icons/css/simple-line-icons.min.css",
+      "wwwroot/plugins/font-awesome/css/font-awesome.min.css",
+      "wwwroot/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css",
+      "wwwroot/plugins/switchery/dist/switchery.min.css",
+      "wwwroot/plugins/sweetalert2/dist/sweetalert2.min.css",
+      "wwwroot/plugins/paper-ripple/dist/paper-ripple.min.css",
+      "wwwroot/plugins/iCheck/skins/square/_all.css",
+      "wwwroot/plugins/clockpicker/dist/bootstrap-clockpicker.min.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundles/CRM_Core.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery-1.12.4.min.js",
+      "wwwroot/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js",
+      "wwwroot/js/holder.js",
+      "wwwroot/plugins/bootstrap/dist/js/bootstrap.min.js",
+      "wwwroot/plugins/metisMenu/dist/metisMenu.min.js",
+      "wwwroot/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js",
+      "wwwroot/plugins/paper-ripple/dist/PaperRipple.min.js",
+      "wwwroot/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
+      "wwwroot/plugins/sweetalert2/dist/sweetalert2.min.js",
+      "wwwroot/plugins/screenfull/dist/screenfull.min.js",
+      "wwwroot/plugins/iCheck/icheck.min.js",
+      "wwwroot/plugins/switchery/dist/switchery.js",
+      "wwwroot/js/core.js",
+      "wwwroot/plugins/clockpicker/dist/bootstrap-clockpicker.min.js",
+      "wwwroot/js/pages/clock.js",
+      "wwwroot/js/CRM/Messages.js",
+      "wwwroot/js/CRM/General.js",
+      "wwwroot/js/CRM/People.js",
+      "wwwroot/js/CRM/Salon.js",
+      "wwwroot/js/CRM/Reservation.js",
+      "wwwroot/js/CRM/Personel.js",
+      //"wwwroot/js/Messages.js",
+      "wwwroot/js/Login/Login.js",
+      "wwwroot/js/CRM/Reminder.js",
+      "wwwroot/js/CRM/Management.js",
+      "wwwroot/js/PersianCalendar/js/persian-datepicker.js",
+      "wwwroot/js/PersianCalendar/js/DateTimePicker.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    }
+  }
+]
+

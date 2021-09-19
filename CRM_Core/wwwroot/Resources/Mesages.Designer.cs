@@ -79,6 +79,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای مشتری انتتخاب شده هیچ خدماتی انتخاب نشده است !.
+        /// </summary>
+        public static string CustomerServiceInfoIsEmpty {
+            get {
+                return ResourceManager.GetString("CustomerServiceInfoIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حذف با موفقیت انجام شد ..
         /// </summary>
         public static string DeleteSuccessfullyApplied {
@@ -124,11 +133,47 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای منوی انتخاب شده یک یا چند زیر منو فعال است ابتدا زیر منوها را غیر فعال کنید!.
+        /// </summary>
+        public static string ForThisMenuThereAreSomeActiveSubMenu {
+            get {
+                return ResourceManager.GetString("ForThisMenuThereAreSomeActiveSubMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مقادیر ازتاریخ تا تاریخ را وارد کنید !.
+        /// </summary>
+        public static string FromDateAndToDateMenuAccessInNull {
+            get {
+                return ResourceManager.GetString("FromDateAndToDateMenuAccessInNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تغییرات با موفقیت ثبت شد .
         /// </summary>
         public static string TheActionEndedWithSuccess {
             get {
                 return ResourceManager.GetString("TheActionEndedWithSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to برای کاربر انتخاب شده هیچ منوی فعالی انتخاب نشده است آیا ادامه می دهید ؟.
+        /// </summary>
+        public static string thereIsNotAnyActiveMenu {
+            get {
+                return ResourceManager.GetString("thereIsNotAnyActiveMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آیتم انتخاب شده تکراری است !.
+        /// </summary>
+        public static string ThisItemHasAddedAleadyToServiceCustomer {
+            get {
+                return ResourceManager.GetString("ThisItemHasAddedAleadyToServiceCustomer", resourceCulture);
             }
         }
         

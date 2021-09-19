@@ -205,6 +205,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام - نام خانوادگی.
+        /// </summary>
+        public static string FullName {
+            get {
+                return ResourceManager.GetString("FullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اطلاعات کلی.
         /// </summary>
         public static string GeneralInfoPeople {

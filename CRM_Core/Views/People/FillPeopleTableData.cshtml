@@ -2,7 +2,13 @@
 @using CRM_Core.Application.GridViewModels
 @using CRM_Core.Application.ViewModels.People
 
-@model DataGridViewModel<PeopleModel>  
+@model DataGridViewModel<PeopleModel>
+
+@{
+    bool isSelectedMode = ViewBag.isSelectedMode == null ? false : (bool)ViewBag.isSelectedMode;
+    bool isEditMode = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode;
+    bool isPrintMode = ViewBag.isPrintMode == null ? false : (bool)ViewBag.isPrintMode;
+}
 
 <div class="table-responsive">
     <table id="tblPeople" class="table table-bordered table-striped table-hover tblFomrData">
@@ -35,20 +41,39 @@
                             <span>1</span>
                         </td>
                         <td>
-                            <a class="btn btn-info btn-round btnAction" onclick="btnOpenEditPeople()" href="#">
-                                <i class="icon-note"></i>
-                                @UI_Presentation.wwwroot.Resources.Buttons.Title.Edit
-                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                            </a>
-                            <a class="btn btn-danger btn-round btnAction" href="#" onclick="btnDeletePeople()">
-                                <i class="icon-trash"></i>
-                                @UI_Presentation.wwwroot.Resources.Buttons.Title.Delete
-                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                            </a>
+                            @if (isEditMode)
+                            {
+                                <a class="btn btn-info btn-round btnAction" onclick="btnOpenEditPeople()" href="#">
+                                    <i class="icon-note"></i>
+                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Edit
+                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                                </a>
+                                <a class="btn btn-danger btn-round btnAction" href="#" onclick="btnDeletePeople()">
+                                    <i class="icon-trash"></i>
+                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Delete
+                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                                </a>
+                            }
+
+                            @if (isSelectedMode)
+                            {
+                                <a class="btn btn-info btn-round btnAction" onclick="selectPeople()" href="#">
+                                    <i class="fa fa-send"></i>
+                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Select
+                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                                </a>
+                            }
+
+                            @if (isPrintMode)
+                            {
+
+                            }
                         </td>
                         <td>
-                            <img class="img-person img-circle" src="~/image/images/user/32.png">
-                            <span>@item.FullName</span>
+                            <div style="width:250px;">
+                                <img class="img-person img-circle" src="~/image/images/user/default.png">
+                                <span class="spFullName">@item.FullName</span>
+                            </div>
                         </td>
 
                         <td>@item.ManualCode</td>

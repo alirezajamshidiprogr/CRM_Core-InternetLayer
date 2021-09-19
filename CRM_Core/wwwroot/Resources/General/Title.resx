@@ -120,6 +120,9 @@
   <data name="Action" xml:space="preserve">
     <value>عملیات</value>
   </data>
+  <data name="ActionMenu" xml:space="preserve">
+    <value>عملیات زیر منوها</value>
+  </data>
   <data name="AddNewProfile" xml:space="preserve">
     <value>افزودن کاربرجدید</value>
   </data>
@@ -198,6 +201,9 @@
   <data name="ForgetPeople" xml:space="preserve">
     <value>اشخاص فراموش شده</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>از تاریخ</value>
+  </data>
   <data name="GeneralSalonInfo" xml:space="preserve">
     <value>اطلاعات سالن</value>
   </data>
@@ -218,6 +224,9 @@
   </data>
   <data name="LoginIntoApplication" xml:space="preserve">
     <value>ورود به برنامه</value>
+  </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>منوهای اصلی</value>
   </data>
   <data name="Management" xml:space="preserve">
     <value>مدیریت</value>
@@ -330,6 +339,12 @@
   <data name="Store" xml:space="preserve">
     <value>انبار</value>
   </data>
+  <data name="SubMenu" xml:space="preserve">
+    <value>زیر منوها</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>تا تاریخ</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>آپلود فایل</value>
   </data>
@@ -338,6 +353,12 @@
   </data>
   <data name="UserName" xml:space="preserve">
     <value>نام کاربری</value>
+  </data>
+  <data name="UserProfileImage" xml:space="preserve">
+    <value>عکس پروفایل</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>کاربران</value>
   </data>
   <data name="UserSetting" xml:space="preserve">
     <value>تنظیمات کاربر</value>

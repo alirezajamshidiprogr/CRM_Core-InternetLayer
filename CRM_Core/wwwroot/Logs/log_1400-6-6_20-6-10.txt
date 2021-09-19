@@ -1,0 +1,15 @@
+<LogInfo>
+    <Time>1400-6-6_20-6-10</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   at System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+   at System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   at CRM_Core.Infrastructure.MappingUtility.GetItem[T](DataRow dr) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Application\Utility\MappingUtility.cs:line 76
+   at CRM_Core.Infrastructure.MappingUtility.DataTableToList[T](DataTable dt) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Application\Utility\MappingUtility.cs:line 58
+   at CRM_Core.Application.Services.Ef_ReservationService.GetReservationByADO(String commandText, String[] searchParameter, Object[] searchValues, Boolean isProcedure) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Application\Services\Ef_ReservationService.cs:line 71
+   at UI_Presentation.Controllers.ReservationController.Index(ReservationViewModelSearch searchParams) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 92</Target>
+    <ErrorMessage>Object of type 'System.Double' cannot be converted to type 'System.String'.</ErrorMessage>
+</LogInfo>

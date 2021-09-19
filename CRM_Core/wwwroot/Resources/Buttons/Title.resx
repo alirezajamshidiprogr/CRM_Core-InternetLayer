@@ -147,6 +147,9 @@
   <data name="Print" xml:space="preserve">
     <value>چاپ</value>
   </data>
+  <data name="Proccess" xml:space="preserve">
+    <value>بررسی</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت</value>
   </data>
@@ -158,5 +161,8 @@
   </data>
   <data name="SelectCustomer" xml:space="preserve">
     <value>انتخاب مشتری</value>
+  </data>
+  <data name="SelectIntroduction" xml:space="preserve">
+    <value>انتخاب معرف</value>
   </data>
 </root>

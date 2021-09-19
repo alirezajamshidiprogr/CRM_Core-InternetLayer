@@ -123,14 +123,23 @@
   <data name="CountOfComing" xml:space="preserve">
     <value>تعداد مراجعه</value>
   </data>
+  <data name="CustomerFamily" xml:space="preserve">
+    <value>نام خانوادگی مشتری</value>
+  </data>
   <data name="CustomerName" xml:space="preserve">
     <value>نام مشتری </value>
   </data>
   <data name="CustomerType" xml:space="preserve">
     <value>نوع مشتری</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
   <data name="Fee" xml:space="preserve">
     <value>بیعانه</value>
+  </data>
+  <data name="FromReservationDate" xml:space="preserve">
+    <value>ازتاریخ نوبت دهی</value>
   </data>
   <data name="FromTimeOrder" xml:space="preserve">
     <value>از ساعت</value>
@@ -138,17 +147,20 @@
   <data name="Order" xml:space="preserve">
     <value>نوبت</value>
   </data>
-  <data name="OrderDate" xml:space="preserve">
-    <value>تاریخ نوبت دهی</value>
-  </data>
   <data name="PaidType" xml:space="preserve">
     <value>نوع تسویه</value>
+  </data>
+  <data name="ReservationSearch" xml:space="preserve">
+    <value>جستجوی نوبت دهی</value>
   </data>
   <data name="Services" xml:space="preserve">
     <value>خدمات</value>
   </data>
   <data name="ServiceType" xml:space="preserve">
     <value>نوع خدمات</value>
+  </data>
+  <data name="ToReservationDate" xml:space="preserve">
+    <value>تا تاریخ نوبت دهی</value>
   </data>
   <data name="ToTimeOrder" xml:space="preserve">
     <value>تا ساعت</value>

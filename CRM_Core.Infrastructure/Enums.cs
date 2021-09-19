@@ -19,5 +19,12 @@ namespace CRM_Core.Infrastructure
         {
             personnel = 2 ,
         }
+
+        public enum states
+        {
+            People = 1 ,
+            Reservation = 2 ,
+            
+        }
     }
 }

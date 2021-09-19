@@ -11,7 +11,9 @@ namespace CRM_Core.DataLayers.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<People> modelBuilder)
         {
-            modelBuilder.Property(t => t.FirstName).HasMaxLength(150);
+            modelBuilder.Property(t => t.TBASPrefixId).IsRequired(false);
+            modelBuilder.Property(t => t.TBASPotentialId).IsRequired(false);
+            modelBuilder.Property(t => t.TBASIntroductionTypeId).IsRequired(false);
             //modelBuilder.Property(t => t.HomeNo).HasMaxLength(100);
             //modelBuilder.Property(t => t.MobileNo).HasMaxLength(100);
             //modelBuilder.Property(t => t.postalCode).HasMaxLength(100);

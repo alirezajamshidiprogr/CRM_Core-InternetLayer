@@ -79,6 +79,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام خانوادگی مشتری.
+        /// </summary>
+        public static string CustomerFamily {
+            get {
+                return ResourceManager.GetString("CustomerFamily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام مشتری .
         /// </summary>
         public static string CustomerName {
@@ -97,11 +106,29 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بیعانه.
         /// </summary>
         public static string Fee {
             get {
                 return ResourceManager.GetString("Fee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ازتاریخ نوبت دهی.
+        /// </summary>
+        public static string FromReservationDate {
+            get {
+                return ResourceManager.GetString("FromReservationDate", resourceCulture);
             }
         }
         
@@ -124,20 +151,20 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تاریخ نوبت دهی.
-        /// </summary>
-        public static string OrderDate {
-            get {
-                return ResourceManager.GetString("OrderDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to نوع تسویه.
         /// </summary>
         public static string PaidType {
             get {
                 return ResourceManager.GetString("PaidType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جستجوی نوبت دهی.
+        /// </summary>
+        public static string ReservationSearch {
+            get {
+                return ResourceManager.GetString("ReservationSearch", resourceCulture);
             }
         }
         
@@ -156,6 +183,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         public static string ServiceType {
             get {
                 return ResourceManager.GetString("ServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تا تاریخ نوبت دهی.
+        /// </summary>
+        public static string ToReservationDate {
+            get {
+                return ResourceManager.GetString("ToReservationDate", resourceCulture);
             }
         }
         

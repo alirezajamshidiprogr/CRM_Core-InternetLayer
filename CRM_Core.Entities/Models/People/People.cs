@@ -8,15 +8,13 @@ namespace CRM_Core.DomainLayer
     public class People
     {
         public int Id { get; set; }
-        //[Required(ErrorMessage ="این فیلد الزامی است" ,ErrorMessageResourceName ="الزامی است")]
-        //[DisplayName("Company Name")]
         [MaxLength(10)]
         public string ManualCode { get; set; }
         [MaxLength(15)]
         public string SystemCode { get; set; }
         [MaxLength(150)]
         public string FirstName { get; set; }
-        [MaxLength(150)]
+        [MaxLength(250)]
         [Required]
         public string LastName { get; set; }
         [MaxLength(11)]
@@ -26,6 +24,7 @@ namespace CRM_Core.DomainLayer
         [MaxLength(10)]
         public string P_Birthday { get; set; }
         public DateTime? M_Birthday { get; set; }
+        [MaxLength(10)]
         public string P_MariedDate { get; set; }
         public DateTime? M_MariedDate { get; set; }
         public string Description { get; set; }
@@ -35,19 +34,20 @@ namespace CRM_Core.DomainLayer
         public int? IntroduceId { get; set; }
         public People Introduce { get; set; }
 
-        [DefaultValue(false)]
+        [Required]
         public int TBASCategoryId { get; set; }
-        public TBASCategory TBASCategory { get; set; }
-        public int? TBASPotentialId { get; set; }
+        public  TBASCategory TBASCategory { get; set; }
+        public Nullable<int> TBASPotentialId { get; set; }
         public TBASPotential TBASPotential { get; set; }
-        public int? TBASPrefixId { get; set; }
+        public Nullable<int> TBASPrefixId { get; set; }
         public TBASPrefix TBASPrefix { get; set; }
-
-        public int? TBASGraduationId { get; set; }
+        public Nullable<int> TBASGraduationId { get; set; }
         public TBASGraduation TBASGraduation { get; set; } 
         public int? TBASIntroductionTypeId { get; set; }
         public TBASIntroductionType TBASIntroductionType { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
     }
 
     public class PeopleVirtual
@@ -148,13 +148,4 @@ namespace CRM_Core.DomainLayer
         [MaxLength(150)]
         public string Name{ get; set; }
     }
-
-    //public class GetPeopleByValue
-    //{
-    //    public string CertificateCode { get; set; }
-    //    public string Birthday { get; set; }
-    //    public int Age { get; set; }
-    //    public string Address { get; set; }
-    //    public string GraduationName { get; set; }
-    //}
 }
