@@ -8,7 +8,7 @@ using System.Data.Common;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_GeneralService : RepositoryBase<ActivityNumber>, IGeneratedNumberService
+    public class Ef_GeneralService : DataAccessLayer.Repositories.RepositoryBase<ActivityNumber>, IGeneratedNumberService
     {
         public CRM_CoreDB _context;
         public Ef_GeneralService(CRM_CoreDB context) : base(context)

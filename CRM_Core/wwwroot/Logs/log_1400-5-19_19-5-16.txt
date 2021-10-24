@@ -1,8 +1,0 @@
-<LogInfo>
-    <Time>1400-5-19_19-5-16</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at UI_Presentation.Controllers.ManagmentController.&lt;&gt;c.&lt;GetUserMenu&gt;b__8_7(&lt;&gt;f__AnonymousType5`2 &lt;&gt;h__TransparentIdentifier1) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ManagmentController.cs:line 97
-   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.ToList()
-   at UI_Presentation.Controllers.ManagmentController.GetUserMenu(String userIdentityId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ManagmentController.cs:line 90</Target>
-    <ErrorMessage>Object reference not set to an instance of an object.</ErrorMessage>
-</LogInfo>

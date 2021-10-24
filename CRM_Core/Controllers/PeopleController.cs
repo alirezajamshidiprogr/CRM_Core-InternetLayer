@@ -452,6 +452,7 @@ namespace CRM_Core.Controllers
             string message = string.Empty;
             try
             {
+             // NOTE :  BEFORE DELETE I SHOULD CHECK THE POEPLE HAS NOT ANY LOG IN SYSTEM SUCH AS RESERVATION AND ETC ... 
                 People people = _peopleService.GetPeopleById(peopleId).FirstOrDefault();
                 people.IsActive = false;
                 _peopleService.UpdatePeople(people);

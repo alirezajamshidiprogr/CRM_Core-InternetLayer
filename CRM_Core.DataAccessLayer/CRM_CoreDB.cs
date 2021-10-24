@@ -7,7 +7,9 @@ using System;
 namespace CRM_Core.DataAccessLayer
 {
     using CRM_Core.DataLayers.EntityConfigurations;
+    using CRM_Core.Entities.Models;
     using CRM_Core.Entities.Models.General;
+    using CRM_Core.Entities.Models.Salon;
     //using CRM_Core.DataLayers.EntityConfigurations;
     //using CRM_Core.Entities;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -54,10 +56,18 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<TBASState> TBASState { get; set; }
         public virtual DbSet<TBASMenu> TBASMenu { get; set; }
         public virtual DbSet<UserMenu> UserMenu { get; set; }
+        public virtual DbSet<SalonInfo> SalonInfo{ get; set; }
+        public virtual DbSet<SalonCosts> SalonCosts { get; set; }
+        public virtual DbSet<BillCosts> BillCosts { get; set; }
+        public virtual DbSet<TransferCosts> TransferCosts { get; set; }
+        public virtual DbSet<TBASSalonCosts> TBASSalonCosts { get; set; }
+        public virtual DbSet<Reminder> Reminder { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<People>().HasQueryFilter(c => c.IsActive);
+            builder.Entity<SalonCosts>().HasQueryFilter(c => c.IsActive);
+            builder.Entity<Reminder>().HasQueryFilter(c => c.IsActive);
             builder.ApplyConfiguration(new People_Config());
             //builder.ApplyConfiguration(new AttributGrpConfig());
             //builder.ApplyConfiguration(new chartPostConfig());

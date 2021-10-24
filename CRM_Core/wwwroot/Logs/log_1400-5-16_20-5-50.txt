@@ -1,8 +1,0 @@
-<LogInfo>
-    <Time>1400-5-16_20-5-50</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at Microsoft.AspNetCore.Identity.UserManager`1.FindByNameAsync(String userName)
-   at Microsoft.AspNetCore.Identity.SignInManager`1.PasswordSignInAsync(String userName, String password, Boolean isPersistent, Boolean lockoutOnFailure)
-   at UI_Presentation.Controllers.ManagmentController.GetUserInfoByParam(String userName, String password) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ManagmentController.cs:line 43</Target>
-    <ErrorMessage>Value cannot be null. (Parameter 'userName')</ErrorMessage>
-</LogInfo>

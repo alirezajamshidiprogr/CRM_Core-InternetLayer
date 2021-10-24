@@ -9,16 +9,7 @@ namespace TagHelperSamples.Bootstrap
     [HtmlTargetElement("gridView-body", ParentTag = "grid-View")]
     public class GridViewBodyTagHelper : TagHelper
     {
-        /// <summary>
-        /// Whether or not to show a button to dismiss the dialog. 
-        /// Default: <c>true</c>
-        /// </summary>
         public bool ShowDismiss { get; set; } = true;
-
-        /// <summary>
-        /// The text to show on the Dismiss button
-        /// Default: Cancel
-        /// </summary>
         public string DismissText { get; set; } = "Cancel";
 
 

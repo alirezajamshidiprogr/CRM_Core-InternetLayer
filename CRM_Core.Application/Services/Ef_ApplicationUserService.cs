@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-   public class Ef_ApplicationUserService :RepositoryBase<ApplicationUser> , IApplicationUserService
+   public class Ef_ApplicationUserService : DataAccessLayer.Repositories.RepositoryBase<ApplicationUser> , IApplicationUserService
     {
         public Ef_ApplicationUserService(CRM_CoreDB context) : base(context)
         {

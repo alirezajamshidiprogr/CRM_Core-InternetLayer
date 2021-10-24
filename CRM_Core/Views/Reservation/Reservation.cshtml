@@ -21,51 +21,58 @@
             <short-TextBox label-title="نام" place-holder="نام"></short-TextBox>
             <short-TextBox label-title="نام" place-holder="نام"></short-TextBox>
         </modal-body>
-       
+
         <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
     </modal>
 
     <br />
     <search-header>
         <Search-Botton>
-            <Icon-Button buttom-class="btn btn-info btn-round btnSearchGrid" icon="fa fa-search" title="افزودن" on-click-event="showPeopleList()"></Icon-Button>
+            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showPeopleList()"></Icon-Button>
             <modal-buttom modal-id="form-reservationSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
         </Search-Botton>
 
         <Search-TextBox>
-            <Search-Grid-TextBox placeholder="نام - نام خانوادگی مشتری "> </Search-Grid-TextBox>
+            <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("showPeopleList('{0}','{1}')","true","isEditMode")"> </Search-Grid-TextBox>
         </Search-TextBox>
-
     </search-header>
 
     <grid-view>
-        <gridView-header>
-            <grid-headerFields width="50" header-field-name="ردیف"></grid-headerFields>
-            <grid-headerFields width="180" header-field-name="نام مشتری"></grid-headerFields>
-            <grid-headerFields header-field-name="کد سیستمی"></grid-headerFields>
-            <grid-headerFields header-field-name="تاریخ نویت"></grid-headerFields>
-            <grid-headerFields header-field-name="از ساعت"></grid-headerFields>
-            <grid-headerFields header-field-name="تا ساعت"></grid-headerFields>
-            <grid-headerFields header-field-name="قیمت"></grid-headerFields>
-            <grid-headerFields header-field-name="نوع پرداخت"></grid-headerFields>
-            <grid-headerFields width="250" header-field-name="خدمات"></grid-headerFields>
-        </gridView-header>
-
-
         <gridView-body>
+            <grid-rows-body is-header="true" width="1480">
+                <header-gridview width="200" header-field-name="@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions"></header-gridview>
+                <header-gridview width="50" header-field-name="@UI_Presentation.wwwroot.Resources.General.Title.RowNum"></header-gridview>
+                <header-gridview width="208" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerName"></header-gridview>
+                <header-gridview width="122" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date"></header-gridview>
+                <header-gridview width="80" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder"></header-gridview>
+                <header-gridview width="80" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder"></header-gridview>
+                <header-gridview width="114" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Fee"></header-gridview>
+                <header-gridview width="136" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType"></header-gridview>
+                <header-gridview width="150" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Services"></header-gridview>
+            </grid-rows-body>
+
+            @if (Model == null) return;
+
             @foreach (var item in Model.Records.ToList())
             {
-                <grid-rows-body>
+                <grid-rows-body width="1480">
+
+                    <grid-rows-buttons style="width:200px;" is-edit-mode="isEditMode ? true : false"
+                                       is-select-mode="@isSelectedMode ? true :false;"
+                                       is-print-mode="@isPrintMode ? true : false">
+                    </grid-rows-buttons>
+
                     <grid-rows-data visible="false" field-value="@item.PeopleId"></grid-rows-data>
-                    <grid-rows-data field-value="@rowNum"></grid-rows-data>
-                    <grid-rows-data field-value="@item.FullName"></grid-rows-data>
-                    <grid-rows-data field-value="@item.SystemCode"></grid-rows-data>
-                    <grid-rows-data field-value="@item.ReservationDate"></grid-rows-data>
-                    <grid-rows-data field-value="@item.FromTime"></grid-rows-data>
-                    <grid-rows-data field-value="@item.ToTime"></grid-rows-data>
-                    <grid-rows-data field-value="@item.Price"></grid-rows-data>
-                    <grid-rows-data field-value="@item.PayType"></grid-rows-data>
-                    <grid-rows-data field-value="@item.TBASServicesValues"></grid-rows-data>
+                    <grid-rows-data width="50" field-value="@rowNum"></grid-rows-data>
+                    <grid-rows-data width="208" field-value="@item.FullName"></grid-rows-data>
+                    <grid-rows-data width="122" field-value="@item.SystemCode"></grid-rows-data>
+                    <grid-rows-data width="110" field-value="@item.ReservationDate"></grid-rows-data>
+                    <grid-rows-data width="80" field-value="@item.FromTime"></grid-rows-data>
+                    <grid-rows-data width="80" field-value="@item.ToTime"></grid-rows-data>
+                    <grid-rows-data width="114" field-value="@item.Price"></grid-rows-data>
+                    <grid-rows-data width="136" field-value="@item.PayType"></grid-rows-data>
+                    <grid-rows-data width="150" field-value="@item.TBASServicesValues"></grid-rows-data>
                 </grid-rows-body>
                 rowNum = rowNum + 1;
             }

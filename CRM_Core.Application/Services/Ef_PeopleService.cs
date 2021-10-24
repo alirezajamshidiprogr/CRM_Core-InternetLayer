@@ -14,7 +14,7 @@ using System.Data.Common;
 
 namespace CRM_Core.Application.Services
 {
-   public class Ef_PeopleService : RepositoryBase<People>, IPeopleService
+   public class Ef_PeopleService : DataAccessLayer.Repositories.RepositoryBase<People>, IPeopleService
     {
         public CRM_CoreDB _context;
         public Ef_PeopleService(CRM_CoreDB context): base(context)
@@ -78,7 +78,7 @@ namespace CRM_Core.Application.Services
             _context.Database.OpenConnection();
             var dataReader = cmd.ExecuteReader();
             dt.Load(dataReader);
-            return (MappingUtility.DataTableToList<PeopleModel>(dt)).AsQueryable();
+            return (MappingUtility333.DataTableToList<PeopleModel>(dt)).AsQueryable();
         }
 
         public IEnumerable<PeopleModel> GetPeopleByAdoById(int peopleId)
@@ -96,7 +96,7 @@ namespace CRM_Core.Application.Services
             _context.Database.OpenConnection();
             var dataReader = cmd.ExecuteReader();
             dt.Load(dataReader);
-            return (MappingUtility.DataTableToList<PeopleModel>(dt)).AsQueryable();
+            return (MappingUtility333.DataTableToList<PeopleModel>(dt)).AsQueryable();
 
         }
 

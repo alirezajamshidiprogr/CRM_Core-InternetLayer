@@ -37,6 +37,11 @@ namespace Infrastructure.IoC
              services.AddScoped<IPeopleServiceService, Ef_PeopleServiceService>();
              services.AddScoped<IReservationService, Ef_ReservationService>();
              services.AddScoped<ITBASPayTypeService, Ef_TBASPayTypeService>();
+             services.AddScoped<ISalonInfoService, Ef_SalonInfoService>();
+             services.AddScoped<ISalonCostsService, Ef_SalonCostsService>();
+             services.AddScoped<ITransferCostsService, Ef_TransferCostsService>();
+             services.AddScoped<IBillCostsService, Ef_BillCostsService>();
+             services.AddScoped<ITBASSalonCostsService, Ef_TBASSalonCostsService>();
              //services.AddTransient<IMyRepository, MyRepository>();
 
             return services;

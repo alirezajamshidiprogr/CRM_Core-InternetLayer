@@ -310,6 +310,7 @@ opacity: 0.4;*/
     padding: 5px !important;
     box-shadow: 0px 3px 10px 1px #373333 !important;
     width: 1140px !important;
+    /*width: 100% !important;*/
     height: 634px !important ;
 }
 

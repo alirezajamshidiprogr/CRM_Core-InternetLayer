@@ -1,46 +1,47 @@
 ﻿
-<div class="titleForm">@ViewBag.Title</div>
+<link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
+<script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+
+
+@model CRM_Core.Entities.Models.Reminder
+@{ bool isEdit = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode; }
+<customChild-tag class="titleForm">
+    <customTag-children>
+        @ViewBag.Title
+    </customTag-children>
+</customChild-tag>
 <br />
-<div class="divformControl" style="margin-top:20px;">
-    <div class="col-lg-12">
+<customChild-tag>
+    <customTag-children>
+        @Html.Hidden("salonId", Model != null ? Model.Id : 0)
+        <long-TextBox id="txtReminderTitle" required="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle" value="@(isEdit ? Model.ReminderTitle : string.Empty)"></long-TextBox>
+        <long-TextBox width="200px" id="txtDate" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Date" value="@(isEdit ? Model.F_RegisterDate : string.Empty)"></long-TextBox>
+        <long-time-TextBox id="txtTime" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Time" value="@(isEdit ? Model.Time : string.Empty)"></long-time-TextBox>
+        <dropDown is-long-form="true" width="194" id="cmbSendTo" onchange-drop-down="" label-title="@UI_Presentation.wwwroot.Resources.General.Title.Personel"></dropDown>
+        <Text-Area id="txtDescription" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
+        <checkBox id="chbRepeated" title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Repeated"></checkBox>
+    </customTag-children>
+</customChild-tag>
 
-        <table class="tblFields">
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtReminderTitle", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reminder.Title.Date, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtDate", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.Reminder.Title.Date })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reminder.Title.Time, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtTime", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Reminder.Title.Time })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reminder.Title.Repeated, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtRepeated", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Reminder.Title.Repeated })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Reminder.Title.SendTo, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtSendTo", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Reminder.Title.SendTo })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
-                <td colspan="6">@Html.TextBox("txtDescription", null, new { @class = "TextArea", style = "width:829px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
-            </tr>
-        </table>
-    </div>
+<div id="divDays" style="padding:20px;border:1px solid #b7acac;border-radius:12px;height:85px;margin-top:73px;display:none;">
+    <checkBox id="chbSat" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Satuarday"></checkBox>
+    <checkBox id="chbSun" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Sunday"></checkBox>
+    <checkBox id="chbMon" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Monday"></checkBox>
+    <checkBox id="chbThu" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Thursday"></checkBox>
+    <checkBox id="chbWens" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Wensday"></checkBox>
+    <checkBox id="chbTue" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Tuesday"></checkBox>
+    <checkBox id="chbFri" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Friday"></checkBox>
+</div>
 
+<form-buttons form-name="Reminder" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Register"></form-buttons>
+<script>
+    concatColonToLables();
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
 
-    <table class="tblButons">
-        <tr>
-            <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
-            <td><button type="button" id="btnCloseAddEditPeople" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
-        </tr>
-    </table>
-    </div>
+</script>
 
-    <script>
-        concatColonToLables();
-        $(".txtDate").datepicker({
-            dateFormat: './dd/mm/yy.html',
-            dateFormat: 'yy/mm/dd',
-            altField: '#alternate2',
-            altFormat: 'DD، d MM yy'
-        });
-    </script>

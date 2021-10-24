@@ -542,6 +542,224 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.ToTable("UserRegion");
                 });
 
+            modelBuilder.Entity("CRM_Core.Entities.Models.Reminder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AlarmDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AlarmName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("F_EditDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("F_RegisterDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRepeatAlarm")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("M_EditDate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("M_RegisterDate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ToPersonelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ToPersonelId");
+
+                    b.ToTable("Reminder");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.BillCosts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BillIdentity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BillType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PayIdentity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BillCosts");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.SalonCosts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CostName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("F_CostDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("F_EditDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("F_RegisterDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("M_CostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("M_EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("RelatinveId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TBASSalonCostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TBASSalonCostId");
+
+                    b.ToTable("SalonCosts");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.SalonInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EditDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LisenceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Manager")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisterDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SalonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telegram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhatsApp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SalonInfo");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.TBASSalonCosts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CostName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CostTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TBASSalonCostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TBASSalonCostId");
+
+                    b.ToTable("TBASSalonCosts");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.TransferCosts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FromTarget")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToDestination")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransferType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransferCosts");
+                });
+
             modelBuilder.Entity("CRM_Core.Entities.Reservation.ClerkServices", b =>
                 {
                     b.Property<int>("Id")
@@ -992,6 +1210,33 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Navigation("City");
 
                     b.Navigation("IdentityUser");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Reminder", b =>
+                {
+                    b.HasOne("CRM_Core.DomainLayer.People", "ToPersonel")
+                        .WithMany()
+                        .HasForeignKey("ToPersonelId");
+
+                    b.Navigation("ToPersonel");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.SalonCosts", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Salon.TBASSalonCosts", "TBASSalonCost")
+                        .WithMany()
+                        .HasForeignKey("TBASSalonCostId");
+
+                    b.Navigation("TBASSalonCost");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Salon.TBASSalonCosts", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Salon.TBASSalonCosts", "TBASSalonCost")
+                        .WithMany()
+                        .HasForeignKey("TBASSalonCostId");
+
+                    b.Navigation("TBASSalonCost");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Reservation.ClerkServices", b =>

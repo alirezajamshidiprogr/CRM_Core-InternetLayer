@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_UserMenuService : RepositoryBase<UserMenu> , IUserMenuService
+    public class Ef_UserMenuService : DataAccessLayer.Repositories.RepositoryBase<UserMenu> , IUserMenuService
     {
         public Ef_UserMenuService(CRM_CoreDB context) :base(context)
         {

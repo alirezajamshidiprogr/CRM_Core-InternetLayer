@@ -1,6 +1,0 @@
-<LogInfo>
-    <Time>1400-5-28_14-5-19</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at UI_Presentation.Controllers.ManagmentController.AddUserMenu(List`1 userMenu, String identityUserId)</Target>
-    <ErrorMessage>Object reference not set to an instance of an object.</ErrorMessage>
-</LogInfo>

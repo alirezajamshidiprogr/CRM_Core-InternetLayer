@@ -70,8 +70,11 @@ namespace CRM_Core.Infrastructure
             {
                 foreach (PropertyInfo pro in temp.GetProperties())
                 {
-                    if (pro.Name == column.ColumnName )
-                        pro.SetValue(obj, dr[column.ColumnName], null);
+                    if (pro.Name == column.ColumnName)
+                    {
+                        var value = dr[column.ColumnName];
+                        pro.SetValue(obj, value.ToString() == string.Empty ? string.Empty : dr[column.ColumnName], null);
+                    }
                     else
                         continue;
                 }

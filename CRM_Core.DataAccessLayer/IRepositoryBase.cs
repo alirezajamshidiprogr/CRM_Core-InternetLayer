@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CRM_Core.Application.Interfaces
 {
-   public interface IRepositoryBase <T> where T : class
+   public interface RepositoryBase <T> where T : class
     {
         IQueryable<T> FindAll();
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);

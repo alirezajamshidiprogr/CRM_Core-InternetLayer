@@ -1,4 +1,7 @@
-﻿function onClickInput(e) {
+﻿var currentDivId = '';
+var pageNumber = 0;
+
+function onClickInput(e) {
     var inputId = e.id;
     var inputs = document.getElementById('#span' + inputId);
     //for (var j = 0; j < clearMandatorySpan.length; j++) {
@@ -19,7 +22,6 @@ function CheckMandatoryFields() {
             if (clearMandatorySpan[j].className == 'icon-info')
                 inputs[i].parentElement.removeChild(inputs[i].parentElement.lastChild)
         }
-        debugger;
         var isRequired = inputs[i].required;
         var idInputs = '#' + inputs[i].id;
 
@@ -48,7 +50,7 @@ function CheckMandatoryFields() {
                 message += "فرمت وارده شده " + '<b>' + inputs[i].placeholder + '</b>' + " صحیح نیست !!!" + '</br>';
 
             /////CHECK DATA FIELD VALUE
-            if (inputs[i].attributes.masked.value == 'Date' && !(dateValidation($(idInputs).val())) && $(idInputs).val() != '') 
+            if (inputs[i].attributes.masked.value == 'Date' && !(dateValidation($(idInputs).val())) && $(idInputs).val() != '')
                 message += 'فرمت وارده شده برای ' + '<b>' + inputs[i].placeholder + '</b>' + " صحیح نیست !!!" + '</br>';
         }
     }
@@ -79,6 +81,81 @@ function CheckMandatoryFields() {
         }
 
     }
+    return message;
+}
+
+function CheckMandatoryFieldsByDivId(divId) {
+    if (currentDivId != '') {
+        var clearMandatoryHiddenDiv = document.getElementById(currentDivId).getElementsByTagName('input');
+
+        for (var i = 0; i < clearMandatoryHiddenDiv.length; i += 1) {
+            var parent = clearMandatoryHiddenDiv[i].parentElement;
+            var clearMandatorySpan = clearMandatoryHiddenDiv[i].parentElement.childNodes;
+            for (var j = 0; j < clearMandatorySpan.length; j++) {
+                if (clearMandatorySpan[j].className == 'icon-info')
+                    clearMandatoryHiddenDiv[i].parentElement.removeChild(clearMandatoryHiddenDiv[i].parentElement.lastChild)
+            }
+        }
+    }
+    currentDivId = divId;
+
+    ///////////////////////////////////
+    var message = '';
+    var requiredShape = '';
+    var inputs = document.getElementById(divId).getElementsByTagName('input');
+
+    for (var i = 0; i < inputs.length; i += 1) {
+        var parent = inputs[i].parentElement;
+        var clearMandatorySpan = inputs[i].parentElement.childNodes;
+        for (var j = 0; j < clearMandatorySpan.length; j++) {
+            if (clearMandatorySpan[j].className == 'icon-info')
+                inputs[i].parentElement.removeChild(inputs[i].parentElement.lastChild)
+        }
+        var isRequired = inputs[i].required;
+        var idInputs = '#' + inputs[i].id;
+
+        /// CHECKING REQUIRED FIELDS 
+        if (isRequired && $(idInputs).val() == '') {
+            if (message == '') {
+                message = ' برخی از فیلد ها اجباری هستند.  ' + ' </br>'
+            }
+            var td = inputs[i].parentElement.innerHTML;
+            requiredShape = '<span id="span' + inputs[i].id + '" class="icon-info" style="color:red;font-size:20px;"></span>'
+            parent.innerHTML = ' ';
+            parent.innerHTML = td + '  ' + requiredShape;
+
+            message += '<b>' + inputs[i].placeholder + '</b>' + '  را وارد نکرده اید!!!  ' + "<br />";
+        }
+
+    }
+
+    var comboBox = document.getElementsByTagName('select');
+
+    for (var k = 0; k < comboBox.length; k++) {
+        var parentCombo = comboBox[k].parentElement;
+        var clearMandatorySpanCombo = comboBox[k].parentElement.childNodes;
+        for (var j = 0; j < clearMandatorySpanCombo.length; j++) {
+            if (clearMandatorySpanCombo[j].className == 'icon-info')
+                comboBox[k].parentElement.removeChild(comboBox[k].parentElement.lastChild)
+        }
+
+        let result = comboBox[k].hasAttribute('required');
+        if (result) {
+            var comboId = comboBox[k].attributes.id.value;
+            var index = document.getElementById(comboId).selectedIndex;
+            if (comboBox[k].attributes.required.value == 'required' && index == 0) {
+                var parentCombo = comboBox[k].parentElement;
+                var tdCombo = comboBox[k].parentElement.innerHTML;
+                requiredShapeCombo = '<span id="span' + comboBox[k].id + '" class="icon-info" style="color:red;font-size:20px;"></span>'
+                parentCombo.innerHTML = ' ';
+                parentCombo.innerHTML = tdCombo + '  ' + requiredShapeCombo;
+                message += '<b>' + comboBox[k].attributes.placeholder.value + '</b>' + " اجباری است لطفا آیتمی را انتخاب کنید !!!" + '</br>';
+
+            }
+        }
+
+    }
+
     return message;
 }
 
@@ -131,14 +208,18 @@ function dateValidation(input) {
 
 function getValueTableById(relativeId) {
     var val = null;
-    var child = event.target.parentNode.parentNode.childNodes;
+    //var child = event.target.parentNode.parentNode.childNodes;
+    var child = event.target.parentNode.parentNode.parentNode.childNodes;
     for (var i = 0; i < child.length; i++) {
         if (child[i].className != 'undefiend' && child[i].className == "specialTd") {
-            var specialFields = child[i].childNodes;
-            if (specialFields[i].className != 'undefiend' && specialFields[i].className == "specialFields") {
-                getId = specialFields[i].id;
+            //var specialFields = child[i].childNodes;
+            var specialFields = child[i].childNodes[0].firstElementChild.className;
+            //if (specialFields[i].className != 'undefiend' && specialFields[i].className == "specialFields") {
+            if (specialFields != 'undefiend' && specialFields == "specialFields") {
+                getId = child[i].childNodes[0].firstElementChild.id;
                 if (getId == relativeId) {
-                    val = specialFields[i].innerHTML;
+                    //val = specialFields[i].innerHTML;
+                    val = child[i].childNodes[0].firstElementChild.innerHTML;
                     break;
                 }
             }
@@ -313,8 +394,86 @@ function separateNumAsMoney(value, input) {
 }
 
 function isValueNumber(value) {
-    if (isNaN(value)) 
+    if (isNaN(value))
         return true;
     else
         return false;
+}
+
+function clearAllInputs() {
+    debugger;
+    var inputs = document.getElementsByTagName('input');
+    var textArea = document.getElementsByTagName('textarea');
+    var select = document.getElementsByTagName('select');
+
+    for (var i = 0; i < textArea.length; i += 1) {
+        var clearMandatorySpan = textArea[i].parentElement.childNodes;
+        for (var j = 0; j < clearMandatorySpan.length; j++) {
+            if (clearMandatorySpan[j].className == 'icon-info')
+                textArea[i].parentElement.removeChild(textArea[i].parentElement.lastChild)
+        }
+        var idtextArea = '#' + textArea[i].id;
+        $(idtextArea).val('');
+    }
+
+
+    for (var i = 0; i < inputs.length; i += 1) {
+        var clearMandatorySpan = inputs[i].parentElement.childNodes;
+        for (var j = 0; j < clearMandatorySpan.length; j++) {
+            if (clearMandatorySpan[j].className == 'icon-info')
+                inputs[i].parentElement.removeChild(inputs[i].parentElement.lastChild)
+        }
+        var idInputs = '#' + inputs[i].id;
+        $(idInputs).val('');
+    }
+
+    for (var i = 0; i < select.length; i += 1) {
+        var clearMandatorySpan = select[i].parentElement.childNodes;
+        for (var j = 0; j < clearMandatorySpan.length; j++) {
+            if (clearMandatorySpan[j].className == 'icon-info')
+                select[i].parentElement.removeChild(select[i].parentElement.lastChild)
+        }
+        var idselect = select[i].id;
+        if (document.getElementById(idselect) != null && document.getElementById(idselect) != undefined)
+                document.getElementById(idselect).selectedIndex = 0;
+    }
+}
+
+function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
+    debugger;
+   
+    switch (state) {
+        case "forward":
+            pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10)) ;
+            break;
+        case "right":
+            pageNumber = parseInt(page_Number) - 1;
+            break;
+        case "left":
+            pageNumber = parseInt(page_Number) + 1;
+            break;
+        default:
+            pageNumber = 0;
+            break;
+    }
+    //window["Show" + actionName + "sList"(true)]();
+    ShowSalonCostsList(true);
+}
+
+function chbClickState(chbId) {
+    var elem = document.getElementById(chbId).offsetParent;
+    var className = elem.className;
+    var isChecked = false;
+    if (className == "icheckbox_square-grey") {
+        document.getElementById(chbId).offsetParent.className = "icheckbox_square-grey checked";
+        isChecked = true;
+    }
+    else {
+        document.getElementById(chbId).offsetParent.className = "icheckbox_square-grey";
+        isChecked = false;
+    }
+
+    
+    if (chbId == "chbRepeated")
+        onChangechbRepeatedClick(isChecked);
 }

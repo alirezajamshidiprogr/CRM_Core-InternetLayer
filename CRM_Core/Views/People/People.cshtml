@@ -1,124 +1,57 @@
 ﻿@using System.Data
+@using System.Web.Helpers
+@using CRM_Core.Infrastructure;
+@{
+    List<SelectListItem> potentialItems = ViewBag.PotentialItems;
+    List<SelectListItem> introductionTypesItems = ViewBag.IntroductionTypesItems;
+    List<SelectListItem> marriedItems = ViewBag.MarriedItems;
+    List<SelectListItem> gradationsItems = ViewBag.GradationsItems;
+    List<SelectListItem> categoriesItems = ViewBag.CategoriesItems;
+    List<SelectListItem> prefixesItems = ViewBag.PrefixesItems;
 
-<div id="form-peopleSearch" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 1150px;">
-        <div class="modal-content">
-            <div class="modal-header" style="background: #5f0931;color: white;">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch</h4>
-            </div>
-            <div class="modal-body" style="background: #f2f4eb;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form method="post" class="form-horizontal" role="form">
-                            <div class="col-lg-11">
-                                <table class="table table-fixed tblFields">
-                                    <tr>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Name, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtNameSearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Name })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Family, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtFamilySearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Family })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Age, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtAgeSearch", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Age })</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Potential, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbPotentialSearch", new SelectList(ViewBag.PotentialItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.BirthDay, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.TextBox("txtBirthDaySearch", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.BirthDay })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbIntroductionTypeSearch", new SelectList(ViewBag.IntroductionTypesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
+    <modal bodystyle="height:200px" title="@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch" id="form-peopleSearch">
+        <modal-body>
+            <short-TextBox id="txtNameSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
+            <short-TextBox id="txtFamilySearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
+            <short-TextBox id="txtAgeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Age"></short-TextBox>
+            <short-TextBox id="txtBirthDaySearch" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay"></short-TextBox>
+            <dropDown id="cmbPotentialSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Potential" drop-down-data-bound="@potentialItems"></dropDown>
+            <dropDown id="cmbIntroductionTypeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType" drop-down-data-bound="@introductionTypesItems"></dropDown>
+            <dropDown id="cmbMariedTypeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.IsMarried" drop-down-data-bound="@marriedItems"></dropDown>
+            <dropDown id="cmbGradationsSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Graduation" drop-down-data-bound="@gradationsItems"></dropDown>
+            <dropDown id="cmbCategoriesSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Category" drop-down-data-bound="@categoriesItems"></dropDown>
+            <dropDown id="cmbPrefixesSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Prefix" drop-down-data-bound="@prefixesItems"></dropDown>
+            <customChild-tag style="text-align: left;">
+                <customTag-children>
+                    <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList(false,'isSelectedMode')"></Icon-Button>
+                </customTag-children>
+            </customChild-tag>
+        </modal-body>
 
-                                    </tr>
-                                    <tr>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbMariedTypeSearch", new SelectList(ViewBag.MarriedItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Graduation, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbGradationsSearch", new SelectList(ViewBag.GradationsItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Category, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbCategoriesSearch", new SelectList(ViewBag.CategoriesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
-                                    </tr>
-                                    <tr>
-                                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Prefix, null, new { @class = "labelWidget" }) </td>
-                                        <td>@Html.DropDownList("cmbPrefixesSearch", new SelectList(ViewBag.PrefixesItems, "Value", "Text"), new { @class = "form-control", style = "width:180px !important;" })</td>
-                                    </tr>
-                                </table>
+        <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
+    </modal>
 
-                            </div><!-- /.col-sm-8 -->
-                            <div class="col-lg-12 divHeaderSearch">
-                                <button type="button" onclick="showPeopleList(false,'isEditMode')" class="btn btn-info btn-round btnSearchGrid">
-                                    <i class="fa fa-search"></i>&nbsp; @UI_Presentation.wwwroot.Resources.General.Title.Search
-                                </button>
-                                <button type="button" class="btn btn-danger btn-round" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
-<div class="col-md-12" style="margin-top:-21px;" >
-    <div class="portlet box border shadow">
-        <div class="portlet-heading" style="font-size:1.2em ; color:#010246">@ViewBag.Title</div>
-        <div class="portlet-body">
-            <div class="row">
-                <div class="col-sm-4 m-b-20">
-                    <a class="btn btn-success btn-round" onclick="showPeopleList" href="#">
-                        <i class="icon-plus"></i>
-                        @UI_Presentation.wwwroot.Resources.Buttons.Title.Add
-                        <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.0004;"></div><div class="paper-ripple__waves"></div></div>
-                    </a>
+    <br />
+    <search-header>
+        <Search-Botton>
+            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showPeopleList()"></Icon-Button>
+            <modal-buttom modal-id="form-peopleSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
+        </Search-Botton>
 
-                    <a class="btn btn-info btn-round" data-target="#form-peopleSearch" data-toggle="modal">
-                        <i class="icon-size-fullscreen"></i>
-                        @UI_Presentation.wwwroot.Resources.General.Title.Search
-                        <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
-                    </a>
-                </div>
-                <div class="col-sm-4 m-b-20">
-                    <form role="form">
-                        <div class="input-group round">
-                            <input class="form-control" type="text" style="width:313px !important;" id="txtPeopleSearch" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.SearchWithFirstNameFullName">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" onclick="showPeopleList(true,'isEditMode')" type="button" style="margin-right:-34px !important;">
-                                    <i class="icon-magnifier"></i>
-                                    <div class="paper-ripple"></div><div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id="peopleList">
-                @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml")
-            </div>
-        </div>
-    </div>
-</div>
+        <Search-TextBox>
+            <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("showPeopleList('{0}','{1}')","true","isEditMode")"> </Search-Grid-TextBox>
+        </Search-TextBox>
+    </search-header>
+    
+    <customChild-tag id="peopleList">
+        <customTag-children>
+            @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml")
+        </customTag-children>
+    </customChild-tag>
+}
 
 <script>
     concatColonToLables();
-
-    //$(".btnAction").click(function () {
-    //    var id = 'PeopleId';
-    //    var val = null;
-    //    var elem = $(this).closest('tr').find('.nr')[0].childNodes;
-    //    var relativeid = null;
-    //    for (var i = 0; i < elem.length; i++) {
-    //        if (elem[i].className != 'undefiend' && elem[i].className == "specialFields") {
-    //            debugger;
-    //            relativeid = elem[i].id;
-    //            if (relativeid == id) {
-    //                val = elem[i].innerHTML;
-    //            break;
-    //            }
-    //        }
-    //    }
-    //    if (val != null)
-    //        btnOpenEditPeople(val);
-    //});
 </script>
 
 

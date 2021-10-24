@@ -8,132 +8,64 @@
     bool isSelectedMode = ViewBag.isSelectedMode == null ? false : (bool)ViewBag.isSelectedMode;
     bool isEditMode = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode;
     bool isPrintMode = ViewBag.isPrintMode == null ? false : (bool)ViewBag.isPrintMode;
+    int rowNum = 1;
+
+    <grid-view>
+       
+        <gridView-body>
+            <grid-rows-body width="2055" is-header="true">
+                <header-gridview width="180" header-field-name="@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions"></header-gridview>
+                <header-gridview width="50"  header-field-name="@UI_Presentation.wwwroot.Resources.General.Title.RowNum"></header-gridview>
+                <header-gridview width="226" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.PeopleProperty"></header-gridview>
+                <header-gridview width="135" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></header-gridview>
+                <header-gridview width="135" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Category"></header-gridview>
+                <header-gridview width="132" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Tel"></header-gridview>
+                <header-gridview width="150" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Mobile"></header-gridview>
+                <header-gridview width="100" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay"></header-gridview>
+                <header-gridview width="65"  header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Age"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Graduation"></header-gridview>
+                <header-gridview width="100" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Potential"></header-gridview>
+                <header-gridview width="100" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Intorduction"></header-gridview>
+                <header-gridview width="250" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Address"></header-gridview>
+            </grid-rows-body>
+
+            @if (Model == null) return;
+
+            @foreach (var item in Model.Records.ToList())
+            {
+                <grid-rows-body width="2055">
+                    @if (isEditMode)
+                    {
+                    }
+
+                    @if (isSelectedMode)
+                    {
+                    }
+
+                    @if (isPrintMode)
+                    {
+
+                    }
+                    <grid-rows-data visible="false" id="PeopleId" field-value="@item.Id"></grid-rows-data>
+                    <grid-rows-buttons style="width:180px;" is-select-mode="@isSelectedMode ? true : false" on-delete-button-action="btnDeletePeople()" on-edit-button-action="btnOpenEditPeople()" is-edit-mode="@isEditMode" ></grid-rows-buttons>
+                    <grid-rows-data width="50"  field-value="@rowNum"></grid-rows-data>
+                    <grid-rows-data width="226" field-value="@item.FullName"></grid-rows-data>
+                    <grid-rows-data width="135" field-value="@item.ManualCode"></grid-rows-data>
+                    <grid-rows-data width="135" field-value="@item.SystemCode"></grid-rows-data>
+                    <grid-rows-data width="110" field-value="@item.TBASCategoryName"></grid-rows-data>
+                    <grid-rows-data width="132" field-value="@item.Tel"></grid-rows-data>
+                    <grid-rows-data width="150" field-value="@item.Mobile"></grid-rows-data>
+                    <grid-rows-data width="100" field-value="@item.P_Birthday"></grid-rows-data>
+                    <grid-rows-data width="65"  field-value="@item.MarriedType"></grid-rows-data>
+                    <grid-rows-data width="110" field-value="@item.TBASGraduationName"></grid-rows-data>
+                    <grid-rows-data width="100" field-value="@item.TBASPotentialName"></grid-rows-data>
+                    <grid-rows-data width="100" field-value="@item.TBASIntroduceName"></grid-rows-data>
+                    <grid-rows-data width="250" field-value="@item.Address"></grid-rows-data>
+                </grid-rows-body>  
+                rowNum = rowNum + 1;
+            }
+        </gridView-body>
+    </grid-view>
 }
 
-<div class="table-responsive">
-    <table id="tblPeople" class="table table-bordered table-striped table-hover tblFomrData">
-        <thead>
-            <tr>
-                <th><i class="icon-energy"></i></th>
-                <th>@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.PeopleProperty</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.ManualCode</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.SystemCode</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Category</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Tel</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Mobile</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.BirthDay</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Address</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Age</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Graduation</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Potential</th>
-                <th>@UI_Presentation.wwwroot.Resources.People.Title.Intorduction</th>
-            </tr>
-        </thead>
-        <tbody id="tbodyPeople">
-            @if (Model != null)
-            {
-                @foreach (var item in Model.Records.ToList())
-                {
-                    <tr>
-                        <td class="specialTd">
-                            <span id="PeopleId" class="specialFields">@item.Id</span>
-                            <span>1</span>
-                        </td>
-                        <td>
-                            @if (isEditMode)
-                            {
-                                <a class="btn btn-info btn-round btnAction" onclick="btnOpenEditPeople()" href="#">
-                                    <i class="icon-note"></i>
-                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Edit
-                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                                </a>
-                                <a class="btn btn-danger btn-round btnAction" href="#" onclick="btnDeletePeople()">
-                                    <i class="icon-trash"></i>
-                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Delete
-                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                                </a>
-                            }
-
-                            @if (isSelectedMode)
-                            {
-                                <a class="btn btn-info btn-round btnAction" onclick="selectPeople()" href="#">
-                                    <i class="fa fa-send"></i>
-                                    @UI_Presentation.wwwroot.Resources.Buttons.Title.Select
-                                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-                                </a>
-                            }
-
-                            @if (isPrintMode)
-                            {
-
-                            }
-                        </td>
-                        <td>
-                            <div style="width:250px;">
-                                <img class="img-person img-circle" src="~/image/images/user/default.png">
-                                <span class="spFullName">@item.FullName</span>
-                            </div>
-                        </td>
-
-                        <td>@item.ManualCode</td>
-                        <td>@item.SystemCode</td>
-                        <td>@item.TBASCategoryName</td>
-                        <td>@item.Tel</td>
-                        <td>@item.Mobile</td>
-                        <td>@item.P_Birthday</td>
-                        <td>@item.Address </td>
-                        <td>@item.MarriedType </td>
-                        <td>@item.TBASGraduationName</td>
-                        <td>@item.TBASPotentialName</td>
-                        <td>@item.TBASIntroduceName</td>
-                    </tr>
-                }
-
-            }
-        </tbody>
-    </table>
-</div><!-- /.table-responsive -->
-
-<div class="text-center" style="margin-top:-36px;">
-    <ul class="pagination round">
-        <li>
-            <a href="#">
-                <i class="icon-control-end"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-arrow-right"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">1</a>
-        </li>
-        <li>
-            <span class="active" href="#">2</span>
-        </li>
-        <li>
-            <a href="#">3</a>
-        </li>
-        <li>
-            <a href="#">4</a>
-        </li>
-        <li>
-            <a href="#">5</a>
-        </li>
-        <li>
-            <a href="#">6</a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-arrow-left"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-control-start"></i>
-            </a>
-        </li>
-    </ul>
-</div><!-- /.text-center -->

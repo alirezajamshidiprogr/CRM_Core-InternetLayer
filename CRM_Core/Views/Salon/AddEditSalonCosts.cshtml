@@ -1,0 +1,94 @@
+﻿@using CRM_Core.Infrastructure ;
+@using CRM_Core.Application.ViewModels.CustomViewModel;
+
+@model SalonCostsViewModel
+
+@{
+    bool isEdit = (bool)ViewBag.isEditMode;
+    int? costTypeId = 0;
+    string display = "display: none;";
+
+    List<SelectListItem> costGroups = ViewBag.CostGroups;
+    List<SelectListItem> billTypes = ViewBag.BillTypes;
+    List<SelectListItem> salonCostGroups = null;
+    List<SelectListItem> salonCostyType = null ;
+    List<SelectListItem> transferType = ViewBag.TransferType;
+    int? mainsSalonCostId = (int?)ViewBag.MainSalonCostId;
+    int? subSalonCostId = (int?)ViewBag.SubSalonCostId ;
+    bool isEnabledropDown = true;
+
+    if (isEdit)
+    {
+        costTypeId = (int?)ViewBag.costTypeId;
+        display = "display:block;";
+        isEnabledropDown = false;
+        salonCostGroups = ViewBag.SalonCostGroups;
+        salonCostyType = ViewBag.SalonCostyType;
+    }
+
+
+    <customChild-tag style="margin-bottom:64px !important;">
+        <customTag-children>
+            <dropDown enable="@isEnabledropDown" is-long-form="true" width="194" id="cmbSalonCostGroup" onchange-drop-down="onChangeCmbSalonCostGroup()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.Type" drop-down-data-bound="@costGroups"></dropDown>
+            <dropDown enable="@isEnabledropDown" is-long-form="true" width="194" id="cmbSalonCostType" onchange-drop-down="onChangeCmbSalonCostType()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.SalonCostGroup" drop-down-data-bound="@salonCostGroups" ></dropDown>
+            <dropDown enable="@isEnabledropDown" is-long-form="true" width="194" id="cmbCostDetails" onchange-drop-down="onChangeCmbCostDetails()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.SalonCostyType" drop-down-data-bound="@salonCostyType"></dropDown>
+        </customTag-children>
+    </customChild-tag>
+
+    if ((isEdit && costTypeId == (int)Enums.costs.GeneralCosts) || !isEdit)
+    {
+        <customChild-tag id="GeneralCosts" class="costDiv divLongFormGroup" style="@display">
+            <customTag-children>
+                <long-TextBox id="txtCostName" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.CostDescription" required="true" value="@(isEdit ? Model.CostName : string.Empty)"></long-TextBox>
+                <long-TextBox id="txtPrice" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.Cost" required="true" value="@(isEdit ? Model.Price : 0)"></long-TextBox>
+                <long-TextBox is-date-type="true" width="257px" id="txtPayDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" required="true" value="@(isEdit ? Model.F_CostDate : string.Empty)"></long-TextBox>
+                <Text-Area id="txtDescription" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
+            </customTag-children>
+        </customChild-tag>
+    }
+
+    if ((isEdit && costTypeId == (int)Enums.costs.Bills) || !isEdit)
+    {
+        <customChild-tag id="billLegend" class="costDiv divLongFormGroup" style="@display">
+            <customTag-children>
+                <dropDown is-long-form="true" id="cmbBillTypeId" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.BillType" drop-down-data-bound="@billTypes" value="@(isEdit ? Model.BillType : (int?)null)"></dropDown>
+                <long-TextBox id="txtIdentityBillNumber" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.BillIdentityNumber" value="@(isEdit ? Model.BillIdentity : string.Empty)"></long-TextBox>
+                <long-TextBox id="txtPayBillNumber" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.BillPayNumber" value="@(isEdit ? Model.PayIdentity : string.Empty)"></long-TextBox>
+                <long-TextBox id="txtBillPrice" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.Cost" required="true" value="@(isEdit ? Model.Price : 0 )"></long-TextBox>
+                <long-TextBox is-date-type="true" width="257px" id="txtBillPayDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" required="true" value="@(isEdit ? Model.F_CostDate : string.Empty)"></long-TextBox>
+                <Text-Area id="txtBillDescription" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
+            </customTag-children>
+        </customChild-tag>
+    }
+
+    if ((isEdit && costTypeId == (int)Enums.costs.Transfer) || !isEdit)
+    {
+        <customChild-tag id="transferLegend" class="costDiv divLongFormGroup" style="@display">
+            <customTag-children>
+                <dropDown is-long-form="true" id="cmbTransferType" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.TransferType" drop-down-data-bound="@transferType" value="@(isEdit ? Model.TransferType : (int?)null)"></dropDown>
+                <long-TextBox id="txtfromTarget" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.FromTarget" value="@(isEdit ? Model.FromTarget : string.Empty)"></long-TextBox>
+                <long-TextBox id="txtToDestination" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.ToDestination" value="@(isEdit ? Model.ToDestination : string.Empty)"></long-TextBox>
+                <long-TextBox id="txtTransferPrice" width="257px" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.Cost" required="true" value="@(isEdit ? Model.Price:0)"></long-TextBox>
+                <long-TextBox is-date-type="true" width="257px" id="txtTransferPayDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" required="true" value="@(isEdit ? Model.F_CostDate: string.Empty)"></long-TextBox>
+                <Text-Area id="txtTransferDescription" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit? Model.Description : string.Empty)"></Text-Area>
+            </customTag-children>
+        </customChild-tag>
+    }
+
+
+    <form-buttons has-confirm-continue-botton="true" form-name="SalonCost" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></form-buttons>
+}
+<script>
+    concatColonToLables();
+
+    if (@isEdit.ToString().ToLower() == 'true')
+        onChangeCmbSalonCostType();
+
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+</script>

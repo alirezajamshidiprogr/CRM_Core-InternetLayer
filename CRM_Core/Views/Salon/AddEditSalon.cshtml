@@ -1,59 +1,54 @@
 ﻿
-<div class="titleForm">@ViewBag.Title</div>
+@model CRM_Core.Entities.Models.Salon.SalonInfo
+@{ 
+    bool isEdit = (bool)ViewBag.isEditMode;
+
+}
+<customChild-tag class="titleForm">
+    <customTag-children>
+        @ViewBag.Title
+    </customTag-children>
+</customChild-tag>
 <br />
-<div class="divformControl">
-    <div class="col-lg-12 detailFields">
-        <div class="imgPerson">
-            <a href="#" title=@UI_Presentation.wwwroot.Resources.General.Title.SelectLogo> <img src="~/image/ButtonImage/salonLogo.png" style="padding-bottom:5px;" height="143" width="143" />@UI_Presentation.wwwroot.Resources.General.Title.SelectLogo</a>
-        </div>
-
-        <table class="tblFields">
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.Salon, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtSalon", null, new { @class = "form-control",required="required" , placeholder = @UI_Presentation.wwwroot.Resources.General.Title.Salon })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.SalonManager, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtSalonManager", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.SalonManager })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Tel, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtTel", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Tel })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Mobile, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtMobile", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Mobile })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Telegram, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtTelegram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Telegram })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtWhatsApp", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WhatsApp })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Instagram, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtInstagram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Instagram })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WebSite, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtWebSite", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WebSite })</td>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.General.Title.LisenceNumber, null, new { @class = "labelWidget" }) </td>
-                <td>@Html.TextBox("txtLisenceNumber", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.General.Title.LisenceNumber })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
-                <td colspan="5">@Html.TextBox("txtDescription", null, new { @class = "TextArea", style = "width:883px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
-            </tr>
-            <tr>
-                <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Address, null, new { @class = "labelWidget" }) </td>
-                <td colspan="5">@Html.TextArea("txtAddress", null, new { @class = "TextArea", style = "width:883px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Address })</td>
-            </tr>
-
-        </table>
-    </div>
+<customChild-tag>
+    <customTag-children>
+        @Html.Hidden("salonId",Model != null ? Model.Id : 0)
+        <short-TextBox id="txtSalonName" required="true" label-title="@UI_Presentation.wwwroot.Resources.General.Title.Salon" value="@(isEdit ? Model.SalonName : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtSalonManager" label-title="@UI_Presentation.wwwroot.Resources.General.Title.SalonManager" value="@(isEdit ? Model.Manager : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtTel" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel" value="@(isEdit ? Model.Tel : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtMobile" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile" value="@(isEdit ? Model.Mobile : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtTelegram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Telegram" value="@(isEdit ? Model.Telegram : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtWhatsApp" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.WhatsApp" value="@(isEdit ? Model.WhatsApp : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtInstagram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Instagram" value="@(isEdit ? Model.Instagram : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtWebSite" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WebSite" value="@(isEdit ? Model.Website : string.Empty)"></short-TextBox>
+        <short-TextBox id="txtLisenceNumber" label-title="@UI_Presentation.wwwroot.Resources.General.Title.LisenceNumber" value="@(isEdit ? Model.LisenceNumber : string.Empty)"></short-TextBox>
+        <long-TextBox width="88%" id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)" ></long-TextBox>
+        <Text-Area id="txtAddress" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Address" value="@(isEdit ? Model.Address : string.Empty)"></Text-Area>
+        
+        <input type="file" title="انتخاب فایل" id="lname" name="lname"><br><br>
 
 
-    <table class="tblButons">
-        <tr>
-            <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
-            <td><button type="button" id="btnCloseAddEditCusomter" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
-        </tr>
-    </table>
+        @*<div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ProfileImage" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+            </div>*@
+        @*<file-browser placeholder="لوگوی سالن خود را انتخاب کنید..." on-click-action="btnClick()"></file-browser>*@
+        @*<div class="form-group">
+                    <input id='txt-search' PlaceHolder="انتخاب لوگو" type="text" style="float:left;height:47px; width:80%;">
+                    <span  class="input-group-addon" style="background: #b75c5c00 ! important;">
+                        <i class="btn btn-success icon-magnifier">&nbsp; انتخاب فایل</i>
+                    </span>
+            </div>*@
 
-</div>
+    </customTag-children>
+</customChild-tag>
 
+<form-buttons form-name="SalonInfo" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Register"></form-buttons>
 <script>
     concatColonToLables();
 </script>

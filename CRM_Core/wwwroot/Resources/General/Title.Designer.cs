@@ -313,6 +313,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جمعه.
+        /// </summary>
+        public static string Friday {
+            get {
+                return ResourceManager.GetString("Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to از تاریخ.
         /// </summary>
         public static string FromDate {
@@ -399,6 +408,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string Management {
             get {
                 return ResourceManager.GetString("Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دوشنبه.
+        /// </summary>
+        public static string Monday {
+            get {
+                return ResourceManager.GetString("Monday", resourceCulture);
             }
         }
         
@@ -637,6 +655,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شنبه.
+        /// </summary>
+        public static string Satuarday {
+            get {
+                return ResourceManager.GetString("Satuarday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to جستجو.
         /// </summary>
         public static string Search {
@@ -736,11 +763,38 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to یکشنبه.
+        /// </summary>
+        public static string Sunday {
+            get {
+                return ResourceManager.GetString("Sunday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سه شنبه.
+        /// </summary>
+        public static string Thursday {
+            get {
+                return ResourceManager.GetString("Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تا تاریخ.
         /// </summary>
         public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پنجشنبه.
+        /// </summary>
+        public static string Tuesday {
+            get {
+                return ResourceManager.GetString("Tuesday", resourceCulture);
             }
         }
         
@@ -795,6 +849,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string UserSetting {
             get {
                 return ResourceManager.GetString("UserSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to چهارشنبه.
+        /// </summary>
+        public static string Wensday {
+            get {
+                return ResourceManager.GetString("Wensday", resourceCulture);
             }
         }
     }

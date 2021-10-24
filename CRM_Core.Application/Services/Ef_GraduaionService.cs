@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_GraduaionService : RepositoryBase<TBASGraduation>, IGraduationService
+    public class Ef_GraduaionService : DataAccessLayer.Repositories.RepositoryBase<TBASGraduation>, IGraduationService
     {
         public Ef_GraduaionService(CRM_CoreDB context) : base(context)
         {

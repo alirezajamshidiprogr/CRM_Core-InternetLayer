@@ -13,76 +13,43 @@
 
     string buttionTitle = state == (int)Enums.states.People ? @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectIntroduction : @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectCustomer;
 
-    <div class="peopleSelector" id="peopleSelector">
-        <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@buttionTitle</button>
+    <customChild-tag class="peopleSelector" id="peopleSelector">
+        <customTag-children>
+            <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@buttionTitle</button>
+            <table class="tblPeopleSelector">
+                <tr>
+                    <td class="specialTd" style="display:none;"><span id="PeopleSelector_Id" class="specialFields"></span></td>
+                    <td class="tdPeopleSelector"><p id="PeopleSelector_fullName"></p></td><td class="tdPeopleSelector"><p id="PeopleSelector_age"></p></td>
+                    <td class="tdPeopleSelector"><p id="PeopleSelector_birthday"></p></td><td class="tdPeopleSelector"><p id="PeopleSelector_certificateCode"></p></td>
+                </tr>
+                <tr>
+                    <td class="tdPeopleSelector"><p id="PeopleSelector_graduation"></p></td><td colspan="3" class="tdPeopleSelector"><p id="PeopleSelector_address"></p></td>
+                </tr>
+            </table>
+        </customTag-children>
+    </customChild-tag>
 
-        <table class="tblPeopleSelector">
-            <tr>
-                <td class="specialTd" style="display:none;">
-                    <span id="PeopleSelector_Id" class="specialFields"></span>
-                </td>
-                <td class="tdPeopleSelector">
-                    <p id="PeopleSelector_fullName"></p>
-                </td>
-                <td class="tdPeopleSelector">
-                    <p id="PeopleSelector_age"></p>
-                </td>
-                <td class="tdPeopleSelector">
-                    <p id="PeopleSelector_birthday"></p>
-                </td>
-                <td class="tdPeopleSelector">
-                    <p id="PeopleSelector_certificateCode"></p>
-                </td>
-            </tr>
-            <tr>
-                <td class="tdPeopleSelector">
-                    <p id="PeopleSelector_graduation"></p>
-                </td>
-                <td colspan="3" class="tdPeopleSelector">
-                    <p id="PeopleSelector_address"></p>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <modal bodystyle="height:611px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="PeopleSelectorModal">
+        <modal-body>
+            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
+            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></short-TextBox>
+            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></short-TextBox>
+            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
+            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
+            <customChild-tag style="text-align: left;">
+                <customTag-children>
+                    <Icon-Button buttom-class="btn btn-success  btn-radious"  icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList(false,'isSelectedMode')"></Icon-Button>
+                </customTag-children>
+            </customChild-tag>
 
-    <div class="modal fade" id="PeopleSelectorModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog peopleSelectorPopup" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background:#101214">
-                    <h5 class="modal-title" style="color:white;">@UI_Presentation.wwwroot.Resources.People.Title.SelectPeople</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body peopleSelectorBody">
-                    <div class="peopleSelectorItemsSearch">
-                        <table>
-                            <tr>
-                                <td><label for="systemCode">@UI_Presentation.wwwroot.Resources.People.Title.SystemCode</label></td>
-                                <td><input type="text" class="form-control" id="_txtsystemCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></td>
-                                <td> <label for="manualCode">@UI_Presentation.wwwroot.Resources.People.Title.ManualCode</label></td>
-                                <td><input type="text" class="form-control" id="_txtmanualCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></td>
-                                <td> <label for="certificeCode">@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode</label></td>
-                                <td><input type="text" class="form-control" id="_txtCertificateCode" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></td>
-                                <td><button type="button" onclick="showPeopleList(false,'isSelectedMode')" class="btn btn-primary" style="width:75px!important;">@UI_Presentation.wwwroot.Resources.Buttons.Title.Search</button></td>
-                            </tr>
-                            <tr>
-                                <td><label for="Name">@UI_Presentation.wwwroot.Resources.People.Title.Name</label></td>
-                                <td> <input type="text" class="form-control" id="_txtName" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Name"></td>
-                                <td><label for="Family">@UI_Presentation.wwwroot.Resources.People.Title.Family</label></td>
-                                <td> <input type="text" class="form-control" id="_txtFamily" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Family"></td>
-                                <td colspan="3" style="text-align:left;"> <button type="button" class="btn btn-danger" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Close</button></td>
-                            </tr>
-
-                        </table>
-                    </div>
-
-                    <div id="peopleList" class="peopleSelectorTable">
-                        @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml", Model)
-                    </div>
-                </div>
+            <div id="peopleList">
+                @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml", Model)
             </div>
-        </div>
-    </div> }
+        </modal-body>
+
+        <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
+    </modal>
+    }
 
 <script>
     getPeopleSelectorInfo('@peopleId');

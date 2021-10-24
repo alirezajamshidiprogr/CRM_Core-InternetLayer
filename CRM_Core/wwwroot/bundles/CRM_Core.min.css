@@ -3091,11 +3091,12 @@ table tr td {
     border: 1px solid #b5b2b2;
     padding: 7px;
     border-radius: 8px;
-    margin-top: 3px;
+    margin-top: 7px;
+    white-space: nowrap;
 }
 
 .header {
-    width: 100%;
+    /*width: auto !important;*/
     height: 50px;
     background: #6a1331;
     text-align: center;
@@ -3112,12 +3113,14 @@ table tr td {
 }
 
 .items {
-    float: right;
+    /*float: right;*/
+    display: inline-block;
     padding: 9px;
+    text-align:center;
 }
 
 .divRow {
-    width: 100%;
+    /*width: auto !important;*/
     height: 50px;
     background: #fdfdfd;
     text-align: center;
@@ -3127,6 +3130,7 @@ table tr td {
     border-bottom-color: rgb(236, 235, 235);
     border-bottom-style: solid;
     border-bottom-width: 3px;
+    text-align:right !important;
 }
 
 .GridFooter {
@@ -3153,10 +3157,33 @@ table tr td {
 
 .tabFields {
     float: right;
-    width: 24%;
+    width: 26%;
     margin-bottom:15px;
     text-align:left ;
 }
+
+.btn-radious{
+    border-radius:12px;
+}
+
+.fileBrowser {
+    border-radius: 0px !important;
+    margin-right: -10px;
+    height: 43px;
+    background: #01656a;
+    width: 122px;
+    padding: 9px;
+    color: white;
+    float: right;
+}
+
+.divLongFormGroup {
+    border: 1px solid #d5d1d1;
+    padding: 17px;
+    border-radius: 12px;
+}
+
+
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
@@ -3469,6 +3496,7 @@ opacity: 0.4;*/
     padding: 5px !important;
     box-shadow: 0px 3px 10px 1px #373333 !important;
     width: 1140px !important;
+    /*width: 100% !important;*/
     height: 634px !important ;
 }
 

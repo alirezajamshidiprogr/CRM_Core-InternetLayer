@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_CategoryService : RepositoryBase<TBASCategory> , ICategoryService
+    public class Ef_CategoryService : DataAccessLayer.Repositories.RepositoryBase<TBASCategory> , ICategoryService
     {
         public Ef_CategoryService(CRM_CoreDB context) : base(context)
         {

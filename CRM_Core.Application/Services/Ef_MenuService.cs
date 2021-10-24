@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_MenuService: RepositoryBase<TBASMenu>, IMenuService
+    public class Ef_MenuService: DataAccessLayer.Repositories.RepositoryBase<TBASMenu>, IMenuService
     {
         public Ef_MenuService(CRM_CoreDB context) : base(context)
         {

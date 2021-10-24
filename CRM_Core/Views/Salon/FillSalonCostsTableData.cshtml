@@ -1,0 +1,74 @@
+﻿@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.CustomViewModel
+
+
+@model DataGridViewModel<SalonCostsViewModelGrid>
+
+@{
+    bool isEditMode = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode;
+    bool isSelectedMode = ViewBag.isSelectedMode == null ? false : (bool)ViewBag.isSelectedMode;
+    bool isPrintMode = ViewBag.isPrintMode == null ? false : (bool)ViewBag.isPrintMode;
+    List<SelectListItem> costGroups = ViewBag.CostGroups;
+    IQueryable<SalonCostsViewModelGridSummery> summery =  ViewBag.summery;
+    string totalPriceGeneralCost = string.Empty;
+    string totalSellAndDistibuteCost = string.Empty;
+    string totalAccontantCosts = string.Empty;
+    int pageNumber = ViewBag.pageNumber == null ? 0 : (int)ViewBag.pageNumber;
+    int totalAllRecords = ViewBag.totalAllRecords == null ? 0 : (int)ViewBag.totalAllRecords;
+
+    if (summery != null)
+    {
+        totalPriceGeneralCost = summery.FirstOrDefault() != null ? summery.FirstOrDefault().totalPriceGeneralCost : "0";
+        totalSellAndDistibuteCost = summery.FirstOrDefault() != null ? summery.FirstOrDefault().totalSellAndDistibuteCost : "0";
+        totalAccontantCosts = summery.FirstOrDefault() != null ? summery.FirstOrDefault().totalAccontantCosts : "0";
+    }
+
+
+    int rowNum = pageNumber == 0 ? 1 : pageNumber * (10+1);
+    <grid-view total-rows-count="totalAllRecords" page-number="pageNumber" action-name="ShowSalonCostsList(true)">
+        <gridView-body>
+            <grid-rows-body is-header="true" width="1480">
+                <header-gridview width="200" header-field-name="@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions"></header-gridview>
+                <header-gridview width="50" header-field-name="@UI_Presentation.wwwroot.Resources.General.Title.RowNum"></header-gridview>
+                <header-gridview width="250" header-field-name="@UI_Presentation.wwwroot.Resources.Salon.Title.CostDescription"></header-gridview>
+                <header-gridview width="200" header-field-name="@UI_Presentation.wwwroot.Resources.Salon.Title.SalonCostyType"></header-gridview>
+                <header-gridview width="122" header-field-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.Salon.Title.Cost"></header-gridview>
+                <header-gridview width="300" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Description"></header-gridview>
+            </grid-rows-body>
+
+            @if (Model == null ) return;
+
+            @foreach (var item in Model.Records.ToList())
+            {
+                <grid-rows-body width="1480">
+
+                    <grid-rows-buttons style="width:200px;" is-edit-mode="isEditMode ? true : false" on-edit-button-action="btnOpenEditSalonCost()" on-delete-button-action="btnDeleteSalonCosts()"
+                                       is-select-mode="@isSelectedMode ? true :false;"
+                                       is-print-mode="@isPrintMode ? true : false">
+                    </grid-rows-buttons>
+
+                    <grid-rows-data visible="false" id="salonCostId" field-value="@item.SalonCostId"></grid-rows-data>
+                    <grid-rows-data width="50" field-value="@rowNum"></grid-rows-data>
+                    <grid-rows-data width="250" field-value="@item.CostName"></grid-rows-data>
+                    <grid-rows-data width="200" field-value="@item.CostTitle"></grid-rows-data>
+                    <grid-rows-data width="122" field-value="@item.Price"></grid-rows-data>
+                    <grid-rows-data width="110" field-value="@item.F_CostDate"></grid-rows-data>
+                    <grid-rows-data width="300" field-value="@item.Description"></grid-rows-data>
+                </grid-rows-body>
+                rowNum = rowNum + 1;
+            }
+
+        </gridView-body>
+
+        <gridView-pagination>
+
+        </gridView-pagination>
+
+        <gridView-footer>
+            <grid-footer-dataItem title="@UI_Presentation.wwwroot.Resources.Salon.Title.TotalPriceGeneralCost" value="@totalPriceGeneralCost"></grid-footer-dataItem>
+            <grid-footer-dataItem title="@UI_Presentation.wwwroot.Resources.Salon.Title.TotalSellAndDistibuteCost" value="@totalSellAndDistibuteCost"></grid-footer-dataItem>
+            <grid-footer-dataItem title="@UI_Presentation.wwwroot.Resources.Salon.Title.TotalAccontantCosts" value="@totalAccontantCosts"></grid-footer-dataItem>
+        </gridView-footer>
+    </grid-view>
+}

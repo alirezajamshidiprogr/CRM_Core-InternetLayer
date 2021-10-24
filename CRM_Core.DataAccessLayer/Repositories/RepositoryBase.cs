@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CRM_Core.DataAccessLayer.Repositories
 {
-   public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+   public class RepositoryBase<T> : Application.Interfaces.RepositoryBase<T> where T : class
     {
         protected CRM_CoreDB RepositoryContext { get; set; }
         private DbSet<T> _dbSet;

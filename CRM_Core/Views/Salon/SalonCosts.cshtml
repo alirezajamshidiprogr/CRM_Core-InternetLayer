@@ -1,0 +1,65 @@
+﻿@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.CustomViewModel
+
+@model DataGridViewModel<SalonCostsViewModelGrid>
+
+@{
+    List<SelectListItem> costGroups = ViewBag.CostGroups;
+
+    <modal bodystyle="height:200px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="form-salonCostSearch">
+        <modal-body>
+            <dropDown id="cmbSalonCostGroup" onchange-drop-down="onChangeCmbSalonCostGroup()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.Type" drop-down-data-bound="@costGroups"></dropDown>
+            <dropDown id="cmbSalonCostType" onchange-drop-down="onChangeCmbSalonCostType()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.SalonCostGroup"></dropDown>
+            <dropDown id="cmbCostDetails" onchange-drop-down="onChangeCmbCostDetails()" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.SalonCostyType"></dropDown>
+            <short-TextBox id="txtFromDate" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.FromDate"></short-TextBox>
+            <short-TextBox id="txtToDate" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.ToDate"></short-TextBox>
+            <short-TextBox id="txtFromPrice" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.FromPrice"></short-TextBox>
+            <short-TextBox id="txtToPrice" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.ToPrice"></short-TextBox>
+            <short-TextBox id="txtCostDescription" label-title="@UI_Presentation.wwwroot.Resources.Salon.Title.CostDescription"></short-TextBox>
+
+            <customChild-tag style="text-align: left;">
+                <customTag-children>
+                    <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="ShowSalonCostsList('false')"></Icon-Button>
+                </customTag-children>
+            </customChild-tag>
+
+        </modal-body>
+
+        <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
+    </modal>
+
+    <br />
+    <search-header>
+        <Search-Botton>
+            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showPeopleList()"></Icon-Button>
+            <modal-buttom modal-id="form-salonCostSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
+        </Search-Botton>
+
+        <Search-TextBox>
+            <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("ShowSalonCostsList('{0}')","true")"> </Search-Grid-TextBox>
+        </Search-TextBox>
+    </search-header>
+
+    <customChild-tag id="salonCostList">
+        <customTag-children>
+            @await Html.PartialAsync("~/Views/Salon/FillSalonCostsTableData.cshtml")
+        </customTag-children>
+    </customChild-tag>
+
+
+}
+
+<script>
+    concatColonToLables();
+    ShowSalonCostsList();
+
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+</script>
+
+

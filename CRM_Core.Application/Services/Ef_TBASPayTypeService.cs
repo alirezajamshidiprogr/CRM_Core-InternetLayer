@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_TBASPayTypeService :RepositoryBase<TBASPayType> , ITBASPayTypeService
+    public class Ef_TBASPayTypeService : DataAccessLayer.Repositories.RepositoryBase<TBASPayType> , ITBASPayTypeService
     {
         public Ef_TBASPayTypeService(CRM_CoreDB context) :base(context)
         {

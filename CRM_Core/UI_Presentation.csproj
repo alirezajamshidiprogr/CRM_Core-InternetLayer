@@ -5,10 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Helpers\**" />
-    <Content Remove="Helpers\**" />
-    <EmbeddedResource Remove="Helpers\**" />
-    <None Remove="Helpers\**" />
+    <Compile Remove="bin\**" />
+    <Compile Remove="obj\**" />
+    <Content Remove="bin\**" />
+    <Content Remove="obj\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="bin\**" />
+    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +37,8 @@
     <Content Remove="wwwroot\Resources\People\Title.resx" />
     <Content Remove="wwwroot\Resources\Reservation\Title.Designer.cs" />
     <Content Remove="wwwroot\Resources\Reservation\Title.resx" />
+    <Content Remove="wwwroot\Resources\Salon\Mesages.Designer.cs" />
+    <Content Remove="wwwroot\Resources\Salon\Title.resx" />
     <Content Remove="wwwroot\Resources\Title.Designer.cs" />
   </ItemGroup>
 
@@ -73,6 +79,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="wwwroot\Resources\Salon\Title.Designer.cs">
+      <DependentUpon>Title.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -108,6 +119,10 @@
       <LastGenOutput>Mesages.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Resources\Salon\Title.resx">
+      <LastGenOutput>Title.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -123,6 +138,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Omu.Awem.Trial" Version="2.7.1" />
+    <PackageReference Include="Omu.AwesomeMvc.Trial" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -158,6 +175,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Mesages.resx</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Resources\Salon\Title.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Title.resx</DependentUpon>
     </Content>
   </ItemGroup>
 

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_ClerkServiceService : RepositoryBase<ClerkServices>, IClerkServiceService
+    public class Ef_ClerkServiceService : DataAccessLayer.Repositories.RepositoryBase<ClerkServices>, IClerkServiceService
     {
         public Ef_ClerkServiceService(CRM_CoreDB context) :base(context)
         {

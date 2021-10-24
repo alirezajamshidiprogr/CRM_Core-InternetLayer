@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_PeoplePropertyService : RepositoryBase<PeopleProperty>, IPeoplePropertyService
+    public class Ef_PeoplePropertyService : DataAccessLayer.Repositories.RepositoryBase<PeopleProperty>, IPeoplePropertyService
     {
         public Ef_PeoplePropertyService(CRM_CoreDB context) : base(context)
         {

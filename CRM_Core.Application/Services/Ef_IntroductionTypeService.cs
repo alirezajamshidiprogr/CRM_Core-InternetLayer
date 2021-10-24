@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_IntroductionTypeService : RepositoryBase<TBASIntroductionType>, IIntroductionTypeService
+    public class Ef_IntroductionTypeService : DataAccessLayer.Repositories.RepositoryBase<TBASIntroductionType>, IIntroductionTypeService
     {
         public Ef_IntroductionTypeService(CRM_CoreDB context) : base(context)
         {

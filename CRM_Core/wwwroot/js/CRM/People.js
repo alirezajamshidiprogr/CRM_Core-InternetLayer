@@ -175,7 +175,6 @@ function btnAddEditPeople() {
     if (people.Id > 0)
         isEdit = true;
 
-    debugger;
     if (introducId == '') {
         swal({
             title: ' سوال... ',
@@ -391,7 +390,6 @@ function FillTelsAndMobiles(tels, mobiles) {
 
     if (mobiles.length > 1) {
         for (var i = 1; i < mobiles.length; i++) {
-            debugger;
             var divMobileFields = document.createElement('div');
             divMobileFields.className = 'input-group';
             divMobileFields.style = 'margin-top:10px;';
@@ -450,7 +448,6 @@ function selectPeople(e) {
 }
 
 function getPeopleSelectorInfo(peopleId) {
-    debugger; 
     $.ajax({
         type: "POST",
         url: "/People/GetPeoplePropertyById",

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-   public class Ef_PeopleVirtualService: RepositoryBase<PeopleVirtual>, IPeopleVirtualService
+   public class Ef_PeopleVirtualService: DataAccessLayer.Repositories.RepositoryBase<PeopleVirtual>, IPeopleVirtualService
     {
         public Ef_PeopleVirtualService(CRM_CoreDB context) : base(context)
         {

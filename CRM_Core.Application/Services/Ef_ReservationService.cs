@@ -14,7 +14,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_ReservationService :RepositoryBase<Reservation>,IReservationService
+    public class Ef_ReservationService : DataAccessLayer.Repositories.RepositoryBase<Reservation>,IReservationService
     {
         public CRM_CoreDB _context;
         public Ef_ReservationService(CRM_CoreDB context) :base(context)
@@ -68,7 +68,7 @@ namespace CRM_Core.Application.Services
             _context.Database.OpenConnection();
             var dataReader = cmd.ExecuteReader();
             dt.Load(dataReader);
-            return (MappingUtility.DataTableToList<ReservationViewModel>(dt)).AsQueryable();
+            return (MappingUtility333.DataTableToList<ReservationViewModel>(dt)).AsQueryable();
         }
 
         public void insertReservation(Reservation reservation)

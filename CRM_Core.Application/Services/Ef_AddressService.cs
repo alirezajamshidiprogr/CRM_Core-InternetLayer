@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_AddressService : RepositoryBase<Address>, IAddressService
+    public class Ef_AddressService : DataAccessLayer.Repositories.RepositoryBase<Address>, IAddressService
     {
         public Ef_AddressService(CRM_CoreDB context) : base(context)
         {
