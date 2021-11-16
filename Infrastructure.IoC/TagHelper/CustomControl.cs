@@ -12,9 +12,6 @@ namespace TagHelperSamples.Bootstrap
     {
         public IHtmlContent children { get; set; }
     }
-    /// <summary>
-    /// Panel Tag Helper
-    /// </summary>
     [RestrictChildren("customTag-children")]
     [HtmlTargetElement("customChild-tag")]
     public class CustomChildTagHelper : TagHelper

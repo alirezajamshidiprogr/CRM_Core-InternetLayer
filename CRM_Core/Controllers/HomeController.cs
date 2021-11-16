@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CRM_Core.Application.Interfaces;
 using CRM_Core.Application.ViewModels;
+using CRM_Core.Application.ViewModels.CustomViewModel;
 using CRM_Core.DataAccessLayer;
 using CRM_Core.DomainLayer;
+using CRM_Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,18 +21,22 @@ namespace CRM_Core.Controllers
         #region CONSTANT
         private IMenuService _menuService;
         private IUserMenuService _userMenuService;
+        private IReminderService _reminderService;
         List<MenuViewModel> menu = new List<MenuViewModel>();
         #endregion
 
-        public HomeController(IMenuService menuService , IUserMenuService userMenuService)
+        #region Actions
+        public HomeController(IMenuService menuService , IUserMenuService userMenuService, IReminderService reminderService)
         {
             _menuService = menuService;
             _userMenuService = userMenuService;
+            _reminderService = reminderService;
         }
         public IActionResult Index()
         {
             TempData["UserFullName"] = SessionProperty.FullName;
             List<MenuViewModel> getUserMenu = new List<MenuViewModel>();
+            IEnumerable<ReminderViewModelSearch> reminderList = new List<ReminderViewModelSearch>();
 
             getUserMenu = (from m in _menuService.GetApplicationMenu().ToList()
                             join u in _userMenuService.GetUserMenuByUserIdentity(SessionProperty.UserID) on m.MenuId equals u.TBASMenuId into menuUsers
@@ -72,8 +77,32 @@ namespace CRM_Core.Controllers
             }
 
             this.ViewData["MenuItems"] = this.menu;
-            return View();
+            //reminderList = _remidnerService.GetCurrentReminderDay("[dbo].[Reminder_Search]");
+            //TempData["reminderListData"] = reminderList;
+            return View("HomeIndex");
         }
 
+        [HttpPost]
+        public IActionResult GetCurrentDayInfo()
+        {
+            string errorMessage = string.Empty;
+            string message = string.Empty;
+            IEnumerable<ReminderViewModelSearch> reminderList = new List<ReminderViewModelSearch>();
+            try
+            {
+                reminderList = _reminderService.GetCurrentReminderDay("[dbo].[Reminder_Search]");
+                ViewBag.Title = UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderList;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
+            return Json(new { message = message, errorMessage = errorMessage, reminderListData = reminderList });
+
+        }
+
+        #endregion Action
     }
 }

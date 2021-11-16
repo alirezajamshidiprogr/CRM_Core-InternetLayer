@@ -64,5 +64,4 @@ namespace TagHelperSamples.Bootstrap
             output.SuppressOutput();
         }
     }
-
 }

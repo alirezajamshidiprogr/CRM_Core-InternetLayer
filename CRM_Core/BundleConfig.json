@@ -58,8 +58,8 @@
       "wwwroot/js/CRM/Reservation.js",
       "wwwroot/js/CRM/Personel.js",
       //"wwwroot/js/Messages.js",
-      "wwwroot/js/Login/Login.js",
       "wwwroot/js/CRM/Reminder.js",
+      "wwwroot/js/Login/Login.js",
       "wwwroot/js/CRM/Management.js",
       "wwwroot/js/PersianCalendar/js/persian-datepicker.js",
       "wwwroot/js/PersianCalendar/js/DateTimePicker.js"

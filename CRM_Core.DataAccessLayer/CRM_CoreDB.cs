@@ -62,6 +62,7 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<TransferCosts> TransferCosts { get; set; }
         public virtual DbSet<TBASSalonCosts> TBASSalonCosts { get; set; }
         public virtual DbSet<Reminder> Reminder { get; set; }
+        public virtual DbSet<ReminderDayDetails> ReminderDayDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

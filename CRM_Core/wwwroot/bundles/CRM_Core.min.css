@@ -2707,7 +2707,7 @@ body, #page-content {
     margin-right: 74px;
     padding: 15px;
     height: 124px;
-    width:86% ;
+    width: 86%;
 }
 
 .summeryRowAddEdit {
@@ -3080,8 +3080,8 @@ table tr td {
 }
 
 .shortWidget {
-    float:right ;
-    width : 25% ;
+    float: right;
+    width: 25%;
 }
 
 .Gridbody {
@@ -3116,7 +3116,7 @@ table tr td {
     /*float: right;*/
     display: inline-block;
     padding: 9px;
-    text-align:center;
+    text-align: center;
 }
 
 .divRow {
@@ -3130,7 +3130,7 @@ table tr td {
     border-bottom-color: rgb(236, 235, 235);
     border-bottom-style: solid;
     border-bottom-width: 3px;
-    text-align:right !important;
+    text-align: right !important;
 }
 
 .GridFooter {
@@ -3158,12 +3158,12 @@ table tr td {
 .tabFields {
     float: right;
     width: 26%;
-    margin-bottom:15px;
-    text-align:left ;
+    margin-bottom: 15px;
+    text-align: left;
 }
 
-.btn-radious{
-    border-radius:12px;
+.btn-radious {
+    border-radius: 12px;
 }
 
 .fileBrowser {
@@ -3183,7 +3183,73 @@ table tr td {
     border-radius: 12px;
 }
 
+.containerCollapse {
+    width: 100%;
+    /*border: 1px solid #d3d3d3;*/
+    margin-bottom: 5px;
+    padding: 8px;
+}
 
+    .containerCollapse div {
+        width: 100%;
+    }
+
+    .containerCollapse .header {
+        background-color: #b08080;
+        padding: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: right;
+        margin-top:10px;
+    }
+
+    .containerCollapse .content {
+        display: none;
+        padding: 19px;
+        border: 1px solid #dbd7d7;
+        margin-top: 5px;
+        border-radius: 8px;
+        padding-right: 36px
+    }
+
+.collapsItems {
+    height: auto;
+    width: 18% !important;
+    border: 1px solid #d0c9c9;
+    border-radius: 9px;
+    padding: 9px;
+    text-align: center;
+    /*float: right;*/
+    margin-left: 1%;
+    margin-bottom: 1%;
+}
+
+.collapsItems:hover{
+    border: 1px solid #6c5c5c;
+    background: #edfff9;
+    box-shadow: 2px 3px 4px -1px;
+    cursor: pointer;
+}
+
+.alertDiv {
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 8px;
+    height: auto;
+    text-align: center;
+    padding: 18px;
+    position: absolute;
+    left: 31%;
+    top: 13%;
+    display:none ;
+}
+
+.alertItems {
+    border: 1px solid #dbd9d9;
+    border-radius: 10px;
+    padding: 11px;
+    margin-bottom:5px;
+}
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 

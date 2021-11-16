@@ -4,14 +4,16 @@ using CRM_Core.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM_Core.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CRM_CoreDB))]
-    partial class CRM_CoreDBModelSnapshot : ModelSnapshot
+    [Migration("20211024185959_UpdateTableReminder")]
+    partial class UpdateTableReminder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -550,12 +552,13 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("F_EditDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("F_ReminderDate")
+                    b.Property<string>("F_RegisterDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -564,11 +567,14 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<bool>("IsRepeatReminder")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("M_EditDate")
+                    b.Property<DateTime>("M_EditDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("M_ReminderDate")
+                    b.Property<DateTime>("M_RegisterDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReminderDayDetailId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReminderTitle")
                         .IsRequired()
@@ -582,6 +588,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReminderDayDetailId");
 
                     b.HasIndex("ToPersonelId");
 
@@ -598,12 +606,7 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReminderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ReminderId");
 
                     b.ToTable("ReminderDayDetails");
                 });
@@ -1233,20 +1236,17 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Reminder", b =>
                 {
+                    b.HasOne("CRM_Core.Entities.Models.ReminderDayDetails", "ReminderDayDetails")
+                        .WithMany()
+                        .HasForeignKey("ReminderDayDetailId");
+
                     b.HasOne("CRM_Core.DomainLayer.People", "ToPersonel")
                         .WithMany()
                         .HasForeignKey("ToPersonelId");
 
+                    b.Navigation("ReminderDayDetails");
+
                     b.Navigation("ToPersonel");
-                });
-
-            modelBuilder.Entity("CRM_Core.Entities.Models.ReminderDayDetails", b =>
-                {
-                    b.HasOne("CRM_Core.Entities.Models.Reminder", "Reminder")
-                        .WithMany()
-                        .HasForeignKey("ReminderId");
-
-                    b.Navigation("Reminder");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Salon.SalonCosts", b =>

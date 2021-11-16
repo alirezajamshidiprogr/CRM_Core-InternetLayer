@@ -1,10 +1,14 @@
-﻿
+﻿@using CRM_Core.Application.ViewModels.CustomViewModel;
+
 <link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 
 
-@model CRM_Core.Entities.Models.Reminder
-@{ bool isEdit = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode; }
+@model ReminderViewModel
+@{
+    bool isEdit =  ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode;
+    List<SelectListItem> personnels = ViewBag.Personnels;
+}
 <customChild-tag class="titleForm">
     <customTag-children>
         @ViewBag.Title
@@ -13,24 +17,24 @@
 <br />
 <customChild-tag>
     <customTag-children>
-        @Html.Hidden("salonId", Model != null ? Model.Id : 0)
-        <long-TextBox id="txtReminderTitle" required="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle" value="@(isEdit ? Model.ReminderTitle : string.Empty)"></long-TextBox>
-        <long-TextBox width="200px" id="txtDate" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Date" value="@(isEdit ? Model.F_RegisterDate : string.Empty)"></long-TextBox>
-        <long-time-TextBox id="txtTime" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Time" value="@(isEdit ? Model.Time : string.Empty)"></long-time-TextBox>
-        <dropDown is-long-form="true" width="194" id="cmbSendTo" onchange-drop-down="" label-title="@UI_Presentation.wwwroot.Resources.General.Title.Personel"></dropDown>
-        <Text-Area id="txtDescription" label-title=" @UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
-        <checkBox id="chbRepeated" title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Repeated"></checkBox>
+        @Html.Hidden("ReminderId", Model != null ? Model.Id : 0)
+        <long-TextBox id="txtReminderTitle" required="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle" value="@(isEdit ? Model.ReminderTitle : string.Empty)"/>
+        <long-TextBox width="200px" id="txtDate" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Date" value="@(isEdit ? Model.F_ReminderDate : string.Empty)" />
+        <long-time-TextBox id="txtTime" label-title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Time" value="@(isEdit ? Model.Time : string.Empty)" ></long-time-TextBox>
+        <dropDown is-long-form="true" width="194" id="cmbSendTo" label-title="@UI_Presentation.wwwroot.Resources.General.Title.Personel" drop-down-data-bound="personnels" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.SelectItem" />
+        <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)" />
+        <checkBox id="chbRepeated" title="@UI_Presentation.wwwroot.Resources.Reminder.Title.Repeated" value="@Model.IsRepeatReminder"></checkBox>
     </customTag-children>
 </customChild-tag>
 
 <div id="divDays" style="padding:20px;border:1px solid #b7acac;border-radius:12px;height:85px;margin-top:73px;display:none;">
-    <checkBox id="chbSat" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Satuarday"></checkBox>
-    <checkBox id="chbSun" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Sunday"></checkBox>
-    <checkBox id="chbMon" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Monday"></checkBox>
-    <checkBox id="chbThu" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Thursday"></checkBox>
-    <checkBox id="chbWens" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Wensday"></checkBox>
-    <checkBox id="chbTue" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Tuesday"></checkBox>
-    <checkBox id="chbFri" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Friday"></checkBox>
+    <checkBox id="chbSat" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Satuarday" value="@Model.Satuarday"></checkBox>
+    <checkBox id="chbSun" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Sunday" value="@Model.Sunday"></checkBox>
+    <checkBox id="chbMon" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Monday" value="@Model.Monday"></checkBox>
+    <checkBox id="chbTue" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Tuesday" value="@Model.Tuesday" ></checkBox>
+    <checkBox id="chbWens" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Wensday" value="@Model.Wensday"></checkBox>
+    <checkBox id="chbThu" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Thursday" value="@Model.Thursday"></checkBox>
+    <checkBox id="chbFri" is-shor-check-box="true" title="@UI_Presentation.wwwroot.Resources.General.Title.Friday" value="@Model.Friday"></checkBox>
 </div>
 
 <form-buttons form-name="Reminder" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Register"></form-buttons>
@@ -42,6 +46,9 @@
         altField: '#alternate2',
         altFormat: 'DD، d MM yy'
     });
+
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    checkFieldsStatusReminder('@ViewBag.isRepeatableReminder', model);
 
 </script>
 

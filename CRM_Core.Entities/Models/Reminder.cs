@@ -12,15 +12,12 @@ namespace CRM_Core.Entities.Models
         public int Id { get; set; }
         [Required]
         public string ReminderTitle { get; set; }
-        [Required]
-        public string F_RegisterDate { get; set; }
-        [Required]
-        public int M_RegisterDate { get; set; }
+        public string F_ReminderDate { get; set; }
+        public DateTime? M_ReminderDate { get; set; }
         public string F_EditDate { get; set; }
-        public int M_EditDate { get; set; }
+        public DateTime? M_EditDate { get; set; }
         [Required]
         public string Time { get; set; }
-        [Required]
         public string Description { get; set; }
         public bool IsRepeatReminder { get; set; }
         public bool IsActive { get; set; }
@@ -28,5 +25,15 @@ namespace CRM_Core.Entities.Models
         [ForeignKey("People")]
         public int? ToPersonelId { get; set; }
         public People ToPersonel { get; set; }
+       
+    }
+
+    public class ReminderDayDetails
+    {
+        public int Id { get; set; }
+        public int Day { get; set; }
+        [ForeignKey("Reminder")]
+        public int? ReminderId { get; set; }
+        public Reminder Reminder { get; set; }
     }
 }

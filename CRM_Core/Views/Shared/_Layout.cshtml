@@ -1,5 +1,9 @@
 ﻿@using CRM_Core.Application.ViewModels;
+@using CRM_Core.Application.ViewModels.CustomViewModel;
 
+@{
+    //IEnumerable<ReminderViewModelSearch> reminderList = (IEnumerable<ReminderViewModelSearch>)TempData["reminderListData"];
+}
 
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -399,9 +403,8 @@
                     @Html.Raw(html)
                 }
 
-            </div><!-- /.side-menu-container -->
-        </div><!-- /#sidebar -->
-        <!-- BEGIN PAGE CONTENT -->
+            </div>
+        </div>
         <div id="page-content">
             <div class="row">
                 <div class="col-md-12" id="MainDivPage" style="background:#f6fffd !important">
@@ -410,7 +413,7 @@
                             <div class="portlet-title">
                                 <h3 class="title">
                                 </h3>
-                            </div><!-- /.portlet-title -->
+                            </div>
                             <div class="buttons-box">
                                 <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
                                     <i class="icon-size-fullscreen"></i>
@@ -418,23 +421,24 @@
                                 <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
                                     <i class="icon-arrow-up"></i>
                                 </a>
-                            </div><!-- /.buttons-box -->
-                        </div><!-- /.portlet-heading -->
+                            </div>
+                        </div>
                         <div class="portlet-body">
+                            <div class="alert alert-success alertDiv" id="divAlertItem"></div>
                             <div id="formContainer" style="background: #f6fffd !important;">
                                 <img src="~/image/login/background.png" alt="background-image" width="1169" height="873" />
                             </div>
-                        </div><!-- /.portlet-body -->
-                    </div><!-- /.portlet -->
-                </div><!-- /.col-md-12 -->
+                        </div>
+                    </div>
+                </div>
 
-            </div><!-- /.row -->
+            </div>
 
             <div class="row footer-container">
                 <div class="col-md-12">
                     <div class="copyright">
                         <p class="pull-right">
-                            مشاطه نرم افزار سالن های زیبایی و آرایشی
+                            @UI_Presentation.wwwroot.Resources.General.Title.MoshattehInfo
                         </p>
                         <p class="pull-left ltr tahoma">
                             <span>©</span>
@@ -443,12 +447,9 @@
                     </div><!-- /.copyright -->
                 </div><!-- /.col-md-12 -->
             </div><!-- /.row -->
-        </div><!-- /#page-content -->
-        <!-- END PAGE CONTENT -->
+        </div>
 
-    </div><!-- /#wrapper -->
-    <!-- END WRAPPER -->
-    <!-- BEGIN SETTING -->
+    </div>
     <div class="settings hidden-xs">
         <a href="#" class="btn" id="toggle-setting">
             <i class="icon-settings"></i>
@@ -550,8 +551,8 @@
         <script src="~/js/CRM/Salon.js"></script>
         <script src="~/js/CRM/Reservation.js"></script>
         <script src="~/js/CRM/Personel.js"></script>
-        <script src="~/js/Login/Login.js"></script>
         <script src="~/js/CRM/Reminder.js"></script>
+        <script src="~/js/Login/Login.js"></script>
         <script src="~/js/CRM/Management.js"></script>
         <script src="~/js/PersianCalendar/js/persian-datepicker.js"></script>
         <script src="~/js/PersianCalendar/js/DateTimePicker.js"></script>
@@ -569,6 +570,10 @@
             altField: '#alternate2',
             altFormat: 'DD، d MM yy'
         });
+
+        GetCurrentDayDataServer();
+
     </script>
 </body>
 </html>
+

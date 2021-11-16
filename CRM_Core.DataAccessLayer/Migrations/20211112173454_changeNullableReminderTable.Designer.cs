@@ -4,14 +4,16 @@ using CRM_Core.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM_Core.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CRM_CoreDB))]
-    partial class CRM_CoreDBModelSnapshot : ModelSnapshot
+    [Migration("20211112173454_changeNullableReminderTable")]
+    partial class changeNullableReminderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

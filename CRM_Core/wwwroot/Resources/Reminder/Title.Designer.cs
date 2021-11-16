@@ -79,11 +79,38 @@ namespace UI_Presentation.wwwroot.Resources.Reminder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to روز.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ویرایش یادآور.
         /// </summary>
         public static string EditReminder {
             get {
                 return ResourceManager.GetString("EditReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یادآور های فردا.
+        /// </summary>
+        public static string NextDayReminder {
+            get {
+                return ResourceManager.GetString("NextDayReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یادآورهای سایر ماه ها.
+        /// </summary>
+        public static string OtherMonthReminder {
+            get {
+                return ResourceManager.GetString("OtherMonthReminder", resourceCulture);
             }
         }
         
@@ -124,11 +151,38 @@ namespace UI_Presentation.wwwroot.Resources.Reminder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to یادآور های این ماه.
+        /// </summary>
+        public static string ThisMonthReminder {
+            get {
+                return ResourceManager.GetString("ThisMonthReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یادآورهای این هفته.
+        /// </summary>
+        public static string ThisWeekReminder {
+            get {
+                return ResourceManager.GetString("ThisWeekReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ساعت.
         /// </summary>
         public static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یادآورهای امروز.
+        /// </summary>
+        public static string TodayReminder {
+            get {
+                return ResourceManager.GetString("TodayReminder", resourceCulture);
             }
         }
     }

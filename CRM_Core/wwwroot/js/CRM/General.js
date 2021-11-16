@@ -1,5 +1,16 @@
 ﻿var currentDivId = '';
 var pageNumber = 0;
+var reminderList = new Array();
+var reminderIdArray = new Array();
+var hasShownRemidner = false;
+var offDisplayinReminder = false;
+//setInterval(function () {
+//    GetCurrentDayDataServer();
+//}, 60000);
+
+setInterval(function () {
+    DisplayCurrentDayData();
+}, 5000);
 
 function onClickInput(e) {
     var inputId = e.id;
@@ -239,17 +250,6 @@ function concatColonToLables() {
 
 function btnDisplayHomePage() {
     window.open("/Home/Index", target = "_self");
-    // $.ajax({
-    //    type: "POST",
-    //    url: "/People/AddEditPeople",
-    //    data: {},
-    //    success: function (data) {
-    //        //$("#formContainer").html(data);
-    //    },
-    //    error: function (httpRequest, textStatus, errorThrown) {
-    //        alert("Error: " + textStatus + " " + errorThrown + " " + httpRequest);
-    //    }
-    //});
 }
 
 function ShowDashboard() {
@@ -401,7 +401,6 @@ function isValueNumber(value) {
 }
 
 function clearAllInputs() {
-    debugger;
     var inputs = document.getElementsByTagName('input');
     var textArea = document.getElementsByTagName('textarea');
     var select = document.getElementsByTagName('select');
@@ -435,16 +434,15 @@ function clearAllInputs() {
         }
         var idselect = select[i].id;
         if (document.getElementById(idselect) != null && document.getElementById(idselect) != undefined)
-                document.getElementById(idselect).selectedIndex = 0;
+            document.getElementById(idselect).selectedIndex = 0;
     }
 }
 
 function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
-    debugger;
-   
+
     switch (state) {
         case "forward":
-            pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10)) ;
+            pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10));
             break;
         case "right":
             pageNumber = parseInt(page_Number) - 1;
@@ -473,7 +471,92 @@ function chbClickState(chbId) {
         isChecked = false;
     }
 
-    
+
     if (chbId == "chbRepeated")
         onChangechbRepeatedClick(isChecked);
+}
+
+function GetCurrentDayDataServer() {
+    $.ajax({
+        type: "POST",
+        url: "/Home/GetCurrentDayInfo",
+        data: {},
+        success: function (result) {
+            if (result.errorMessage != '') {
+                ErrorMessage(result.errorMessage);
+                return;
+            }
+            for (var i = 0; i < result.reminderListData.length; i++)
+                reminderList.push({ id: result.reminderListData[i].id, personnel: result.reminderListData[i].personnel, time: result.reminderListData[i].time, reminderTitle: result.reminderListData[i].reminderTitle });
+        },
+        error: function (result) {
+            ErrorMessage();
+        }
+    });
+}
+
+function DisplayCurrentDayData() {
+    var hasAlertItem = false;
+    var date = new Date();
+    var options = { hour12: false };
+    var getCurrentTime = date.toLocaleTimeString('en-US', options);
+    var reminderElem = document.getElementById("divAlertItem");
+
+    //reminderElem.style.display = 'none';
+
+    if (reminderList.length > 0 && reminderList != undefined) {
+        reminderElem.innerHTML = '';
+
+        var divHeader = document.createElement('div');
+        divHeader.className = 'item';
+        divHeader.innerHTML = "<div><i class='fa fa-bell' aria-hidden='true' style='font-size: 47px;margin-bottom: 15px;color: darksalmon;'></i>";
+        divHeader.innerHTML += "<span style='font-size:14px;color:black;'>" + "یادآور های ساعت :" + reminderList[0].time +"</span></div>";
+
+        reminderElem.appendChild(divHeader);
+
+        if (reminderList == undefined) return;
+
+        for (var i = 0; i < (reminderList.length) + 4; i++) {
+            for (var j = 0; j < reminderIdArray.length; j++) {
+                if (reminderIdArray[j].id == reminderList[i].id) return;
+            }
+            var timeReminder = new Date("2020 08 08 " + reminderList[0].time);
+            var timeCurrent = new Date("2020 08 08 " + getCurrentTime);
+            var date1_ms = timeReminder.getMinutes();
+            var date2_ms = timeCurrent.getMinutes();
+            var date1_hours = timeReminder.getHours();
+            var date2_hours = timeCurrent.getHours();
+
+            if (offDisplayinReminder && (date2_ms - date1_ms == 0 || date2_ms - date1_ms == 1)) return;
+
+            if (hasShownRemidner == true || ((date2_hours == date1_hours) && (date2_ms - date1_ms == 0 || date2_ms - date1_ms == 1))) {
+                hasShownRemidner = true;
+                offDisplayinReminder = false ;
+                hasAlertItem = true;
+                var alertItems = document.createElement('div');
+                alertItems.className = 'alertItems';
+                //alertItems.innerHTML += "<button onclick='SetReminderOff(this)' style='width: 108px;float:right;' class='btn btn-danger curve'><i class='fa fa-bell-slash-o' aria-hidden='true' style='font-size:22px; color:rebeccapurple;text-align:right;'></i>لغو هشدار<div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0.00216; '></div><div class='paper - ripple__waves'></div></div><div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0.0076;'></div><div class='paper-ripple__waves'></div></div></button>";
+                alertItems.innerHTML += "<span style='color: rebeccapurple;text-align:center;font-size: 17px;'>" + reminderList[0].reminderTitle + "</span>";
+                alertItems.innerHTML += "<span class='reminderId' style='display:none ;'>" + reminderList[0].id + "</span>";
+                reminderElem.appendChild(alertItems);
+            }
+        }
+
+        if (hasShownRemidner == true || ((date2_hours == date1_hours) && (date2_ms - date1_ms == 0 || date2_ms - date1_ms == 1))) {
+            var dismissDiv = document.createElement('div');
+            dismissDiv.innerHTML += "<button onclick='SetReminderOff()' style='width: 100%; float:left ;' class='btn btn-success curve'><i class='fa fa-bell-slash-o' aria-hidden='true' style='font-size: 22px;color: rebeccapurple;text-align: right;'></i>لغو یادآور ها<div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0.00216;'></div><div class='paper-ripple__waves'></div></div><div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0.0076;'></div><div class='paper-ripple__waves'></div></div></button>";
+            reminderElem.appendChild(dismissDiv);
+            $("#divAlertItem").slideDown(1500);
+        }
+
+        if (hasAlertItem)
+            reminderElem.style.display = 'block';
+    }
+}
+
+function SetReminderOff() {
+    offDisplayinReminder = true;
+    hasShownRemidner = false;
+    $("#divAlertItem").fadeOut(1500);
+
 }

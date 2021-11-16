@@ -1,0 +1,44 @@
+﻿@using CRM_Core.Infrastructure ;
+@using CRM_Core.Application.ViewModels.CustomViewModel;
+@using System.Data;
+@{
+
+    @model IEnumerable<CRM_Core.Application.ViewModels.CustomViewModel.ReminderViewModelSearch>
+
+    DateTime getDate = DateTime.Now;
+
+    List<string> Header = new List<string>();
+    List<string> HeaderTitle = new List<string>();
+    DataTable dtToday = Model.Where(item => item.RemiderStateNumber == 0 || (item.IsRepeatableReminder && getDate.DayOfWeek.ToString() == item.DayNameEn)).ToList().ToDataTable<ReminderViewModelSearch>();
+    DataTable dtNextDay = Model.Where(item => item.RemiderStateNumber == 1 || (item.IsRepeatableReminder && getDate.AddDays(1).DayOfWeek.ToString() == item.DayNameEn)).ToList().ToDataTable<ReminderViewModelSearch>();
+    DataTable dtThisWeek = Model.Where(item => item.RemiderStateNumber == 2 || item.IsRepeatableReminder).ToList().ToDataTable<ReminderViewModelSearch>();
+    DataTable dtThisMonth = Model.Where(item => item.RemiderStateNumber == 3 || item.IsRepeatableReminder).ToList().ToDataTable<ReminderViewModelSearch>();
+    DataTable dtOtherMonth = Model.Where(item => item.RemiderStateNumber == 4 || item.IsRepeatableReminder).ToList().ToDataTable<ReminderViewModelSearch>();
+
+    Header.Add("Id");
+    Header.Add(UI_Presentation.wwwroot.Resources.Reminder.Title.ReminderTitle);
+    Header.Add(UI_Presentation.wwwroot.Resources.Reminder.Title.Date);
+    Header.Add(UI_Presentation.wwwroot.Resources.Reminder.Title.Time);
+    Header.Add(UI_Presentation.wwwroot.Resources.General.Title.Personel);
+    Header.Add(UI_Presentation.wwwroot.Resources.Reminder.Title.Day);
+
+        <item-collapse model-list-table="dtToday" icon-class="fa fa-bell-o" on-click-event="collapseItemClick(this)" header-title="Header" header-name="@UI_Presentation.wwwroot.Resources.Reminder.Title.TodayReminder" />
+        <item-collapse model-list-table="dtNextDay" icon-class="fa fa-bell-o" on-click-event="collapseItemClick(this)" header-title="Header" header-name="@UI_Presentation.wwwroot.Resources.Reminder.Title.NextDayReminder" />
+        <item-collapse model-list-table="dtThisWeek" icon-class="fa fa-bell-o" on-click-event="collapseItemClick(this)" header-title="Header" header-name="@UI_Presentation.wwwroot.Resources.Reminder.Title.ThisWeekReminder" />
+        <item-collapse model-list-table="dtThisMonth" icon-class="fa fa-bell-o" on-click-event="collapseItemClick(this)" header-title="Header" header-name="@UI_Presentation.wwwroot.Resources.Reminder.Title.ThisMonthReminder" />
+        <item-collapse model-list-table="dtOtherMonth" icon-class="fa fa-bell-o" on-click-event="collapseItemClick(this)" header-title="Header" header-name="@UI_Presentation.wwwroot.Resources.Reminder.Title.OtherMonthReminder" />
+}
+
+
+<script>
+    $(".header").click(function () {
+        $header = $(this);
+        $content = $header.next();
+        $content.slideToggle(500, function () {
+            $header.text(function () {
+                //return $content.is(":visible") ? "<span>html</span>" : "<span>not html </span>";
+            });
+        });
+
+    });
+</script>

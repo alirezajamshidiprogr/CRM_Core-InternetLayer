@@ -6,6 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagHelperSamples.Bootstrap;
+using CRM_Core.Application.Interfaces;
+using CRM_Core.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Linq.Expressions;
 
 namespace UI_Presentation.Models
 {
@@ -18,7 +23,7 @@ namespace UI_Presentation.Models
         public string Title { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagMode = TagMode.SelfClosing;
             var sb = new StringBuilder();
             sb.AppendFormat("<button type='button' onclick ={0} class ='{1}' ><i class='{2}' ></i>&nbsp;{3} </button>", onClickEvent, buttomClass, icon, Title);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -41,7 +46,7 @@ namespace UI_Presentation.Models
             html += string.Format("<input id='{0}' placeholder='{1}' class='{2}' type='{3}' {4} style='width:160px !important;float:left;' value='{5}' />", Id, labelTitle, isDateType ? "form-control txtDate" : "form-control", "text", required ? "required=required" : "", value != string.Empty ? value : string.Empty);
             html += "</div>";
 
-            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagMode = TagMode.SelfClosing;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -58,11 +63,11 @@ namespace UI_Presentation.Models
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html =string.Format("<div class='tabFields' style='{0}'><div class='input-group round'>" , IsShorCheckBox ? "width:10% !important;" : "clear:both;width:100% !important;");
+            html = string.Format("<div class='tabFields' style='{0}'><div class='input-group round'>", IsShorCheckBox ? "width:10% !important;" : "clear:both;width:100% !important;");
             html += string.Format("<div onclick='chbClickState(\"" + Id + "\")' class='checkbox' style='cursor: pointer;'><div class='{0}' style='position: relative;border:1px solid;'>", Value ? "icheckbox_square-grey checked" : "icheckbox_square-grey"); ;
-            html += string.Format("<input  style='position: absolute; opacity: 0; ' type='checkbox'  id='{0}' name='{1}' value='{2}'></div>" , Id, string.Empty, Value, Title);
-            html += "<span style='margin-right:10px;'>" + Title +"</span>";
-            html += "</div></div></div>"; 
+            html += string.Format("<input  style='position: absolute; opacity: 0; ' type='checkbox'  id='{0}' name='{1}' value='{2}'></div>", Id, string.Empty, Value, Title);
+            html += "<span style='margin-right:10px;'>" + Title + "</span>";
+            html += "</div></div></div>";
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
@@ -76,12 +81,13 @@ namespace UI_Presentation.Models
         public string Id { get; set; }
         public string labelTitle { get; set; }
         public bool required { get; set; } = false;
+        public string Value{ get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
             html += "<div class='tabFields' style='width:100%;text-align:right;'>";
             html += string.Format("<div style='float: right;'><label class='labelWidget clockpicker-autoclose' style='width:101px !important;'>{0}</label></div>", labelTitle);
-            html += string.Format("<div class='input-group'><span class='input-group-addon'><i class='icon-clock'></i></span> <input style='width:155px !important;' id='{0}' placeholder='{1}' class='form-control clockpicker-autoclose' required='{2}'></div>", Id, labelTitle, required ? "required" : "");
+            html += string.Format("<div class='input-group'><span class='input-group-addon'><i class='icon-clock'></i></span> <input style='width:155px !important;' id='{0}' placeholder='{1}' class='form-control clockpicker-autoclose' required='{2}' value='{3}'></div>", Id, labelTitle, required ? "required" : "", Value);
             html += "</div>";
 
             output.TagMode = TagMode.StartTagAndEndTag;
@@ -127,7 +133,7 @@ namespace UI_Presentation.Models
             html += string.Format("<a href = '#' class='btn btn-success' style='margin-bottom:7px;' data-toggle='dropdown' onclick='{0}'>", OnClick);
             html += string.Format("<i class='{0}' style='padding:5px;'></i>{1}</a></div>", IconClass, Title);
 
-            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagMode = TagMode.SelfClosing;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -501,6 +507,74 @@ namespace UI_Presentation.Models
             //var sb = new StringBuilder();
             //sb.AppendFormat(html);
             //output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("collapse-header")]
+    public class CollapseHeader : TagHelper
+    {
+        public string Title { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format(@"<div class='header'><span>{0}</span>", Title);
+            html += "<i class='fa fa-sort-desc' aria-hidden='true'></i></div>";
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("item-collapse")]
+    public class CollapseItemDetails : TagHelper
+    {
+        public string IconClass { get; set; }
+        public DataTable ModelListTable { get; set; }
+        public List<string> HeaderTitle { get; set; }
+        public string HeaderName { get; set; }
+        public string OnClickEvent { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            int counter = 1;
+            string html = string.Empty;
+
+            html += "<div class='containerCollapse'>";
+            html += string.Format("<div class='header'><span style='margin-left:5px;'>{0}</span><i class='fa fa-sort-desc' aria-hidden='true'></i></div>", HeaderName);
+            html += "<div class='content'>";
+
+            for (int i = 0; i < ModelListTable.Rows.Count; i++)
+            {
+                if (counter % 5 == 0 || counter == 1)
+                    html += "<div class='row' style='margin-top:10px;'>";
+
+                html += string.Format("<div class='col-lg-4 collapsItems' onclick='{0}'><div><i class='{1}' aria-hidden='true' style='font-size:34px;text-align:center;'></i></div>", OnClickEvent, IconClass);
+
+                for (int j = 0; j < HeaderTitle.Count ; j++)
+                {
+                    if (j == 0)
+                        html += string.Format("<div><span class='collapseId' style='display:none;'>{0}</span></div>", ModelListTable.Rows[i][j]);
+                    else
+                    {
+                        html += string.Format(@"<div><span style='font-size:1.2em;'> {0} </span>", HeaderTitle[j] + " : ");
+                        html += string.Format(@"<span>{0}</span></div>", ModelListTable.Rows[i][j]); // FIRST COLUMN ALWAYS MUST BE ID 
+                    }
+                }
+                html += "</div>";
+
+                if (counter % 5 == 0 || counter == ModelListTable.Rows.Count)
+                    html += "</div>";
+
+                counter += 1;
+            }
+
+            html += "</div></div></div>";
+            output.TagMode = TagMode.SelfClosing;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
         }
     }
 }

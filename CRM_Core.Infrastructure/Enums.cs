@@ -103,5 +103,11 @@ namespace CRM_Core.Infrastructure
             [Description("پست")]
             Post = 4,
         }
+
+        public enum PeopleCategory
+        {
+            Customer = 1 ,
+            Personnel= 2,
+        }
     }
 }

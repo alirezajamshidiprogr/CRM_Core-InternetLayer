@@ -1,16 +1,17 @@
-﻿var isRepeatedDaysChecked;
+﻿var isRepeatedDaysChecked = false;
 
-function btnOpenEditReminder() {
+function btnOpenEditReminder(id) {
     enablePageloadding();
     $.ajax({
         type: "POST",
         url: "/Reminder/AddEditReminder",
-        data: {},
+        data: { reminderId: id },
         success: function (data) {
             disablePageloadding();
             $("#formContainer").html(data);
         },
         error: function (httpRequest, textStatus, errorThrown) {
+            disablePageloadding();
             alert("Error: " + textStatus + " " + errorThrown + " " + httpRequest);
         }
     });
@@ -32,21 +33,45 @@ function onChangechbRepeatedClick(isChecked) {
     }
 }
 
-function btnAddEditReminder() {
+function btnAddEditReminder(id) {
+    var isEdit = false;
     enablePageloadding();
     if (isRepeatedDaysChecked)
         var getWeekDays = getWeekDayReminder();
 
+    var reminderInfo = {
+        Id: $("#ReminderId").val(),
+        ReminderTitle: $("#txtReminderTitle").val(),
+        F_ReminderDate: $("#txtDate").val(),
+        Time: $("#txtTime").val(),
+        ToPersonelId: $("#cmbSendTo").val(),
+        Description: $("#txtDescription").val(),
+        IsRepeatReminder: isRepeatedDaysChecked,
+    };
+    if (reminderInfo.Id > 0)
+        isEdit = true;
+
+    enablePageloadding();
     $.ajax({
         type: "POST",
-        url: "/Salon/AddEditSalon",
-        data: {},
-        success: function (data) {
-            disablePageloadding();
-            $("#formContainer").html(data);
+        url: "/Reminder/AddEditReminderMethod",
+        data: {
+            isEdit: isEdit,
+            days: getWeekDays,
+            reminderInfo: reminderInfo,
         },
-        error: function (httpRequest, textStatus, errorThrown) {
-            alert("Error: " + textStatus + " " + errorThrown + " " + httpRequest);
+        success: function (result) {
+            if (result.errorMessage != '') {
+                ErrorMessage(result.errorMessage);
+                return;
+            }
+            //GetCurrentDayData(result.reminderListData,'reminder')
+            SuccessMessage(result.message);
+            disablePageloadding();
+            ShowDashboard();
+        },
+        error: function (result) {
+            ErrorMessage();
         }
     });
 }
@@ -87,3 +112,79 @@ function getWeekDayReminder() {
     }
     return days;
 }
+
+function btnShowReminderList() {
+    enablePageloadding();
+    $.ajax({
+        type: "GET",
+        url: "/Reminder/Index",
+        data: {},
+        success: function (data) {
+            disablePageloadding();
+            $("#formContainer").html(data);
+        },
+        error: function (httpRequest, textStatus, errorThrown) {
+            disablePageloadding();
+            ErrorMessage();
+        }
+    });
+}
+
+function collapseItemClick(e) {
+    var Id;
+    if (e.childNodes[1].childNodes[0].className == 'collapseId')
+        Id = e.childNodes[1].childNodes[0].innerHTML;
+    btnOpenEditReminder(Id);
+}
+
+function checkFieldsStatusReminder(isRepeatedReminder, model) {
+
+    var txtDate = document.getElementById('txtDate');
+    var chbRepeated = document.getElementById('chbRepeated');
+    var divDays = document.getElementById('divDays');
+
+    if (isRepeatedReminder == 'True') {
+        isRepeatedDaysChecked = true;
+        txtDate.style.opacity = "0.5";
+        txtDate.style.pointerEvents = "none";
+        chbRepeated.className = "icheckbox_square-grey checked";
+        divDays.style.display = 'block';
+        var chbSat = document.getElementById('chbSat');
+        var chbSun = document.getElementById('chbSun');
+        var chbMon = document.getElementById('chbMon');
+        var chbTue = document.getElementById('chbTue');
+        var chbWens = document.getElementById('chbWens');
+        var chbThu = document.getElementById('chbThu');
+        var chbFri = document.getElementById('chbFri');
+
+        if (model.Satuarday == true)
+            chbSat.className = "icheckbox_square-grey checked";
+        if (model.Sunday == true)
+            chbSun.className = "icheckbox_square-grey checked";
+        if (model.Monday == true)
+            chbMon.className = "icheckbox_square-grey checked";
+        if (model.Thursday == true)
+            chbTue.className = "icheckbox_square-grey checked";
+        if (model.Wensday == true)
+            chbWens.className = "icheckbox_square-grey checked";
+        if (model.Tuesday == true)
+            chbThu.className = "icheckbox_square-grey checked";
+        if (model.Friday == true)
+            chbFri.className = "icheckbox_square-grey checked";
+
+    }
+}
+
+function btnCloseReminder() {
+
+}
+//function SetReminderOff(e) {
+//    debugger; 
+//    var parentDiv = e.parentNode;
+//    for (var i = 0; i < parentDiv.childNodes.length; i++) {
+//        if (parentDiv.childNodes[i].className == "reminderId") 
+//                reminderIdArray.push({ id: parentDiv.childNodes[i].innerHTML });
+//    }
+//    $("#parentDiv").hide(3000);
+
+//}

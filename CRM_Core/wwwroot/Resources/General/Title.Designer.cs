@@ -124,6 +124,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to یادآوری دوباره.
+        /// </summary>
+        public static string AgainReminder {
+            get {
+                return ResourceManager.GetString("AgainReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;&lt; همه &gt;&gt;.
         /// </summary>
         public static string AllItems {
@@ -138,6 +147,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string Backup {
             get {
                 return ResourceManager.GetString("Backup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لغو هشدار.
+        /// </summary>
+        public static string CancelReminder {
+            get {
+                return ResourceManager.GetString("CancelReminder", resourceCulture);
             }
         }
         
@@ -417,6 +435,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string Monday {
             get {
                 return ResourceManager.GetString("Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشاطه نرم افزار سالن های زیبایی و آرایشی.
+        /// </summary>
+        public static string MoshattehInfo {
+            get {
+                return ResourceManager.GetString("MoshattehInfo", resourceCulture);
             }
         }
         
@@ -772,7 +799,7 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to سه شنبه.
+        ///   Looks up a localized string similar to پنجشنبه.
         /// </summary>
         public static string Thursday {
             get {
@@ -790,7 +817,7 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to پنجشنبه.
+        ///   Looks up a localized string similar to سه شنبه.
         /// </summary>
         public static string Tuesday {
             get {

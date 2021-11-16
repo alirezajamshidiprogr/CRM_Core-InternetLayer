@@ -123,8 +123,17 @@
   <data name="Date" xml:space="preserve">
     <value>تاریخ</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>روز</value>
+  </data>
   <data name="EditReminder" xml:space="preserve">
     <value>ویرایش یادآور</value>
+  </data>
+  <data name="NextDayReminder" xml:space="preserve">
+    <value>یادآور های فردا</value>
+  </data>
+  <data name="OtherMonthReminder" xml:space="preserve">
+    <value>یادآورهای سایر ماه ها</value>
   </data>
   <data name="ReminderList" xml:space="preserve">
     <value>لیست یادآورها</value>
@@ -138,7 +147,16 @@
   <data name="SendTo" xml:space="preserve">
     <value>ارسال به</value>
   </data>
+  <data name="ThisMonthReminder" xml:space="preserve">
+    <value>یادآور های این ماه</value>
+  </data>
+  <data name="ThisWeekReminder" xml:space="preserve">
+    <value>یادآورهای این هفته</value>
+  </data>
   <data name="Time" xml:space="preserve">
     <value>ساعت</value>
+  </data>
+  <data name="TodayReminder" xml:space="preserve">
+    <value>یادآورهای امروز</value>
   </data>
 </root>

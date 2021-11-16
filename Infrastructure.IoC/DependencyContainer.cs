@@ -42,6 +42,8 @@ namespace Infrastructure.IoC
              services.AddScoped<ITransferCostsService, Ef_TransferCostsService>();
              services.AddScoped<IBillCostsService, Ef_BillCostsService>();
              services.AddScoped<ITBASSalonCostsService, Ef_TBASSalonCostsService>();
+             services.AddScoped<IReminderService, Ef_ReminderService>();
+             services.AddScoped<IReminderDayDetailsService, Ef_ReminderDayDetailsService>();
              //services.AddTransient<IMyRepository, MyRepository>();
 
             return services;

@@ -138,11 +138,17 @@
   <data name="Address" xml:space="preserve">
     <value>آدرس </value>
   </data>
+  <data name="AgainReminder" xml:space="preserve">
+    <value>یادآوری دوباره</value>
+  </data>
   <data name="AllItems" xml:space="preserve">
     <value>&lt;&lt; همه &gt;&gt;</value>
   </data>
   <data name="Backup" xml:space="preserve">
     <value>پشتیبان گیری</value>
+  </data>
+  <data name="CancelReminder" xml:space="preserve">
+    <value>لغو هشدار</value>
   </data>
   <data name="CheckRepeatedMobiles" xml:space="preserve">
     <value>شماره های همراه تکراری را چک کن </value>
@@ -236,6 +242,9 @@
   </data>
   <data name="Monday" xml:space="preserve">
     <value>دوشنبه</value>
+  </data>
+  <data name="MoshattehInfo" xml:space="preserve">
+    <value>مشاطه نرم افزار سالن های زیبایی و آرایشی</value>
   </data>
   <data name="OnlineTime" xml:space="preserve">
     <value>ساعت جاری :</value>
@@ -355,13 +364,13 @@
     <value>یکشنبه</value>
   </data>
   <data name="Thursday" xml:space="preserve">
-    <value>سه شنبه</value>
+    <value>پنجشنبه</value>
   </data>
   <data name="ToDate" xml:space="preserve">
     <value>تا تاریخ</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
-    <value>پنجشنبه</value>
+    <value>سه شنبه</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>آپلود فایل</value>

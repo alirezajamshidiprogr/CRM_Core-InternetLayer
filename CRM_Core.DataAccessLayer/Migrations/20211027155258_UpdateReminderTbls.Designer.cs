@@ -4,14 +4,16 @@ using CRM_Core.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM_Core.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CRM_CoreDB))]
-    partial class CRM_CoreDBModelSnapshot : ModelSnapshot
+    [Migration("20211027155258_UpdateReminderTbls")]
+    partial class UpdateReminderTbls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -550,6 +552,7 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("F_EditDate")
@@ -586,26 +589,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.HasIndex("ToPersonelId");
 
                     b.ToTable("Reminder");
-                });
-
-            modelBuilder.Entity("CRM_Core.Entities.Models.ReminderDayDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ReminderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReminderId");
-
-                    b.ToTable("ReminderDayDetails");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Salon.BillCosts", b =>
@@ -1238,15 +1221,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasForeignKey("ToPersonelId");
 
                     b.Navigation("ToPersonel");
-                });
-
-            modelBuilder.Entity("CRM_Core.Entities.Models.ReminderDayDetails", b =>
-                {
-                    b.HasOne("CRM_Core.Entities.Models.Reminder", "Reminder")
-                        .WithMany()
-                        .HasForeignKey("ReminderId");
-
-                    b.Navigation("Reminder");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Salon.SalonCosts", b =>
