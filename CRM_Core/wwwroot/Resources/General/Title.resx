@@ -306,6 +306,9 @@
   <data name="Restore" xml:space="preserve">
     <value>بازگردانی نسخه پشتیبان</value>
   </data>
+  <data name="Rial" xml:space="preserve">
+    <value>ریال</value>
+  </data>
   <data name="Role" xml:space="preserve">
     <value>وظایف</value>
   </data>

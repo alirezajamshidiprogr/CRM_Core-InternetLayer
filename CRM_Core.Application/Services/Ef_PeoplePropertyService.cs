@@ -39,14 +39,14 @@ namespace CRM_Core.Application.Services
             return FindByCondition(item => item.TBASPeopleTypeField == number);
         }
 
-        public IEnumerable<PeopleProperty> GetPeoplePrpoertyMobiles(People people, int mobile, int mobileComment)
+        public IEnumerable<PeopleProperty> GetPeoplePrpoertyMobiles(People people, int mobile)
         {
-            return FindByCondition(item => item.People.Equals(people) && (item.TBASPeopleTypeField.Equals(mobile) || item.TBASPeopleTypeField.Equals(mobileComment)));
+            return FindByCondition(item => item.People.Equals(people) && item.TBASPeopleTypeField.Equals(mobile));
         }
 
-        public IEnumerable<PeopleProperty> GetPeoplePrpoertyTels(People people, int code, int number, int telCommetn)
+        public IEnumerable<PeopleProperty> GetPeoplePrpoertyTels(People people, int number)
         {
-            return FindByCondition(item => item.People.Equals(people) && (item.TBASPeopleTypeField.Equals(code) || item.TBASPeopleTypeField.Equals(number) || item.TBASPeopleTypeField.Equals(telCommetn)));
+            return FindByCondition(item => item.People.Equals(people) &&  item.TBASPeopleTypeField.Equals(number));
         }
     }
 }

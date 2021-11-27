@@ -103,7 +103,10 @@ namespace CRM_Core.Controllers
             if (state == "isEditMode")
                 ViewBag.isEditMode = true;
             else if (state == "isSelectedMode")
+            {
                 ViewBag.isSelectedMode = true;
+                TempData["IsSelectMode"] = true;
+            }
             else if (state == "isPrintMode")
                 ViewBag.isPrintMode = true;
 
@@ -115,8 +118,8 @@ namespace CRM_Core.Controllers
 
                 if (quickSearch)
                 {
-                    searchParameter = new string[] { "@FullName" };
-                    searchValues = new object[] { fullName };
+                    searchParameter = new string[] { "@FullName" , "@Page" , "@PageSize" , "@Sort" };
+                    searchValues = new object[] { fullName , searchParams.PageNumber , 10 , string.Empty };
                 }
                 else
                 {
@@ -124,8 +127,10 @@ namespace CRM_Core.Controllers
                     {
                      "@FirstName"
                     ,"@LastName"
-                    ,"@Age"
-                    ,"@Birthday"
+                    ,"@FromAge"
+                    ,"@ToAge"
+                    ,"@FromBirthday"
+                    ,"@ToBirthday"
                     ,"@TBASPotentialId"
                     ,"@TBASIntroduceId"
                     ,"@TBASIntroductionTypeId"
@@ -136,29 +141,41 @@ namespace CRM_Core.Controllers
                     ,"@CertificateCode"
                     ,"@ManualCode"
                     ,"@SystemCode"
+                    ,"@Page"
+                    ,"@PageSize"
+                    ,"@Sort"
                     };
 
                     searchValues = new object[]
                     {
-                    searchParams.FirstName
-                   ,searchParams.LastName
-                   ,searchParams.Age
-                   ,searchParams.Birthday.ToMiladiDate()
-                   ,searchParams.TBASPotentialId
-                   ,searchParams.TBASIntroduceId
-                   ,searchParams.TBASIntroductionTypeId
-                   ,searchParams.MariedType
-                   ,searchParams.TBASGradationsId
-                   ,searchParams.TBASCategoriyId
-                   ,searchParams.TBASPrefixID
-                   ,searchParams.CertificateCode
-                   ,searchParams.ManualCode
-                   ,searchParams.SystemCode
+                        searchParams.FirstName
+                       ,searchParams.LastName
+                       ,searchParams.FromAge
+                       ,searchParams.ToAge
+                       ,searchParams.FromBirthday.ToDateTime() 
+                       ,searchParams.ToBirthday.ToDateTime() 
+                       ,searchParams.TBASPotentialId
+                       ,searchParams.TBASIntroduceId
+                       ,searchParams.TBASIntroductionTypeId
+                       ,searchParams.MariedType
+                       ,searchParams.TBASGradationsId
+                       ,searchParams.TBASCategoriyId
+                       ,searchParams.TBASPrefixID
+                       ,searchParams.CertificateCode
+                       ,searchParams.ManualCode
+                       ,searchParams.SystemCode
+                       ,searchParams.PageNumber
+                       ,10
+                       ,string.Empty
                     };
                 }
-               
-                peopleList.Records = _peopleService.GetPeopleByADO("[dbo].[People_Search]", searchParameter, searchValues);
+                DataSet dsData = _peopleService.GetPeopleDataTable("[dbo].[People_Search]", searchParameter, searchValues);
+                ViewBag.totalAllRecords = (int)dsData.Tables[1].Rows[0][0];
+                ViewBag.pageNumber = searchParams.PageNumber;
+                peopleList.Records = MappingUtility.DataTableToList<PeopleModel>(dsData.Tables[0]).AsQueryable();
                 peopleList.TotalCount = peopleList.Records.Count();
+
+                //peopleList.Records = _peopleService.GetPeopleByADO("[dbo].[People_Search]", searchParameter, searchValues);
             }
             catch (Exception ex)
             {
@@ -166,7 +183,7 @@ namespace CRM_Core.Controllers
                 Utility.RegisterErrorLog(ex, SessionProperty.UserName);
                 return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
-            return PartialView(peopleList);
+            return PartialView("FillPeopleTableData", peopleList);
         }
 
         [HttpPost]
@@ -185,11 +202,11 @@ namespace CRM_Core.Controllers
                 peopleViewModel.TBASIntroductionTypeItems = _introductionTypeService.GetIntroductionTypes();
 
                 List<SelectListItem> marriedItems = new List<SelectListItem>()
-                    {
-                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Single, Value = "1", Selected = false },
-                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Married, Value = "2", Selected = false },
-                            new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.divorced, Value = "3", Selected = false },
-                    };
+                {
+                   new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Single, Value = "1", Selected = false },
+                   new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.Married, Value = "2", Selected = false },
+                   new SelectListItem (){ Text = UI_Presentation.wwwroot.Resources.People.Title.divorced, Value = "3", Selected = false },
+                };
 
                 ViewBag.marriedItems = marriedItems;
 
@@ -219,7 +236,7 @@ namespace CRM_Core.Controllers
                     ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddPeople;
                 }
 
-                return PartialView(peopleViewModel);
+                return PartialView("AddEditPeople",peopleViewModel);
             }
             catch (Exception ex)
             {
@@ -248,7 +265,7 @@ namespace CRM_Core.Controllers
         //[RangeExceptionOn]
         //[Authorization]
         [HttpPost]
-        public ActionResult AddEditPeopleMethod(bool isEdit, bool checkRepeatedTels, bool checkRepeatedMobiles, List<TempTels> tels, List<TempMobiles> mobiles, PeopleVirtual peopleVirtual, Address address, People people)
+        public ActionResult AddEditPeopleMethod(bool isEdit, bool checkRepeatedTels,bool hasVisitedTelsMobiles, bool checkRepeatedMobiles, List<TempTels> tels, List<TempMobiles> mobiles, PeopleVirtual peopleVirtual, Address address, People people)
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
@@ -268,8 +285,6 @@ namespace CRM_Core.Controllers
                 people.M_MariedDate = people.P_MariedDate != null ? people.P_MariedDate.ToDateTime() : (DateTime?)null;
                 people.SystemCode = _generetedNumberService.NewGenerateNumber(SessionProperty.UserID, (int)Enums.states.People);
 
-                if (_peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0 )
-                    throw new CustomeException("ManualCode Is Exists In Table People...", true, null);
 
                 if (isEdit)
                 {
@@ -288,7 +303,6 @@ namespace CRM_Core.Controllers
                         peopleVirtualOld.WhatsApp = peopleVirtual.WhatsApp;
                     }
 
-
                     addressOld.Province = address.Province;
                     addressOld.City = address.City;
                     addressOld.Area = address.Area;
@@ -298,26 +312,49 @@ namespace CRM_Core.Controllers
 
                     People oldPeople = _peopleService.GetPeopleById(people.Id).FirstOrDefault();
 
-                    oldPeople.FirstName = people.FirstName;
+                    oldPeople.SystemCode = people.SystemCode;
                     oldPeople.ManualCode = people.ManualCode;
+                    oldPeople.FirstName = people.FirstName;
+                    oldPeople.LastName = people.LastName;
+                    oldPeople.CertificateCode = people.CertificateCode;
+                    oldPeople.Job = people.Job;
+                    oldPeople.P_Birthday= people.P_Birthday;
+                    oldPeople.M_Birthday = people.P_Birthday.ToDateTime();
+                    oldPeople.P_MariedDate = people.P_MariedDate;
+                    oldPeople.M_MariedDate = people.P_MariedDate.ToDateTime();
+                    oldPeople.Description = people.Description;
+                    oldPeople.MarriedType = people.MarriedType;
+                    oldPeople.IntroduceId = people.IntroduceId;
+                    oldPeople.TBASCategoryId = people.TBASCategoryId;
+                    oldPeople.TBASPotentialId = people.TBASPotentialId;
+                    oldPeople.TBASPrefixId = people.TBASPrefixId;
+                    oldPeople.TBASGraduationId = people.TBASGraduationId;
+                    oldPeople.TBASIntroductionTypeId = people.TBASIntroductionTypeId;
 
                     _peopleService.UpdatePeople(oldPeople);
 
                     if (peopleVirtualOld != null)
                         _peopleVirtualService.UpdatePeopleVirtual(peopleVirtualOld);
+                    else if (peopleVirtual.Email != null || peopleVirtual.WebSite != null || peopleVirtual.Telegram != null || peopleVirtual.Instagram != null || peopleVirtual.WhatsApp != null)
+                    {
+                        peopleVirtual.PeopleId = people.Id;
+                        _peopleVirtualService.AddPeopleVirtual(peopleVirtual);
+                    }
+
 
 
                     _addressService.UpdateAddress(addressOld);
 
-                    // Delete Previous Data For Tels
-                    var oldPeoplePropertyTels = _peoplePropertyService.GetPeoplePrpoertyTels(people, (int)Enums.tbasPeopePropertyState.code, (int)Enums.tbasPeopePropertyState.number, (int)Enums.tbasPeopePropertyState.commentTel);
-                    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyTels.ToList());
 
 
-                    if (tels.Count != 0)
+                    if (hasVisitedTelsMobiles && tels.Count != 0)
                     {
                         if (checkRepeatedTels && CheckForRepeatedTels(tels))
                             throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
+
+                        // Delete Previous Data For Tels
+                        var oldPeoplePropertyTels = _peoplePropertyService.GetPeoplePrpoertyTels(people, (int)Enums.tbasPeopePropertyState.number);
+                        _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyTels.ToList());
 
                         for (int i = 0; i < tels.Count; i++)
                         {
@@ -335,15 +372,17 @@ namespace CRM_Core.Controllers
                         }
                     }
 
-                    // Delete Previous Data For Mobiles
-                    var oldPeoplePropertyMobiles = _peoplePropertyService.GetPeoplePrpoertyMobiles(people, (int)Enums.tbasPeopePropertyState.mobile, (int)Enums.tbasPeopePropertyState.mobileComment);
-                    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyMobiles.ToList());
 
 
-                    if (mobiles.Count != 0)
+                    if (hasVisitedTelsMobiles && mobiles.Count != 0)
                     {
                         if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
                             throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
+
+                        // Delete Previous Data For Mobiles
+                        var oldPeoplePropertyMobiles = _peoplePropertyService.GetPeoplePrpoertyMobiles(people, (int)Enums.tbasPeopePropertyState.mobile);
+                        _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyMobiles.ToList());
+
 
                         for (int i = 0; i < mobiles.Count; i++)
                         {
@@ -365,6 +404,9 @@ namespace CRM_Core.Controllers
 
                 else
                 {
+                    if (_peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0)
+                        throw new CustomeException("ManualCode Is Exists In Table People...", true, null);
+
                     people.IsActive = true; // Here i set This Fields Manually 
                     _peopleService.AddPeople(people);
 
@@ -429,6 +471,7 @@ namespace CRM_Core.Controllers
                 ActivityNumber activityNumber = new ActivityNumber { TBASStateId = (int)Enums.states.People, RelatedNumber = people.SystemCode };
                 if (!isEdit)
                     _generetedNumberService.InsertNumberInActivity(activityNumber);
+
                 _peopleService.SaveChanges();
             }
             catch (Exception ex)

@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1400-8-29_20-8-58</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at CRM_Core.Controllers.PeopleController.AddEditPeopleMethod(Boolean isEdit, Boolean checkRepeatedTels, Boolean checkRepeatedMobiles, List`1 tels, List`1 mobiles, PeopleVirtual peopleVirtual, Address address, People people)</Target>
+    <ErrorMessage>Object reference not set to an instance of an object.</ErrorMessage>
+</LogInfo>

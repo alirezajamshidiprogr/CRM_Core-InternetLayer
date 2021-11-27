@@ -91,5 +91,12 @@ namespace CRM_Core.Infrastructure
                 throw;
             }
         }
+
+        public static double SubtractDaysDates(DateTime fromDate, DateTime toDate)
+        {
+            TimeSpan ts = fromDate - toDate;
+            return ts.TotalDays;
+        }
+
     }
 }

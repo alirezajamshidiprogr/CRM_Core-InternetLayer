@@ -121,13 +121,13 @@
     <value>عملیات</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>افزودن</value>
+    <value>ثبت</value>
   </data>
   <data name="AddItem" xml:space="preserve">
     <value>اضافه کن</value>
   </data>
   <data name="AddWithContinue" xml:space="preserve">
-    <value>افزودن و ادامه</value>
+    <value>ثبت و ادامه</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>لغو</value>

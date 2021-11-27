@@ -1,70 +1,75 @@
 ﻿@using CRM_Core.Infrastructure;
+@using CRM_Core.Entities.Reservation 
 
+@model CRM_Core.Entities.Reservation.Reservation
 
 <link href="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <script src="~/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
-
 <script src="~/js/pages/clock.js"></script>
-@{ ViewData["peopleId"] = 1008;
-    
-    int? peopleId = ViewBag.peopleId ?? (int)ViewBag.peopleId;
-    List<SelectListItem> payType = ViewBag.payTypeItems;
 
+@{
     <div class="titleForm">@ViewBag.Title</div>
+    int? peopleId = ViewBag.peopleId == null ? 0 : (int)ViewBag.peopleId;
+    bool isEdit = ViewBag.isEdit == null ? false : (bool)ViewBag.isEdit;
+    List<SelectListItem> payType = ((List<TBASPayType>)ViewBag.payTypeItems).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.PeopleId ? true : false) : false }; });
+
     <br />
+
+    @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.People).ToString(), peopleId.ToString()) } })
+
     @*<partial name="~/Views/People/ShowPeopleSelectorPopup.cshtml" action="ShowPeopleSelectorPopup" view-data="ViewData" />*@
-    @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.People).ToString(), peopleId.ToString()) } }) @*@await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", TempData["test"]);*@
+    @*@await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", TempData["test"]);*@
 
-    <tab-strip form-name="Reservation">
-        <tab-Item>
-            <tab-Name is-active="true" target-tab="Reservation" tab-title="@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople"> </tab-Name>
-            <tab-Name target-tab="Services" tab-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Services"> </tab-Name>
-        </tab-Item>
+                 <tab-strip form-name="Reservation">
+                     <tab-Item>
+                         <tab-Name is-active="true" target-tab="Reservation" tab-title="@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople"> </tab-Name>
+                         <tab-Name target-tab="Services" tab-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Services"> </tab-Name>
+                     </tab-Item>
 
-        <tab-details>
-            <tab-details-item id="Reservation" is-acitve="true">
-                <tab-controlls>
-                    @Html.Hidden("ReservationId", null)
-                    <short-TextBox id="txtOrderDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" required="true" is-date-type="true"></short-TextBox>
-                    <time-TextBox id="txtFromTimeOrder" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder"></time-TextBox>
-                    <time-TextBox id="txtToTimeOrder" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder"></time-TextBox>
-                    <dropDown id="cmbPaidType" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.AllItems" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType" drop-down-data-bound="@payType"></dropDown>
-                    <short-TextBox id="txtFee" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Fee"></short-TextBox>
-                    <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" ></Text-Area>
-                </tab-controlls>
-                
-                <tab-summery>
-                   <tab-summeryItems title="تعداد کل" value="25بار"></tab-summeryItems>
-                   <tab-summeryItems title="تعداد کل" value="25بار"></tab-summeryItems>
-                   <tab-summeryItems title="تعداد کل" value="25بار"></tab-summeryItems>
-                   <tab-summeryItems title="تعداد کل" value="25بار"></tab-summeryItems>
-                   <tab-summeryItems title="تعداد کل" value="25بار"></tab-summeryItems>
-                </tab-summery>
+                     <tab-details>
+                         <tab-details-item id="Reservation" is-acitve="true">
+                             <tab-controlls>
+                                 @Html.Hidden("ReservationId", Model.Id)
+                                 <short-TextBox id="txtOrderDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" required="true" is-date-type="true" value="@(isEdit ? Model.P_ReservationDate : string.Empty)"></short-TextBox>
+                                 <dropDown id="cmbPaidType" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType" drop-down-data-bound="@payType"></dropDown>
+                                 <short-TextBox id="txtFee" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Fee"  value="@(isEdit ? Model.Price.ToString() : string.Empty)"></short-TextBox>
+                                 <time-TextBox Style="margin-right:5%;clear:both;" id="txtFromTimeOrder" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder"  value="@(isEdit ? Model.FromTime.ToString() : string.Empty)"></time-TextBox>
+                                 <time-TextBox id="txtToTimeOrder" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder"  value="@(isEdit ? Model.ToTime.ToString() : string.Empty)"></time-TextBox>
+                                 <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description"  value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
+                             </tab-controlls>
 
-            </tab-details-item>
+                             <tab-summery>
+                                 <tab-summeryItems id="totalBeCustomer" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.TotalComeInSalon"></tab-summeryItems>
+                                 <tab-summeryItems id="totalIncome" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.TotalIncomeForSalon"></tab-summeryItems>
+                                 <tab-summeryItems id="peopleType" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType"></tab-summeryItems>
+                             </tab-summery>
 
-            <tab-details-item id="Services">
-                <tab-controlls>
-                    <div style="margin-top: 53px;">
-                        <div style="width:300px;margin-bottom:12px;">
-                            <select class="comboBox" id="cmbClerk" onchange="loadItemsSalonServicesDiv()"> <option>@UI_Presentation.wwwroot.Resources.General.Title.AllItems</option> </select>
-                            <p style="float:right;margin-left :5px;">خدمات کارمند :</p>
-                        </div>
-                        <div>
-                            <p id="pSalonService" class="pSalonService">خدمات سالن</p>
-                            <p id="pCustomerService" class="pCustomerService">خدمات مشتری</p>
-                        </div>
-                    </div>
-                    <div id="salonServices" class="portlet box border shadow divGetServices"></div>
-                    <div id="customerServices" class="portlet box border shadow divGetServices" style="float:left!important;width:598px;"></div>
-                </tab-controlls>
-            </tab-details-item>
-        </tab-details>
-       <tab-bottons></tab-bottons>
-    </tab-strip>
- }
+                         </tab-details-item>
 
+                         <tab-details-item id="Services">
+                             <tab-controlls>
+                                 <div style="margin-top: 53px;">
+                                     <div style="width:300px;margin-bottom:12px;">
+                                         <select class="comboBox" id="cmbClerk" onchange="loadItemsSalonServicesDiv()"> <option>@UI_Presentation.wwwroot.Resources.General.Title.AllItems</option> </select>
+                                         <p style="float:right;margin-left :5px;">خدمات کارمند :</p>
+                                     </div>
+                                     <div>
+                                         <p id="pSalonService" class="pSalonService">خدمات سالن</p>
+                                         <p id="pCustomerService" class="pCustomerService">خدمات مشتری</p>
+                                     </div>
+                                 </div>
+                                 <div id="salonServices" class="portlet box border shadow divGetServices"></div>
+                                 <div id="customerServices" class="portlet box border shadow divGetServices" style="float:left!important;width:598px;"></div>
+                             </tab-controlls>
+                         </tab-details-item>
+                     </tab-details>
+                     @*<tab-bottons></tab-bottons>*@
+                 </tab-strip> 
+  <form-buttons has-confirm-continue-botton="true" form-name="Reservation" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-add-button-cick="btnAddEditReservation()"></form-buttons>
+
+    }
 <script>
+    var customerEmptyMessage = '@UI_Presentation.wwwroot.Resources.Mesages.AddPeopleToRegisterReservation';
 
     loadItemsSalonServicesDiv();
     var repeatedItemsService = '@UI_Presentation.wwwroot.Resources.Mesages.ThisItemHasAddedAleadyToServiceCustomer'
@@ -81,4 +86,9 @@
     });
 
     var customerServiceIsNullMessage = '@UI_Presentation.wwwroot.Resources.Mesages.CustomerServiceInfoIsEmpty';
-  </script>
+    $(document).ready(function () { 
+        $("#PeopleSelector_Id").on('DOMSubtreeModified', function () {
+            getCallbackPeopleSelect();
+        });
+    });
+</script>

@@ -1,4 +1,5 @@
 ﻿using CRM_Core.Application.Interfaces;
+using CRM_Core.Application.ViewModels.CustomViewModel;
 using CRM_Core.DataAccessLayer;
 using CRM_Core.DataAccessLayer.Repositories;
 using CRM_Core.Entities.Reservation;
@@ -10,9 +11,17 @@ namespace CRM_Core.Application.Services
 {
     public class Ef_PeopleServiceService : DataAccessLayer.Repositories.RepositoryBase<PeopleServices> , IPeopleServiceService
     {
-        public Ef_PeopleServiceService(CRM_CoreDB context):base(context)
+        IReservationService _reservationService;
+        public Ef_PeopleServiceService(CRM_CoreDB context, IReservationService reservationService) :base(context)
         {
+            _reservationService = reservationService;
+        }
 
+        public IEnumerable<PeopleServiceReservationViewModel> getPeopleServiceByClerkId(int clerkId)
+        {
+            var peopleService = FindByCondition(item => item.ClerkServicesId == clerkId);
+            var reservation = _reservationService.GetAllReservation() ;
+            return null;
         }
 
         public IEnumerable<PeopleServices> getPeopleServiceByReservationId(int reservationId)

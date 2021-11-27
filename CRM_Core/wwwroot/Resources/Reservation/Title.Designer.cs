@@ -70,6 +70,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خدمات کارمند.
+        /// </summary>
+        public static string ClerkService {
+            get {
+                return ResourceManager.GetString("ClerkService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تعداد مراجعه.
         /// </summary>
         public static string CountOfComing {
@@ -169,6 +178,24 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد سیستمی نوبت.
+        /// </summary>
+        public static string ReservationSystemCode {
+            get {
+                return ResourceManager.GetString("ReservationSystemCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خدمات سالن.
+        /// </summary>
+        public static string SalonService {
+            get {
+                return ResourceManager.GetString("SalonService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خدمات.
         /// </summary>
         public static string Services {
@@ -187,11 +214,56 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تعداد نوبت های امروز.
+        /// </summary>
+        public static string TodayReservationCount {
+            get {
+                return ResourceManager.GetString("TodayReservationCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تا تاریخ نوبت دهی.
         /// </summary>
         public static string ToReservationDate {
             get {
                 return ResourceManager.GetString("ToReservationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد مراجعه به سالن.
+        /// </summary>
+        public static string TotalComeInSalon {
+            get {
+                return ResourceManager.GetString("TotalComeInSalon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سودآوری کل.
+        /// </summary>
+        public static string TotalIncomeForSalon {
+            get {
+                return ResourceManager.GetString("TotalIncomeForSalon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جمع کل مبلغ نوبت ها.
+        /// </summary>
+        public static string TotalReservationPrice {
+            get {
+                return ResourceManager.GetString("TotalReservationPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جمع مبلغ نوبت های امروز.
+        /// </summary>
+        public static string TotalTodayReservationPrice {
+            get {
+                return ResourceManager.GetString("TotalTodayReservationPrice", resourceCulture);
             }
         }
         

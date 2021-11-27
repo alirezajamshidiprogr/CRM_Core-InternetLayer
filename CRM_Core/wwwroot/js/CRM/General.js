@@ -4,9 +4,17 @@ var reminderList = new Array();
 var reminderIdArray = new Array();
 var hasShownRemidner = false;
 var offDisplayinReminder = false;
-//setInterval(function () {
-//    GetCurrentDayDataServer();
-//}, 60000);
+var deleteMessageQuestion = '';
+var confirmDeleteMessage = '';
+var thisActionIsNotRestore = '';
+var introducePeopleMessage = '';
+var question = '';
+var yesTitle = '';
+
+
+setInterval(function () {
+    GetCurrentDayDataServer();
+}, 60000);
 
 setInterval(function () {
     DisplayCurrentDayData();
@@ -267,6 +275,7 @@ function ShowDashboard() {
 }
 
 function findIndexArrayWithAttr(array, attr, value) {
+    debugger;
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] == value) {
             return i;
@@ -439,7 +448,7 @@ function clearAllInputs() {
 }
 
 function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
-
+    debugger;
     switch (state) {
         case "forward":
             pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10));
@@ -455,7 +464,9 @@ function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
             break;
     }
     //window["Show" + actionName + "sList"(true)]();
-    ShowSalonCostsList(true);
+    window[actionName]('false','isEditMode');
+
+    //ShowSalonCostsList(true);
 }
 
 function chbClickState(chbId) {

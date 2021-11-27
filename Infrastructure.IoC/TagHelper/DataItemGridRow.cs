@@ -88,6 +88,7 @@ namespace TagHelperSamples.Bootstrap
         public string OnEditButtonAction { get; set; }
         public string OnPrintButtonAction { get; set; }
         public string Style { get; set; }
+        public string CallBackFunction { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
@@ -107,7 +108,7 @@ namespace TagHelperSamples.Bootstrap
             }
             else if (IsSelectMode)
             {
-                html += "<a class='btn btn-info btn-round btnAction' href='#' onclick='selectPeople()'>";
+                html += "<a class='btn btn-info btn-round btnAction' href='#' onclick='selectPeople(this)'>";
                 html += "<i class='icon-check'></i> انتخاب <div class='paper-ripple'><div class='paper-ripple__background'></div><div class='paper-ripple__waves'></div></div></a>";
             }
             else

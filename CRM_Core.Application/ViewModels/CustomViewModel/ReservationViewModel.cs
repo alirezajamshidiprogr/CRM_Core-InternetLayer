@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRM_Core.Entities.Reservation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,16 +23,27 @@ namespace CRM_Core.Application.ViewModels.CustomViewModel
 
     public class ReservationViewModelSearch
     {
-        public string PeopleName { get; set; }
-        public string PeopleLastName { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerLastName { get; set; }
+        public string CustomerFirstName { get; set; }
+        public string CustomerFamily { get; set; }
+        public string FullName { get; set; }
         public int? TBASServiceId { get; set; }
-        public string Date { get; set; }
         public int? PayTypeId { get; set; }
-        public string SystemCode { get; set; }
+        public string Date { get; set; }
+        public string ReservationSystemCode { get; set; }
         public string FromTime { get; set; }
         public string ToTime { get; set; }
+        public int PageNumber { get; set; }
     }
 
+    public class PeopleReservationHistoryInfo
+    {
+        public string CountOfBeCustomer { get; set; }
+        public string CustomerType { get; set; }
+        public string CustomerIncomeForSalon { get; set; }
+    }
+
+    public class PeopleServiceReservationViewModel : Reservation
+    {
+        public int ClerkId { get; set; }
+    }
 }

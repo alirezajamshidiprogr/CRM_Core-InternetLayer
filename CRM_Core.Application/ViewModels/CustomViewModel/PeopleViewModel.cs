@@ -52,8 +52,10 @@ namespace CRM_Core.Application.ViewModels.People
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Birthday { get; set; }
-        public int? Age { get; set; }
+        public string FromBirthday { get; set; }
+        public string ToBirthday { get; set; }
+        public int? FromAge { get; set; }
+        public int? ToAge { get; set; }
         public int? TBASPotentialId { get; set; }
         public int? TBASIntroduceId { get; set; }
         public int? TBASIntroductionTypeId { get; set; }
@@ -64,7 +66,9 @@ namespace CRM_Core.Application.ViewModels.People
         public string CertificateCode { get; set; }
         public string ManualCode { get; set; }
         public string SystemCode { get; set; }
+        public int PageNumber { get; set; }
+
     }
 
-   
+
 }

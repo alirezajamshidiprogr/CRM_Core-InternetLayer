@@ -173,7 +173,6 @@ namespace UI_Presentation.Controllers
                 ViewBag.isSelectedMode = true;
                 ViewBag.isPrintMode = true;
 
-
             }
             catch (Exception ex)
             {

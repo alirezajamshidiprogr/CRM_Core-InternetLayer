@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using CRM_Core.Infrastructure;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace CRM_Core.Application.Services
 {
@@ -113,6 +114,25 @@ namespace CRM_Core.Application.Services
         public IQueryable<People> GetPeopleByManualCode(string manualCode)
         {
             return FindByCondition(item => item.ManualCode == manualCode);
+        }
+
+        public DataSet GetPeopleDataTable(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true)
+        {
+
+            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = commandText;
+            cmd.CommandType = CommandType.StoredProcedure;
+            for (int i = 0; i < searchParameter.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(searchParameter[i], searchValues[i]);
+            }
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);
+            return ds;
         }
 
         public void UpdatePeople(People people)

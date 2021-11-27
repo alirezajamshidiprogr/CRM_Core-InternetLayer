@@ -2,6 +2,7 @@
 using CRM_Core.DomainLayer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -17,6 +18,7 @@ namespace CRM_Core.Application.Interfaces
         IQueryable<People> GetPeopleByManualCode(string manualCode);
         IEnumerable<PeopleModel> GetPeopleByAdoById(int peopleId);
         IEnumerable<PeopleModel> GetPeopleByADO(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true);
+        DataSet GetPeopleDataTable (string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true);
         void AddPeople(People people);
 
         void DeletePeople(People people);

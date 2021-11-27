@@ -7,16 +7,16 @@
 @model CRM_Core.Application.ViewModels.People.peopleViewModel
 @{
     bool isEdit = (bool)ViewBag.isEdit;
-    int peopleId = Model.People != null ? Model.People.Id : 0;
-    List<SelectListItem> graduationItems = Model.GraduationItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; }); ;
-    List<SelectListItem> potentialItems = Model.PotentialItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; }); ;
-    List<SelectListItem> categoriyItem = Model.CategoriyItem.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; }); ;
-    List<SelectListItem> tbasIntroductionTypeItems = Model.TBASIntroductionTypeItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; }); ;
-    List<SelectListItem> prefixItems = Model.PrefixItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; }); ;
-    List<SelectListItem> marriedItems = ViewBag.marriedItems;
+    int? peopleIntroduceId = Model.People != null ? Model.People.IntroduceId : 0;
+    List<SelectListItem> graduationItems = Model.GraduationItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.People.TBASGraduationId ? true : false) : false }; });
+    List<SelectListItem> potentialItems = Model.PotentialItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.People.TBASPotentialId ? true : false) : false }; });
+    List<SelectListItem> categoriyItem = Model.CategoriyItem.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.People.TBASCategoryId ? true : false) : false }; });
+    List<SelectListItem> tbasIntroductionTypeItems = Model.TBASIntroductionTypeItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.People.TBASIntroductionTypeId ? true : false) : false }; });
+    List<SelectListItem> prefixItems = Model.PrefixItems.ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.People.TBASPrefixId ? true : false) : false }; }); ;
+    List<SelectListItem> marriedItems = ((List<SelectListItem>)ViewBag.marriedItems).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Text, Value = item.Value, Selected = isEdit ? (Model.People.MarriedType.ToString() == item.Value ? true : false) : false }; });
 
     <br />
-    @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.People).ToString(), peopleId.ToString()) } })
+    @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.People).ToString(), peopleIntroduceId.ToString()) } })
 
     <tab-strip form-name="People" has-confirm-continue-botton="true">
         <tab-Item>
@@ -37,12 +37,12 @@
                     <short-TextBox id="txtJob" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Job" value="@(isEdit ? Model.People.Job : string.Empty)"></short-TextBox>
                     <short-TextBox id="txtBirthDay" label-title="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay" is-date-type="true" value="@(isEdit ? Model.People.P_Birthday : string.Empty)"></short-TextBox>
                     <dropDown id="cmbGraduaction" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Graduation" drop-down-data-bound="@graduationItems"></dropDown>
-                    <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description"  value="@(isEdit ? Model.People.Description : string.Empty)"></Text-Area>
-                    <Text-Address></Text-Address>
+                    <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.People.Description : string.Empty)"></Text-Area>
+                    <Text-Address province-value="@(isEdit ? Model.Address.Province : string.Empty)" city-value="@(isEdit ? Model.Address.City : string.Empty)" area-value="@(isEdit ? Model.Address.Area : string.Empty)" street-value="@(isEdit ? Model.Address.Street : string.Empty)" alley-value="@(isEdit ? Model.Address.Alley : string.Empty)" other-address="@(isEdit ? Model.Address.OtherAddress : string.Empty)"></Text-Address>
                 </tab-controlls>
             </tab-details-item>
 
-            <tab-details-item id="PeopleRelations" >
+            <tab-details-item id="PeopleRelations">
                 <tab-controlls>
                     <div id="divTels" style="width:1125px;background-color:transparent ;border:none ; margin-top:59px;" class="portlet box border shadow divTels">
                         <customChild-tag class="portlet-heading">
@@ -54,9 +54,10 @@
                         <checkBox id="chbCheckRepeatedTels" title="@UI_Presentation.wwwroot.Resources.General.Title.CheckRepeatedTels"></checkBox>
 
                         <linkIcon on-click="AddNewRowTel()" icon-class="fa fa-plus"></linkIcon>
-                        
+
                         <customChild-tag id="divFields1" class="input-group">
                             <customTag-children>
+                                <custom-tag name="div" class="divTelsItems" style="display:none ;"></custom-tag>
                                 <textBox-Icon max-length="3" style="width:70px !important; margin-left:7px;" id="txtCode1" icon-class="fa fa-phone-square" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.Code"></textBox-Icon>
                                 <textBox-Icon max-length="8" style="margin-left:7px;width:128px !important ;" id="txtTel1" icon-class="fa fa-phone" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Tel"></textBox-Icon>
                                 <textBox-Icon max-length="8" style="width:695px !important" id="txtComment1" icon-class="fa fa-comment" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description"></textBox-Icon>
@@ -65,7 +66,7 @@
                     </div>
 
                     <div id="divMobiles" style="width:1125px;background-color:transparent ;border:none ; margin-top:30px;" class="portlet box border shadow">
-                      <customChild-tag class="portlet-heading">
+                        <customChild-tag class="portlet-heading">
                             <customTag-children>
                                 <custom-tag name="h3" class="title" value="@UI_Presentation.wwwroot.Resources.General.Title.RegisterPhones"></custom-tag>
                             </customTag-children>
@@ -73,27 +74,28 @@
                         <checkBox id="chbCheckRepeatedMobiles" title="@UI_Presentation.wwwroot.Resources.General.Title.CheckRepeatedMobiles"></checkBox>
                         <linkIcon on-click="AddNewRowMobile()" icon-class="fa fa-plus"></linkIcon>
                         <customChild-tag id="divFields1" class="input-group">
-                           
-                        <customTag-children>
+
+                            <customTag-children>
+                                <custom-tag name="div" class="divMobileItems" style="display:none ;"></custom-tag>
                                 <textBox-Icon max-length="11" style="margin-left:7px;width:128px !important ;" id="txtMobile1" icon-class="fa fa-mobile" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Mobile"></textBox-Icon>
-                                <textBox-Icon max-length="8"  style="width:836px !important" id="txtMobComment1" icon-class="fa fa-comment" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description"></textBox-Icon>
-                        </customTag-children>
-                      </customChild-tag>
+                                <textBox-Icon max-length="8" style="width:836px !important" id="txtMobComment1" icon-class="fa fa-comment" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description"></textBox-Icon>
+                            </customTag-children>
+                        </customChild-tag>
                     </div>
                 </tab-controlls>
             </tab-details-item>
 
-            <tab-details-item id="PeopleVirtual" >
+            <tab-details-item id="PeopleVirtual">
                 <tab-controlls>
-                    <short-TextBox id="txtWebSite" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WebSite" value="@(isEdit ? Model.PeopleVirtual.WebSite : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtTelegram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Telegram" value="@(isEdit ? Model.PeopleVirtual.Telegram : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtWhatsApp" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp" value="@(isEdit ? Model.PeopleVirtual.WhatsApp : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtEmail" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Email" value="@(isEdit ? Model.PeopleVirtual.Email : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtInstagram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Instagram" value="@(isEdit ? Model.PeopleVirtual.Instagram : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtWebSite" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WebSite" value="@(isEdit && Model.PeopleVirtual != null ? Model.PeopleVirtual.WebSite : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtTelegram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Telegram" value="@(isEdit && Model.PeopleVirtual != null ? Model.PeopleVirtual.Telegram : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtWhatsApp" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp" value="@(isEdit && Model.PeopleVirtual != null ?  Model.PeopleVirtual.WhatsApp : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtEmail" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Email" value="@(isEdit && Model.PeopleVirtual != null ?  Model.PeopleVirtual.Email : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtInstagram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Instagram" value="@(isEdit && Model.PeopleVirtual != null ?  Model.PeopleVirtual.Instagram : string.Empty)"></short-TextBox>
                 </tab-controlls>
             </tab-details-item>
 
-            <tab-details-item id="OtherInfo" >
+            <tab-details-item id="OtherInfo">
                 <tab-controlls>
                     <dropDown id="cmbMarriedType" all-items-name="" onchange-drop-down="checkMariedStateDate()" label-title="@UI_Presentation.wwwroot.Resources.People.Title.IsMarried" drop-down-data-bound="@marriedItems"></dropDown>
                     <dropDown id="cmbPotential" all-items-name="" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Potential" drop-down-data-bound="@potentialItems"></dropDown>
@@ -101,19 +103,21 @@
                     <dropDown id="cmbIntroductionType" all-items-name="" label-title="@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType" drop-down-data-bound="@tbasIntroductionTypeItems"></dropDown>
                     <dropDown id="cmbPrefix" all-items-name="" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Prefix" drop-down-data-bound="@prefixItems"></dropDown>
                     <short-TextBox id="txtCertificateCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode" value="@(isEdit ? Model.People.CertificateCode : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtMariedDate" label-title="@UI_Presentation.wwwroot.Resources.People.Title.MariedDate" is-date-type="true" value="@(isEdit ? Model.People.P_MariedDate : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtMariedDate" Style="clear:both ;" label-title="@UI_Presentation.wwwroot.Resources.People.Title.MariedDate" is-date-type="true" value="@(isEdit ? Model.People.P_MariedDate : string.Empty)"></short-TextBox>
                 </tab-controlls>
             </tab-details-item>
 
-            <tab-details-item id="documentInfo" >
+            <tab-details-item id="documentInfo">
                 <tab-controlls>
                 </tab-controlls>
             </tab-details-item>
 
         </tab-details>
 
-        <tab-bottons></tab-bottons>
+        @*<tab-bottons></tab-bottons>*@
     </tab-strip>
+
+    <form-buttons has-confirm-continue-botton="true" form-name="People" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></form-buttons>
 }
 <script>
     var canNotEmptyTel = '@UI_Presentation.wwwroot.Resources.Mesages.FillTheEmptyFieldTels';
@@ -140,7 +144,9 @@
         if (peopleId > 0)
              getPeopleTelsAndMobile(e, peopleId);
     });
-    $("#txtMariedDate").prop('disabled', true);       
+
+
+    $("#txtMariedDate").prop('disabled', true);
 
 
 </script>

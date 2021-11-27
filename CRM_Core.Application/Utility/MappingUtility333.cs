@@ -32,6 +32,8 @@ namespace CRM_Core.Infrastructure
         //        return dataTable;
         //    }
         //}
+
+
         public static DataSet LoadStoreProcedureDS(int peopleId)
         {
             SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");

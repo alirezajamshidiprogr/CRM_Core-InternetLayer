@@ -53,10 +53,10 @@ namespace TagHelperSamples.Bootstrap
                 string html = string.Empty;
                 html += "<table style='clear: both;' id='formButtons' class='tblButons'>";
                 html += "<tr>";
-                html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary'>افـزودن</button></td>", "btnConfirm" + FormName, "btnAddEdit" + FormName + "()");
+                html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary'>ثبت</button></td>", "btnConfirm" + FormName, "btnAddEdit" + FormName + "()");
 
                 if (HasConfirmContinueBotton)
-                    html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-primary'>افـزودن و ادامه</button></td>", "btnConfirmContinue" + FormName, "btnAddEdit" + FormName + "(true)");
+                    html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-primary'>ثبت وادامه</button></td>", "btnConfirmContinue" + FormName, "btnAddEdit" + FormName + "(true)");
 
                 html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-danger'>لغـو</button></td>", "btnCancel" + FormName, "btnClose" + FormName + "()");
                 html += "</tr>";

@@ -10,9 +10,8 @@
     string[] splitParam = param.Split(",");
     int state = Convert.ToInt32(splitParam[0]);
     int peopleId = Convert.ToInt32(splitParam[1]);
-
     string buttionTitle = state == (int)Enums.states.People ? @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectIntroduction : @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectCustomer;
-
+    TempData["IsSelectMode"] = true;
     <customChild-tag class="peopleSelector" id="peopleSelector">
         <customTag-children>
             <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@buttionTitle</button>
@@ -31,14 +30,14 @@
 
     <modal bodystyle="height:611px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="PeopleSelectorModal">
         <modal-body>
-            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
-            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></short-TextBox>
-            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></short-TextBox>
-            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
-            <short-TextBox label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
+            <short-TextBox id="_txtsystemCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
+            <short-TextBox id="_txtmanualCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></short-TextBox>
+            <short-TextBox id="_txtCertificateCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></short-TextBox>
+            <short-TextBox id="_txtName" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
+            <short-TextBox id="_txtFamily" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
             <customChild-tag style="text-align: left;">
                 <customTag-children>
-                    <Icon-Button buttom-class="btn btn-success  btn-radious"  icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList(false,'isSelectedMode')"></Icon-Button>
+                    <Icon-Button buttom-class="btn btn-success  btn-radious"  icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList('false','isSelectedMode')"></Icon-Button>
                 </customTag-children>
             </customChild-tag>
 

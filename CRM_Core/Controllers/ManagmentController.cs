@@ -163,8 +163,8 @@ namespace UI_Presentation.Controllers
 
                 foreach (var item in userMenu)
                 {
-                    item.StartDate = item.FStartDate.ToString().ToDateTime();
-                    item.EndDate = item.FEndDate.ToString().ToDateTime();
+                    item.StartDate = (DateTime)item.FStartDate.ToString().ToDateTime();
+                    item.EndDate = (DateTime)item.FEndDate.ToString().ToDateTime();
                 }
                 _userMenuService.AddUserMenu(userMenu, identityUserId);
                 _userMenuService.SaveChanges();

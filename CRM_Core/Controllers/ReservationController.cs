@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using System.Web.WebPages.Html;
 using CRM_Core.DataAccessLayer;
 using CRM_Core.DomainLayer;
 using CRM_Core.Entities.Reservation;
@@ -14,10 +13,10 @@ using CRM_Core.Infrastructure;
 using MyCRM.Layered.Model.Utility;
 using CRM_Core.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using System.Data.Entity;
 using CRM_Core.Application.GridViewModels;
 using CRM_Core.Application.ViewModels.CustomViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace UI_Presentation.Controllers
 {
@@ -45,60 +44,24 @@ namespace UI_Presentation.Controllers
             this._payTypeService = payTypeService;
         }
         #region Actions
-        public IActionResult AddEditReservation(int? peopleId)
-        {
-            ViewBag.peopleId = peopleId;
-            ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddReservation;
-            List<SelectListItem> payTypeService = _payTypeService.getAllPayTypes().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
-            ViewBag.payTypeItems = payTypeService;
-            return PartialView();
-        }
-
-        public ActionResult Index(ReservationViewModelSearch searchParams)
+        public IActionResult AddEditReservation(int? reservationId , bool isEdit)
         {
             string errorMessage = string.Empty;
             try
             {
-                DataGridViewModel<ReservationViewModel> reservationList = new DataGridViewModel<ReservationViewModel>();
-                string[] searchParameter;
-                object[] searchValues;
-                searchParameter = new string[]
-                {
-                     "@PeopleName"
-                    ,"@PeopleLastName"
-                    ,"@CustomerName"
-                    ,"@CustomerLastName"
-                    ,"@TBASServiceId"
-                    ,"@Date"
-                    ,"@PayTypeId"
-                    ,"@SystemCode"
-                    ,"@FromTime"
-                    ,"@ToTime"
-                };
-
-                searchValues = new object[]
-                {
-                    searchParams.PeopleName
-                   ,searchParams.PeopleLastName
-                   ,searchParams.CustomerName
-                   ,searchParams.CustomerLastName
-                   ,searchParams.TBASServiceId
-                   ,searchParams.Date.ToMiladiDate() 
-                   ,searchParams.PayTypeId
-                   ,searchParams.SystemCode
-                   ,searchParams.FromTime
-                   ,searchParams.ToTime
-                };
-                ViewBag.isEditMode = true;
-                ViewBag.isSelectedMode = true;
-                ViewBag.isPrintMode = true;
+                Reservation reservation = new Reservation();
+                ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddReservation;
+                List<TBASPayType> payTypeService = _payTypeService.getAllPayTypes().ToList();
+                ViewBag.payTypeItems = payTypeService;
                 
-                List<SelectListItem> payTypeList = _payTypeService.getAllPayTypes().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
-                ViewBag.PayTypeList = payTypeList;
+                if(isEdit)
+                {
+                    reservation = _reservationService.GetReservationById(reservationId.Value).FirstOrDefault();
+                    ViewBag.isEdit = true;
+                    ViewBag.peopleId = reservation.PeopleId;
+                }
 
-                reservationList.Records = _reservationService.GetReservationByADO("[dbo].[Reservation_Search]", searchParameter, searchValues);
-                reservationList.TotalCount = reservationList.Records.Count();
-                return PartialView("Reservation",reservationList);
+                return PartialView("AddEditReservation", reservation);
             }
             catch (Exception ex)
             {
@@ -107,9 +70,116 @@ namespace UI_Presentation.Controllers
                 return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
         }
+
+        public ActionResult Index()
+        {
+            string errorMessage = string.Empty;
+            try
+            {
+                List<SelectListItem> payTypeList = _payTypeService.getAllPayTypes().ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = false }; });
+                ViewBag.PayTypeList = payTypeList;
+                return PartialView("Reservation");
+            }
+            catch (Exception ex)
+            {
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
+        }
+
+        public IActionResult FillReservationTableData(bool quickSearch, string fullName, ReservationViewModelSearch searchParams, string state)
+        {
+            string errorMessage = string.Empty;
+            DataGridViewModel<ReservationViewModel> reservationList = new DataGridViewModel<ReservationViewModel>();
+            try
+            {
+                string[] searchParameter;
+                object[] searchValues;
+
+                if (quickSearch)
+                {
+                    searchParameter = new string[] { "@FullName", "@Page", "@PageSize", "@Sort" };
+                    searchValues = new object[] { fullName, searchParams.PageNumber, 10, string.Empty };
+                }
+                else
+                {
+                    searchParameter = new string[]
+                    {
+                         "@CustomerFirstName"
+                        ,"@CustomerFamily"
+                        ,"@TBASServiceId"
+                        ,"@Date"
+                        ,"@PayTypeId"
+                        ,"@SystemCode"
+                        ,"@FromTime"
+                        ,"@ToTime"
+                        ,"@Page"
+                        ,"@PageSize"
+                        ,"@Sort"
+                    };
+
+                    searchValues = new object[]
+                    {
+                        searchParams.CustomerFirstName
+                       ,searchParams.CustomerFamily
+                       ,searchParams.TBASServiceId
+                       ,searchParams.Date.ToMiladiDate()
+                       ,searchParams.PayTypeId
+                       ,searchParams.ReservationSystemCode
+                       ,searchParams.FromTime
+                       ,searchParams.ToTime
+                       ,searchParams.PageNumber
+                       ,10
+                       ,string.Empty
+                    };
+
+                }
+                
+                DataSet dsData = _peopleService.GetPeopleDataTable("[dbo].[Reservation_Search]", searchParameter, searchValues);
+                ViewBag.totalAllRecords = (int)dsData.Tables[1].Rows[0][0];
+                ViewBag.pageNumber = searchParams.PageNumber;
+                reservationList.Records = MappingUtility.DataTableToList<ReservationViewModel>(dsData.Tables[0]).AsQueryable();
+                reservationList.TotalCount = reservationList.Records.Count();
+            }
+            catch (Exception ex)
+            {
+                errorMessage = string.Empty;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
+            return PartialView("FillReservationTableData", reservationList);
+        }
+
+        public ActionResult DeleteReservation(int reservationId)
+        {
+            string result = string.Empty;
+            string message = string.Empty;
+            try
+            {
+                Reservation reservation = _reservationService.GetReservationById(reservationId).FirstOrDefault();
+                reservation.IsActive = false;
+                _reservationService.UpdateReservation(reservation);
+                _peopleService.SaveChanges();
+                message = UI_Presentation.wwwroot.Resources.Mesages.DeleteSuccessfullyApplied;
+            }
+            catch (Exception ex)
+            {
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
+            }
+            return Json(new
+            {
+                result = result,
+                message = message,
+            });
+        }
+
+
         #endregion Action
 
         #region Methods
+        [HttpPost]
         public ActionResult GetSalonServices(int? clerkId)
         {
             string result = string.Empty;
@@ -185,7 +255,20 @@ namespace UI_Presentation.Controllers
 
                 if (!ModelState.IsValid)
                     throw new CustomeException("Model Is Not Valid", true, null);
-                reservation.M_ReservationDate = reservation.P_ReservationDate.ToDateTime();
+
+                if (Utility.SubtractDaysDates((DateTime)reservation.P_ReservationDate.ToDateTime(), DateTime.Now) < 0)
+                {
+                    result = wwwroot.Resources.Mesages.DateReservationCanNotBeLessDateTimeNow;
+                    throw new CustomeException("Date Of Reservation Is Less Than DateTimeNow", true, null);
+                }
+
+                //List<PeopleServices> listPeopleService = _peopleServiceService.getPeopleServiceByReservationId
+                //foreach (var item in peopleServices)
+                //{
+                //    if (item.ClerkServicesId ==)
+                //}
+
+                reservation.M_ReservationDate = (DateTime)reservation.P_ReservationDate.ToDateTime();
                 reservation.SystemCode = !isEdit ? _generetedNumberService.NewGenerateNumber(SessionProperty.UserID, (int)Enums.states.Reservation) : reservation.SystemCode;
                 if (isEdit)
                 {
@@ -209,6 +292,7 @@ namespace UI_Presentation.Controllers
                 }
                 else
                 {
+                    reservation.IsActive = true;
                     _reservationService.insertReservation(reservation);
                     _reservationService.SaveChanges();
 
@@ -228,14 +312,35 @@ namespace UI_Presentation.Controllers
             }
             catch (Exception ex)
             {
-                result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
+                result = result != null ? result : UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
                 Utility.RegisterErrorLog(ex, SessionProperty.UserName);
-                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+                return Json(new { errorMessage = result });
             }
             return Json(new
             {
                 result = result,
                 message = message,
+            });
+        }
+
+        [HttpPost]
+        public ActionResult GetPeopleReservationInfo(int peopleId)
+        {
+            string result = string.Empty;
+            PeopleReservationHistoryInfo getpeopleReservationHistory = new PeopleReservationHistoryInfo();
+            try
+            {
+                getpeopleReservationHistory = _reservationService.GetPeopleHistoryReservation(peopleId);
+            }
+            catch (Exception ex)
+            {
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
+            }
+            return Json(new
+            {
+                errorMessage = result,
+                getpeopleReservationHistory= getpeopleReservationHistory ,
             });
         }
 

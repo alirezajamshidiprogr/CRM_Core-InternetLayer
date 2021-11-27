@@ -9,8 +9,12 @@ namespace CRM_Core.Infrastructure
 {
    public static class ObjectExtension
     {
-        public static DateTime ToDateTime(this string input)
+        public static DateTime? ToDateTime(this string input)
         {
+
+            if (input == null) 
+                return null;
+
             PersianCalendar pc = new PersianCalendar();
 
             int year = Convert.ToInt32(input.Substring(0, 4));
@@ -73,5 +77,6 @@ namespace CRM_Core.Infrastructure
             //put a breakpoint here and check datatable
             return dataTable;
         }
+
     }
 }

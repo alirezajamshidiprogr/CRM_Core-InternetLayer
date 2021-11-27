@@ -5,13 +5,24 @@ var optionCustomerType = ["مشتری سالن", "مشتری شخصی"];
 var newSalonService = [];
 var repeatedItemsService = '';
 var customerServiceIsNullMessage = '';
+var customerEmptyMessage = '';
 
 function btnOpenEditReservation() {
+    var reservationId = getValueTableById('ReservationId');
+    var isEdit = false;
+    if (reservationId > 0)
+        isEdit = true;
+
+    enablePageloadding();
     $.ajax({
         type: "POST",
         url: "/Reservation/AddEditReservation",
-        data: {},
+        data: {
+            reservationId: reservationId,
+            isEdit: isEdit,
+        },
         success: function (data) {
+            disablePageloadding();
             $("#formContainer").html(data);
         },
         error: function (httpRequest, textStatus, errorThrown) {
@@ -29,7 +40,7 @@ function loadItemsSalonServicesDiv(serviceId) {
         var length = salonServices.length;
         for (var i = 0; i < length; i++) {
             if (salonServices[i].clerkId == clerkId)
-                newSalonService.push({ TBASServiceId: salonServices[i].tbasServiceId, ClerkServiceId: salonServices[i].clerkServiceId, ServiceName: salonServices[i].serviceName, ClerkId: salonServices[i].clerkId });
+                newSalonService.push({ TBASServiceId: salonServices[i].tbasServiceId, clerkServiceId: salonServices[i].clerkServiceId, serviceName: salonServices[i].serviceName, ClerkId: salonServices[i].clerkId });
         }
         AddItemsToDivSalonService(newSalonService);
         return;
@@ -46,7 +57,6 @@ function getSalonServices(clerkId) {
                 clerkId: clerkId
             },
             success: function (result) {
-                debugger;
                 if (result.result != '') {
                     ErrorMessage(result.result);
                     return;
@@ -131,9 +141,8 @@ function AddItemsToDivSalonService(salonServices) {
 }
 
 function addItemsToCustomerServiceDiv(array, arrayIndex, isdelete) {
-    debugger;
     if (!isdelete) {
-        customerServices.push({ TBASServiceId: array[arrayIndex].tbasServiceId, ClerkServiceId: array[arrayIndex].clerkServiceId, ServiceName: array[arrayIndex].serviceName, ClerkId: array[arrayIndex].clerkId });
+        customerServices.push({ TBASServiceId: array[arrayIndex].tbasServiceId, clerkServiceId: array[arrayIndex].clerkServiceId, serviceName: array[arrayIndex].serviceName, ClerkId: array[arrayIndex].clerkId });
     }
     var parentDiv = document.getElementById("customerServices");
     var count = 1;
@@ -150,7 +159,7 @@ function addItemsToCustomerServiceDiv(array, arrayIndex, isdelete) {
         hiddenField.id = "clerkServiceId" + count;
         hiddenField.className = "specialFields";
         hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("value", customerServices[i].ClerkServiceId);
+        hiddenField.setAttribute("value", customerServices[i].clerkServiceId);
 
         divServiceDetails.appendChild(hiddenField);
         //////// 
@@ -167,7 +176,7 @@ function addItemsToCustomerServiceDiv(array, arrayIndex, isdelete) {
         var service = document.createElement("p");
         service.style.width = "212px";
         service.style.float = "right";
-        service.innerHTML = customerServices[i].ServiceName;
+        service.innerHTML = customerServices[i].serviceName;
         divServiceDetails.appendChild(service);
         //////////////
 
@@ -205,13 +214,13 @@ function addItemsToCustomerServiceDiv(array, arrayIndex, isdelete) {
 }
 
 function refreshDivItemsService(e, salonServices, state) {
-    debugger;
     if (state == 'add') {
+        debugger;
         var id = e.currentTarget.id;
         var serviceId = document.getElementById(id).parentElement.childNodes[0].attributes.value;
         var arrayIndex = findIndexArrayWithAttr(salonServices, 'clerkServiceId', serviceId.value);
         for (var i = 0; i < customerServices.length; i++) {
-            if (serviceId.value == customerServices[i].ClerkServiceId) {
+            if (serviceId.value == customerServices[i].clerkServiceId) {
                 ErrorMessage(repeatedItemsService);
                 return;
             }
@@ -222,8 +231,8 @@ function refreshDivItemsService(e, salonServices, state) {
     else {
         var id = e.currentTarget.id;
         var serviceId = document.getElementById(id).parentElement.childNodes[0].attributes.value;
-        var arrayIndex = findIndexArrayWithAttr(customerServices, 'ClerkServiceId', serviceId.value);
-        document.getElementById('cmbClerk').selectedIndex = SelectComboIndexByValue(customerServices[arrayIndex].ClerkServiceId, 'cmbClerk');;
+        var arrayIndex = findIndexArrayWithAttr(customerServices, 'clerkServiceId', serviceId.value);
+        document.getElementById('cmbClerk').selectedIndex = SelectComboIndexByValue(customerServices[arrayIndex].clerkServiceId, 'cmbClerk');;
         customerServices.splice(arrayIndex, 1);
         addItemsToCustomerServiceDiv(customerServices, arrayIndex, true);
         //loadItemsSalonServicesDiv();
@@ -276,6 +285,13 @@ function fillClerks(clerk) {
 
 function btnAddEditReservation() {
     var parent = document.getElementById("customerServices");
+    var introducId = $("#PeopleSelector_Id")[0].innerText;
+
+    if (introducId == '') {
+        ErrorMessage(customerEmptyMessage);
+        return;
+    }
+
     var children = parent.childNodes;
     var mandatoryMessage = CheckMandatoryFields();
     if (mandatoryMessage != '') {
@@ -298,58 +314,167 @@ function btnAddEditReservation() {
                 var isSalonCustomer = valcmb == 0 ? true : false;
             }
         }
-        getCustomerServices.push({ ClerkServicesId: clerkServiceId, isSalonCustomer: isSalonCustomer});
-}
-
-var reservationFields = {
-    Id: $("#ReservationId").val(),
-    PeopleId: $("#PeopleSelector_Id")[0].innerHTML,
-    P_ReservationDate: $("#txtOrderDate").val(),
-    FromTime: $("#txtFromTimeOrder").val(),
-    ToTime: $("#txtToTimeOrder").val(),
-    Price: $("#txtFee").val(),
-    TBASPayTypeId: $("#cmbPaidType").val(),
-    Description: $("#txtDescription").val(),
-};
-
-var isEdit = false;
-if (reservationFields.Id != '')
-    isEdit = true;
-$.ajax({
-    type: "POST",
-    url: "/Reservation/AddEditReservationMethod",
-    data: {
-        isEdit: isEdit,
-        peopleServices: getCustomerServices,
-        reservation: reservationFields,
-    },
-    success: function (result) {
-        if (result.result != '') {
-            ErrorMessage(result.result);
-            return;
-        }
-
-        SuccessMessage(result.message);
-    },
-    error: function (result) {
-        ErrorMessage();
+        getCustomerServices.push({ ClerkServicesId: clerkServiceId, isSalonCustomer: isSalonCustomer });
     }
-});
+
+    var reservationFields = {
+        Id: $("#ReservationId").val(),
+        PeopleId: $("#PeopleSelector_Id")[0].innerHTML,
+        P_ReservationDate: $("#txtOrderDate").val(),
+        FromTime: $("#txtFromTimeOrder").val(),
+        ToTime: $("#txtToTimeOrder").val(),
+        Price: $("#txtFee").val(),
+        TBASPayTypeId: $("#cmbPaidType").val(),
+        Description: $("#txtDescription").val(),
+    };
+
+    var isEdit = false;
+    if (reservationFields.Id != '')
+        isEdit = true;
+
+
+    $.ajax({
+        type: "POST",
+        url: "/Reservation/AddEditReservationMethod",
+        data: {
+            isEdit: isEdit,
+            peopleServices: getCustomerServices,
+            reservation: reservationFields,
+        },
+        success: function (result) {
+            debugger;
+            if (result.errorMessage != '') {
+                ErrorMessage(result.errorMessage);
+                return;
+            }
+
+            SuccessMessage(result.message);
+        },
+        error: function (result) {
+            ErrorMessage();
+        }
+    });
 }
 
-function btnShowPeopleServicesList(){
-        enablePageloadding();
+function showReservationList(quickSearch, state) {
+    enablePageloadding();
+    var reservation = '';
+
+    if (quickSearch == 'true')
+        var txtSearchValue = $("#txt-search").val();
+    else
+        reservation = {
+            CustomerFirstName: $("#txtcustomerName").val(),
+            CustomerFamily: $("#txtCustomerFamily").val(),
+            TBASServiceId: $("#cmbServiceType").val(),
+            Date: $("#txtDate").val(),
+            ReservationSystemCode: $("#txtFromTime").val(),
+            FromTime: $("#txtToTime").val(),
+            ToTime: $("#txtReservationSystemCode").val(),
+            PageNumber: pageNumber,
+        };
+
+    $.ajax({
+        type: "POST",
+        url: "/Reservation/FillReservationTableData",
+        data: {
+            quickSearch: quickSearch,
+            fullName: txtSearchValue,
+            searchParams: reservation,
+            state: state
+        },
+        success: function (result) {
+            if (result.errorMessage != undefined) {
+                ErrorMessage(result.errorMessage);
+                return;
+            }
+            disablePageloadding();
+            $('#ReservationList').html(result);
+            $('#form-reservationSearch').modal('hide');
+        },
+        error: function () {
+            disablePageloadding();
+            ErrorMessage();
+        }
+    });
+}
+
+function btnShowPeopleServicesList() {
+    enablePageloadding();
+    $.ajax({
+        type: "GET",
+        url: "/Reservation/Index",
+        data: {},
+        success: function (data) {
+            disablePageloadding();
+            $("#formContainer").html(data);
+        },
+        error: function (httpRequest, textStatus, errorThrown) {
+            disablePageloadding();
+            ErrorMessage();
+        }
+    });
+}
+
+function getCallbackPeopleSelect() {
+    enablePageloadding();
+    var peopleId = $("#PeopleSelector_Id")[0].innerHTML;
+    if (parseInt(peopleId) > 0) {
         $.ajax({
-            type: "GET",
-            url: "/Reservation/Index",
-            data: {},
-            success: function (data) {
+            type: "POST",
+            url: "/Reservation/GetPeopleReservationInfo",
+            data: { peopleId: peopleId },
+            success: function (result) {
                 disablePageloadding();
-                $("#formContainer").html(data);
+                if (result.errorMessage != '') {
+                    ErrorMessage(result.errorMessage);
+                    return;
+                }
+                $("#totalBeCustomer").text(result.getpeopleReservationHistory.countOfBeCustomer);
+                $("#totalIncome").text(result.getpeopleReservationHistory.customerIncomeForSalon);
+                $("#peopleType").text(result.getpeopleReservationHistory.customerType);
             },
             error: function (httpRequest, textStatus, errorThrown) {
                 disablePageloadding();
                 ErrorMessage();
             }
         });
+    }
+}
+
+function btnDeleteReservation() {
+    var reservationId = getValueTableById('ReservationId');
+    swal({
+        title: deleteMessageQuestion,
+        text: thisActionIsNotRestore,
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#f44336',
+        cancelButtonColor: '#777',
+        confirmButtonText: confirmDeleteMessage
+    }).then(function () {
+        enablePageloadding();
+        $.ajax({
+            type: "POST",
+            url: "/Reservation/DeleteReservation",
+            data: {
+                reservationId: reservationId,
+            },
+            success: function (result) {
+                if (result.result != '') {
+                    ErrorMessage(result.result);
+                    return;
+                }
+                disablePageloadding();
+                SuccessMessage(result.message);
+                showPeopleList(true);
+            },
+            error: function (result) {
+                disablePageloadding();
+                ErrorMessage();
+            }
+        });
+
+    },
+    ).catch(swal.noop);
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace UI_Presentation.Models
         public string Title { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagMode = TagMode.SelfClosing;
+            output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             sb.AppendFormat("<button type='button' onclick ={0} class ='{1}' ><i class='{2}' ></i>&nbsp;{3} </button>", onClickEvent, buttomClass, icon, Title);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -36,17 +37,19 @@ namespace UI_Presentation.Models
         public string Id { get; set; }
         public string labelTitle { get; set; }
         public string value { get; set; }
+        public string Style { get; set; }
         public bool isDateType { get; set; } = false;
         public bool required { get; set; } = false;
+        
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += "<div class='tabFields' style='text-align:left;'>";
+            html += string.Format("<div class='col-lg-4 tabFields' style='{0}'>", Style);
             html += string.Format("<label class='labelWidget' style='width:100px;'> {0} </label>", labelTitle);
-            html += string.Format("<input id='{0}' placeholder='{1}' class='{2}' type='{3}' {4} style='width:160px !important;float:left;' value='{5}' />", Id, labelTitle, isDateType ? "form-control txtDate" : "form-control", "text", required ? "required=required" : "", value != string.Empty ? value : string.Empty);
+            html += string.Format("<input id='{0}' placeholder='{1}' class='{2}' type='{3}' {4} style='width:160px !important;' value='{5}' />", Id, labelTitle, isDateType ? "form-control txtDate" : "form-control", "text", required ? "required=required" : "", value != string.Empty ? value : string.Empty);
             html += "</div>";
 
-            output.TagMode = TagMode.SelfClosing;
+            output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -127,13 +130,12 @@ namespace UI_Presentation.Models
         public string IconClass { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-
             string html = string.Empty;
             html += "<div class='input-group'>";
             html += string.Format("<a href = '#' class='btn btn-success' style='margin-bottom:7px;' data-toggle='dropdown' onclick='{0}'>", OnClick);
             html += string.Format("<i class='{0}' style='padding:5px;'></i>{1}</a></div>", IconClass, Title);
 
-            output.TagMode = TagMode.SelfClosing;
+            output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -167,10 +169,11 @@ namespace UI_Presentation.Models
         public string Id { get; set; }
         public string labelTitle { get; set; }
         public bool required { get; set; } = false;
+        public string Style { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += "<div class='tabFields'>";
+            html += string.Format("<div class='col-lg-4 tabFields'style='{0}'>", Style);
             html += string.Format("<div style='width: 25%;float: right;'><label class='labelWidget clockpicker-autoclose' style='width:81px;'>{0}</label></div>", labelTitle);
             html += string.Format("<div class='input-group'><span class='input-group-addon'><i class='icon-clock'></i></span> <input id='{0}' placeholder='{1}' class='form-control clockpicker-autoclose' required='{2}'></div>", Id, labelTitle, required ? "required" : "");
             html += "</div>";
@@ -228,7 +231,7 @@ namespace UI_Presentation.Models
                 style += width != null ? "width:" + width + "px !important;float:right !important;" : "width:160px !important;float:right !important;";
                 style += !Enable ? "opacity:0.5; pointer-events: none;" : "";
 
-                html += "<div class='tabFields' style='width:31% !important;'>";
+                html += "<div class='col-lg-4 tabFields'>";
                 html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:101px !important;text-align:right;float:right;'>{0}</label>", labelTitle);
                 html += string.Format("<select id='{0}' class='comboBox' name='{1}' onchange='{2}' style='{3}'>", Id, Name, onchangeDropDown, style);
             }
@@ -318,11 +321,13 @@ namespace UI_Presentation.Models
     {
         public string Title { get; set; }
         public string Value { get; set; }
+        public string Id { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += "<div class='col-lg-3' style='margin-right:123px;";
-            html += string.Format("<p id='countOfComming'> {0} : {1} </p>", Title, Value);
+            html += "<div class='col-lg-4' style='margin-right:123px;font-size:1.1em;color: #042b55;'>";
+            html += string.Format("<p style='float:right;'> {0} : </p>", Title);
+            html += string.Format("<p id={0}> {1} </p>", Id, Value);
             html += "</div>";
             output.TagName = null;
             output.TagMode = TagMode.StartTagAndEndTag;
@@ -338,15 +343,19 @@ namespace UI_Presentation.Models
         public bool HasConfirmContinueBotton { get; set; }
         public string FormName { get; set; }
         public string ConfirmButtonTitle { get; set; }
+        public string OnAddButtonCick { get; set; }
+        public string OnAddButtonContinueCick { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            string eventBtnConfirm = OnAddButtonCick != null ? OnAddButtonCick : "btnAddEdit" + FormName + "()";
+            string eventBtnConfirmContinue = OnAddButtonContinueCick != null ? OnAddButtonContinueCick : "btnAddEdit" + FormName + "(true)";
             string html = string.Empty;
             html += "<table id='formButtons' class='tblButons'>";
             html += "<tr>";
-            html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary'>{2}</button></td>", "btnConfirm" + FormName, "btnAddEdit" + FormName + "()", ConfirmButtonTitle == string.Empty ? "افـزودن" : ConfirmButtonTitle);
+            html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary'>{2}</button></td>", "btnConfirm" + FormName, eventBtnConfirm, ConfirmButtonTitle == string.Empty ? "ثبت" : ConfirmButtonTitle);
 
             if (HasConfirmContinueBotton)
-                html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-primary'>افـزودن و ادامه</button></td>", "btnConfirmContinue" + FormName, "btnAddEdit" + FormName + "(true)");
+                html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-primary'>ثبت و ادامه</button></td>", "btnConfirmContinue" + FormName, eventBtnConfirmContinue);
 
             html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-danger'>لغـو</button></td>", "btnCancel" + FormName, "btnClose" + FormName + "()");
             html += "</tr>";
@@ -434,9 +443,9 @@ namespace UI_Presentation.Models
         {
             string html = string.Empty;
             html += string.Format(@"<div class='input-group'>
-                                  <input id='txt-search' PlaceHolder='{0}' type='text' style='float: left;height:47px; width:80%;'>
-                                  <span onclick={1} class='input-group-addon' style='background: #b75c5c00 ! important;'>
-                                   <i class='btn btn-success icon-magnifierr'>&nbsp; جستجو</i>
+                                  <input id='txt-search' PlaceHolder='{0}' type='text' style='float: left;height:47px; width:100%;text-align:center;'>
+                                  <span onclick={1} class='input-group-addon' style='background: #d94f4f00  ! important;'>
+                                   <i class='btn btn-success icon-magnifierr' style='background: #514d4d;'>&nbsp; جستجو</i>
                                    </span>
                                    </div>", Placeholder, OnClickAction);
 

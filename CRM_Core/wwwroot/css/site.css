@@ -12,7 +12,7 @@ a {
   color: #0366d6;
 }
 #formContainer {
-    height: 900px;
+    height: 90%;
     overflow-y:hidden ;
     overflow-x:hidden;
 }
@@ -153,13 +153,13 @@ table {
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
         color: #1a1a1a;
         cursor: default;
-        background-color: #ffc400;
+        background-color: #d2d0c9;
         border: 1px solid #ddd;
         border-bottom-color: rgb(221, 221, 221);
         border-bottom-color: rgb(221, 221, 221);
         border-bottom-color: transparent;
         font-size: 1.2em;
-        border-radius:18px;
+        border-radius: 18px;
     }
 
 .btn-primary {
@@ -309,9 +309,11 @@ opacity: 0.4;*/
     border-radius: 20px;
     padding: 5px !important;
     box-shadow: 0px 3px 10px 1px #373333 !important;
-    width: 1140px !important;
+    width: 100% !important;
     /*width: 100% !important;*/
-    height: 634px !important ;
+    height: 514px !important;
+    overflow: -moz-hidden-unscrollable;
+    overflow-y: auto;
 }
 
 #page-content {
@@ -344,4 +346,8 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="search"]
     height: 73%;
     margin-top:7px;
     border: 1px solid #ccc5c5;
+}
+
+.ui-datepicker{
+    z-index:1000  !important;
 }

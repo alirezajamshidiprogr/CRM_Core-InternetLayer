@@ -61,6 +61,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جهت ثبت نوبت دهی مشتری سالن را انتخاب کنید ..
+        /// </summary>
+        public static string AddPeopleToRegisterReservation {
+            get {
+                return ResourceManager.GetString("AddPeopleToRegisterReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to متاسفانه برنامه با خطا مواجه شد ، لطفا با پشتیبانی تماس بگیرید..
         /// </summary>
         public static string AnErrorHasAccuredInTheOperation {
@@ -79,11 +88,38 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بله، حذف شود..
+        /// </summary>
+        public static string ConfirmDeleteMessage {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برای مشتری انتتخاب شده هیچ خدماتی انتخاب نشده است !.
         /// </summary>
         public static string CustomerServiceInfoIsEmpty {
             get {
                 return ResourceManager.GetString("CustomerServiceInfoIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاریخ نوبت دهی نمیتواند از تاریخ جاری کوچکتر باشد !.
+        /// </summary>
+        public static string DateReservationCanNotBeLessDateTimeNow {
+            get {
+                return ResourceManager.GetString("DateReservationCanNotBeLessDateTimeNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جهت حذف آیتم انتخاب شده اطمینان دارید ؟.
+        /// </summary>
+        public static string DeleteMessageQuestion {
+            get {
+                return ResourceManager.GetString("DeleteMessageQuestion", resourceCulture);
             }
         }
         
@@ -133,6 +169,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای ثبت شخص هیچ معرفی انتخاب نشده است آیا میخواهید ادامه دهید؟.
+        /// </summary>
+        public static string ForThisCustomerHasNotRegisterAnyIntroducePeople {
+            get {
+                return ResourceManager.GetString("ForThisCustomerHasNotRegisterAnyIntroducePeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برای منوی انتخاب شده یک یا چند زیر منو فعال است ابتدا زیر منوها را غیر فعال کنید!.
         /// </summary>
         public static string ForThisMenuThereAreSomeActiveSubMenu {
@@ -147,6 +192,15 @@ namespace UI_Presentation.wwwroot.Resources {
         public static string FromDateAndToDateMenuAccessInNull {
             get {
                 return ResourceManager.GetString("FromDateAndToDateMenuAccessInNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سوال ....
+        /// </summary>
+        public static string Question {
+            get {
+                return ResourceManager.GetString("Question", resourceCulture);
             }
         }
         
@@ -169,11 +223,29 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to این عملیات برگشت پذیر نیست....
+        /// </summary>
+        public static string ThisActionIsNotRestore {
+            get {
+                return ResourceManager.GetString("ThisActionIsNotRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آیتم انتخاب شده تکراری است !.
         /// </summary>
         public static string ThisItemHasAddedAleadyToServiceCustomer {
             get {
                 return ResourceManager.GetString("ThisItemHasAddedAleadyToServiceCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان رزرو نوبت برای این تاریخ منقضی شده است !.
+        /// </summary>
+        public static string TimeReservationHasExpired {
+            get {
+                return ResourceManager.GetString("TimeReservationHasExpired", resourceCulture);
             }
         }
         
@@ -192,6 +264,15 @@ namespace UI_Presentation.wwwroot.Resources {
         public static string UserNamePasswordIsNotValid {
             get {
                 return ResourceManager.GetString("UserNamePasswordIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to بله.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

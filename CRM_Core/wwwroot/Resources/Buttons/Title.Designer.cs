@@ -70,7 +70,7 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to افزودن.
+        ///   Looks up a localized string similar to ثبت.
         /// </summary>
         public static string Add {
             get {
@@ -88,7 +88,7 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to افزودن و ادامه.
+        ///   Looks up a localized string similar to ثبت و ادامه.
         /// </summary>
         public static string AddWithContinue {
             get {

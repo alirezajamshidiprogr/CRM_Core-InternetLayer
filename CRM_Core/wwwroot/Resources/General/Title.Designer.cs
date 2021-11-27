@@ -628,6 +628,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ریال.
+        /// </summary>
+        public static string Rial {
+            get {
+                return ResourceManager.GetString("Rial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to وظایف.
         /// </summary>
         public static string Role {

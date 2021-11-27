@@ -120,6 +120,9 @@
   <data name="Clerk" xml:space="preserve">
     <value>کارمند</value>
   </data>
+  <data name="ClerkService" xml:space="preserve">
+    <value>خدمات کارمند</value>
+  </data>
   <data name="CountOfComing" xml:space="preserve">
     <value>تعداد مراجعه</value>
   </data>
@@ -153,14 +156,35 @@
   <data name="ReservationSearch" xml:space="preserve">
     <value>جستجوی نوبت دهی</value>
   </data>
+  <data name="ReservationSystemCode" xml:space="preserve">
+    <value>کد سیستمی نوبت</value>
+  </data>
+  <data name="SalonService" xml:space="preserve">
+    <value>خدمات سالن</value>
+  </data>
   <data name="Services" xml:space="preserve">
     <value>خدمات</value>
   </data>
   <data name="ServiceType" xml:space="preserve">
     <value>نوع خدمات</value>
   </data>
+  <data name="TodayReservationCount" xml:space="preserve">
+    <value>تعداد نوبت های امروز</value>
+  </data>
   <data name="ToReservationDate" xml:space="preserve">
     <value>تا تاریخ نوبت دهی</value>
+  </data>
+  <data name="TotalComeInSalon" xml:space="preserve">
+    <value>تعداد مراجعه به سالن</value>
+  </data>
+  <data name="TotalIncomeForSalon" xml:space="preserve">
+    <value>سودآوری کل</value>
+  </data>
+  <data name="TotalReservationPrice" xml:space="preserve">
+    <value>جمع کل مبلغ نوبت ها</value>
+  </data>
+  <data name="TotalTodayReservationPrice" xml:space="preserve">
+    <value>جمع مبلغ نوبت های امروز</value>
   </data>
   <data name="ToTimeOrder" xml:space="preserve">
     <value>تا ساعت</value>

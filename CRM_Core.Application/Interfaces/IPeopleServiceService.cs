@@ -1,7 +1,7 @@
-﻿using CRM_Core.Entities.Reservation;
+﻿using CRM_Core.Application.ViewModels.CustomViewModel;
+using CRM_Core.Entities.Reservation;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CRM_Core.Application.Interfaces
 {
@@ -10,5 +10,7 @@ namespace CRM_Core.Application.Interfaces
         IEnumerable<PeopleServices> getPeopleServiceByReservationId(int reservationId);
         void insertPeopleService(PeopleServices peopleServiceList);
         void removePeopleServiceByReservationId(PeopleServices peopleService);
+
+        IEnumerable<PeopleServiceReservationViewModel> getPeopleServiceByClerkId(int clerkId);
     }
 }

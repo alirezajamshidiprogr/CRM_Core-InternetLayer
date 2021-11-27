@@ -10,7 +10,6 @@ namespace CRM_Core.Entities.Reservation
    public class Reservation
     {
         public int Id { get; set; }
-
         [Required]
         public People People { get; set; }
         public int PeopleId { get; set; }
@@ -19,14 +18,19 @@ namespace CRM_Core.Entities.Reservation
         public string P_ReservationDate { get; set; }
         [Required]
         public DateTime M_ReservationDate { get; set; }
-        public DateTime? FromTime { get; set; }
-        public DateTime? ToTime { get; set; }
+        [Required]
+        [Column(TypeName = "time(7)")]
+        public TimeSpan FromTime { get; set; }
+        [Required]
+        [Column(TypeName = "time(7)")]
+        public TimeSpan ToTime { get; set; }
         [Required]
         public string SystemCode { get; set; }
         public double Price { get; set; }
         public TBASPayType TBASPayType { get; set; }
         public int TBASPayTypeId{ get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class TBASPayType

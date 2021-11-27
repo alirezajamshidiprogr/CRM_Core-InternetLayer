@@ -3,6 +3,7 @@ var canNotEmptyMobile = '';
 var hasCallTelsAndMobiles = false;
 var tels = '';
 var mobiles = '';
+var hasVisitedTels = false;
 
 function btnOpenEditPeople() {
     var peopleId = getValueTableById('PeopleId');
@@ -42,30 +43,34 @@ function btnShowPeopleList() {
 
 function showPeopleList(quickSearch, state) {
     enablePageloadding();
-    if (quickSearch == true)
-        var txtSearchValue = $("#txtPeopleSearch").val();
+    if (quickSearch == 'true')
+        var txtSearchValue = $("#txt-search").val();
     var people = '';
-    if (state == 'isSelectedMode' && quickSearch == false) {// SEARCH ITEMS FOR SELECT PEOPLE SEARCH 
+    if (state == 'isSelectedMode' && quickSearch == 'false') {// SEARCH ITEMS FOR SELECT PEOPLE SEARCH 
         people = {
             systemCode : $("#_txtsystemCode").val(),
             ManualCode : $("#_txtmanualCode").val(),
             CertificateCode : $("#_txtCertificateCode").val(),
             FirstName : $("#_txtName").val(),
-            LastName : $("#_txtFamily").val()
+            LastName: $("#_txtFamily").val(),
+            PageNumber: pageNumber,
         };
     }
-    else if (state == 'isEditMode' && quickSearch == false) {
+    else if (state == 'isEditMode' && quickSearch == 'false') {
         people = {
             FirstName: $("#txtNameSearch").val(),
             LastName: $("#txtFamilySearch").val(),
-            Birthday: $("#txtBirthDaySearch").val(),
-            Age: $("#txtAgeSearch").val(),
+            FromBirthday: $("#txtFromBirthDaySearch").val(),
+            ToBirthday: $("#txtToBirthDaySearch").val(),
+            FromAge: $("#txtFromAgeSearch").val(),
+            ToAge: $("#txtToAgeSearch").val(),
             TBASPotentialId: document.getElementById("cmbPotentialSearch").value,
             TBASIntroductionTypeId: document.getElementById("cmbIntroductionTypeSearch").value ,
             MariedType: document.getElementById("cmbMariedTypeSearch").value ,
             TBASGradationsId: document.getElementById("cmbGradationsSearch").value ,
             TBASCategoriyId: document.getElementById("cmbCategoriesSearch").value ,
-            TBASPrefixID: document.getElementById("cmbPrefixesSearch").value ,
+            TBASPrefixID: document.getElementById("cmbPrefixesSearch").value,
+            PageNumber: pageNumber,
         };
     }
 
@@ -142,9 +147,9 @@ function btnAddEditPeople() {
 
 
     // Tels AND Mobiles
-    var lenTels = parentDivTels.getElementsByClassName("input-group").length;
-    var lenMobiles = parentDivMobiles.getElementsByClassName("input-group").length;
-    for (var i = 1; i < lenTels; i++) {
+    var lenTels = parentDivTels.getElementsByClassName("divTelsItems").length;
+    var lenMobiles = parentDivMobiles.getElementsByClassName("divMobileItems").length;
+    for (var i = 1; i <= lenTels; i++) {
         var txtCode = document.getElementById("txtCode" + i).value;
         var txtTel = document.getElementById("txtTel" + i).value;
         var txtComment = document.getElementById("txtComment" + i).value;
@@ -153,7 +158,7 @@ function btnAddEditPeople() {
         }
 
     }
-    for (var i = 1; i < lenMobiles; i++) {
+    for (var i = 1; i <= lenMobiles; i++) {
         var txtMobile = document.getElementById("txtMobile" + i).value;
         var txtMobComment = document.getElementById("txtMobComment" + i).value;
         if (txtMobile != '' && txtMobile != null) {
@@ -177,13 +182,13 @@ function btnAddEditPeople() {
 
     if (introducId == '') {
         swal({
-            title: ' سوال... ',
-            text: "برای ثبت شخص هیچ معرفی انتخاب نشده است آیا میخواهید ادامه دهید؟",
+            title: question,
+            text: introducePeopleMessage,
             type: 'question',
             showCancelButton: true,
             confirmButtonColor: '#f44336',
             cancelButtonColor: '#777',
-            confirmButtonText: 'بله  '
+            confirmButtonText: yesTitle
         }).then(function () {
             AddEditPeoplefunction(isEdit, checkRepeatedTels, checkRepeatedMobiles, tels, mobiles, peopleVirtual, address, people);
         },
@@ -202,6 +207,7 @@ function AddEditPeoplefunction(isEdit, checkRepeatedTels, checkRepeatedMobiles, 
         data: {
             isEdit: isEdit,
             checkRepeatedTels: checkRepeatedTels,
+            hasVisitedTelsMobiles: hasVisitedTels,
             checkRepeatedMobiles: checkRepeatedMobiles,
             tels: tels,
             mobiles: mobiles,
@@ -247,13 +253,13 @@ function btnCloseAddEditPeople() {
 function btnDeletePeople() {
     var peopleId = getValueTableById('PeopleId');
     swal({
-        title: 'آیا جهت حذف آیتم اطمینان دارید؟',
-        text: "این عملیات برگشت پذیر نیست...",
+        title: deleteMessageQuestion,
+        text: thisActionIsNotRestore,
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#f44336',
         cancelButtonColor: '#777',
-        confirmButtonText: 'بله، حذف شود. '
+        confirmButtonText: confirmDeleteMessage
     }).then(function () {
         enablePageloadding();
         $.ajax({
@@ -283,14 +289,13 @@ function btnDeletePeople() {
 
 function AddNewRowTel() {
     var parentDiv = document.getElementById("divTels");
-    var len = parentDiv.getElementsByClassName("input-group").length;
-    var idCode = "txtCode" + len;
-    var idTel = "txtTel" + len;
-    var idComment = "txtComment" + len;
+    var len = parentDiv.getElementsByClassName("divTelsItems").length;
+    var idCode = "txtCode" + (len+1);
+    var idTel = "txtTel" + (len+1);
+    var idComment = "txtComment" + (len+1);
 
-    for (var i = len; i >= 2; i--) {
-        var num = i - 1;
-        var txtTel = document.getElementById("txtTel" + num).value
+    for (var i = 1; i <= len ; i++) {
+        var txtTel = document.getElementById("txtTel" + i).value
         if (txtTel == '' || txtTel == null) {
             WarningMessage(canNotEmptyTel);
             return;
@@ -302,8 +307,8 @@ function AddNewRowTel() {
     var divTelFields = document.createElement('div');
     divTelFields.className = 'input-group';
     divTelFields.style = 'margin-top:10px;';
-
-    divTelFields.innerHTML = '<span class="input-group-addon"><i class="fa fa-phone-square" ></i ></span ><input class="form-control" id="' + idCode + '"type="text" maxlength="3" style="width:70px !important; margin-left: 7px;" placeholder="کد"><span class="input-group-addon"><i class="fa fa-phone"></i></span><input class="form-control" id="' + idTel + '" style="margin-left:7px;width:128px !important ;" type="text" maxlength="8" placeholder="تلفن"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idComment + '" type="text" placeholder="توضیحات" style="width:695px !important">'
+    divTelFields.innerHTML = "<div class='divTelsItems' style='display:none;'> </div>";
+    divTelFields.innerHTML += '<span class="input-group-addon"><i class="fa fa-phone-square" ></i ></span ><input class="form-control" id="' + idCode + '"type="text" maxlength="3" style="width:70px !important; margin-left: 7px;" placeholder="کد"><span class="input-group-addon"><i class="fa fa-phone"></i></span><input class="form-control" id="' + idTel + '" style="margin-left:7px;width:128px !important ;" type="text" maxlength="8" placeholder="تلفن"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idComment + '" type="text" placeholder="توضیحات" style="width:695px !important">'
     //document.getElementById(idTel).setAttribute("format", "Phone");
 
     addList.appendChild(divTelFields);
@@ -311,13 +316,12 @@ function AddNewRowTel() {
 
 function AddNewRowMobile() {
     var parentDiv = document.getElementById("divMobiles");
-    var len = parentDiv.getElementsByClassName("input-group").length;
-    var idMobile = "txtMobile" + len;
-    var idMobComment = "txtMobComment" + len;
+    var len = parentDiv.getElementsByClassName("divMobileItems").length;
+    var idMobile = "txtMobile" + (len+1);
+    var idMobComment = "txtMobComment" + (len+1);
 
-    for (var i = len; i >= 2; i--) {
-        var num = i - 1;
-        var txtMobile = document.getElementById("txtMobile" + num).value
+    for (var i = 1; i <= len; i++) {
+        var txtMobile = document.getElementById("txtMobile" + i).value
         if (txtMobile == '' || txtMobile == null) {
             WarningMessage(canNotEmptyMobile);
             return;
@@ -329,17 +333,17 @@ function AddNewRowMobile() {
     var divMobileFields = document.createElement('div');
     divMobileFields.className = 'input-group';
     divMobileFields.style = 'margin-top:10px;';
-
-    divMobileFields.innerHTML = '<span class="input-group-addon"><i class="fa fa-mobile"></i></span><input class="form-control" id="' + idMobile + '" style="margin-left:7px;width:128px !important ;" type="text" maxlength="11" placeholder="همراه"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idMobComment + '" type="text" placeholder="توضیحات" style="width:836px !important">'
+    divMobileFields.innerHTML = "<div class='divMobileItems' style='display:none;'> </div>";
+    divMobileFields.innerHTML += '<span class="input-group-addon"><i class="fa fa-mobile"></i></span><input class="form-control" id="' + idMobile + '" style="margin-left:7px;width:128px !important ;" type="text" maxlength="11" placeholder="همراه"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idMobComment + '" type="text" placeholder="توضیحات" style="width:836px !important">'
     addList.appendChild(divMobileFields);
     //document.getElementById(idMobile).setAttribute("format", "Mobile");
 
 }
 
 function getPeopleTelsAndMobile(e, peopleId) {
+    hasVisitedTels = true; 
     var target = $(e.target).attr("href")
     if (target == '#PeopleRelations') {
-        //  if (!hasCallTelsAndMobiles) return;
         $.ajax({
             type: "POST",
             url: "/People/GetPeopleTelsAndMobiles",
@@ -379,7 +383,8 @@ function FillTelsAndMobiles(tels, mobiles) {
             var idCode = "txtCode" + (i + 1);
             var idTel = "txtTel" + (i + 1);
             var idComment = "txtComment" + (i + 1);
-            divTelFields.innerHTML = '<span class="input-group-addon"><i class="fa fa-phone-square" ></i ></span ><input class="form-control" id="' + idCode + '"type="text" maxlength="3" value= " ' + tels[i].code + '" style="width:70px !important; margin-left: 7px;" placeholder="کد"><span class="input-group-addon"><i class="fa fa-phone"></i></span><input class="form-control" id="' + idTel + '" style="margin-left:7px;width:128px !important ;" type="text" value="' + tels[i].number + '" maxlength="8" placeholder="تلفن"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idComment + '" type="text" value="' + tels[i].comment + '"placeholder="توضیحات" style="width:695px !important">'
+            divTelFields.innerHTML = "<div class='divTelsItems' style='display:none;'> </div>";
+            divTelFields.innerHTML += '<span class="input-group-addon"><i class="fa fa-phone-square" ></i ></span ><input class="form-control" id="' + idCode + '"type="text" maxlength="3" value= " ' + tels[i].code + '" style="width:70px !important; margin-left: 7px;" placeholder="کد"><span class="input-group-addon"><i class="fa fa-phone"></i></span><input class="form-control" id="' + idTel + '" style="margin-left:7px;width:128px !important ;" type="text" value="' + tels[i].number + '" maxlength="8" placeholder="تلفن"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idComment + '" type="text" value="' + tels[i].comment + '"placeholder="توضیحات" style="width:695px !important">'
             addListTels.appendChild(divTelFields);
         }
     }
@@ -396,8 +401,8 @@ function FillTelsAndMobiles(tels, mobiles) {
 
             var idMobile = "txtMobile" + (i + 1);
             var idMobComment = "txtMobComment" + (i + 1);
-
-            divMobileFields.innerHTML = '<span class="input-group-addon"><i class="fa fa-mobile"></i></span><input class="form-control" id="' + idMobile + '" style="margin-left:7px;width:128px !important ;" type="text" value="' + mobiles[i].mobile + '" maxlength="11" placeholder="همراه"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idMobComment + '" type="text" value="' + mobiles[i].comment + '" placeholder="توضیحات" style="width:836px !important">'
+            divMobileFields.innerHTML = "<div class='divMobileItems' style='display:none;'> </div>";
+            divMobileFields.innerHTML += '<span class="input-group-addon"><i class="fa fa-mobile"></i></span><input class="form-control" id="' + idMobile + '" style="margin-left:7px;width:128px !important ;" type="text" value="' + mobiles[i].mobile + '" maxlength="11" placeholder="همراه"><span class="input-group-addon"><i class="fa fa-comment"></i></span><input class="form-control" id="' + idMobComment + '" type="text" value="' + mobiles[i].comment + '" placeholder="توضیحات" style="width:836px !important">'
             addListMobiles.appendChild(divMobileFields);
         }
     }
@@ -437,6 +442,7 @@ function btnShowPeoplePopupClick(buttonTitle) {
 }
 
 function selectPeople(e) {
+    debugger;
     var peopleId = getValueTableById('PeopleId');
     if (peopleId > 0) {
         $(document).ready(function () {

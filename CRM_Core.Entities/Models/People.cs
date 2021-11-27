@@ -23,9 +23,12 @@ namespace CRM_Core.DomainLayer
         public string Job { get; set; }
         [MaxLength(10)]
         public string P_Birthday { get; set; }
+
+        [Column(TypeName = "Date")]
         public DateTime? M_Birthday { get; set; }
         [MaxLength(10)]
         public string P_MariedDate { get; set; }
+        [Column(TypeName = "Date")]
         public DateTime? M_MariedDate { get; set; }
         public string Description { get; set; }
         public int? MarriedType{ get; set; }
@@ -65,6 +68,7 @@ namespace CRM_Core.DomainLayer
         public string Instagram { get; set; }
         [ForeignKey("PeopleId")]
         public People People { get; set; }
+        public int PeopleId { get; set; }
     }
 
     public class Address

@@ -119,10 +119,10 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime?>("M_Birthday")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<DateTime?>("M_MariedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<string>("ManualCode")
                         .HasMaxLength(10)
@@ -218,7 +218,7 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("PeopleId")
+                    b.Property<int>("PeopleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Telegram")
@@ -839,8 +839,11 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FromTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("FromTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("M_ReservationDate")
                         .HasColumnType("datetime2");
@@ -863,8 +866,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<int>("TBASPayTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ToTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("ToTime")
+                        .HasColumnType("time(7)");
 
                     b.HasKey("Id");
 
@@ -1185,7 +1188,9 @@ namespace CRM_Core.DataAccessLayer.Migrations
                 {
                     b.HasOne("CRM_Core.DomainLayer.People", "People")
                         .WithMany()
-                        .HasForeignKey("PeopleId");
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("People");
                 });

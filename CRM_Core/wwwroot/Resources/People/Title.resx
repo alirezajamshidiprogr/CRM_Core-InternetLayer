@@ -165,6 +165,12 @@
   <data name="Family" xml:space="preserve">
     <value>فامیلی</value>
   </data>
+  <data name="FromAge" xml:space="preserve">
+    <value>از سن </value>
+  </data>
+  <data name="FromBirthDay" xml:space="preserve">
+    <value>از تاریخ</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>نام - نام خانوادگی</value>
   </data>
@@ -254,6 +260,12 @@
   </data>
   <data name="Telegram" xml:space="preserve">
     <value>تلگرام</value>
+  </data>
+  <data name="ToAge" xml:space="preserve">
+    <value>تا سن</value>
+  </data>
+  <data name="ToBirthDay" xml:space="preserve">
+    <value>تا تاریخ</value>
   </data>
   <data name="TodayReservation" xml:space="preserve">
     <value>رزروهای امروز</value>

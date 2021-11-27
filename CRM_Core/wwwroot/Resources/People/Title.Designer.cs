@@ -205,6 +205,24 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to از سن .
+        /// </summary>
+        public static string FromAge {
+            get {
+                return ResourceManager.GetString("FromAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to از تاریخ.
+        /// </summary>
+        public static string FromBirthDay {
+            get {
+                return ResourceManager.GetString("FromBirthDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام - نام خانوادگی.
         /// </summary>
         public static string FullName {
@@ -471,6 +489,24 @@ namespace UI_Presentation.wwwroot.Resources.People {
         public static string Telegram {
             get {
                 return ResourceManager.GetString("Telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تا سن.
+        /// </summary>
+        public static string ToAge {
+            get {
+                return ResourceManager.GetString("ToAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تا تاریخ.
+        /// </summary>
+        public static string ToBirthDay {
+            get {
+                return ResourceManager.GetString("ToBirthDay", resourceCulture);
             }
         }
         

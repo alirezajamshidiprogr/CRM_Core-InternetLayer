@@ -9,12 +9,14 @@
     List<SelectListItem> categoriesItems = ViewBag.CategoriesItems;
     List<SelectListItem> prefixesItems = ViewBag.PrefixesItems;
 
-    <modal bodystyle="height:200px" title="@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch" id="form-peopleSearch">
+    <modal bodystyle="height:245px" title="@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch" id="form-peopleSearch">
         <modal-body>
             <short-TextBox id="txtNameSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
             <short-TextBox id="txtFamilySearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
-            <short-TextBox id="txtAgeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Age"></short-TextBox>
-            <short-TextBox id="txtBirthDaySearch" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay"></short-TextBox>
+            <short-TextBox id="txtFromAgeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.FromAge"></short-TextBox>
+            <short-TextBox id="txtToAgeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.ToAge"></short-TextBox>
+            <short-TextBox id="txtFromBirthDaySearch" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.FromBirthDay"></short-TextBox>
+            <short-TextBox id="txtToBirthDaySearch" is-date-type="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.ToBirthDay"></short-TextBox>
             <dropDown id="cmbPotentialSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Potential" drop-down-data-bound="@potentialItems"></dropDown>
             <dropDown id="cmbIntroductionTypeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.AcquaintanceType" drop-down-data-bound="@introductionTypesItems"></dropDown>
             <dropDown id="cmbMariedTypeSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.IsMarried" drop-down-data-bound="@marriedItems"></dropDown>
@@ -23,7 +25,7 @@
             <dropDown id="cmbPrefixesSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Prefix" drop-down-data-bound="@prefixesItems"></dropDown>
             <customChild-tag style="text-align: left;">
                 <customTag-children>
-                    <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList(false,'isSelectedMode')"></Icon-Button>
+                    <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="@string.Format("showPeopleList('{0}','{1}')","false","isEditMode")"></Icon-Button>
                 </customTag-children>
             </customChild-tag>
         </modal-body>
@@ -34,8 +36,8 @@
     <br />
     <search-header>
         <Search-Botton>
-            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showPeopleList()"></Icon-Button>
-            <modal-buttom modal-id="form-peopleSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
+            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="btnOpenEditPeople()"></Icon-Button>
+            <modal-buttom modal-id="form-peopleSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search" ></modal-buttom>
         </Search-Botton>
 
         <Search-TextBox>
