@@ -36,25 +36,106 @@ namespace UI_Presentation.Models
     {
         public string Id { get; set; }
         public string labelTitle { get; set; }
+        public string RequeiredMessage { get; set; }
         public string value { get; set; }
         public string Style { get; set; }
-        public bool isDateType { get; set; } = false;
+        public string InputType { get; set; }
         public bool required { get; set; } = false;
-        
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += string.Format("<div class='col-lg-4 tabFields' style='{0}'>", Style);
-            html += string.Format("<label class='labelWidget' style='width:100px;'> {0} </label>", labelTitle);
-            html += string.Format("<input id='{0}' placeholder='{1}' class='{2}' type='{3}' {4} style='width:160px !important;' value='{5}' />", Id, labelTitle, isDateType ? "form-control txtDate" : "form-control", "text", required ? "required=required" : "", value != string.Empty ? value : string.Empty);
+            html += string.Format("<div class='form-group'> ", Style);
+            html += string.Format("<div class='controls'> ");
+            html += string.Format("<label>{0}</label>", labelTitle);
+            html += string.Format("<input id='{0}' name ='text' class='form-control text-left' dir='ltr' {1}  placeholder='{2}' {3} value='{4}' type='{5}'>", Id,required ? "required=\"" + string.Empty + "\"" : string.Empty, labelTitle, RequeiredMessage != string.Empty ? "data-validation-required-message=\"" + RequeiredMessage + "\""  : string.Empty, value != string.Empty ? value : string.Empty, InputType == string.Empty ? "text" : InputType);
+            html += "</div>";
             html += "</div>";
 
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
         }
     }
+
+
+    [HtmlTargetElement("DateTime-TextBox")]
+    public class DateTimeTextBox : TagHelper
+    {
+        public string Id { get; set; }
+        public string labelTitle { get; set; }
+        public string RequeiredMessage { get; set; }
+        public string value { get; set; }
+        public string Style { get; set; }
+        public bool required { get; set; } = false;
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<div class='mb-1'>");
+            html += string.Format("<label>{0}</label>", labelTitle);
+            html += string.Format("<fieldset class='form-group position-relative has-icon-left'>");
+            html += string.Format("<input id={0} type='text' class='form-control txtDate' placeholder='انتخاب تاریخ' value='{1}'>", Id,value);
+            html += string.Format("<div class='form-control-position'> <i class='bx bx-calendar'></i></div></fieldset>");
+            html += "</div>";
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("FormTitle")]
+    public class FormTitle: TagHelper
+    {
+        public string Form_Title { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<h5 class='mb-1'>{0}</h5>", Form_Title);
+            output.TagMode = TagMode.StartTagOnly;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+
+    [HtmlTargetElement("Profile-Image")]
+    public class ProfileImage: TagHelper
+    {
+        public string Id { get; set; }
+        public string ProfileTitle { get; set; }
+        public string ImageLink { get; set; }
+        public string ImageAlt { get; set; }
+        public string OnClickChange { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format(" <div class='media mb-2'>");
+            html += string.Format("<a class='mr-2' href='#'> <img class='users-avatar-shadow rounded-circle' alt='{0}' src='{1}' width='120' height='120'></a>", ImageAlt , "../../assets/images/portrait/small/avatar-s-26.jpg");
+            html += string.Format("<div class='media-body'>");
+            html += string.Format(" <h4 class='media-heading'>{0}</h4>", ProfileTitle);
+            html += string.Format("<div class='col-12 px-0 d-flex'>");
+            html += string.Format("<a class='btn btn-sm btn-primary mr-25' href='#' onclick='{0}'>تغییر</a>" , OnClickChange );
+            html += "</div>";
+            html += "</div>";
+            html += "</div>";
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+
 
     [HtmlTargetElement("checkBox")]
     public class CheckBox : TagHelper
@@ -84,7 +165,7 @@ namespace UI_Presentation.Models
         public string Id { get; set; }
         public string labelTitle { get; set; }
         public bool required { get; set; } = false;
-        public string Value{ get; set; }
+        public string Value { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
@@ -179,6 +260,7 @@ namespace UI_Presentation.Models
             html += "</div>";
 
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -200,12 +282,74 @@ namespace UI_Presentation.Models
             html += string.Format("</{0}>", Name);
 
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
         }
     }
 
+
+    //[HtmlTargetElement("dropDown")]
+    //public class DropDown : TagHelper
+    //{
+    //    public string Id { get; set; }
+    //    public string Name { get; set; }
+    //    public string AllItemsName { get; set; }
+    //    public string labelTitle { get; set; }
+    //    public string onchangeDropDown { get; set; }
+    //    public List<SelectListItem> dropDownDataBound { get; set; }
+    //    public bool isLongForm { get; set; } = false;
+    //    public bool required { get; set; } = false;
+    //    public int? width { get; set; } = null;
+    //    public bool Enable { get; set; } = true;
+    //    public string value { get; set; }
+    //    public override void Process(TagHelperContext context, TagHelperOutput output)
+    //    {
+    //        string html = string.Empty;
+
+    //        if (isLongForm)
+    //        {
+    //            string style = string.Empty;
+    //            style += width != null ? "width:" + width + "px !important;float:right !important;" : "width:160px !important;float:right !important;";
+    //            style += !Enable ? "opacity:0.5; pointer-events: none;" : "";
+
+    //            html += "<div class='col-lg-4 tabFields'>";
+    //            html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:101px !important;text-align:right;float:right;'>{0}</label>", labelTitle);
+    //            html += string.Format("<select id='{0}' class='comboBox' name='{1}' onchange='{2}' style='{3}'>", Id, Name, onchangeDropDown, style);
+    //        }
+    //        else
+    //        {
+    //            string style = string.Empty;
+    //            style += !Enable ? "opacity:0.5; pointer-events: none;" : "";
+
+    //            html += "<div class='tabFields'>";
+    //            html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:81px;'>{0}</label>", labelTitle);
+    //            html += string.Format("<select id='{0}' class='comboBox' name='{1}' onchange='{2}'> style='{3}' ", Id, Name, onchangeDropDown, style);
+    //        }
+
+    //        if (!string.IsNullOrEmpty(AllItemsName))
+    //            html += string.Format("<option value ='null'>{0}</option>", AllItemsName);
+    //        if (dropDownDataBound != null)
+    //        {
+    //            foreach (var item in dropDownDataBound)
+    //            {
+    //                if (item.Selected)
+    //                    html += string.Format("<option value='{0}' selected>{1}</option>", item.Value, item.Text);
+    //                else
+    //                    html += string.Format("<option value='{0}'>{1}</option>", item.Value, item.Text);
+    //            }
+    //        }
+
+    //        html += "</select>";
+    //        html += "</div>";
+
+    //        output.TagMode = TagMode.StartTagAndEndTag;
+    //        var sb = new StringBuilder();
+    //        sb.AppendFormat(html);
+    //        output.PreContent.SetHtmlContent(sb.ToString());
+    //    }
+    //}
 
     [HtmlTargetElement("dropDown")]
     public class DropDown : TagHelper
@@ -216,34 +360,18 @@ namespace UI_Presentation.Models
         public string labelTitle { get; set; }
         public string onchangeDropDown { get; set; }
         public List<SelectListItem> dropDownDataBound { get; set; }
-        public bool isLongForm { get; set; } = false;
         public bool required { get; set; } = false;
-        public int? width { get; set; } = null;
         public bool Enable { get; set; } = true;
         public string value { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
+            string style = string.Empty;
 
-            if (isLongForm)
-            {
-                string style = string.Empty;
-                style += width != null ? "width:" + width + "px !important;float:right !important;" : "width:160px !important;float:right !important;";
-                style += !Enable ? "opacity:0.5; pointer-events: none;" : "";
+            html += "<div class='form-group'>";
+            html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:101px !important;text-align:right;float:right;'>{0}</label>", labelTitle);
+            html += string.Format("<select class='form-control' id='{0}' name='{1}' onchange='{2}' >", Id, Name, onchangeDropDown);
 
-                html += "<div class='col-lg-4 tabFields'>";
-                html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:101px !important;text-align:right;float:right;'>{0}</label>", labelTitle);
-                html += string.Format("<select id='{0}' class='comboBox' name='{1}' onchange='{2}' style='{3}'>", Id, Name, onchangeDropDown, style);
-            }
-            else
-            {
-                string style = string.Empty;
-                style += !Enable ? "opacity:0.5; pointer-events: none;" : "";
-
-                html += "<div class='tabFields'>";
-                html += string.Format("<label class='labelWidget clockpicker-autoclose' style='width:81px;'>{0}</label>", labelTitle);
-                html += string.Format("<select id='{0}' class='comboBox' name='{1}' onchange='{2}'> style='{3}' ", Id, Name, onchangeDropDown, style);
-            }
 
             if (!string.IsNullOrEmpty(AllItemsName))
                 html += string.Format("<option value ='null'>{0}</option>", AllItemsName);
@@ -278,7 +406,7 @@ namespace UI_Presentation.Models
 
             string html = string.Empty;
             html += string.Format(@"<a class='btn btn-info btn-round' data-target='{0}' data-toggle='modal'>
-                <i class='fa fa-filter'></i>
+                <i class='bx bx-search'></i>
                 {1}
                 <div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0;'></div><div class='paper-ripple__waves'></div></div>
             </a>", "#" + ModalId, Title);
@@ -352,12 +480,12 @@ namespace UI_Presentation.Models
             string html = string.Empty;
             html += "<table id='formButtons' class='tblButons'>";
             html += "<tr>";
-            html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary'>{2}</button></td>", "btnConfirm" + FormName, eventBtnConfirm, ConfirmButtonTitle == string.Empty ? "ثبت" : ConfirmButtonTitle);
+            html += string.Format("<td><button type ='button' id='{0}' onclick='{1}' class='btn btn-primary fa fa-check'>{2}</button></td>", "btnConfirm" + FormName, eventBtnConfirm, ConfirmButtonTitle == string.Empty ? "ثبت" : ConfirmButtonTitle);
 
             if (HasConfirmContinueBotton)
                 html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-primary'>ثبت و ادامه</button></td>", "btnConfirmContinue" + FormName, eventBtnConfirmContinue);
 
-            html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-danger'>لغـو</button></td>", "btnCancel" + FormName, "btnClose" + FormName + "()");
+            html += string.Format("<td><button type = 'button' id='{0}' onclick='{1}' class='btn btn-danger fa fa-close (alias)'>لغـو</button></td>", "btnCancel" + FormName, "btnClose" + FormName + "()");
             html += "</tr>";
             html += "</table>";
 
@@ -409,7 +537,7 @@ namespace UI_Presentation.Models
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtArea' value='{0}' class='form-control' style = 'width:118px!important' placeholder='منـطقه'></div>", areaValue != string.Empty ? areaValue : string.Empty);
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtStreet' value='{0}' class='form-control' style = 'width:200px !important' placeholder='خیـابان'></div>", streetValue != string.Empty ? streetValue : string.Empty);
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtAlley' value='{0}' class='form-control' style = 'width:200px !important' placeholder='کوچه'> </div>", alleyValue != string.Empty ? alleyValue : string.Empty);
-            html += string.Format("<br /><div style='margin-top:15px;'><input id='txtOtherAddress' value='{0}' class='form-control' style = 'width:97% !important' placeholder='ادامه آدرس'> </div>", OtherAddress != string.Empty ? OtherAddress : string.Empty);
+            html += string.Format("<br /><div style='margin-top:26px;'><input id='txtOtherAddress' value='{0}' class='form-control' style = 'width:97% !important' placeholder='ادامه آدرس'> </div>", OtherAddress != string.Empty ? OtherAddress : string.Empty);
             html += "</div>";
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
@@ -560,7 +688,7 @@ namespace UI_Presentation.Models
 
                 html += string.Format("<div class='col-lg-4 collapsItems' onclick='{0}'><div><i class='{1}' aria-hidden='true' style='font-size:34px;text-align:center;'></i></div>", OnClickEvent, IconClass);
 
-                for (int j = 0; j < HeaderTitle.Count ; j++)
+                for (int j = 0; j < HeaderTitle.Count; j++)
                 {
                     if (j == 0)
                         html += string.Format("<div><span class='collapseId' style='display:none;'>{0}</span></div>", ModelListTable.Rows[i][j]);

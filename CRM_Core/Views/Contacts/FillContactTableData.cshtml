@@ -1,0 +1,47 @@
+﻿@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.CustomViewModel
+
+@model DataGridViewModel<ContactViewModel>
+
+@{
+    int rowNum = 1;
+    <grid-view style="height:419px;margin-top:-2%;">
+        <gridView-body>
+            <grid-rows-body is-header="true" width="1480">
+                <header-gridview width="200" header-field-name="@UI_Presentation.wwwroot.Resources.Buttons.Title.Actions"></header-gridview>
+                <header-gridview width="50" header-field-name="@UI_Presentation.wwwroot.Resources.General.Title.RowNum"></header-gridview>
+                <header-gridview width="208" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Name"></header-gridview>
+                <header-gridview width="122" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Family"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Tel"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Mobile"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.WorkTel"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.EmailPost"></header-gridview>
+                <header-gridview width="110" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.Fax"></header-gridview>
+                <header-gridview width="300" header-field-name="@UI_Presentation.wwwroot.Resources.People.Title.HomeAddress"></header-gridview>
+            </grid-rows-body>
+
+            @if (Model == null) return;
+
+            @foreach (var item in Model.Records.ToList())
+            {
+        <grid-rows-body width="1480">
+
+            <grid-rows-data visible="false" field-value="@item.Id"></grid-rows-data>
+            <grid-rows-buttons style="width:200px;" is-edit-mode="true" is-print-mode="true" on-delete-button-action="btnDeleteContact()" on-edit-button-action="btnOpenEditContacts()"></grid-rows-buttons>
+            <grid-rows-data width="50" field-value="@rowNum"></grid-rows-data>
+            <grid-rows-data width="208" field-value="@item.FirstName"></grid-rows-data>
+            <grid-rows-data width="122" field-value="@item.LastName"></grid-rows-data>
+            <grid-rows-data width="110" field-value="@item.Tel"></grid-rows-data>
+            <grid-rows-data width="110" field-value="@item.Mobile"></grid-rows-data>
+            <grid-rows-data width="110" field-value="@item.WorkTel"></grid-rows-data>
+            <grid-rows-data width="110" field-value="@item.Emails"></grid-rows-data>
+            <grid-rows-data width="110" field-value="@item.Fax"></grid-rows-data>
+            <grid-rows-data width="300" field-value="@item.Address"></grid-rows-data>
+        </grid-rows-body>
+                rowNum = rowNum + 1;
+            }
+            
+        </gridView-body>
+    </grid-view>
+
+}

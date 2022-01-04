@@ -1,0 +1,55 @@
+﻿@{
+    bool isEdit = false;
+    <div class="container" style="padding:8px;">
+        <button type="button" class="btn btn-info btnCollapse" data-toggle="collapse" data-target="#AddEditContact">@UI_Presentation.wwwroot.Resources.People.Title.RegisterNewContact</button>
+        <div id="AddEditContact" class="collapse">
+            <customChild-tag>
+                <customTag-children>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WorkTel " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Fax " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Email " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.HomeAddress " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
+                   
+                    <form-buttons form-name="People" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></form-buttons>
+                </customTag-children>
+            </customChild-tag>
+        </div>
+
+        <button type="button" class="btn btn-info btnCollapse" data-toggle="collapse" data-target="#SearchContact">@UI_Presentation.wwwroot.Resources.People.Title.SearchContact</button>
+        <div id="SearchContact" class="collapse in">
+            <customChild-tag>
+                <customTag-children>
+                    <short-TextBox id="txtNameSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name "></short-TextBox>
+                    <short-TextBox id="txtFamilySearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family "></short-TextBox>
+                    <short-TextBox id="txtTelSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel "></short-TextBox>
+                    <short-TextBox id="txtMobileSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile "></short-TextBox>
+
+                    <Icon-Button buttom-class="btn btn-info  btn-round btnSearchGrid" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="btnOpenEditPeople()"></Icon-Button>
+                </customTag-children>
+            </customChild-tag>
+        </div>
+    </div>
+
+    <customChild-tag id="contactList">
+        <customTag-children>
+            @await Html.PartialAsync("~/Views/Contacts/FillContactTableData.cshtml")
+        </customTag-children>
+    </customChild-tag>
+}
+
+
+<script>
+    $("#TitleForm").html('@TempData["Title"]');
+    concatColonToLables();
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+</script>

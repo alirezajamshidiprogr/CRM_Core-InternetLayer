@@ -120,6 +120,9 @@
   <data name="AcquaintanceType" xml:space="preserve">
     <value>نحوه آشنایی</value>
   </data>
+  <data name="AddPeople" xml:space="preserve">
+    <value>افزودن شخص جدید</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>آدرس</value>
   </data>
@@ -159,11 +162,23 @@
   <data name="EditCustomer" xml:space="preserve">
     <value>ویرایش مشتری</value>
   </data>
+  <data name="EditPeople" xml:space="preserve">
+    <value>ویرایش شخص</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>ایمیل</value>
   </data>
+  <data name="EmailPost" xml:space="preserve">
+    <value>پست الکترونیکی</value>
+  </data>
   <data name="Family" xml:space="preserve">
     <value>فامیلی</value>
+  </data>
+  <data name="FatherName" xml:space="preserve">
+    <value>نام پدر</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>فکس</value>
   </data>
   <data name="FromAge" xml:space="preserve">
     <value>از سن </value>
@@ -179,6 +194,12 @@
   </data>
   <data name="Graduation" xml:space="preserve">
     <value>تحصیلات</value>
+  </data>
+  <data name="HomeAddress" xml:space="preserve">
+    <value>آدرس منزل</value>
+  </data>
+  <data name="HomeTel" xml:space="preserve">
+    <value>تلفن منزل</value>
   </data>
   <data name="Instagram" xml:space="preserve">
     <value>اینستاگرام</value>
@@ -216,11 +237,14 @@
   <data name="PeopleCount" xml:space="preserve">
     <value>تعداد مشتریان</value>
   </data>
+  <data name="PeopleInfo" xml:space="preserve">
+    <value>اطلاعات شخص</value>
+  </data>
   <data name="PeopleProperty" xml:space="preserve">
     <value>مشخصات شخص</value>
   </data>
   <data name="PeopleRelations" xml:space="preserve">
-    <value>ارتباطات</value>
+    <value>شبکه های اجتماعی</value>
   </data>
   <data name="PeopleSearch" xml:space="preserve">
     <value>جستجوی اشخاص</value>
@@ -239,6 +263,15 @@
   </data>
   <data name="Province" xml:space="preserve">
     <value>استان</value>
+  </data>
+  <data name="RegisterNewContact" xml:space="preserve">
+    <value>ثبت مخاطب جدید</value>
+  </data>
+  <data name="Relations" xml:space="preserve">
+    <value>ارتباطات</value>
+  </data>
+  <data name="SearchContact" xml:space="preserve">
+    <value>جستجوی مخاطب</value>
   </data>
   <data name="SelectPeople" xml:space="preserve">
     <value>انتخاب شخص</value>
@@ -270,6 +303,9 @@
   <data name="TodayReservation" xml:space="preserve">
     <value>رزروهای امروز</value>
   </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>توییتر</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>آپلود فایل</value>
   </data>
@@ -278,5 +314,8 @@
   </data>
   <data name="WhatsApp" xml:space="preserve">
     <value>واتساپ</value>
+  </data>
+  <data name="WorkTel" xml:space="preserve">
+    <value>تلفن محل کار</value>
   </data>
 </root>

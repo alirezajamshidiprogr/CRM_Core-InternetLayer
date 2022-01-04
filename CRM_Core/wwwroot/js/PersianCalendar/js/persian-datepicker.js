@@ -779,10 +779,10 @@
         isFixed |= $(this).css("position") == "fixed";
         return !isFixed
       });
-      if (isFixed && $.browser.opera) {
-        $.datepicker._pos[0] -= document.documentElement.scrollLeft;
-        $.datepicker._pos[1] -= document.documentElement.scrollTop
-      }
+      //if (isFixed && $.browser.opera) {
+      //  $.datepicker._pos[0] -= document.documentElement.scrollLeft;
+      //  $.datepicker._pos[1] -= document.documentElement.scrollTop
+      //}
       var offset = {
         left: $.datepicker._pos[0],
         top: $.datepicker._pos[1]

@@ -10,15 +10,16 @@ var thisActionIsNotRestore = '';
 var introducePeopleMessage = '';
 var question = '';
 var yesTitle = '';
+var noTitle = '';
 
 
-setInterval(function () {
-    GetCurrentDayDataServer();
-}, 60000);
+//setInterval(function () {
+//    GetCurrentDayDataServer();
+//}, 60000);
 
-setInterval(function () {
-    DisplayCurrentDayData();
-}, 5000);
+//setInterval(function () {
+//    DisplayCurrentDayData();
+//}, 5000);
 
 function onClickInput(e) {
     var inputId = e.id;
@@ -303,6 +304,7 @@ function logOutApp() {
 function btnLogin() {
     var UserName = $("#UserName").val();
     var Password = $("#Password").val();
+
     $("#divLoaderLogin").show();
     $.ajax({
         url: "/Login/validateuser",
@@ -359,14 +361,16 @@ function enablePageloadding() {
     $("#divLoader").show();
     var element = document.getElementById('MainDivPage');
     element.style.opacity = "0.2";
-    document.getElementById("page-content").style.pointerEvents = "none";
+    element.pointerEvents = "none";
+    //document.getElementById("page-content").style.pointerEvents = "none";
 }
 
 function disablePageloadding() {
-    document.getElementById("page-content").style.pointerEvents = "auto";
+    //document.getElementById("page-content").style.pointerEvents = "auto";
     $("#divLoader").hide();
     var element = document.getElementById('MainDivPage');
     element.style.opacity = "1";
+    element.style.pointerEvents = "auto";
 }
 
 //function formatMoney(number, decPlaces, decSep, thouSep) {
@@ -464,7 +468,7 @@ function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
             break;
     }
     //window["Show" + actionName + "sList"(true)]();
-    window[actionName]('false','isEditMode');
+    window[actionName]('false', 'isEditMode');
 
     //ShowSalonCostsList(true);
 }
@@ -521,7 +525,7 @@ function DisplayCurrentDayData() {
         var divHeader = document.createElement('div');
         divHeader.className = 'item';
         divHeader.innerHTML = "<div><i class='fa fa-bell' aria-hidden='true' style='font-size: 47px;margin-bottom: 15px;color: darksalmon;'></i>";
-        divHeader.innerHTML += "<span style='font-size:14px;color:black;'>" + "یادآور های ساعت :" + reminderList[0].time +"</span></div>";
+        divHeader.innerHTML += "<span style='font-size:14px;color:black;'>" + "یادآور های ساعت :" + reminderList[0].time + "</span></div>";
 
         reminderElem.appendChild(divHeader);
 
@@ -542,7 +546,7 @@ function DisplayCurrentDayData() {
 
             if (hasShownRemidner == true || ((date2_hours == date1_hours) && (date2_ms - date1_ms == 0 || date2_ms - date1_ms == 1))) {
                 hasShownRemidner = true;
-                offDisplayinReminder = false ;
+                offDisplayinReminder = false;
                 hasAlertItem = true;
                 var alertItems = document.createElement('div');
                 alertItems.className = 'alertItems';
@@ -571,3 +575,4 @@ function SetReminderOff() {
     $("#divAlertItem").fadeOut(1500);
 
 }
+

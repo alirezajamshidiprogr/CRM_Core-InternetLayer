@@ -1,6 +1,0 @@
-<LogInfo>
-    <Time>1400-8-28_21-8-41</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at CRM_Core.Controllers.PeopleController.AddEditPeopleMethod(Boolean isEdit, Boolean checkRepeatedTels, Boolean checkRepeatedMobiles, List`1 tels, List`1 mobiles, PeopleVirtual peopleVirtual, Address address, People people)</Target>
-    <ErrorMessage>PeopleID CanNot Be Same As IntroduceId...</ErrorMessage>
-</LogInfo>

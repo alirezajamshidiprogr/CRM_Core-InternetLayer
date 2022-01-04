@@ -47,7 +47,7 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<TBASServices> TBASServices { get; set; }
         public virtual DbSet<ClerkServices> ClerkServices { get; set; }
         public virtual DbSet<TBASIntroductionType> TBASIntroductionType { get; set; }
-        public virtual DbSet<PeopleServices> PeopleServices { get; set; }
+        public virtual DbSet<ReservationDetails> ReservationDetails { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<Province> Province { get; set; }
         public virtual DbSet<City> City { get; set; }
@@ -63,6 +63,7 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<TBASSalonCosts> TBASSalonCosts { get; set; }
         public virtual DbSet<Reminder> Reminder { get; set; }
         public virtual DbSet<ReminderDayDetails> ReminderDayDetails { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

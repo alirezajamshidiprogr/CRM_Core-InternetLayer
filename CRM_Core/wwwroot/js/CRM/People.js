@@ -5,8 +5,8 @@ var tels = '';
 var mobiles = '';
 var hasVisitedTels = false;
 
-function btnOpenEditPeople() {
-    var peopleId = getValueTableById('PeopleId');
+function btnOpenEditPeople(e) {
+    var peopleId = getValueTableById('PeopleId', e);
     hasCallTelsAndMobiles = false;
     enablePageloadding();
     $.ajax({
@@ -14,7 +14,9 @@ function btnOpenEditPeople() {
         url: "/People/AddEditPeople",
         data: { peopleId: peopleId },
         success: function (data) {
-            disablePageloadding();
+            setTimeout(function () {
+                disablePageloadding();
+            },2000);
             $("#formContainer").html(data);
         },
         error: function (httpRequest, textStatus, errorThrown) {
@@ -31,8 +33,10 @@ function btnShowPeopleList() {
         url: "/People/Index",
         data: {},
         success: function (data) {
+            showPeopleList(true, 'isEditMode');
             disablePageloadding();
             $("#formContainer").html(data);
+            showPeopleList(true,'isEditMode');
         },
         error: function (httpRequest, textStatus, errorThrown) {
             disablePageloadding();
@@ -99,18 +103,20 @@ function showPeopleList(quickSearch, state) {
     });
 }
 
-function btnAddEditPeople() {
+function btnAddEditPeople(introducePeopleMessage) {
+    debugger;
     var mandatoryMessage = CheckMandatoryFields();
     if (mandatoryMessage != '') {
          ShowMandatoryMessage(mandatoryMessage);
         return;
     }
+
     var introducId = $("#PeopleSelector_Id")[0].innerText;
     
-    var tels = new Array();
-    var mobiles = new Array();
-    var checkRepeatedTels = document.getElementById("chbCheckRepeatedTels").checked;
-    var checkRepeatedMobiles = document.getElementById("chbCheckRepeatedMobiles").checked;
+    //var tels = new Array();
+    //var mobiles = new Array();
+    //var checkRepeatedTels = document.getElementById("chbCheckRepeatedTels").checked;
+    //var checkRepeatedMobiles = document.getElementById("chbCheckRepeatedMobiles").checked;
     // General Info People 
     var people = {
         Id: $("#PeopleID").val(),
@@ -129,6 +135,12 @@ function btnAddEditPeople() {
         TBASCategoryId: $("#cmbCategory").val(),
         TBASPotentialId: $("#cmbPotential").val(),
         MarriedType: $("#cmbMarriedType").val(),
+        HomeTel: $("#txtHomeTel").val(),
+        WorkTel: $("#txtWorkTel").val(),
+        Fax: $("#txtHomeTel").val(),
+        Mobile1: $("#txtMobile1").val(),
+        Mobile2: $("#txtMobile2").val(),
+        Mobile3: $("#txtMobile3").val(),
     };
 
     var address = {
@@ -142,29 +154,32 @@ function btnAddEditPeople() {
 
 
     ///// PeopleTelsAndMobiles
-    var parentDivTels = document.getElementById("divTels");
-    var parentDivMobiles = document.getElementById("divMobiles");
+
+
+
+    //var parentDivTels = document.getElementById("divTels");
+    //var parentDivMobiles = document.getElementById("divMobiles");
 
 
     // Tels AND Mobiles
-    var lenTels = parentDivTels.getElementsByClassName("divTelsItems").length;
-    var lenMobiles = parentDivMobiles.getElementsByClassName("divMobileItems").length;
-    for (var i = 1; i <= lenTels; i++) {
-        var txtCode = document.getElementById("txtCode" + i).value;
-        var txtTel = document.getElementById("txtTel" + i).value;
-        var txtComment = document.getElementById("txtComment" + i).value;
-        if (txtTel != '' && txtTel != null) {
-            tels.push({ Code: txtCode, Number: txtTel, Comment: txtComment });
-        }
+    //var lenTels = parentDivTels.getElementsByClassName("divTelsItems").length;
+    //var lenMobiles = parentDivMobiles.getElementsByClassName("divMobileItems").length;
+    //for (var i = 1; i <= lenTels; i++) {
+    //    var txtCode = document.getElementById("txtCode" + i).value;
+    //    var txtTel = document.getElementById("txtTel" + i).value;
+    //    var txtComment = document.getElementById("txtComment" + i).value;
+    //    if (txtTel != '' && txtTel != null) {
+    //        tels.push({ Code: txtCode, Number: txtTel, Comment: txtComment });
+    //    }
 
-    }
-    for (var i = 1; i <= lenMobiles; i++) {
-        var txtMobile = document.getElementById("txtMobile" + i).value;
-        var txtMobComment = document.getElementById("txtMobComment" + i).value;
-        if (txtMobile != '' && txtMobile != null) {
-            mobiles.push({ Mobile: txtMobile, Comment: txtMobComment });
-        }
-    }
+    //}
+    //for (var i = 1; i <= lenMobiles; i++) {
+    //    var txtMobile = document.getElementById("txtMobile" + i).value;
+    //    var txtMobComment = document.getElementById("txtMobComment" + i).value;
+    //    if (txtMobile != '' && txtMobile != null) {
+    //        mobiles.push({ Mobile: txtMobile, Comment: txtMobComment });
+    //    }
+    //}
 
     /////// People OtherInfo
 
@@ -188,15 +203,16 @@ function btnAddEditPeople() {
             showCancelButton: true,
             confirmButtonColor: '#f44336',
             cancelButtonColor: '#777',
-            confirmButtonText: yesTitle
+            confirmButtonText: yesTitle,
+            cancelButtonText: noTitle
         }).then(function () {
-            AddEditPeoplefunction(isEdit, checkRepeatedTels, checkRepeatedMobiles, tels, mobiles, peopleVirtual, address, people);
+            AddEditPeoplefunction(isEdit, false, false, null, null, peopleVirtual, address, people);
         },
         ).catch(swal.noop);
          return;
     }
 
-    AddEditPeoplefunction(isEdit, checkRepeatedTels, checkRepeatedMobiles, tels, mobiles, peopleVirtual, address, people);
+    AddEditPeoplefunction(isEdit, false, false, null, null, peopleVirtual, address, people);
 
 }
 
@@ -441,8 +457,7 @@ function btnShowPeoplePopupClick(buttonTitle) {
     });
 }
 
-function selectPeople(e) {
-    debugger;
+function selectPeople() {
     var peopleId = getValueTableById('PeopleId');
     if (peopleId > 0) {
         $(document).ready(function () {
@@ -488,4 +503,9 @@ function fillPeopleById(result, peopleId) {
     document.getElementById("PeopleSelector_certificateCode").innerText += result.peopleModel[0].certificateCode;
     document.getElementById("PeopleSelector_graduation").innerText += result.peopleModel[0].tbasGraduationName;
     document.getElementById("PeopleSelector_address").innerText += result.peopleModel[0].address;
+}
+
+
+function btnTest(e) {
+    QuestionMessage();
 }

@@ -7,9 +7,9 @@ namespace CRM_Core.Application.Interfaces
 {
     public interface IPeopleServiceService
     {
-        IEnumerable<PeopleServices> getPeopleServiceByReservationId(int reservationId);
-        void insertPeopleService(PeopleServices peopleServiceList);
-        void removePeopleServiceByReservationId(PeopleServices peopleService);
+        IEnumerable<ReservationDetails> getPeopleServiceByReservationId(int reservationId);
+        void insertPeopleService(ReservationDetails reservationDetailsList);
+        void removePeopleServiceByReservationId(ReservationDetails reservationDetails);
 
         IEnumerable<PeopleServiceReservationViewModel> getPeopleServiceByClerkId(int clerkId);
     }

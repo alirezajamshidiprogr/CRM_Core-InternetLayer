@@ -153,6 +153,9 @@
   <data name="FillTheEmptyFieldTels" xml:space="preserve">
     <value>یک یا برخی از فیلدهای شماره تلفن خالی است </value>
   </data>
+  <data name="FillThisAddedServiceItem" xml:space="preserve">
+    <value>لطفا تمامی فیلدها را وارد نمایید !</value>
+  </data>
   <data name="ForThisCustomerHasNotRegisterAnyIntroducePeople" xml:space="preserve">
     <value>برای ثبت شخص هیچ معرفی انتخاب نشده است آیا میخواهید ادامه دهید؟</value>
   </data>
@@ -162,8 +165,17 @@
   <data name="FromDateAndToDateMenuAccessInNull" xml:space="preserve">
     <value>مقادیر ازتاریخ تا تاریخ را وارد کنید !</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="OneServiceShouldBeThereAtLeast" xml:space="preserve">
+    <value>حداقل یک سرویس باید به مشتری اختصاص داده شود !</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>سوال ...</value>
+  </data>
+  <data name="SendSMSToCustomerForReservatin" xml:space="preserve">
+    <value>پیامک ثبت نوبت را به مشتری ارسال کن </value>
   </data>
   <data name="TheActionEndedWithSuccess" xml:space="preserve">
     <value>تغییرات با موفقیت ثبت شد </value>
@@ -173,6 +185,9 @@
   </data>
   <data name="ThisActionIsNotRestore" xml:space="preserve">
     <value>این عملیات برگشت پذیر نیست...</value>
+  </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>این فیلد الزامی است </value>
   </data>
   <data name="ThisItemHasAddedAleadyToServiceCustomer" xml:space="preserve">
     <value>آیتم انتخاب شده تکراری است !</value>

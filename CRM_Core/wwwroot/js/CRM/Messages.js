@@ -11,10 +11,10 @@
 }
 
 function WarningMessage(message) {
-  swal(
-      'هشدار !!!',
-       message,
-      'warning');
+    swal(
+        'هشدار !!!',
+        message,
+        'warning');
 }
 
 function ErrorMessage(message) {
@@ -44,7 +44,7 @@ function QuestionMessage() {
         cancelButtonColor: '#777',
         confirmButtonText: 'بله، خارج شو. '
     }).then(function () {
-
+        alert('خارج شدم');
     },
     ).catch(swal.noop);
 }

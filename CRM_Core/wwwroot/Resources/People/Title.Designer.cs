@@ -70,6 +70,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to افزودن شخص جدید.
+        /// </summary>
+        public static string AddPeople {
+            get {
+                return ResourceManager.GetString("AddPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آدرس.
         /// </summary>
         public static string Address {
@@ -187,6 +196,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ویرایش شخص.
+        /// </summary>
+        public static string EditPeople {
+            get {
+                return ResourceManager.GetString("EditPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ایمیل.
         /// </summary>
         public static string Email {
@@ -196,11 +214,38 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to پست الکترونیکی.
+        /// </summary>
+        public static string EmailPost {
+            get {
+                return ResourceManager.GetString("EmailPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فامیلی.
         /// </summary>
         public static string Family {
             get {
                 return ResourceManager.GetString("Family", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام پدر.
+        /// </summary>
+        public static string FatherName {
+            get {
+                return ResourceManager.GetString("FatherName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فکس.
+        /// </summary>
+        public static string Fax {
+            get {
+                return ResourceManager.GetString("Fax", resourceCulture);
             }
         }
         
@@ -246,6 +291,24 @@ namespace UI_Presentation.wwwroot.Resources.People {
         public static string Graduation {
             get {
                 return ResourceManager.GetString("Graduation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس منزل.
+        /// </summary>
+        public static string HomeAddress {
+            get {
+                return ResourceManager.GetString("HomeAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تلفن منزل.
+        /// </summary>
+        public static string HomeTel {
+            get {
+                return ResourceManager.GetString("HomeTel", resourceCulture);
             }
         }
         
@@ -358,6 +421,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اطلاعات شخص.
+        /// </summary>
+        public static string PeopleInfo {
+            get {
+                return ResourceManager.GetString("PeopleInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مشخصات شخص.
         /// </summary>
         public static string PeopleProperty {
@@ -367,7 +439,7 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ارتباطات.
+        ///   Looks up a localized string similar to شبکه های اجتماعی.
         /// </summary>
         public static string PeopleRelations {
             get {
@@ -426,6 +498,33 @@ namespace UI_Presentation.wwwroot.Resources.People {
         public static string Province {
             get {
                 return ResourceManager.GetString("Province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ثبت مخاطب جدید.
+        /// </summary>
+        public static string RegisterNewContact {
+            get {
+                return ResourceManager.GetString("RegisterNewContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ارتباطات.
+        /// </summary>
+        public static string Relations {
+            get {
+                return ResourceManager.GetString("Relations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جستجوی مخاطب.
+        /// </summary>
+        public static string SearchContact {
+            get {
+                return ResourceManager.GetString("SearchContact", resourceCulture);
             }
         }
         
@@ -520,6 +619,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to توییتر.
+        /// </summary>
+        public static string Twitter {
+            get {
+                return ResourceManager.GetString("Twitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آپلود فایل.
         /// </summary>
         public static string UploadFile {
@@ -543,6 +651,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         public static string WhatsApp {
             get {
                 return ResourceManager.GetString("WhatsApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تلفن محل کار.
+        /// </summary>
+        public static string WorkTel {
+            get {
+                return ResourceManager.GetString("WorkTel", resourceCulture);
             }
         }
     }

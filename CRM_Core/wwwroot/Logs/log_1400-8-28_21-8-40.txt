@@ -1,6 +1,0 @@
-<LogInfo>
-    <Time>1400-8-28_21-8-40</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at CRM_Core.Controllers.PeopleController.AddEditPeopleMethod(Boolean isEdit, Boolean checkRepeatedTels, Boolean checkRepeatedMobiles, List`1 tels, List`1 mobiles, PeopleVirtual peopleVirtual, Address address, People people) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\PeopleController.cs:line 288</Target>
-    <ErrorMessage>ManualCode Is Exists In Table People...</ErrorMessage>
-</LogInfo>

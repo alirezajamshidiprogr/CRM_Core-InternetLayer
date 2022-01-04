@@ -25,13 +25,12 @@ namespace TagHelperSamples.Bootstrap
             await output.GetChildContentAsync();
 
             var template =
-    $@"<div class='modal-dialog' role='document' style='width: 1150px;'>
-    <div class='modal-content'>
-      <div class='modal-header' style='background: #ececec;color: #352020;'>
-        <button type = 'button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    $@"<div class='modal-dialog' role='document' style='width:1150px;'>
+    <div class='modal-content' style='width: 247%;margin-right:-400px;overflow:auto;'>
+     <button type = 'button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <h4 class='modal-title' id='{context.UniqueId}Label'>{Title}</h4>
       </div>
-        <div class='modal-body' style='"+ Bodystyle + ";background:#f7f7f7;'>";
+        <div class='modal-body' style='"+ Bodystyle + ";background:#f7f7f7;width:247%;margin-right:-70%;'>";
 
             output.TagName = "div";
             output.Attributes.SetAttribute("role", "dialog");

@@ -1,6 +1,0 @@
-<LogInfo>
-    <Time>1400-9-4_16-9-40</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 peopleServices, Reservation reservation) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 219</Target>
-    <ErrorMessage>Date Of Reservation Is Less Than DateTimeNow</ErrorMessage>
-</LogInfo>

@@ -1,7 +1,0 @@
-<LogInfo>
-    <Time>1400-8-30_20-8-7</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at System.Nullable`1.get_Value()
-   at UI_Presentation.Controllers.ReservationController.AddEditReservation(Nullable`1 reservationId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 53</Target>
-    <ErrorMessage>Nullable object must have a value.</ErrorMessage>
-</LogInfo>

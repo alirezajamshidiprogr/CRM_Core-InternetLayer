@@ -1,6 +1,0 @@
-<LogInfo>
-    <Time>1400-9-3_21-9-29</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 peopleServices, Reservation reservation) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 207</Target>
-    <ErrorMessage>Model Is Not Valid</ErrorMessage>
-</LogInfo>

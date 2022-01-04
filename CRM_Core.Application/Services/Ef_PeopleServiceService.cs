@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CRM_Core.Application.Services
 {
-    public class Ef_PeopleServiceService : DataAccessLayer.Repositories.RepositoryBase<PeopleServices> , IPeopleServiceService
+    public class Ef_PeopleServiceService : DataAccessLayer.Repositories.RepositoryBase<ReservationDetails> , IPeopleServiceService
     {
         IReservationService _reservationService;
         public Ef_PeopleServiceService(CRM_CoreDB context, IReservationService reservationService) :base(context)
@@ -24,22 +24,22 @@ namespace CRM_Core.Application.Services
             return null;
         }
 
-        public IEnumerable<PeopleServices> getPeopleServiceByReservationId(int reservationId)
+        public IEnumerable<ReservationDetails> getPeopleServiceByReservationId(int reservationId)
         {
             return FindByCondition(item => item.ReservationId == reservationId);
         }
 
-        public void insertPeopleService(PeopleServices peopleService)
+        public void insertPeopleService(ReservationDetails reservationDetails)
         {
-              Create(peopleService);
+              Create(reservationDetails);
         }
 
-        public void removePeopleServiceByReservationId(PeopleServices peopleService)
+        public void removePeopleServiceByReservationId(ReservationDetails reservationDetails)
         {
-             Delete(peopleService);
+             Delete(reservationDetails);
         }
 
-        public void removePeopleServiceByReservationId(List<PeopleServices> peopleServiceList)
+        public void removePeopleServiceByReservationId(List<ReservationDetails> reservationDetailsList)
         {
             throw new NotImplementedException();
         }

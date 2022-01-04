@@ -1,114 +1,130 @@
-﻿@*@model CRM_Core.DomainLayer.ApplicationUser*@
-
-@{ Layout = null; }
-<style>
-    .loginBody {
-        background-image: url(../image/login/loginBackground.png);
-        height: 100%;
-        min-height: 100%;
-        position: relative;
-        background-repeat: no-repeat !important;
-    }
-</style>
+﻿@{ Layout = null;}
 
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html class="loading" lang="fa" data-textdirection="rtl" dir="rtl">
 <head>
-    <title>@ViewBag.Title</title>
-    <meta charset="utf-8">
-    <environment include="Development">
-        <link href="~/css/font.css" rel="stylesheet" />
-        <link href="~/bundles/CRM_CoreBootstrap.min.css" rel="stylesheet" />
-        <link href="~/bundles/CRM_Core.min.css" rel="stylesheet" />
-    </environment>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>صفحه ورود</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/ico/favicon.ico">
+    <meta name="theme-color" content="#5A8DEE">
 
-    <environment exclude="Development">
-        <link href="~/css/font.css" rel="stylesheet" />
-        <link href="~/bundles/CRM_CoreBootstrap.min.css" rel="stylesheet" />
-        <link href="~/bundles/CRM_Core.min.css" rel="stylesheet" />
-    </environment>
+    <link rel="stylesheet" type="text/css" href="~/assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/themes/semi-dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/pages/authentication.css">
+    <link href="~/assets/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+
 </head>
-<body class="fix-header active-ripple theme-blue loginBody">
-    <div id="divLoaderLogin" class="folding-cube" style="margin-top:303px;position:fixed;display:none; z-index:500000">
-        <div class="cube1 cube" style=""></div>
-        <div class="cube2 cube" style=""></div>
-        <div class="cube4 cube" style=""></div>
-        <div class="cube3 cube" style=""></div>
-    </div><!-- /.folding-cube -->
-
-    <div class="fixed-modal-bg"></div>
-        
-    <div class="modal-page shadow" style="border-radius:51px ;box-shadow: 7px 7px 7px -1px gray; float: right;height: 752px;margin-top: -50px;">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="logo-con m-t-10 m-b-10">
-                            <img src="~/image/login/lock.png" style="height:118px !important" class="center-block img-responsive">
+<body class="vertical-layout vertical-menu-modern 1-column  navbar-sticky footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <div id="divLoaderLogin" style="position: fixed; margin-right: 43%; z-index: 5500000; margin-top: 17%;display:none;">
+        <span style="text-align: center;position: fixed;margin-right: 32px;z-index: 6500000000;font-size: 1.4em;margin-top: 124px;color: #8c458e;"> درحال بارگذاری صفحه ... </span>
+        <section id="bootstrap-spinners">
+            <div class="row match-height">
+                <div class="col-md-12 col-sm-12" style="text-align: center;">
+                    <div class="card" style="margin: 0px auto;background:transparent;">
+                        <div class="spinner-border spinner-border-lg" role="status">
+                            <span class="sr-only">در حال بارگذاری ...</span>
                         </div>
-                        <h2 class="text-center m-b-20">@UI_Presentation.wwwroot.Resources.General.Title.LoginIntoApplication</h2>
-                        <hr>
-                        <div class="form-group">
-                            <label for="" class="sr-only">@UI_Presentation.wwwroot.Resources.General.Title.UserName</label>
-                            <div class="input-group round">
-                                <span class="input-group-addon">
-                                    <i class="icon-user"></i>
-                                </span>
-                                <input style="text-align:right;width:277px !important;" id="UserName" class="form-control ltr text-left" type="text" required="required">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-body">
+                <section id="auth-login" class="row flexbox-container">
+                    <div class="col-xl-8 col-11">
+                        <div class="card bg-authentication mb-0">
+                            <div class="row m-0">
+                                <div class="col-md-6 col-12 px-0">
+                                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                                        <div class="card-header pb-1">
+                                            <div class="card-title">
+                                                <h4 class="text-center mb-2"> به مشاطه خوش آمدید ...</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="form-group mb-50">
+                                                    <label class="text-bold-700" for="exampleInputEmail1">@UI_Presentation.wwwroot.Resources.General.Title.UserName</label>
+                                                    <input type="email" class="form-control text-left" id="UserName" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UserName" dir="ltr">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="text-bold-700" for="exampleInputPassword1">@UI_Presentation.wwwroot.Resources.General.Title.Password</label>
+                                                    <input type="password" class="form-control text-left" id="Password" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.Password" dir="ltr">
+                                                </div>
+                                                <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                                    <div class="text-left">
+                                                        <div class="checkbox checkbox-sm">
+                                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                            <label class="checkboxsmall" for="exampleCheck1"><small>مرا به خاطر بسپار</small></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right line-height-2"><a href="auth-forgot-password.html" class="card-link"><small>رمز عبورتان را فراموش کرده اید؟</small></a></div>
+                                                </div>
+                                                <a class="btn btn-primary glow w-100 position-relative" href="#" onclick="btnLogin()">
+                                                    <input class="btn btn-primary glow w-100 position-relative" type="submit" value="@UI_Presentation.wwwroot.Resources.General.Title.Login" />
+                                                </a>
+                                                <hr>
+                                                <div class="text-center"><small class="mr-25">ورود بدون نام کاربری   </small><a href="auth-register.html"><small> ورود </small></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                                    <div class="card-content">
+                                        <img class="img-fluid" src="~/assets/images/pages/login.png" alt="branding logo">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="password" class="sr-only">@UI_Presentation.wwwroot.Resources.General.Title.Password</label>
-                            <div class="input-group round">
-                                <span class="input-group-addon">
-                                    <i class="icon-key"></i>
-                                </span>
-                                <input style="text-align:right;width:277px !important" id="Password" class="form-control ltr text-left" type="password" required="required">
-                            </div>
-                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/vendors/js/vendors.min.js"></script>
+    <script src="~/assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
+    <script src="~/assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+    <script src="~/assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <script src="~/assets/js/scripts/configs/vertical-menu-light.js"></script>
+    <script src="~/assets/js/core/app-menu.js"></script>
+    <script src="~/assets/js/core/app.js"></script>
+    <script src="~/assets/js/scripts/components.js"></script>
+    <script src="~/assets/js/scripts/footer.js"></script>
+    <script src="~/assets/sweetalert2/dist/sweetalert2.min.js"></script>
 
 
 
+    <script src="~/assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="~/assets/vendors/js/extensions/polyfill.min.js"></script>
+    <script src="~/assets/js/scripts/customizer.js"></script>
+    <script src="~/assets/js/scripts/extensions/sweet-alerts.js"></script>
+    <script src="~/js/CRM/Messages.js"></script>
+    <script src="~/js/CRM/General.js"></script>
+    <script src="~/js/Login/Login.js"></script>
 
-                        <a href="#" onclick="btnLogin()">
-                            <input class="btn btn-info btn-round btn-block" type="submit" value="@UI_Presentation.wwwroot.Resources.General.Title.Login" />
-                        </a>
 
-                        <hr class="m-b-30">
-                        <div style="text-align:center;">
-                            <span>اتوماسیون مدیریت سالن های زیبایی</span>
-                            <br />
-                        </div>
-                        <div style="text-align:center;">
-                            <span>مــشّاطـه</span>
-                            <br />
-                        </div>
-                    </div><!-- /.col-md-12 -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.modal-page -->
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
 
-        <!-- END WRAPPER -->
-        <!-- BEGIN JS -->
-    <environment include="Development">
-        <script src="~/bundles/CRM_Core.min.js"></script>
-        @*<script src="~/js/jquery-1.12.4.min.js"></script>
-        <script src="~/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
-        <script src="~/js/holder.js"></script>
-        <script src="~/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="~/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
-        <script src="~/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-        <script src="~/plugins/iCheck/icheck.min.js"></script>
-        <script src="~/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/plugins/jquery-validation/src/localization/messages_fa.js"></script>
-        <script src="~/js/core.js"></script>
-        <script src="~/js/CRM/Messages.js"></script>
-        <script src="~/js/CRM/General.js"></script>
-        <script src="~/js/pages/login.js"></script>*@
-    </environment>
 
-        <environment exclude="Development">
-            <script src="~/bundles/CRM_Core.min.js"></script>
-        </environment>
 </body>
 </html>
+
+
+
+
+
+

@@ -21,15 +21,28 @@ namespace CRM_Core.DomainLayer
         public string CertificateCode { get; set; }
         [MaxLength(200)]
         public string Job { get; set; }
-        [MaxLength(10)]
+        [MaxLength(11)]
+        public string HomeTel { get; set; }
+        [MaxLength(11)]
+        public string WorkTel { get; set; }
+        [MaxLength(11)]
+        public string Fax { get; set; }
+        [MaxLength(11)]
+        public string Mobile1 { get; set; }
+        [MaxLength(11)]
+        public string Mobile2 { get; set; }
+        [MaxLength(11)]
+        public string Mobile3 { get; set; }
         public string P_Birthday { get; set; }
-
+        [MaxLength(10)]
         [Column(TypeName = "Date")]
         public DateTime? M_Birthday { get; set; }
         [MaxLength(10)]
         public string P_MariedDate { get; set; }
         [Column(TypeName = "Date")]
         public DateTime? M_MariedDate { get; set; }
+        public DateTime M_InsertDate { get; set; }
+        public DateTime? M_EditDate { get; set; }
         public string Description { get; set; }
         public int? MarriedType{ get; set; }
 
@@ -48,7 +61,6 @@ namespace CRM_Core.DomainLayer
         public TBASGraduation TBASGraduation { get; set; } 
         public int? TBASIntroductionTypeId { get; set; }
         public TBASIntroductionType TBASIntroductionType { get; set; }
-
         [Required]
         public bool IsActive { get; set; }
     }
@@ -95,6 +107,7 @@ namespace CRM_Core.DomainLayer
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
     }
 
@@ -102,6 +115,7 @@ namespace CRM_Core.DomainLayer
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
     }
 
@@ -109,6 +123,7 @@ namespace CRM_Core.DomainLayer
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
     }
 
@@ -116,6 +131,7 @@ namespace CRM_Core.DomainLayer
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
     }
 
@@ -140,7 +156,9 @@ namespace CRM_Core.DomainLayer
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
+        [MaxLength(200)]
         public string Title { get; set; }
     }
 
@@ -149,7 +167,7 @@ namespace CRM_Core.DomainLayer
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(200)]
         public string Name{ get; set; }
     }
 }

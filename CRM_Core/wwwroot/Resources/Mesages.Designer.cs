@@ -169,6 +169,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to لطفا تمامی فیلدها را وارد نمایید !.
+        /// </summary>
+        public static string FillThisAddedServiceItem {
+            get {
+                return ResourceManager.GetString("FillThisAddedServiceItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برای ثبت شخص هیچ معرفی انتخاب نشده است آیا میخواهید ادامه دهید؟.
         /// </summary>
         public static string ForThisCustomerHasNotRegisterAnyIntroducePeople {
@@ -196,11 +205,38 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خیر.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حداقل یک سرویس باید به مشتری اختصاص داده شود !.
+        /// </summary>
+        public static string OneServiceShouldBeThereAtLeast {
+            get {
+                return ResourceManager.GetString("OneServiceShouldBeThereAtLeast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to سوال ....
         /// </summary>
         public static string Question {
             get {
                 return ResourceManager.GetString("Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پیامک ثبت نوبت را به مشتری ارسال کن .
+        /// </summary>
+        public static string SendSMSToCustomerForReservatin {
+            get {
+                return ResourceManager.GetString("SendSMSToCustomerForReservatin", resourceCulture);
             }
         }
         
@@ -228,6 +264,15 @@ namespace UI_Presentation.wwwroot.Resources {
         public static string ThisActionIsNotRestore {
             get {
                 return ResourceManager.GetString("ThisActionIsNotRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to این فیلد الزامی است .
+        /// </summary>
+        public static string ThisFieldIsRequired {
+            get {
+                return ResourceManager.GetString("ThisFieldIsRequired", resourceCulture);
             }
         }
         

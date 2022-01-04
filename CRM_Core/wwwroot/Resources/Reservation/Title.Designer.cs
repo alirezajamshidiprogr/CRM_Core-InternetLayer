@@ -61,6 +61,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to افزودن نوبت دهی .
+        /// </summary>
+        public static string AddReservation {
+            get {
+                return ResourceManager.GetString("AddReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کارمند.
         /// </summary>
         public static string Clerk {
@@ -124,6 +133,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ویرایش نوبت دهی.
+        /// </summary>
+        public static string EditReservation {
+            get {
+                return ResourceManager.GetString("EditReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بیعانه.
         /// </summary>
         public static string Fee {
@@ -151,6 +169,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشتری شخصی.
+        /// </summary>
+        public static string IsPersonalCustomer {
+            get {
+                return ResourceManager.GetString("IsPersonalCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نوبت.
         /// </summary>
         public static string Order {
@@ -165,6 +192,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         public static string PaidType {
             get {
                 return ResourceManager.GetString("PaidType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اطلاعات نوبت دهی.
+        /// </summary>
+        public static string ReservationInfo {
+            get {
+                return ResourceManager.GetString("ReservationInfo", resourceCulture);
             }
         }
         
@@ -201,6 +237,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         public static string Services {
             get {
                 return ResourceManager.GetString("Services", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خدمات مشتری.
+        /// </summary>
+        public static string ServicesListeCustomer {
+            get {
+                return ResourceManager.GetString("ServicesListeCustomer", resourceCulture);
             }
         }
         

@@ -1,8 +1,0 @@
-<LogInfo>
-    <Time>1400-8-28_21-8-11</Time>
-    <UserInfo>alireza</UserInfo>
-    <Target>   at System.String.Substring(Int32 startIndex, Int32 length)
-   at CRM_Core.Infrastructure.ObjectExtension.ToDateTime(String input) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Infrastructure\ObjectExtension.cs:line 20
-   at CRM_Core.Controllers.PeopleController.FillPeopleTableData(Boolean quickSearch, String fullName, peopleViewModelSearch searchParams, String state) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\PeopleController.cs:line 146</Target>
-    <ErrorMessage>Index and length must refer to a location within the string. (Parameter 'length')</ErrorMessage>
-</LogInfo>

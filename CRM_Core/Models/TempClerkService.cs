@@ -9,7 +9,7 @@ namespace UI_Presentation.Models
     {
         public int TbasServiceId { get; set; }
         public int ClerkServiceId { get; set; }
-        public int ClerkId { get; set; }
+        public int? PersonnelId { get; set; }
         public string ServiceName { get; set; }
     }
 }

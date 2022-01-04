@@ -99,9 +99,17 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Fax")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
                     b.Property<string>("FirstName")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("HomeTel")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int?>("IntroduceId")
                         .HasColumnType("int");
@@ -119,7 +127,14 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime?>("M_Birthday")
+                        .HasMaxLength(10)
                         .HasColumnType("Date");
+
+                    b.Property<DateTime?>("M_EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_InsertDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("M_MariedDate")
                         .HasColumnType("Date");
@@ -131,9 +146,20 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<int?>("MarriedType")
                         .HasColumnType("int");
 
+                    b.Property<string>("Mobile1")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Mobile2")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Mobile3")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
                     b.Property<string>("P_Birthday")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("P_MariedDate")
                         .HasMaxLength(10)
@@ -157,6 +183,10 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<int?>("TBASPrefixId")
                         .HasColumnType("int");
+
+                    b.Property<string>("WorkTel")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 
@@ -249,7 +279,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -265,7 +296,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -281,8 +313,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -298,10 +330,12 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -317,7 +351,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -333,11 +368,54 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
                     b.ToTable("TBASPrefix");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Emails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkTel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.General.ActivityNumber", b =>
@@ -804,31 +882,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.ToTable("ClerkServices");
                 });
 
-            modelBuilder.Entity("CRM_Core.Entities.Reservation.PeopleServices", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClerkServicesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isSalonCustomer")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClerkServicesId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("PeopleServices");
-                });
-
             modelBuilder.Entity("CRM_Core.Entities.Reservation.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -839,13 +892,16 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("FromTime")
-                        .HasColumnType("time(7)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("M_ReservationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("M_ReservationEditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_ReservationInsertDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("P_ReservationDate")
@@ -854,28 +910,53 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("PeopleId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("int")
+                        .HasColumnName("CustomerId");
 
                     b.Property<string>("SystemCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("TBASPayTypeId")
                         .HasColumnType("int");
-
-                    b.Property<TimeSpan>("ToTime")
-                        .HasColumnType("time(7)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PeopleId");
 
-                    b.HasIndex("TBASPayTypeId");
-
                     b.ToTable("Reservation");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Reservation.ReservationDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClerkServicesId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("FromTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("ToTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<bool>("isSalonCustomer")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClerkServicesId");
+
+                    b.HasIndex("ReservationId");
+
+                    b.ToTable("ReservationDetails");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Reservation.TBASPayType", b =>
@@ -1291,7 +1372,18 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Navigation("TBASServices");
                 });
 
-            modelBuilder.Entity("CRM_Core.Entities.Reservation.PeopleServices", b =>
+            modelBuilder.Entity("CRM_Core.Entities.Reservation.Reservation", b =>
+                {
+                    b.HasOne("CRM_Core.DomainLayer.People", "People")
+                        .WithMany()
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("People");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Reservation.ReservationDetails", b =>
                 {
                     b.HasOne("CRM_Core.Entities.Reservation.ClerkServices", "ClerkServices")
                         .WithMany()
@@ -1308,25 +1400,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Navigation("ClerkServices");
 
                     b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("CRM_Core.Entities.Reservation.Reservation", b =>
-                {
-                    b.HasOne("CRM_Core.DomainLayer.People", "People")
-                        .WithMany()
-                        .HasForeignKey("PeopleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CRM_Core.Entities.Reservation.TBASPayType", "TBASPayType")
-                        .WithMany()
-                        .HasForeignKey("TBASPayTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("People");
-
-                    b.Navigation("TBASPayType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

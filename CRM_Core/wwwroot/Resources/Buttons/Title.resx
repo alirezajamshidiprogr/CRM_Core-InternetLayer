@@ -121,7 +121,7 @@
     <value>عملیات</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>ثبت</value>
+    <value>ذخیره تغییرات</value>
   </data>
   <data name="AddItem" xml:space="preserve">
     <value>اضافه کن</value>
@@ -143,6 +143,9 @@
   </data>
   <data name="LogOut" xml:space="preserve">
     <value>خروج</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>افزودن</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>چاپ</value>

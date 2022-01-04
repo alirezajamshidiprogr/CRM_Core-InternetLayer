@@ -12,44 +12,74 @@
     int peopleId = Convert.ToInt32(splitParam[1]);
     string buttionTitle = state == (int)Enums.states.People ? @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectIntroduction : @UI_Presentation.wwwroot.Resources.Buttons.Title.SelectCustomer;
     TempData["IsSelectMode"] = true;
-    <customChild-tag class="peopleSelector" id="peopleSelector">
-        <customTag-children>
-            <button type="button" data-toggle="modal" data-target="#PeopleSelectorModal" id="btnAddEditPeople" class="btn btnPeopleSelector">@buttionTitle</button>
-            <table class="tblPeopleSelector">
-                <tr>
-                    <td class="specialTd" style="display:none;"><span id="PeopleSelector_Id" class="specialFields"></span></td>
-                    <td class="tdPeopleSelector"><p id="PeopleSelector_fullName"></p></td><td class="tdPeopleSelector"><p id="PeopleSelector_age"></p></td>
-                    <td class="tdPeopleSelector"><p id="PeopleSelector_birthday"></p></td><td class="tdPeopleSelector"><p id="PeopleSelector_certificateCode"></p></td>
-                </tr>
-                <tr>
-                    <td class="tdPeopleSelector"><p id="PeopleSelector_graduation"></p></td><td colspan="3" class="tdPeopleSelector"><p id="PeopleSelector_address"></p></td>
-                </tr>
-            </table>
-        </customTag-children>
-    </customChild-tag>
 
-    <modal bodystyle="height:611px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="PeopleSelectorModal">
-        <modal-body>
-            <short-TextBox id="_txtsystemCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
-            <short-TextBox id="_txtmanualCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></short-TextBox>
-            <short-TextBox id="_txtCertificateCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></short-TextBox>
-            <short-TextBox id="_txtName" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
-            <short-TextBox id="_txtFamily" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
-            <customChild-tag style="text-align: left;">
-                <customTag-children>
-                    <Icon-Button buttom-class="btn btn-success  btn-radious"  icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList('false','isSelectedMode')"></Icon-Button>
-                </customTag-children>
-            </customChild-tag>
-
-            <div id="peopleList">
-                @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml", Model)
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1" data-toggle="modal" data-target="#PeopleSelectorModal">@buttionTitle</button>
+            <div class="col-12">
+                <ul class="list-group list-group-flush" style="margin-top: 29px; margin: 10px -25px 0px 0px auto;">
+                    <li style="display:none !important;" class="list-group-item d-flex justify-content-between border-0 pb-0 specialFields">
+                        <span class="invoice-subtotal-title" id="PeopleSelector_Id"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_fullName"></h6>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_age"></h6>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_birthday"></h6>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_certificateCode"> </h6>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_graduation"></h6>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 pb-0">
+                        <h6 class="invoice-subtotal-value mb-0" id="PeopleSelector_address"></h6>
+                    </li>
+                </ul>
             </div>
-        </modal-body>
 
-        <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
-    </modal>
-    }
+            <div class="modal fade" id="PeopleSelectorModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:247%; margin-right:-400px;overflow:auto;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-2" style="border: 1px solid #cac7c7;border-radius: 8px;padding: 15px;height:100%;">
+                                    <short-TextBox id="_txtsystemCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
+                                    <short-TextBox id="_txtmanualCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.ManualCode"></short-TextBox>
+                                    <short-TextBox id="_txtCertificateCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode"></short-TextBox>
+                                    <short-TextBox id="_txtName" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
+                                    <short-TextBox id="_txtFamily" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
+                                    <Icon-Button buttom-class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="showPeopleList('false','isSelectedMode')"></Icon-Button>
+                                </div>
+
+                                <div class="col-10" id="peopleList" style="margin-top: -72px; height: 700px !important;">
+                                    @await Html.PartialAsync("~/Views/People/FillPeopleTableData.cshtml")
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="modal-footer">
+                            <button type="button" class="btn btn-default close" data-dismiss="modal">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button>
+                        </div>*@
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+     </div>
+
+}
+
 
 <script>
     getPeopleSelectorInfo('@peopleId');
+    showPeopleList('false', 'isSelectedMode');
 </script>

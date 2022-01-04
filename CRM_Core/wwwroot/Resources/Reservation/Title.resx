@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddReservation" xml:space="preserve">
+    <value>افزودن نوبت دهی </value>
+  </data>
   <data name="Clerk" xml:space="preserve">
     <value>کارمند</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="Date" xml:space="preserve">
     <value>تاریخ</value>
   </data>
+  <data name="EditReservation" xml:space="preserve">
+    <value>ویرایش نوبت دهی</value>
+  </data>
   <data name="Fee" xml:space="preserve">
     <value>بیعانه</value>
   </data>
@@ -147,11 +153,17 @@
   <data name="FromTimeOrder" xml:space="preserve">
     <value>از ساعت</value>
   </data>
+  <data name="IsPersonalCustomer" xml:space="preserve">
+    <value>مشتری شخصی</value>
+  </data>
   <data name="Order" xml:space="preserve">
     <value>نوبت</value>
   </data>
   <data name="PaidType" xml:space="preserve">
     <value>نوع تسویه</value>
+  </data>
+  <data name="ReservationInfo" xml:space="preserve">
+    <value>اطلاعات نوبت دهی</value>
   </data>
   <data name="ReservationSearch" xml:space="preserve">
     <value>جستجوی نوبت دهی</value>
@@ -164,6 +176,9 @@
   </data>
   <data name="Services" xml:space="preserve">
     <value>خدمات</value>
+  </data>
+  <data name="ServicesListeCustomer" xml:space="preserve">
+    <value>خدمات مشتری</value>
   </data>
   <data name="ServiceType" xml:space="preserve">
     <value>نوع خدمات</value>

@@ -1,11 +1,8 @@
 ﻿var salonServices = null;
-var customerServices = [];
-var hasComboClerks = false;
-var optionCustomerType = ["مشتری سالن", "مشتری شخصی"];
-var newSalonService = [];
-var repeatedItemsService = '';
-var customerServiceIsNullMessage = '';
-var customerEmptyMessage = '';
+var personnels = [];
+var counter = 1;
+var fillThisAddedServiceItem = ''
+var oneServiceShouldBeThere = ''
 
 function btnOpenEditReservation() {
     var reservationId = getValueTableById('ReservationId');
@@ -31,305 +28,36 @@ function btnOpenEditReservation() {
     });
 }
 
-function loadItemsSalonServicesDiv(serviceId) {
-    var arrayIndex = serviceId > 0 ? findIndexArrayWithAttr(salonServices, 'id', serviceId) : null;
-    var clerkId = arrayIndex > 0 ? salonServices[arrayIndex].clerkServiceId : document.getElementById("cmbClerk").value;
-
-    if (clerkId > 0) {
-        newSalonService = [];
-        var length = salonServices.length;
-        for (var i = 0; i < length; i++) {
-            if (salonServices[i].clerkId == clerkId)
-                newSalonService.push({ TBASServiceId: salonServices[i].tbasServiceId, clerkServiceId: salonServices[i].clerkServiceId, serviceName: salonServices[i].serviceName, ClerkId: salonServices[i].clerkId });
-        }
-        AddItemsToDivSalonService(newSalonService);
-        return;
-    }
-    getSalonServices(clerkId);
-}
-
-function getSalonServices(clerkId) {
-    if (salonServices == null) {
-        $.ajax({
-            type: "POST",
-            url: "/Reservation/GetSalonServices",
-            data: {
-                clerkId: clerkId
-            },
-            success: function (result) {
-                if (result.result != '') {
-                    ErrorMessage(result.result);
-                    return;
-                }
-                salonServices = result.serviceList;
-                AddItemsToDivSalonService(result.serviceList);
-
-            },
-            error: function (result) {
-                ErrorMessage();
-            }
-        });
-    }
-    AddItemsToDivSalonService(salonServices);
-}
-
-function AddItemsToDivSalonService(salonServices) {
-    var parentDiv = document.getElementById("salonServices");
-    parentDiv.innerHTML = "";
-    var count = 1;
-    if (salonServices == null) return;
-
-    document.getElementById("pSalonService").innerHTML = 'خدمات سالن ' + "- تعداد : " + salonServices.length;;
-    document.getElementById("pCustomerService").innerHTML = 'خدمات مشتری ' + "- تعداد : " + customerServices.length;;
-
-    for (var i = 0; i < salonServices.length; i++) {
-        var divServiceDetails = document.createElement('div'); // parent element div 
-        divServiceDetails.className = 'divServiceDetails';
-
-        //// add hidden field item
-        //var hiddenField = document.createElement("input");
-        //hiddenField.id = "serviceId" + count;
-        //hiddenField.setAttribute("type", "hidden");
-        //hiddenField.setAttribute("value", salonServices[i].tbasServiceId);
-
-        //divServiceDetails.appendChild(hiddenField);
-        ////////// 
-
-        // add hidden field item
-        var hiddenField = document.createElement("input");
-        hiddenField.id = "clerkServiceId" + count;
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("value", salonServices[i].clerkServiceId);
-
-        divServiceDetails.appendChild(hiddenField);
-        ////////
-
-        //add row number 
-        var row = document.createElement("p");
-        row.style.width = "30px";
-        row.style.float = "right";
-        row.innerHTML = count + ")";
-        divServiceDetails.appendChild(row);
-        ///////
-
-        // add serviceTitle item
-        var service = document.createElement("p");
-        service.style.width = "299px";
-        service.style.float = "right";
-        service.innerHTML = salonServices[i].serviceName;
-        divServiceDetails.appendChild(service);
-        //////////////
-
-
-        // add service button select 
-        var button = document.createElement("input");
-        button.setAttribute("type", "button");
-        button.className = "btn btn-success";
-        button.style.width = "75px";
-        button.id = "btnAddItem" + count;
-        button.addEventListener("click", function (e) {
-            refreshDivItemsService(e, salonServices, 'add');
-        });
-        button.value = "اضافه";
-        divServiceDetails.appendChild(button);
-        //////////
-
-        parentDiv.appendChild(divServiceDetails);
-
-        count++;
-    }
-}
-
-function addItemsToCustomerServiceDiv(array, arrayIndex, isdelete) {
-    if (!isdelete) {
-        customerServices.push({ TBASServiceId: array[arrayIndex].tbasServiceId, clerkServiceId: array[arrayIndex].clerkServiceId, serviceName: array[arrayIndex].serviceName, ClerkId: array[arrayIndex].clerkId });
-    }
-    var parentDiv = document.getElementById("customerServices");
-    var count = 1;
-    parentDiv.innerHTML = "";
-    document.getElementById("pCustomerService").innerHTML = 'خدمات مشتری ' + "- تعداد : " + customerServices.length;;
-
-    for (var i = 0; i < customerServices.length; i++) {
-        var divServiceDetails = document.createElement('div');
-        divServiceDetails.className = 'divServiceDetails';
-        divServiceDetails.style.width = '554px !important';
-
-        // add hidden field item
-        var hiddenField = document.createElement("input");
-        hiddenField.id = "clerkServiceId" + count;
-        hiddenField.className = "specialFields";
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("value", customerServices[i].clerkServiceId);
-
-        divServiceDetails.appendChild(hiddenField);
-        //////// 
-
-        //add row number 
-        var row = document.createElement("p");
-        row.style.width = "30px";
-        row.style.float = "right";
-        row.innerHTML = count + ")";
-        divServiceDetails.appendChild(row);
-        ///////
-
-        // add serviceTitle item
-        var service = document.createElement("p");
-        service.style.width = "212px";
-        service.style.float = "right";
-        service.innerHTML = customerServices[i].serviceName;
-        divServiceDetails.appendChild(service);
-        //////////////
-
-        //// add combo customerType
-        var comboBox = document.createElement("SELECT");
-        comboBox.setAttribute("id", "customerType" + count)
-        comboBox.className = "cmbCustomerServiceType";
-
-        for (var j = 0; j < optionCustomerType.length; j++) {
-            var option = document.createElement("option");
-            option.value = j;
-            option.text = optionCustomerType[j];
-            comboBox.appendChild(option);
-        }
-        divServiceDetails.appendChild(comboBox);
-
-        /////
-
-        // add service button select 
-        var button = document.createElement("input");
-        button.setAttribute("type", "button");
-        button.className = "btn btn-danger";
-        button.id = "btnDeleteCustomerService" + count;
-        button.addEventListener("click", function (e) {
-            refreshDivItemsService(e, salonServices, 'delete');
-        });
-        button.value = "حذف";
-        divServiceDetails.appendChild(button);
-        //////////
-
-        parentDiv.appendChild(divServiceDetails);
-
-        count++;
-    }
-}
-
-function refreshDivItemsService(e, salonServices, state) {
-    if (state == 'add') {
-        debugger;
-        var id = e.currentTarget.id;
-        var serviceId = document.getElementById(id).parentElement.childNodes[0].attributes.value;
-        var arrayIndex = findIndexArrayWithAttr(salonServices, 'clerkServiceId', serviceId.value);
-        for (var i = 0; i < customerServices.length; i++) {
-            if (serviceId.value == customerServices[i].clerkServiceId) {
-                ErrorMessage(repeatedItemsService);
-                return;
-            }
-        }
-        addItemsToCustomerServiceDiv(salonServices, arrayIndex, false);
-
-    }
-    else {
-        var id = e.currentTarget.id;
-        var serviceId = document.getElementById(id).parentElement.childNodes[0].attributes.value;
-        var arrayIndex = findIndexArrayWithAttr(customerServices, 'clerkServiceId', serviceId.value);
-        document.getElementById('cmbClerk').selectedIndex = SelectComboIndexByValue(customerServices[arrayIndex].clerkServiceId, 'cmbClerk');;
-        customerServices.splice(arrayIndex, 1);
-        addItemsToCustomerServiceDiv(customerServices, arrayIndex, true);
-        //loadItemsSalonServicesDiv();
-    }
-}
-
-function getClerkCombo(e) {
-    var target = $(e.target).attr("href")
-    if (target == '#Services') {
-        $("#AddEditReservation").hide();
-        $("#btnCloseReservation").hide();
-        if (!hasComboClerks) {
-            $.ajax({
-                type: "POST",
-                url: "/Reservation/GetClerks",
-                data: {
-                },
-                success: function (result) {
-                    if (result.result != '') {
-                        ErrorMessage(result.result);
-                        return;
-                    }
-                    fillClerks(result.clerk);
-                    hasComboClerks = true;
-
-                },
-                error: function (result) {
-                    ErrorMessage();
-                }
-            });
-
-        }
-    }
-    else {
-        $("#AddEditReservation").show();
-        $("#btnCloseReservation").show();
-
-    }
-}
-
-function fillClerks(clerk) {
-    $("#cmbClerk").html("");
-    for (var i = 0; i < clerk.length; i++) {
-        var item = clerk[i];
-        $("#cmbClerk").append(
-            $("<option></option>").val(item.value).html(item.text)
-        );
-    }
-}
-
-function btnAddEditReservation() {
-    var parent = document.getElementById("customerServices");
+function btnAddEditReservation(fillMandatoroyMessage) {
     var introducId = $("#PeopleSelector_Id")[0].innerText;
 
     if (introducId == '') {
         ErrorMessage(customerEmptyMessage);
         return;
     }
+   
+    var customerServices = new Array();
+    var reservationId = $('#ReservationId').val();
 
-    var children = parent.childNodes;
-    var mandatoryMessage = CheckMandatoryFields();
-    if (mandatoryMessage != '') {
-        var parent = document.getElementById("customerServices");
-        if (children[0] != undefined && children[0].nodeName == '#text') {
-            mandatoryMessage += customerServiceIsNullMessage;
-        }
-        ShowMandatoryMessage(mandatoryMessage);
-        return;
+    for (var i = 1; i <= counter; i++) {
+        Id = reservationId;
+        var peopleSelector_Id = $("#PeopleSelector_Id")[0].innerText;
+        var txtOrderDate = $('#txtOrderDate').val();
+        var txtDescription = $('#txtDescription').val();
+        var txtfromTime = $('#txtFromTime_' + i).val();
+        var txttoTime = $('#txtToTime_' + i).val();
+        var txtServices = document.getElementById("cmbServieces_" + i).value;
+        var isSalonCustomer;
+        let elem = "chbCustomerState_" + i;
+        if (document.getElementById(elem).hasAttribute("checked"))
+            isSalonCustomer = true ;
+        else
+            isSalonCustomer = false ;
+        customerServices.push({ CustomerId: peopleSelector_Id, P_ReservationDate: txtOrderDate, ClerkServicesId: txtServices, isSalonCustomer: isSalonCustomer, FromTime: txtfromTime, ToTime: txttoTime, Description:txtDescription });
     }
-
-    var getCustomerServices = [];
-    for (var i = 0; i < children.length; i++) {
-        for (var j = 0; j < children[i].childNodes.length; j++) {
-            if (children[i].childNodes[j].className == 'specialFields')
-                clerkServiceId = children[i].childNodes[j].value;
-            else if (children[i].childNodes[j].className == 'cmbCustomerServiceType') {
-                var cmbCustomerServiceTypeElem = document.getElementById("customerType" + (i + 1));
-                var valcmb = cmbCustomerServiceTypeElem.selectedIndex;
-                var isSalonCustomer = valcmb == 0 ? true : false;
-            }
-        }
-        getCustomerServices.push({ ClerkServicesId: clerkServiceId, isSalonCustomer: isSalonCustomer });
-    }
-
-    var reservationFields = {
-        Id: $("#ReservationId").val(),
-        PeopleId: $("#PeopleSelector_Id")[0].innerHTML,
-        P_ReservationDate: $("#txtOrderDate").val(),
-        FromTime: $("#txtFromTimeOrder").val(),
-        ToTime: $("#txtToTimeOrder").val(),
-        Price: $("#txtFee").val(),
-        TBASPayTypeId: $("#cmbPaidType").val(),
-        Description: $("#txtDescription").val(),
-    };
 
     var isEdit = false;
-    if (reservationFields.Id != '')
+    if (reservationId != '')
         isEdit = true;
 
 
@@ -338,12 +66,11 @@ function btnAddEditReservation() {
         url: "/Reservation/AddEditReservationMethod",
         data: {
             isEdit: isEdit,
-            peopleServices: getCustomerServices,
-            reservation: reservationFields,
+            reservationDetails: customerServices,
         },
         success: function (result) {
             debugger;
-            if (result.errorMessage != '') {
+            if (result.errorMessage != '' && result.errorMessage != undefined) {
                 ErrorMessage(result.errorMessage);
                 return;
             }
@@ -477,4 +204,193 @@ function btnDeleteReservation() {
 
     },
     ).catch(swal.noop);
+}
+
+function getPersonnel() {
+    $.ajax({
+        type: "POST",
+        url: "/Reservation/GetClerks",
+        data: {
+        },
+        success: function (result) {
+            if (result.result != '') {
+                ErrorMessage(result.result);
+                return;
+            }
+            personnels = result.clerk;
+            fillPersonnelCombo();
+        },
+        error: function (result) {
+            ErrorMessage();
+        }
+    });
+}
+
+function fillPersonnelCombo(selectedValue) {
+    var comboBox = document.getElementById("cmbPersonnel_" + counter);
+    comboBox.innerHTML = '';
+    for (var j = 0; j < personnels.length; j++) {
+        var option = document.createElement("option");
+        option.value = personnels[j].value;
+        option.text = personnels[j].text;
+        if (selectedValue == personnels[j].value)
+            option.setAttribute('selected', 'selected');
+        comboBox.appendChild(option);
+    }
+
+}
+
+function getServices() {
+    $.ajax({
+        type: "POST",
+        url: "/Reservation/GetSalonServices",
+        data: {
+        },
+        success: function (result) {
+            if (result.result != '') {
+                ErrorMessage(result.result);
+                return;
+            }
+            salonServices = result.serviceList;
+        },
+        error: function (result) {
+            ErrorMessage();
+        }
+    });
+}
+
+function fillServiceByPersonnel(e, isOnchangecmbPersonnel) {
+    var personnelId;
+    let value = e.id.indexOf("_");
+    let result = e.id.substr(value + 1, 2);
+    var cmbServiceValue = e.value;
+
+    if (isOnchangecmbPersonnel)
+        personnelId = document.getElementById(e.id).value;
+    else
+        personnelId = document.getElementById("cmbPersonnel_" + result).value;
+
+    var comboBox = document.getElementById("cmbServieces_" + result);
+    $("#cmbServieces_" + result).html("");
+    for (var j = 0; j < salonServices.length; j++) {
+        debugger;
+        if (salonServices[j].personnelId == parseInt(personnelId) || salonServices[j].personnelId == null) {
+            var option = document.createElement("option");
+            option.value = salonServices[j].clerkServiceId;
+            option.text = salonServices[j].serviceName;
+            if (!isOnchangecmbPersonnel && cmbServiceValue == salonServices[j].clerkServiceId)
+                option.setAttribute('selected', 'selected');
+
+            comboBox.appendChild(option);
+        }
+    }
+
+    if (isOnchangecmbPersonnel)
+        fillPersonnelCombo(e.value);
+}
+
+function addServiceItemsDiv() {
+    var txtfromTime = $('txtFromTime_' + counter).val(); 
+    var txttoTime = $('txtToTime_' + counter).val(); 
+    var txtServices = document.getElementById("cmbServieces_" + counter).value;   
+    var txtPersonnel = document.getElementById("cmbPersonnel_" + counter).value ; 
+
+    if (txtfromTime == '' || txttoTime == '' || (txtServices == '' || txtServices == 0 ) || (txtPersonnel == '' || txtPersonnel  == 'null' )) {
+        ErrorMessage(fillThisAddedServiceItem);
+        return;
+    }
+
+    counter += 1;
+    var parentDiv = document.getElementById("divServices");
+    var divId = "divItem_" + counter;
+    var cmbPersonnelId = 'cmbPersonnel_' + counter;
+    var cmbServiceId = 'cmbServieces_' + counter;
+    var txtFromTime = 'txtFromTime_' + counter;
+    var txtToTime = 'txtToTime_' + counter;
+    var chbCustomerState = 'chbCustomerState_' + counter;
+    var chbCustomerState = 'chbCustomerState_' + counter;
+    var btndeleteItemId = 'btndeleteItem_' + counter;
+
+    var html = `<div id='${divId}' data-repeater-item=''>
+        <div class='row justify-content-between' >
+            <div class='col-md-2 col-sm-12 form-group'>
+                <label for='personnel'>پرسنل</label>
+                <select id='${cmbPersonnelId}' onchange='fillServiceByPersonnel(this,true)' class='form-control'>
+                </select>
+            </div>
+            <div class='col-md-2 col-sm-12 form-group'>
+                <label for='cmbServiceId'>خدمات</label>
+                <select id='${cmbServiceId}' onchange='fillServiceByPersonnel(this,false)' class='form-control'>
+                </select>
+            </div>
+            <div class='col-md-2 col-sm-12 form-group'>
+                <label for='txtFromTime'>از ساعت</label>
+                <input class='form-control time' id='${txtFromTime}' type='text' name='time' onchange="onTimeChageText(this,'FromTime')" autocomplete="off">
+               </div>
+                <div class='col-md-2 col-sm-12 form-group'>
+                    <label for='txtFromTime'>تاساعت</label>
+                    <input class='form-control time' id='${txtToTime}' type='text' name='time'  onchange="onTimeChageText(this,'ToTime')" autocomplete="off">
+                 </div>
+                    <div class='col-md-2 col-sm-12 form-group'>
+                        <label for='txtToTime'>نوع مشتری</label>
+                        <fieldset>
+                            <div class="checkbox checkbox-primary checkbox-glow">
+                                    <input type='checkbox' id='${chbCustomerState}' onchange="changeStateCustomer(this)">
+                                     <label for='${chbCustomerState}'>مشتری شخصی</label>
+                               </div>
+                        </fieldset>
+                   </div>
+                        <div class='col-md-2 col-sm-12 form-group d-flex align-items-center pt-2'>
+                            <button id='${btndeleteItemId}' class='btn btn-danger text-nowrap px-1' data-repeater-delete='' type='button' onclick='deleteServiceItemsDiv(this)'>
+                                <i class='bx bx-x'></i>حذف</button>
+                        </div>
+                    </div>
+                    <hr>
+</div>`;
+
+
+
+    parentDiv.innerHTML += html;
+    fillPersonnelCombo();
+}
+
+function changeStateCustomer(e) {
+    let elem = e.id;
+    if (document.getElementById(elem).hasAttribute("checked"))
+        document.getElementById(elem).removeAttribute("checked");
+    else
+        document.getElementById(elem).setAttribute("checked", "");
+}
+
+function deleteServiceItemsDiv(e, isFirstDiv) {
+    if (isFirstDiv) {
+        ErrorMessage(oneServiceShouldBeThere);
+        return;
+    }
+
+    let value = e.id.indexOf("_");
+    let result = e.id.substr(value + 1, 2);
+    var divServices = document.getElementById("divServices");
+    var divChild = document.getElementById("divItem_" + result);
+
+    for (var i = 0; i < divServices.childNodes.length; i++) {
+        if (divServices.childNodes[i].id == divChild.id) {
+            divServices.removeChild(divServices.childNodes[i]);
+            counter -= 1;
+            break;
+        }
+    }
+}
+
+function onTimeChageText(e, state) {
+    let value = e.id.indexOf("_");
+    let result = e.id.substr(value + 1, 2);
+    if (state == 'FromTime') {
+        var fromTime = document.getElementById("txtFromTime_" + result);
+        fromTime.setAttribute("value", $("#txtFromTime_" + result).val());
+    }
+    else {
+        var toTime = document.getElementById("txtToTime_" + result);
+        toTime.setAttribute("value", $("#txtToTime_" + result).val());
+    }
 }

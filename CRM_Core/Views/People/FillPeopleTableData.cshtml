@@ -5,14 +5,14 @@
 @model DataGridViewModel<PeopleModel>
 
 @{
-    bool isSelectMode = TempData["IsSelectMode"] == string.Empty ? false : Convert.ToBoolean(TempData["IsSelectMode"]) ;
+    bool isSelectMode = TempData["IsSelectMode"] == string.Empty ? false : Convert.ToBoolean(TempData["IsSelectMode"]);
     bool isSelectedMode = isSelectMode;
     bool isEditMode = ViewBag.isEditMode == null ? false : (bool)ViewBag.isEditMode;
     bool isPrintMode = ViewBag.isPrintMode == null ? false : (bool)ViewBag.isPrintMode;
     int pageNumber = ViewBag.pageNumber == null ? 0 : (int)ViewBag.pageNumber;
     int totalAllRecords = ViewBag.totalAllRecords == null ? 0 : (int)ViewBag.totalAllRecords;
     int rowNum = pageNumber == 0 ? 1 : pageNumber * (10 + 1);
-    string styleGrid =!isSelectedMode ? "height:419px;margin-top:0%;" : "height:419px;";
+    string styleGrid = !isSelectedMode ? "margin-top:0%;" : "";
 
     <grid-view style="@styleGrid" total-rows-count="totalAllRecords" page-number="pageNumber" action-name="showPeopleList">
 
@@ -53,7 +53,7 @@
 
                     }
                     <grid-rows-data visible="false" id="PeopleId" field-value="@item.Id"></grid-rows-data>
-                    <grid-rows-buttons style="width:180px;" is-select-mode="@isSelectedMode ? true : false" on-delete-button-action="btnDeletePeople()" on-edit-button-action="btnOpenEditPeople()" is-edit-mode="@isEditMode"></grid-rows-buttons>
+                    <grid-rows-buttons style="width:180px;" is-select-mode="@isSelectedMode ? true : false" on-delete-button-action="btnDeletePeople(this)" on-edit-button-action="btnOpenEditPeople(this)" is-edit-mode="@isEditMode"></grid-rows-buttons>
                     <grid-rows-data width="50" field-value="@rowNum"></grid-rows-data>
                     <grid-rows-data width="226" field-value="@item.FullName"></grid-rows-data>
                     <grid-rows-data width="135" field-value="@item.ManualCode"></grid-rows-data>

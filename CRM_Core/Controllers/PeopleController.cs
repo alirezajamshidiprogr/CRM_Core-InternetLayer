@@ -191,7 +191,6 @@ namespace CRM_Core.Controllers
         {
             string errorMessage = string.Empty;
             ViewBag.isEdit = false;
-
             try
             {
                 peopleViewModel peopleViewModel = new peopleViewModel();
@@ -270,14 +269,14 @@ namespace CRM_Core.Controllers
             string message = string.Empty;
             string errorMessage = string.Empty;
             //ModelState["people.Category"].Errors.Clear();
-            ModelState["address.People"].Errors.Clear();
-            ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            ModelState["people.TBASPrefixId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            ModelState["people.TBASIntroductionTypeId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            ModelState["address.People"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            //ModelState["address.People"].Errors.Clear();
+            //ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            //ModelState["people.TBASPrefixId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            //ModelState["people.TBASIntroductionTypeId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            //ModelState["address.People"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
 
-            if (!ModelState.IsValid)
-                throw new CustomeException("Model Is Not Valid", true, null);
+            //if (!ModelState.IsValid)
+            //    throw new CustomeException("Model Is Not Valid", true, null);
 
             try
             {
@@ -324,6 +323,12 @@ namespace CRM_Core.Controllers
                     oldPeople.M_MariedDate = people.P_MariedDate.ToDateTime();
                     oldPeople.Description = people.Description;
                     oldPeople.MarriedType = people.MarriedType;
+                    oldPeople.HomeTel = people.HomeTel;
+                    oldPeople.WorkTel = people.WorkTel;
+                    oldPeople.Fax = people.Fax;
+                    oldPeople.Mobile1 = people.Mobile1;
+                    oldPeople.Mobile2 = people.Mobile2;
+                    oldPeople.Mobile3 = people.Mobile3;
                     oldPeople.IntroduceId = people.IntroduceId;
                     oldPeople.TBASCategoryId = people.TBASCategoryId;
                     oldPeople.TBASPotentialId = people.TBASPotentialId;
@@ -347,58 +352,58 @@ namespace CRM_Core.Controllers
 
 
 
-                    if (hasVisitedTelsMobiles && tels.Count != 0)
-                    {
-                        if (checkRepeatedTels && CheckForRepeatedTels(tels))
-                            throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
+                    //if (hasVisitedTelsMobiles && tels.Count != 0)
+                    //{
+                    //    if (checkRepeatedTels && CheckForRepeatedTels(tels))
+                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
 
-                        // Delete Previous Data For Tels
-                        var oldPeoplePropertyTels = _peoplePropertyService.GetPeoplePrpoertyTels(people, (int)Enums.tbasPeopePropertyState.number);
-                        _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyTels.ToList());
+                    //    // Delete Previous Data For Tels
+                    //    var oldPeoplePropertyTels = _peoplePropertyService.GetPeoplePrpoertyTels(people, (int)Enums.tbasPeopePropertyState.number);
+                    //    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyTels.ToList());
 
-                        for (int i = 0; i < tels.Count; i++)
-                        {
-                            for (int j = 1; j <= 3; j++)
-                            {
-                                string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
-                                _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                                {
-                                    People = oldPeople,
-                                    TBASPeopleTypeField = j,
-                                    Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
-                                    Order = i,
-                                });
-                            }
-                        }
-                    }
-
-
-
-                    if (hasVisitedTelsMobiles && mobiles.Count != 0)
-                    {
-                        if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
-                            throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
-
-                        // Delete Previous Data For Mobiles
-                        var oldPeoplePropertyMobiles = _peoplePropertyService.GetPeoplePrpoertyMobiles(people, (int)Enums.tbasPeopePropertyState.mobile);
-                        _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyMobiles.ToList());
+                    //    for (int i = 0; i < tels.Count; i++)
+                    //    {
+                    //        for (int j = 1; j <= 3; j++)
+                    //        {
+                    //            string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
+                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
+                    //            {
+                    //                People = oldPeople,
+                    //                TBASPeopleTypeField = j,
+                    //                Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
+                    //                Order = i,
+                    //            });
+                    //        }
+                    //    }
+                    //}
 
 
-                        for (int i = 0; i < mobiles.Count; i++)
-                        {
-                            for (int j = 4; j <= 5; j++)
-                            {
-                                string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
-                                _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                                {
-                                    People = oldPeople,
-                                    TBASPeopleTypeField = j,
-                                    Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
-                                    Order = i,
-                                });
-                            }
-                        }
-                    }
+
+                    //if (hasVisitedTelsMobiles && mobiles.Count != 0)
+                    //{
+                    //    if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
+                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
+
+                    //    // Delete Previous Data For Mobiles
+                    //    var oldPeoplePropertyMobiles = _peoplePropertyService.GetPeoplePrpoertyMobiles(people, (int)Enums.tbasPeopePropertyState.mobile);
+                    //    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyMobiles.ToList());
+
+
+                    //    for (int i = 0; i < mobiles.Count; i++)
+                    //    {
+                    //        for (int j = 4; j <= 5; j++)
+                    //        {
+                    //            string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
+                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
+                    //            {
+                    //                People = oldPeople,
+                    //                TBASPeopleTypeField = j,
+                    //                Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
+                    //                Order = i,
+                    //            });
+                    //        }
+                    //    }
+                    //}
 
                 }
 
@@ -422,47 +427,47 @@ namespace CRM_Core.Controllers
                         _addressService.AddAddress(address);
                     }
 
-                    if (tels.Count != 0)
-                    {
-                        if (checkRepeatedTels && CheckForRepeatedTels(tels))
-                            throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
+                    //if (tels.Count != 0)
+                    //{
+                    //    if (checkRepeatedTels && CheckForRepeatedTels(tels))
+                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
 
-                        for (int i = 0; i < tels.Count; i++)
-                        {
-                            for (int j = 1; j <= 3; j++)
-                            {
-                                string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
-                                _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                                {
-                                    People = people,
-                                    TBASPeopleTypeField = j,
-                                    Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
-                                    Order = i,
-                                });
-                            }
-                        }
-                    }
+                    //    for (int i = 0; i < tels.Count; i++)
+                    //    {
+                    //        for (int j = 1; j <= 3; j++)
+                    //        {
+                    //            string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
+                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
+                    //            {
+                    //                People = people,
+                    //                TBASPeopleTypeField = j,
+                    //                Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
+                    //                Order = i,
+                    //            });
+                    //        }
+                    //    }
+                    //}
 
-                    if (mobiles.Count != 0)
-                    {
-                        if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
-                            throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
+                    //if (mobiles.Count != 0)
+                    //{
+                    //    if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
+                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
 
-                        for (int i = 0; i < mobiles.Count; i++)
-                        {
-                            for (int j = 4; j <= 5; j++)
-                            {
-                                string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
-                                _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                                {
-                                    People = people,
-                                    TBASPeopleTypeField = j,
-                                    Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
-                                    Order = i,
-                                });
-                            }
-                        }
-                    }
+                    //    for (int i = 0; i < mobiles.Count; i++)
+                    //    {
+                    //        for (int j = 4; j <= 5; j++)
+                    //        {
+                    //            string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
+                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
+                    //            {
+                    //                People = people,
+                    //                TBASPeopleTypeField = j,
+                    //                Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
+                    //                Order = i,
+                    //            });
+                    //        }
+                    //    }
+                    //}
 
                 }
 

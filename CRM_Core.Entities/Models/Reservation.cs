@@ -12,23 +12,19 @@ namespace CRM_Core.Entities.Reservation
         public int Id { get; set; }
         [Required]
         public People People { get; set; }
+        [Column("CustomerId")]
         public int PeopleId { get; set; }
         [Required]
         [MaxLength(10)]
         public string P_ReservationDate { get; set; }
         [Required]
         public DateTime M_ReservationDate { get; set; }
+        public DateTime M_ReservationInsertDate { get; set; }
+        public DateTime? M_ReservationEditDate { get; set; }
         [Required]
-        [Column(TypeName = "time(7)")]
-        public TimeSpan FromTime { get; set; }
-        [Required]
-        [Column(TypeName = "time(7)")]
-        public TimeSpan ToTime { get; set; }
-        [Required]
+        [MaxLength(15)]
         public string SystemCode { get; set; }
-        public double Price { get; set; }
-        public TBASPayType TBASPayType { get; set; }
-        public int TBASPayTypeId{ get; set; }
+        public int TBASPayTypeId { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
     }
@@ -68,7 +64,7 @@ namespace CRM_Core.Entities.Reservation
         public bool Acitve { get; set; }
     }
 
-    public class PeopleServices
+    public class ReservationDetails
     {
         public int Id { get; set; }
 
@@ -82,6 +78,13 @@ namespace CRM_Core.Entities.Reservation
 
         [Required]
         public bool isSalonCustomer { get; set; }
+
+        [Required]
+        [Column(TypeName = "time(7)")]
+        public TimeSpan FromTime { get; set; }
+        [Required]
+        [Column(TypeName = "time(7)")]
+        public TimeSpan ToTime { get; set; }
     }
 
 }

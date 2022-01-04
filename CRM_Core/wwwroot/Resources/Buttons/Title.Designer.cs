@@ -70,7 +70,7 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ثبت.
+        ///   Looks up a localized string similar to ذخیره تغییرات.
         /// </summary>
         public static string Add {
             get {
@@ -138,6 +138,15 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to افزودن.
+        /// </summary>
+        public static string New {
+            get {
+                return ResourceManager.GetString("New", resourceCulture);
             }
         }
         

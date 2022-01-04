@@ -97,12 +97,12 @@ namespace TagHelperSamples.Bootstrap
             {
                 if (EditButton)
                 {
-                    html += string.Format("<a class='btn btn-info btn-round btnAction' href='#' onclick='{0}''>", OnEditButtonAction);
+                    html += string.Format("<a class='btn btn-primary btn-round btnAction' style='margin-left:4px;' href='#' onclick='{0}'>", OnEditButtonAction);
                     html += "<i class='icon-note'></i> ویرایش <div class='paper-ripple'><div class='paper-ripple__background'></div><div class='paper-ripple__waves'></div></div></a>";
                 }
                 if (DeleteButton)
                 {
-                    html += string.Format("<a class='btn btn-danger btn-round btnAction' href='#' onclick='{0}''>", OnDeleteButtonAction);
+                    html += string.Format("<a class='btn btn-danger btn-round btnAction' href='#' onclick='{0}'>", OnDeleteButtonAction);
                     html += "<i class='icon-trash'></i> حذف <div class='paper-ripple'><div class='paper-ripple__background'></div><div class='paper-ripple__waves'></div></div></a>";
                 }
             }

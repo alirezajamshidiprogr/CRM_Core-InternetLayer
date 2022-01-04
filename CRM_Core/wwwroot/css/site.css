@@ -1,13 +1,17 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿ Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. 
+#swal2-content {
+    font-family: "secondary-font", "primary-font", "segoe ui", "tahoma" ;
 }
-
-/* Provide sufficient contrast against white background */
+.swal2-styled {
+    font-family: "secondary-font", "primary-font", "segoe ui", "tahoma" !important;
+}
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+ Provide sufficient contrast against white background 
 a {
   color: #0366d6;
 }
@@ -16,7 +20,10 @@ a {
     overflow-y:hidden ;
     overflow-x:hidden;
 }
-.btn-primary {
+.searchButtom {
+    margin-right: 2%;
+}
+/*.btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
@@ -32,9 +39,8 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
-/* Sticky footer styles
--------------------------------------------------- */
+ Sticky footer styles
+-------------------------------------------------- 
 html {
   font-size: 14px;
 }
@@ -59,26 +65,25 @@ button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
 }
-
-/* Sticky footer styles
--------------------------------------------------- */
+ Sticky footer styles
+-------------------------------------------------- 
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+ Margin bottom by footer height 
+margin-bottom: 60px;
 }
 #footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #37023c !important;
-    /*background-color: #364077 !important;*/
+    line-height: 60px;  Vertically center the text there 
+background-color: #37023c !important;
+background-color: #364077 !important;
 }
 
 @font-face {
@@ -217,13 +222,11 @@ label {
     z-index: 10000;
     opacity: .5;
 }
-/*#1E2850*/
-
-/*4B5270*/
-
+#1E2850
+4B5270
 .form-controls {
-    /*display: block;*/
-    font-family: 'A Iranian Sans';
+display: block;
+font-family: 'A Iranian Sans';
     width: 208px !important;
     height: calc(2.25rem + 2px);
     padding-right: 7px;
@@ -265,8 +268,7 @@ height: 100px;
         position: sticky;
         top: 0;
     }
-
-/* Just common table stuff. Really. */
+ Just common table stuff. Really. 
 table {
     border-collapse: collapse;
     width: 100%;
@@ -287,11 +289,9 @@ tr td{
 tr th{
     text-align:center;
 }
-
-/*برای غیر فعال کردن دیو
+برای غیر فعال کردن دیو
 pointer-events: none;
-opacity: 0.4;*/
-
+opacity: 0.4;
 .clockpicker-plate {
     background: #eeede9 !important;
 }
@@ -310,8 +310,8 @@ opacity: 0.4;*/
     padding: 5px !important;
     box-shadow: 0px 3px 10px 1px #373333 !important;
     width: 100% !important;
-    /*width: 100% !important;*/
-    height: 514px !important;
+width: 100% !important;
+height: 514px !important;
     overflow: -moz-hidden-unscrollable;
     overflow-y: auto;
 }
@@ -350,4 +350,104 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="search"]
 
 .ui-datepicker{
     z-index:1000  !important;
+}
+.specialFields {
+    display: none;
+}*/
+
+.divTableGrid {
+    /*width: 994px;*/
+    width: auto
+}
+
+.TableDataDiv {
+    /*width: 778px !important;*/
+}
+
+.divHeaderSearch {
+    text-align: center;
+}
+
+.tableGrdData {
+    height: 500px !important;
+}
+
+.btnSearchGrid {
+    width: 100px;
+}
+
+.btnGridActions {
+    position: inherit;
+}
+.Gridbody {
+    overflow: auto;
+    background: #fdfcfc;
+    height: 600px;
+    border: 1px solid #b5b2b2;
+    padding: 7px;
+    border-radius: 8px;
+    margin-top: 7px;
+    white-space: nowrap;
+    margin-top: 47px;
+}
+
+.header {
+    /*width: auto !important;*/
+    height: 40px;
+    background: #0e7979;
+    text-align: center;
+    box-shadow: -1px 3px 3px 0px;
+    border-radius: 13px;
+    border-left: 1px solid #cacaca;
+    color: white;
+}
+
+
+.headerFields {
+    float: right;
+    border-left: 1px solid #c1baba;
+    padding: 6px;
+}
+
+.items {
+    float: right;
+    display: inline-block;
+    padding: 9px;
+    text-align: center;
+}
+
+.divRow {
+    /*width: auto !important;*/
+    height: 50px;
+    background: #fdfdfd;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 6px;
+    border-bottom: 3px solid #ecebeb;
+    border-bottom-color: rgb(236, 235, 235);
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    text-align: right !important;
+}
+
+.GridFooter {
+    width: 100%;
+    height: 104px;
+    background: #e9f0ef;
+    border-radius: 12px;
+    box-shadow: 0px 1px 4px 1px;
+    margin-top: 8px;
+    border: 1px solid #b9acac;
+    padding: 14px;
+}
+
+.modal-header {
+    margin-left: 1066px;
+    background: #dfdfdf ;
+    width : 100% ;
+}
+
+.time {
+    height: 36px;
+    width: 103px;
 }
