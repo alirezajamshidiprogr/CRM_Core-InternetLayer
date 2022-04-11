@@ -312,40 +312,40 @@ function addServiceItemsDiv() {
     var btndeleteItemId = 'btndeleteItem_' + counter;
 
     var html = `<div id='${divId}' data-repeater-item=''>
-        <div class='row justify-content-between' >
-            <div class='col-md-2 col-sm-12 form-group'>
+                <div class='row justify-content-between' >
+                <div class='col-md-2 col-sm-12 form-group'>
                 <label for='personnel'>پرسنل</label>
                 <select id='${cmbPersonnelId}' onchange='fillServiceByPersonnel(this,true)' class='form-control'>
                 </select>
-            </div>
-            <div class='col-md-2 col-sm-12 form-group'>
+                </div>
+                <div class='col-md-2 col-sm-12 form-group'>
                 <label for='cmbServiceId'>خدمات</label>
                 <select id='${cmbServiceId}' onchange='fillServiceByPersonnel(this,false)' class='form-control'>
                 </select>
-            </div>
-            <div class='col-md-2 col-sm-12 form-group'>
+                </div>
+                <div class='col-md-2 col-sm-12 form-group'>
                 <label for='txtFromTime'>از ساعت</label>
                 <input class='form-control time' id='${txtFromTime}' type='text' name='time' onchange="onTimeChageText(this,'FromTime')" autocomplete="off">
-               </div>
+                </div>
                 <div class='col-md-2 col-sm-12 form-group'>
-                    <label for='txtFromTime'>تاساعت</label>
-                    <input class='form-control time' id='${txtToTime}' type='text' name='time'  onchange="onTimeChageText(this,'ToTime')" autocomplete="off">
-                 </div>
-                    <div class='col-md-2 col-sm-12 form-group'>
-                        <label for='txtToTime'>نوع مشتری</label>
-                        <fieldset>
-                            <div class="checkbox checkbox-primary checkbox-glow">
-                                    <input type='checkbox' id='${chbCustomerState}' onchange="changeStateCustomer(this)">
-                                     <label for='${chbCustomerState}'>مشتری شخصی</label>
-                               </div>
-                        </fieldset>
-                   </div>
-                        <div class='col-md-2 col-sm-12 form-group d-flex align-items-center pt-2'>
-                            <button id='${btndeleteItemId}' class='btn btn-danger text-nowrap px-1' data-repeater-delete='' type='button' onclick='deleteServiceItemsDiv(this)'>
-                                <i class='bx bx-x'></i>حذف</button>
-                        </div>
-                    </div>
-                    <hr>
+                <label for='txtFromTime'>تاساعت</label>
+                <input class='form-control time' id='${txtToTime}' type='text' name='time'  onchange="onTimeChageText(this,'ToTime')" autocomplete="off">
+                </div>
+                <div class='col-md-2 col-sm-12 form-group'>
+                <label for='txtToTime'>نوع مشتری</label>
+                <fieldset>
+                <div class="checkbox checkbox-primary checkbox-glow">
+                <input type='checkbox' id='${chbCustomerState}' onchange="changeStateCustomer(this)">
+                <label for='${chbCustomerState}'>مشتری شخصی</label>
+                </div>
+                </fieldset>
+                </div>
+                <div class='col-md-2 col-sm-12 form-group d-flex align-items-center pt-2'>
+                <button id='${btndeleteItemId}' class='btn btn-danger text-nowrap px-1' data-repeater-delete='' type='button' onclick='deleteServiceItemsDiv(this)'>
+                <i class='bx bx-x'></i>حذف</button>
+                </div>
+                </div>
+                <hr>
 </div>`;
 
 

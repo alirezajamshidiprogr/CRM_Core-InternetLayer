@@ -12,7 +12,7 @@
     int pageNumber = ViewBag.pageNumber == null ? 0 : (int)ViewBag.pageNumber;
     int totalAllRecords = ViewBag.totalAllRecords == null ? 0 : (int)ViewBag.totalAllRecords;
     int rowNum = pageNumber == 0 ? 1 : pageNumber * (10 + 1);
-    string styleGrid = !isSelectedMode ? "margin-top:0%;" : "";
+    string styleGrid = !isSelectedMode ? "margin-top:0%;" : "margin-top:47px;";
 
     <grid-view style="@styleGrid" total-rows-count="totalAllRecords" page-number="pageNumber" action-name="showPeopleList">
 
@@ -42,10 +42,12 @@
                 <grid-rows-body width="2055">
                     @if (isEditMode)
                     {
+
                     }
 
                     @if (isSelectedMode)
                     {
+
                     }
 
                     @if (isPrintMode)

@@ -20,13 +20,22 @@ namespace UI_Presentation.Models
     {
         public string onClickEvent { get; set; }
         public string buttomClass { get; set; }
+        public int BottonType { get; set; }
         public string icon { get; set; }
         public string Title { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
-            sb.AppendFormat("<button type='button' onclick ={0} class ='{1}' ><i class='{2}' ></i>&nbsp;{3} </button>", onClickEvent, buttomClass, icon, Title);
+            if (BottonType == 1 )
+            sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-success' ><i class='bx bx-check-circle' ></i>&nbsp;{3} </button>", "\"" + onClickEvent +"\"", buttomClass, icon, Title);
+            else if (BottonType == 2)
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-danger' ><i class='bx bxs-x-circle' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+            else if (BottonType == 3)
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-primary' ><i class='bx bx-search-alt-2' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+            else if (BottonType == 4)
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-info' ><i class='bx bx-trash' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+
             output.PreContent.SetHtmlContent(sb.ToString());
         }
     }
@@ -37,18 +46,19 @@ namespace UI_Presentation.Models
         public string Id { get; set; }
         public string labelTitle { get; set; }
         public string RequeiredMessage { get; set; }
+        public string onChangeTextBox { get; set; }
         public string value { get; set; }
         public string Style { get; set; }
         public string InputType { get; set; }
         public bool required { get; set; } = false;
-
+        public string tabIndex { get; set; } = null;
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
             html += string.Format("<div class='form-group'> ", Style);
             html += string.Format("<div class='controls'> ");
             html += string.Format("<label>{0}</label>", labelTitle);
-            html += string.Format("<input id='{0}' name ='text' class='form-control text-left' dir='ltr' {1}  placeholder='{2}' {3} value='{4}' type='{5}'>", Id,required ? "required=\"" + string.Empty + "\"" : string.Empty, labelTitle, RequeiredMessage != string.Empty ? "data-validation-required-message=\"" + RequeiredMessage + "\""  : string.Empty, value != string.Empty ? value : string.Empty, InputType == string.Empty ? "text" : InputType);
+            html += string.Format("<input id='{0}' name ='text' class='form-control text-left' dir='ltr' {1}  placeholder='{2}' {3} value='{4}' type='{5}' onchange='{6}' '{7}'>", Id, required ? "required=\"" + string.Empty + "\"" : string.Empty, labelTitle, RequeiredMessage != string.Empty ? "data-validation-required-message=\"" + RequeiredMessage + "\"" : string.Empty, value != string.Empty ? value : string.Empty, InputType == string.Empty ? "text" : InputType, onChangeTextBox,tabIndex != null ? "tabindex=\"" + tabIndex + "\"" : "");
             html += "</div>";
             html += "</div>";
 
@@ -77,7 +87,7 @@ namespace UI_Presentation.Models
             html += string.Format("<div class='mb-1'>");
             html += string.Format("<label>{0}</label>", labelTitle);
             html += string.Format("<fieldset class='form-group position-relative has-icon-left'>");
-            html += string.Format("<input id={0} type='text' class='form-control txtDate' placeholder='انتخاب تاریخ' value='{1}'>", Id,value);
+            html += string.Format("<input id={0} type='text' class='form-control txtDate' placeholder='انتخاب تاریخ' value='{1}'>", Id, value);
             html += string.Format("<div class='form-control-position'> <i class='bx bx-calendar'></i></div></fieldset>");
             html += "</div>";
 
@@ -90,7 +100,7 @@ namespace UI_Presentation.Models
     }
 
     [HtmlTargetElement("FormTitle")]
-    public class FormTitle: TagHelper
+    public class FormTitle : TagHelper
     {
         public string Form_Title { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -107,7 +117,7 @@ namespace UI_Presentation.Models
 
 
     [HtmlTargetElement("Profile-Image")]
-    public class ProfileImage: TagHelper
+    public class ProfileImage : TagHelper
     {
         public string Id { get; set; }
         public string ProfileTitle { get; set; }
@@ -118,11 +128,11 @@ namespace UI_Presentation.Models
         {
             string html = string.Empty;
             html += string.Format(" <div class='media mb-2'>");
-            html += string.Format("<a class='mr-2' href='#'> <img class='users-avatar-shadow rounded-circle' alt='{0}' src='{1}' width='120' height='120'></a>", ImageAlt , "../../assets/images/portrait/small/avatar-s-26.jpg");
+            html += string.Format("<a class='mr-2' href='#'> <img class='users-avatar-shadow rounded-circle' alt='{0}' src='{1}' width='120' height='120'></a>", ImageAlt, "../../assets/images/portrait/small/avatar-s-26.jpg");
             html += string.Format("<div class='media-body'>");
             html += string.Format(" <h4 class='media-heading'>{0}</h4>", ProfileTitle);
             html += string.Format("<div class='col-12 px-0 d-flex'>");
-            html += string.Format("<a class='btn btn-sm btn-primary mr-25' href='#' onclick='{0}'>تغییر</a>" , OnClickChange );
+            html += string.Format("<a class='btn btn-sm btn-primary mr-25' href='#' onclick='{0}'>تغییر</a>", OnClickChange);
             html += "</div>";
             html += "</div>";
             html += "</div>";
@@ -142,16 +152,71 @@ namespace UI_Presentation.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
+        public string Style { get; set; }
         public bool Value { get; set; } = false;
-        public bool IsShorCheckBox { get; set; } = false;
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html = string.Format("<div class='tabFields' style='{0}'><div class='input-group round'>", IsShorCheckBox ? "width:10% !important;" : "clear:both;width:100% !important;");
-            html += string.Format("<div onclick='chbClickState(\"" + Id + "\")' class='checkbox' style='cursor: pointer;'><div class='{0}' style='position: relative;border:1px solid;'>", Value ? "icheckbox_square-grey checked" : "icheckbox_square-grey"); ;
-            html += string.Format("<input  style='position: absolute; opacity: 0; ' type='checkbox'  id='{0}' name='{1}' value='{2}'></div>", Id, string.Empty, Value, Title);
-            html += "<span style='margin-right:10px;'>" + Title + "</span>";
+            html += "<div class='form-group d-flex flex-md-row flex-column justify-content-between align-items-center'>";
+            html += "<div class='text-left'> <div class='checkbox checkbox-sm'>";
+            html += string.Format("<input type = 'checkbox' class='form-check-input' id='{0}'>", Id);
+            html += string.Format("<label class='checkboxsmall' for='{0}'><small style ='{1}' > {2} </small ></label > ", Id, Style, Title);
             html += "</div></div></div>";
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("inputBox")]
+    public class InputBox : TagHelper
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string PlaceHolder { get; set; }
+        public string Style { get; set; }
+        public string Value { get; set; } 
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<input class='form-control' id='{0}' type='text' placeholder='{1}' aria-invalid='false' style='{2}' value='{3}'>", Id,PlaceHolder,Style,Value) ;
+            output.TagMode = TagMode.StartTagAndEndTag;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("select-Box")]
+    public class SelectBox : TagHelper
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Style { get; set; }
+        public string AllItemsName { get; set; }
+        public List<SelectListItem> dropDownDataBound { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<select id='{0}' class='form-control' aria-invalid='false' style='{1}'>" , Id,Style) ;
+
+            if (!string.IsNullOrEmpty(AllItemsName))
+                html += string.Format("<option value ='null'>{0}</option>", AllItemsName);
+            if (dropDownDataBound != null)
+            {
+                foreach (var item in dropDownDataBound)
+                {
+                    if (item.Selected)
+                        html += string.Format("<option value='{0}' selected>{1}</option>", item.Value, item.Text);
+                    else
+                        html += string.Format("<option value='{0}'>{1}</option>", item.Value, item.Text);
+                }
+            }
+
+            html += "</select>";
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
@@ -405,7 +470,7 @@ namespace UI_Presentation.Models
         {
 
             string html = string.Empty;
-            html += string.Format(@"<a class='btn btn-info btn-round' data-target='{0}' data-toggle='modal'>
+            html += string.Format(@"<a class='btn btn-info btn-round' style='background:#4a6060 !important;color:white;' data-target='{0}' data-toggle='modal'>
                 <i class='bx bx-search'></i>
                 {1}
                 <div class='paper-ripple'><div class='paper-ripple__background' style='opacity: 0;'></div><div class='paper-ripple__waves'></div></div>
@@ -536,7 +601,7 @@ namespace UI_Presentation.Models
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtCity' value='{0}' class='form-control' style = 'width:118px!important' placeholder='شـهر'></div>", cityValue != string.Empty ? cityValue : string.Empty);
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtArea' value='{0}' class='form-control' style = 'width:118px!important' placeholder='منـطقه'></div>", areaValue != string.Empty ? areaValue : string.Empty);
             html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtStreet' value='{0}' class='form-control' style = 'width:200px !important' placeholder='خیـابان'></div>", streetValue != string.Empty ? streetValue : string.Empty);
-            html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtAlley' value='{0}' class='form-control' style = 'width:200px !important' placeholder='کوچه'> </div>", alleyValue != string.Empty ? alleyValue : string.Empty);
+            html += string.Format("<div style='float:right;margin-left:6px;'><input id='txtAlley' value='{0}' class='form-control' style = 'width:152px !important' placeholder='کوچه'> </div>", alleyValue != string.Empty ? alleyValue : string.Empty);
             html += string.Format("<br /><div style='margin-top:26px;'><input id='txtOtherAddress' value='{0}' class='form-control' style = 'width:97% !important' placeholder='ادامه آدرس'> </div>", OtherAddress != string.Empty ? OtherAddress : string.Empty);
             html += "</div>";
             output.TagMode = TagMode.StartTagAndEndTag;
@@ -714,5 +779,100 @@ namespace UI_Presentation.Models
             output.PreContent.SetHtmlContent(sb.ToString());
         }
     }
+
+    [HtmlTargetElement("li-Item")]
+    public class Li_ItemTagHelper : TagHelper
+    {
+        public string Id { get; set; }
+        public bool? IsSpecialFields { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<li style='background:transparent;' class='{0}'>", IsSpecialFields == true ? "list-group-item d-flex justify-content-between border-0 pb-0 specialTd" : "list-group-item d-flex justify-content-between border-0 pb-0");
+            html += string.Format("<h6 class='invoice-subtotal-value mb-0' id='{0}'></h6> </li>", Id);
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("li-ItemVerticalMenu")]
+    public class Li_ItemVerticalMenuTagHelper : TagHelper
+    {
+        public string Id { get; set; }
+        public string MenuTitle { get; set; }
+        public string Link { get; set; }
+        public string IconImage { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<li class='nav-item'><a class='nav-link d-flex align-items-center' id='{0}' data-toggle='pill' href='{1}' aria-expanded='false'>", Id, "#" + Link);
+            html += string.Format("<i class='{0}'></i><span> {1} </span></a></li>", IconImage, MenuTitle);
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("ImageSelector")]
+    public class ImageSelectorTagHelper : TagHelper
+    {
+        public string ImgSrc { get; set; }
+        public string ImageAlt { get; set; }
+        public string Height { get; set; }
+        public string Width { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += "<div class='media'>";
+            html += "<a href='javascript:%20void(0);'>";
+            html += string.Format("<img src='{0}' class='rounded mr-75' alt='{1}' height='{2}' width='{3}'></a>", ImgSrc, ImageAlt, Height, Width);
+            html += "<div class='media-body mt-25'>";
+            html += "<div class='col-12 px-0 d-flex flex-sm-row flex-column justify-content-start'>";
+            html += "<label for='select-files' class='btn btn-sm btn-light-primary ml-50 mb-50 mb-sm-0'>";
+            html += "<span>ارسال تصویر جدید</span>";
+            html += "<input id='select-files' type='file' hidden>";
+            html += "<button class='btn btn-sm btn-light-secondary ml-50'>بازنشانی</button> </div>";
+            html += " <p class='text-muted ml-1 mt-50'><small>فایل های مجاز: JPG، PNG و GIF. حداکثر اندازه مجاز: 800KB</small></p>";
+            html += "</div></div> <hr>";
+
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("tab-Item-li")]
+    public class ButtonTagHelper : TagHelper
+    {
+        public bool IsActive { get; set; }
+        public string Href{ get; set; }
+        public string ClassName { get; set; }
+        public string Title { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<li class='nav-item current'><a class='{0}' id='account-tab' role='tab' aria-selected='true' aria-controls='{1}' href='{2}' data-toggle='tab'>",IsActive ? "nav-link d-flex align-items-center active" : "nav-link d-flex align-items-center", Href , "#" + Href);
+            html += string.Format("<i class='{0}'></i><span class='d-none d-sm-block'>{1}</span></a></li >" , ClassName , Title) ;
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+
+
 }
 

@@ -109,5 +109,27 @@ namespace CRM_Core.Infrastructure
             Customer = 1 ,
             Personnel= 2,
         }
+
+        public enum ButtonType
+        {
+            RegisterBotton = 1,
+            CancelBotton = 2,
+            SearchBotton = 3,
+            clearBotton = 4,
+        }
+
+        public enum PeopleType
+        {
+            people = 1 ,
+            contact = 2,
+            personnel = 3,
+        }
+
+        public enum MariedType
+        {
+            Single = 1,
+            Married = 2,
+            divorced = 3,
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace CRM_Core.DataAccessLayer
 
     public class CRM_CoreDB : IdentityDbContext
     {
+     
         public CRM_CoreDB(DbContextOptions<CRM_CoreDB> options)
             : base(options)
         { 
@@ -64,6 +65,15 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<Reminder> Reminder { get; set; }
         public virtual DbSet<ReminderDayDetails> ReminderDayDetails { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<TBASPhoneTypes> TBASPhoneTypes { get; set; }
+        public virtual DbSet<TelPhones> TelPhones { get; set; }
+        public virtual DbSet<Cheque> Cheque { get; set; }
+        public virtual DbSet<ChequeDetails> ChequeDetails { get; set; }
+        public virtual DbSet<Personnel> Personnel { get; set; }
+        public virtual DbSet<PersonnelSkils> PersonnelSkils { get; set; }
+        public virtual DbSet<PersonnelWorkTime> PersonnelWorkTime { get; set; }
+        public virtual DbSet<PersonnelVation> PersonnelVation { get; set; }
+        public virtual DbSet<PersonnelSkils> TBASPersonenelSkils { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

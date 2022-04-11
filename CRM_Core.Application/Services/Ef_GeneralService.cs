@@ -16,6 +16,12 @@ namespace CRM_Core.Application.Services
             _context = context;
         }
 
+        public void DeleteNumberFromActivety(string activityNumber, int stateId)
+        {
+            ActivityNumber getActivityNumber = FindByCondition(item => item.RelatedNumber == activityNumber && item.TBASStateId == stateId).LastOrDefaultAsync().Result;
+            Delete(getActivityNumber);
+        }
+
         public void InsertNumberInActivity(ActivityNumber activityNumber)
         {
             Create(activityNumber);

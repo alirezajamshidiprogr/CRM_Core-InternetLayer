@@ -11,7 +11,9 @@ namespace CRM_Core.Application.Interfaces
         IEnumerable<PeopleVirtual> GetPeopleVirtual();
         IEnumerable<PeopleVirtual> GetPeopleVirtualById(int peopelVirtualId);
         IQueryable<PeopleVirtual> GetPeopleVirtualByPeopleId(int peopleId);
+        IQueryable<PeopleVirtual> GetPeopleVirtualByContactId(int contactId);
         void UpdatePeopleVirtual(PeopleVirtual peopleVirtual);
         void AddPeopleVirtual(PeopleVirtual peopleVirtual);
+        void DeleteContact(PeopleVirtual contact);
     }
 }

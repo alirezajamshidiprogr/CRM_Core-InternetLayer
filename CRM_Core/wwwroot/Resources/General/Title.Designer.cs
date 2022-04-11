@@ -79,6 +79,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ثبت صورتحساب.
+        /// </summary>
+        public static string AddCheque {
+            get {
+                return ResourceManager.GetString("AddCheque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to افزودن کاربرجدید.
         /// </summary>
         public static string AddNewProfile {
@@ -390,6 +399,15 @@ namespace UI_Presentation.wwwroot.Resources.General {
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ورود به پنل مدیر.
+        /// </summary>
+        public static string LoginAsAdmin {
+            get {
+                return ResourceManager.GetString("LoginAsAdmin", resourceCulture);
             }
         }
         

@@ -11,8 +11,10 @@ var introducePeopleMessage = '';
 var question = '';
 var yesTitle = '';
 var noTitle = '';
-
-
+var counter = 1;
+var telsValueArray = new Array();
+var duplicatedTelMessage = '';
+var searchState = '';
 //setInterval(function () {
 //    GetCurrentDayDataServer();
 //}, 60000);
@@ -261,11 +263,17 @@ function btnDisplayHomePage() {
     window.open("/Home/Index", target = "_self");
 }
 
-function ShowDashboard() {
+function ShowDashboard(e) {
     $.ajax({
         type: "GET",
         url: "/Dashboard/Index",
         data: {},
+        beforeSend: function () {
+            EnableProcess(e, true);
+        },
+        complete: function () {
+            EnableProcess(e, false);
+        },
         success: function (data) {
             $("#formContainer").html(data);
         },
@@ -276,7 +284,6 @@ function ShowDashboard() {
 }
 
 function findIndexArrayWithAttr(array, attr, value) {
-    debugger;
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] == value) {
             return i;
@@ -373,19 +380,13 @@ function disablePageloadding() {
     element.style.pointerEvents = "auto";
 }
 
-//function formatMoney(number, decPlaces, decSep, thouSep) {
-//    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 0 : decPlaces,
-//        decSep = typeof decSep === "undefined" ? "." : decSep;
-//    thouSep = typeof thouSep === "undefined" ? "," : thouSep;
-//    var sign = number < 0 ? "-" : "";
-//    var i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decPlaces)));
-//    var j = (j = i.length) > 3 ? j % 3 : 0;
+function EnableProcess(e, state) {
+    if (state)
+        e.childNodes[0].className = 'fa fa-refresh fa-spin';
+    else
+        e.childNodes[0].className = 'bx bxs-check-circle';
 
-//    return sign +
-//        (j ? i.substr(0, j) + thouSep : "") +
-//        i.substr(j).replace(/(\decSep{3})(?=\decSep)/g, "$1" + thouSep) +
-//        (decPlaces ? decSep + Math.abs(number - i).toFixed(decPlaces).slice(2) : "");
-//}
+}
 
 function separateNumAsMoney(value, input) {
     /* seprate number input 3 number */
@@ -453,22 +454,27 @@ function clearAllInputs() {
 
 function ChangingGridPage(state, actionName, page_Number, totalAllRecords) {
     debugger;
+    pageNumber = parseInt(pageNumber);
     switch (state) {
         case "forward":
-            pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10));
+            //pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? parseInt(totalAllRecords) / 10 : parseInt((parseInt(totalAllRecords) / 10));
+            pageNumber += 1;
             break;
         case "right":
-            pageNumber = parseInt(page_Number) - 1;
+            //pageNumber = parseInt(page_Number) - 1;
+            pageNumber = 0;
             break;
         case "left":
-            pageNumber = parseInt(page_Number) + 1;
+            pageNumber = (parseInt(totalAllRecords) % 10) == 0 ? (parseInt(parseInt(totalAllRecords) / 10))-1 : parseInt(parseInt(totalAllRecords) / 10);
+            //pageNumber = parseInt(page_Number) + 1;
             break;
         default:
-            pageNumber = 0;
+            pageNumber -= 1;
             break;
     }
     //window["Show" + actionName + "sList"(true)]();
-    window[actionName]('false', 'isEditMode');
+
+    window[actionName]('false', searchState == 'isSelectedMode' ? 'isSelectedMode' : 'isEditMode');
 
     //ShowSalonCostsList(true);
 }
@@ -576,3 +582,139 @@ function SetReminderOff() {
 
 }
 
+function deleteTelPhonesItemsDiv(e) {
+    let value = e.id.indexOf("_");
+    let result = e.id.substr(value + 1, 2);
+    var divPhoneTels = document.getElementById("divPhoneTels");
+    var divChildFields = document.getElementById("divRelationsFields_" + result);
+    var divChildBottons = document.getElementById("divRelationsBottons_" + result);
+
+    if (result == "1") return;
+
+    for (var i = 0; i < divPhoneTels.childNodes.length; i++) {
+        if (divPhoneTels.childNodes[i].id == divChildFields.id) {
+            divPhoneTels.removeChild(divPhoneTels.childNodes[i]);
+        }
+
+        if (divPhoneTels.childNodes[i].id == divChildBottons.id) {
+            divPhoneTels.removeChild(divPhoneTels.childNodes[i]);
+            counter -= 1;
+            break;
+        }
+    }
+}
+
+function addServiceItemsTelDiv(e) {
+    if (counter == 0)
+        counter = 1;
+  
+    var cmbTelType = document.getElementById("cmbTelType_" + counter).value;
+    var txtTel = document.getElementById('txtTel_' + counter).value;
+    var txtDescription = document.getElementById('txtDescription_' + counter).value;
+
+    if (txtTel == '' || (cmbTelType == '' || cmbTelType == 'null')) {
+        ErrorMessage(fillTelPhoneFields);
+        return;
+    }
+
+    var telValue = document.getElementById("txtTel_" + counter);
+    telValue.setAttribute("value", $("#txtTel_" + counter).val());
+    var description = document.getElementById("txtDescription_" + counter);
+    description.setAttribute("value", $("#txtDescription_" + counter).val());
+
+    fillCmbPhoneTelType(true);
+
+    if (checkRepeatedTelValues($("#txtTel_" + counter).val())) {
+        ErrorMessage(duplicatedTelMessage);
+        return;
+    }
+
+    counter += 1;
+    var parentDiv = document.getElementById("divPhoneTels");
+    var divIdFields = "divRelationsFields_" + counter;
+    var divIdButtons = "divRelationsBottons_" + counter;
+    var cmbTelType = 'cmbTelType_' + counter;
+    var txtTel = 'txtTel_' + counter;
+    var txtDescription = 'txtDescription_' + counter;
+    var btnDeletePhone = 'btnDelete_' + counter;
+    var btnAddPhone = 'btnAddPhone_' + counter;
+
+   
+
+    var html = `<div class='col-md-10 col-sm-12 form-group TelItems' id='${divIdFields}'>
+                    <select id='${cmbTelType}'' class='form-control' aria-invalid='false' style='width: 24%;float: right;margin-left: 12px;'>
+                    </select>
+                    <input class='form-control' id='${txtTel}' type='text' placeholder='${txtTelPlaceHolder}' aria-invalid='false' style='width: 23%;float: right;margin-left: 11px;'>
+                    <input class='form-control' id='${txtDescription}' type='text' placeholder='${txtDescriptionPlaceHolder}' aria-invalid='false' style='width: 48%;'>
+                    </div>
+                    <div class='col-md-2 col-sm-12 form-group' id='${divIdButtons}'>
+                        <a href='#' id='${btnAddPhone}' style='font-size: 2.2em;color: green;' class='bx bxs-plus-circle' onclick='addServiceItemsTelDiv(this)'></a>
+                        <a href='#' id='${btnDeletePhone}' style='font-size: 2.2em;color:red ;' class='bx bxs-minus-circle' onclick='deleteTelPhonesItemsDiv(this)' ></a>
+                    </div>
+                </div>`;
+
+    
+
+    parentDiv.innerHTML += html;
+    fillCmbPhoneTelType();
+}
+
+function fillCmbPhoneTelType(isSelectedValue) {
+    var comboBox = document.getElementById("cmbTelType_" + counter);
+    var cmbTelTypeValue = document.getElementById("cmbTelType_" + counter).value;
+
+    comboBox.innerHTML = '';
+    for (var j = 0; j < phoneTelsType.length; j++) {
+        var option = document.createElement("option");
+        option.value = phoneTelsType[j].value;
+        option.text = phoneTelsType[j].text;
+        if (cmbTelTypeValue == phoneTelsType[j].value && isSelectedValue)
+            option.setAttribute('selected', 'selected');
+
+        comboBox.appendChild(option);
+    }
+}
+
+function checkRepeatedTelValues(telValue) {
+    var isRepeated = false;
+    if (telsValueArray.length > 0 ) {
+        for (var i = 0; i < telsValueArray.length; i++) {
+            if (telValue == telsValueArray[i].tel) {
+                isRepeated = true;
+                break;
+            }
+        }
+    }
+
+    if (isRepeated == false)
+        telsValueArray.push({ tel: telValue });
+
+    return isRepeated;
+}
+
+//function fillTelArrayValues(isEdit,counter) {
+//    debugger;
+//    if (isEdit == 'True') {
+//        for (var i = parseInt(counter-1); i > 0; i--) {
+//            var telValue = $("#txtTel_" + i).val();
+//            telsValueArray.push({ tel: telValue });
+//        }
+//    }
+//}
+
+function btnActionCancelClick(e,questionMessage) {
+        swal({
+            title: question,
+            text: questionMessage,
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#f44336',
+            cancelButtonColor: '#777',
+            confirmButtonText: yesTitle,
+            cancelButtonText: noTitle
+        }).then(function () {
+            ShowDashboard(e);
+        },
+        ).catch(swal.noop);
+        return;
+}

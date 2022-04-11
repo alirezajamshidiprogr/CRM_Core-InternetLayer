@@ -184,7 +184,7 @@
     <value>از سن </value>
   </data>
   <data name="FromBirthDay" xml:space="preserve">
-    <value>از تاریخ</value>
+    <value>از تاریخ تولد</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>نام - نام خانوادگی</value>
@@ -298,7 +298,7 @@
     <value>تا سن</value>
   </data>
   <data name="ToBirthDay" xml:space="preserve">
-    <value>تا تاریخ</value>
+    <value>تا تاریخ تولد</value>
   </data>
   <data name="TodayReservation" xml:space="preserve">
     <value>رزروهای امروز</value>
@@ -317,5 +317,8 @@
   </data>
   <data name="WorkTel" xml:space="preserve">
     <value>تلفن محل کار</value>
+  </data>
+  <data name="Youtube" xml:space="preserve">
+    <value>یوتیوب</value>
   </data>
 </root>

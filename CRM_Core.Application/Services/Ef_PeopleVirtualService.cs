@@ -31,15 +31,24 @@ namespace CRM_Core.Application.Services
             return FindByCondition(item => item.Id == peopelVirtualId);
         }
 
-        public IQueryable<PeopleVirtual> GetPeopleVirtualByPeopleId(int peopleId)
+        public IQueryable<PeopleVirtual> GetPeopleVirtualByPeopleId(int contactId)
         {
-            return FindByCondition(item => item.People.Id == peopleId);
+            return FindByCondition(item => item.RelativeId == contactId && item.Type == 1 );
+        }
+        public IQueryable<PeopleVirtual> GetPeopleVirtualByContactId(int peopleId)
+        {
+            return FindByCondition(item => item.RelativeId == peopleId && item.Type == 1);
         }
 
         public void UpdatePeopleVirtual(PeopleVirtual peopleVirtual)
         {
             Update(peopleVirtual);
             //SaveChanges();
+        }
+
+        public void DeleteContact(PeopleVirtual contact)
+        {
+            Delete(contact);
         }
     }
 }

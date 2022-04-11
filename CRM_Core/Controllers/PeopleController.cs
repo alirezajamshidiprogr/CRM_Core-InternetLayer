@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using CRM_Core.Application.Services;
 using CRM_Core.Entities.Models.General;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using CRM_Core.Entities.Models;
+using CRM_Core.Application.ViewModels.CustomViewModel;
 
 namespace CRM_Core.Controllers
 {
@@ -22,6 +24,7 @@ namespace CRM_Core.Controllers
     public class PeopleController : Controller
     {
         #region CONSTANT
+        private ITBASTelPhoneTypesService _telPhoneType;
         private IPeopleService _peopleService;
         private ICategoryService _categoryService;
         private IPrefixService _prefixService;
@@ -32,9 +35,11 @@ namespace CRM_Core.Controllers
         private IPeopleVirtualService _peopleVirtualService;
         private IPeoplePropertyService _peoplePropertyService;
         private IGeneratedNumberService _generetedNumberService;
+        private ITelPhonesService _telPhonesService;
+
         #endregion
 
-        public PeopleController(IPeopleService peopleService, ICategoryService categoryService, IPotentialService potentialService, IPrefixService prefixService, IIntroductionTypeService introductionService, IGraduationService graduationService, IAddressService addressService, IPeopleVirtualService peopleVirtualService, IPeoplePropertyService peoplePropertyService, IGeneratedNumberService generetedNumberService)
+        public PeopleController(IPeopleService peopleService, ICategoryService categoryService, IPotentialService potentialService, IPrefixService prefixService, IIntroductionTypeService introductionService, IGraduationService graduationService, IAddressService addressService, IPeopleVirtualService peopleVirtualService, IPeoplePropertyService peoplePropertyService, IGeneratedNumberService generetedNumberService, ITelPhonesService telPhonesService, ITBASTelPhoneTypesService telPhoneType)
         {
             _peopleService = peopleService;
             _categoryService = categoryService;
@@ -46,6 +51,8 @@ namespace CRM_Core.Controllers
             _peopleVirtualService = peopleVirtualService;
             _peoplePropertyService = peoplePropertyService;
             _generetedNumberService = generetedNumberService;
+            _telPhonesService = telPhonesService;
+            _telPhoneType = telPhoneType;
         }
 
         #region Action
@@ -93,7 +100,7 @@ namespace CRM_Core.Controllers
                 Utility.RegisterErrorLog(ex, SessionProperty.UserName);
                 return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
-         
+
         }
 
         public IActionResult FillPeopleTableData(bool quickSearch, string fullName, peopleViewModelSearch searchParams, string state)
@@ -118,8 +125,8 @@ namespace CRM_Core.Controllers
 
                 if (quickSearch)
                 {
-                    searchParameter = new string[] { "@FullName" , "@Page" , "@PageSize" , "@Sort" };
-                    searchValues = new object[] { fullName , searchParams.PageNumber , 10 , string.Empty };
+                    searchParameter = new string[] { "@FullName", "@Page", "@PageSize", "@Sort" };
+                    searchValues = new object[] { fullName, searchParams.PageNumber, 10, string.Empty };
                 }
                 else
                 {
@@ -152,8 +159,8 @@ namespace CRM_Core.Controllers
                        ,searchParams.LastName
                        ,searchParams.FromAge
                        ,searchParams.ToAge
-                       ,searchParams.FromBirthday.ToDateTime() 
-                       ,searchParams.ToBirthday.ToDateTime() 
+                       ,searchParams.FromBirthday.ToDateTime()
+                       ,searchParams.ToBirthday.ToDateTime()
                        ,searchParams.TBASPotentialId
                        ,searchParams.TBASIntroduceId
                        ,searchParams.TBASIntroductionTypeId
@@ -208,7 +215,9 @@ namespace CRM_Core.Controllers
                 };
 
                 ViewBag.marriedItems = marriedItems;
+                List<TBASPhoneTypes> tbasTelPhoneTypes = _telPhoneType.GetTelPhoneTypes().OrderBy(item => item.Id).ToList();
 
+                TempData["tbasTelPhoneTypes"] = _telPhoneType.GetTelPhoneTypes().ToList();
                 if (peopleId.HasValue)
                 {
                     ViewBag.isEdit = true;
@@ -229,13 +238,28 @@ namespace CRM_Core.Controllers
                     peopleViewModel.People = _peopleService.GetPeopleById(peopleId.Value).FirstOrDefault();
                     peopleViewModel.Address = _addressService.GetAddressById(addressId).FirstOrDefault();
                     peopleViewModel.PeopleVirtual = peopleVirtual != null ? _peopleVirtualService.GetPeopleVirtualById(peopleVirtual.Id).FirstOrDefault() : null;
+
+                    List<TelPhones> phoneTelTypes = null;
+                    List<TelPhones> telPhones = _telPhonesService.GetTelPhonesByType(peopleId.Value, (int)Enums.PeopleType.people).ToList();
+
+
+                    phoneTelTypes = (from _telPhones in telPhones
+                                     select new TelPhones
+                                     {
+                                         Description = _telPhones.Description,
+                                         Value = _telPhones.Value,
+                                     }
+                                ).ToList();
+
+                    TempData["phoneTelTypes"] = phoneTelTypes;
+
                 }
                 else
                 {
                     ViewBag.Title = UI_Presentation.wwwroot.Resources.General.Title.AddPeople;
                 }
 
-                return PartialView("AddEditPeople",peopleViewModel);
+                return PartialView("AddEditPeople", peopleViewModel);
             }
             catch (Exception ex)
             {
@@ -264,34 +288,58 @@ namespace CRM_Core.Controllers
         //[RangeExceptionOn]
         //[Authorization]
         [HttpPost]
-        public ActionResult AddEditPeopleMethod(bool isEdit, bool checkRepeatedTels,bool hasVisitedTelsMobiles, bool checkRepeatedMobiles, List<TempTels> tels, List<TempMobiles> mobiles, PeopleVirtual peopleVirtual, Address address, People people)
+        public ActionResult AddEditPeopleMethod(bool isEdit, bool checkRepeatedTels, List<TelPhoneType> otherRelationShips, PeopleVirtual peopleVirtual, Address address, People people)
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
-            //ModelState["people.Category"].Errors.Clear();
-            //ModelState["address.People"].Errors.Clear();
-            //ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            //ModelState["people.TBASPrefixId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            //ModelState["people.TBASIntroductionTypeId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-            //ModelState["address.People"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+           
+            if (ModelState["people.MarriedType"].ValidationState.ToString() == "Invalid")
+              ModelState["people.MarriedType"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
 
-            //if (!ModelState.IsValid)
-            //    throw new CustomeException("Model Is Not Valid", true, null);
+            if (ModelState["people.TBASCategoryId"].ValidationState.ToString() == "Invalid")
+              ModelState["people.TBASCategoryId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+
+            if (ModelState["people.TBASPrefixId"].ValidationState.ToString() == "Invalid")
+              ModelState["people.TBASPrefixId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+
+            if (ModelState["people.TBASPotentialId"].ValidationState.ToString() == "Invalid")
+              ModelState["people.TBASPotentialId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+
+            if (ModelState["people.TBASGraduationId"].ValidationState.ToString() == "Invalid")
+              ModelState["people.TBASGraduationId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+
+            if (ModelState["people.TBASIntroductionTypeId"].ValidationState.ToString() == "Invalid")
+              ModelState["people.TBASIntroductionTypeId"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+           
 
             try
             {
+                if (!ModelState.IsValid)
+                    throw new CustomeException("Model Is Not Valid", true, null);
+
+                if ((!isEdit && _peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0))
+                    throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage);
+
+                if (checkRepeatedTels && checkRepeatedTelPhones(otherRelationShips))
+                    throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles, UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones, true, null, ref errorMessage);
+
                 people.M_Birthday = people.P_Birthday != null ? people.P_Birthday.ToDateTime() : (DateTime?)null;
                 people.M_MariedDate = people.P_MariedDate != null ? people.P_MariedDate.ToDateTime() : (DateTime?)null;
-                people.SystemCode = _generetedNumberService.NewGenerateNumber(SessionProperty.UserID, (int)Enums.states.People);
-
 
                 if (isEdit)
                 {
                     if (people.Id == people.IntroduceId) // PEOPLE_ID CAN NOT BE SAME AS INTRODUCE ID 
-                        throw new CustomeException("PeopleID CanNot Be Same As IntroduceId...", true, null);
+                        throw new CustomeException("PeopleID CanNot Be Same As IntroduceId...", UI_Presentation.wwwroot.Resources.Mesages.PeopleCanNotBeSameAsIntroductionPeople, true, null,ref errorMessage);
 
                     PeopleVirtual peopleVirtualOld = _peopleVirtualService.GetPeopleVirtualByPeopleId(people.Id).FirstOrDefault();
                     Address addressOld = _addressService.GetAddressByPeopleId(people.Id).FirstOrDefault();
+                    People oldPeople = _peopleService.GetPeopleById(people.Id).OrderBy(item=>item.Id).FirstOrDefault();
+
+                    People getManualCodePeople = _peopleService.GetPeopleByManualCode(people.ManualCode).OrderBy(item=>item.Id).LastOrDefault();
+                    if ((getManualCodePeople != null  && getManualCodePeople.Id != people.Id && _peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0))
+                        throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage);
+
 
                     if (peopleVirtualOld != null)
                     {
@@ -303,13 +351,12 @@ namespace CRM_Core.Controllers
                     }
 
                     addressOld.Province = address.Province;
-                    addressOld.City = address.City;
+                    addressOld.Province = address.City;
                     addressOld.Area = address.Area;
                     addressOld.Street = address.Street;
                     addressOld.Alley = address.Alley;
                     addressOld.OtherAddress = address.OtherAddress;
 
-                    People oldPeople = _peopleService.GetPeopleById(people.Id).FirstOrDefault();
 
                     oldPeople.SystemCode = people.SystemCode;
                     oldPeople.ManualCode = people.ManualCode;
@@ -317,18 +364,12 @@ namespace CRM_Core.Controllers
                     oldPeople.LastName = people.LastName;
                     oldPeople.CertificateCode = people.CertificateCode;
                     oldPeople.Job = people.Job;
-                    oldPeople.P_Birthday= people.P_Birthday;
+                    oldPeople.P_Birthday = people.P_Birthday;
                     oldPeople.M_Birthday = people.P_Birthday.ToDateTime();
                     oldPeople.P_MariedDate = people.P_MariedDate;
                     oldPeople.M_MariedDate = people.P_MariedDate.ToDateTime();
                     oldPeople.Description = people.Description;
                     oldPeople.MarriedType = people.MarriedType;
-                    oldPeople.HomeTel = people.HomeTel;
-                    oldPeople.WorkTel = people.WorkTel;
-                    oldPeople.Fax = people.Fax;
-                    oldPeople.Mobile1 = people.Mobile1;
-                    oldPeople.Mobile2 = people.Mobile2;
-                    oldPeople.Mobile3 = people.Mobile3;
                     oldPeople.IntroduceId = people.IntroduceId;
                     oldPeople.TBASCategoryId = people.TBASCategoryId;
                     oldPeople.TBASPotentialId = people.TBASPotentialId;
@@ -342,148 +383,65 @@ namespace CRM_Core.Controllers
                         _peopleVirtualService.UpdatePeopleVirtual(peopleVirtualOld);
                     else if (peopleVirtual.Email != null || peopleVirtual.WebSite != null || peopleVirtual.Telegram != null || peopleVirtual.Instagram != null || peopleVirtual.WhatsApp != null)
                     {
-                        peopleVirtual.PeopleId = people.Id;
+                        peopleVirtual.RelativeId = people.Id;
                         _peopleVirtualService.AddPeopleVirtual(peopleVirtual);
                     }
 
-
-
                     _addressService.UpdateAddress(addressOld);
 
+                    if (otherRelationShips != null)
+                    {
+                        TelPhones telPhones = new TelPhones();
+                        List<TelPhones> getTelPhones = _telPhonesService.GetTelPhonesByType(people.Id, (int)Enums.PeopleType.people).ToList();
+                        _telPhonesService.DeleteTelPhones(getTelPhones);
 
+                        if (checkRepeatedTels && checkRepeatedTelPhones(otherRelationShips))
+                            throw new CustomeException("There Is Duplicated Tel Phones ", UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones , true, null, ref errorMessage);
 
-                    //if (hasVisitedTelsMobiles && tels.Count != 0)
-                    //{
-                    //    if (checkRepeatedTels && CheckForRepeatedTels(tels))
-                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
-
-                    //    // Delete Previous Data For Tels
-                    //    var oldPeoplePropertyTels = _peoplePropertyService.GetPeoplePrpoertyTels(people, (int)Enums.tbasPeopePropertyState.number);
-                    //    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyTels.ToList());
-
-                    //    for (int i = 0; i < tels.Count; i++)
-                    //    {
-                    //        for (int j = 1; j <= 3; j++)
-                    //        {
-                    //            string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
-                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                    //            {
-                    //                People = oldPeople,
-                    //                TBASPeopleTypeField = j,
-                    //                Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
-                    //                Order = i,
-                    //            });
-                    //        }
-                    //    }
-                    //}
-
-
-
-                    //if (hasVisitedTelsMobiles && mobiles.Count != 0)
-                    //{
-                    //    if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
-                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
-
-                    //    // Delete Previous Data For Mobiles
-                    //    var oldPeoplePropertyMobiles = _peoplePropertyService.GetPeoplePrpoertyMobiles(people, (int)Enums.tbasPeopePropertyState.mobile);
-                    //    _peoplePropertyService.DeletePeopleProperty(oldPeoplePropertyMobiles.ToList());
-
-
-                    //    for (int i = 0; i < mobiles.Count; i++)
-                    //    {
-                    //        for (int j = 4; j <= 5; j++)
-                    //        {
-                    //            string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
-                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                    //            {
-                    //                People = oldPeople,
-                    //                TBASPeopleTypeField = j,
-                    //                Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
-                    //                Order = i,
-                    //            });
-                    //        }
-                    //    }
-                    //}
+                        _telPhonesService.AddTelPhones(otherRelationShips, people.Id, (int)Enums.PeopleType.people);
+                    }
 
                 }
 
                 else
                 {
-                    if (_peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0)
-                        throw new CustomeException("ManualCode Is Exists In Table People...", true, null);
+                    people.SystemCode = _generetedNumberService.NewGenerateNumber(SessionProperty.UserID, (int)Enums.states.People);
+
+                    // NOTE : IN EACH INSERT MUST ADD RELATIVE NUMBER INTO THIS TABLE FOR NEXT SESSIONS  
+                    ActivityNumber activityNumber = new ActivityNumber();
+                    activityNumber.TBASStateId = (int)Enums.states.People;
+                    activityNumber.RelatedNumber = people.SystemCode;
+                    _generetedNumberService.InsertNumberInActivity(activityNumber);
 
                     people.IsActive = true; // Here i set This Fields Manually 
                     _peopleService.AddPeople(people);
+                    _peopleService.SaveChanges();
 
                     if (peopleVirtual.Email != null || peopleVirtual.WebSite != null || peopleVirtual.Telegram != null || peopleVirtual.Instagram != null || peopleVirtual.WhatsApp != null)
                     {
-                        peopleVirtual.People = people;
+                        peopleVirtual.RelativeId = people.Id;
+                        peopleVirtual.Type = (int)Enums.PeopleType.people;
                         _peopleVirtualService.AddPeopleVirtual(peopleVirtual);
                     }
 
                     if (address.Province != null || address.City != null || address.Area != null || address.Street != null || address.Alley != null || address.OtherAddress != null)
                     {
-                        address.People = people;
+                        address.RelativeId = people.Id;
+                        address.Type = (int)Enums.PeopleType.people;
                         _addressService.AddAddress(address);
                     }
 
-                    //if (tels.Count != 0)
-                    //{
-                    //    if (checkRepeatedTels && CheckForRepeatedTels(tels))
-                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedTels);
-
-                    //    for (int i = 0; i < tels.Count; i++)
-                    //    {
-                    //        for (int j = 1; j <= 3; j++)
-                    //        {
-                    //            string comment = tels[i].Comment == null ? string.Empty : tels[i].Comment.ToString();
-                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                    //            {
-                    //                People = people,
-                    //                TBASPeopleTypeField = j,
-                    //                Value = j == 1 ? tels[i].Code.ToString() : j == 2 ? tels[i].Number.ToString() : comment,
-                    //                Order = i,
-                    //            });
-                    //        }
-                    //    }
-                    //}
-
-                    //if (mobiles.Count != 0)
-                    //{
-                    //    if (checkRepeatedMobiles && CheckForRepeatedMobiles(mobiles))
-                    //        throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles);
-
-                    //    for (int i = 0; i < mobiles.Count; i++)
-                    //    {
-                    //        for (int j = 4; j <= 5; j++)
-                    //        {
-                    //            string comment = mobiles[i].Comment == null ? string.Empty : mobiles[i].Comment.ToString();
-                    //            _peoplePropertyService.AddPeopleProperty(new PeopleProperty
-                    //            {
-                    //                People = people,
-                    //                TBASPeopleTypeField = j,
-                    //                Value = j == 4 ? mobiles[i].Mobile.ToString() : comment,
-                    //                Order = i,
-                    //            });
-                    //        }
-                    //    }
-                    //}
-
+                    if (otherRelationShips != null && otherRelationShips.Count != 0)
+                        _telPhonesService.AddTelPhones(otherRelationShips, people.Id, (int)Enums.PeopleType.people);
                 }
-
+                
                 message = UI_Presentation.wwwroot.Resources.Mesages.TheActionEndedWithSuccess;
-
-                ActivityNumber activityNumber = new ActivityNumber { TBASStateId = (int)Enums.states.People, RelatedNumber = people.SystemCode };
-                if (!isEdit)
-                    _generetedNumberService.InsertNumberInActivity(activityNumber);
-
                 _peopleService.SaveChanges();
             }
             catch (Exception ex)
             {
-                errorMessage = string.Empty;
                 Utility.RegisterErrorLog(ex, SessionProperty.UserName);
-                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+                return Json(new { errorMessage = errorMessage != null ? errorMessage : UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
 
             return Json(new { message = message, errorMessage = errorMessage });
@@ -500,7 +458,7 @@ namespace CRM_Core.Controllers
             string message = string.Empty;
             try
             {
-             // NOTE :  BEFORE DELETE I SHOULD CHECK THE POEPLE HAS NOT ANY LOG IN SYSTEM SUCH AS RESERVATION AND ETC ... 
+                // NOTE :  BEFORE DELETE I SHOULD CHECK THE POEPLE HAS NOT ANY LOG IN SYSTEM SUCH AS RESERVATION AND ETC ... 
                 People people = _peopleService.GetPeopleById(peopleId).FirstOrDefault();
                 people.IsActive = false;
                 _peopleService.UpdatePeople(people);
@@ -520,66 +478,53 @@ namespace CRM_Core.Controllers
             });
         }
 
+        //[NonAction]
+        //private bool CheckForRepeatedMobiles(List<TempMobiles> mobiles)
+        //{
+        //    bool repeatedMobiles = false;
+        //    var registeredMobiles = _peoplePropertyService.GetPeoplePrpoertyByMobileNumber((int)Enums.tbasPeopePropertyState.mobile).ToList();
+
+        //    foreach (var item in mobiles)
+        //    {
+        //        for (int i = 0; i < registeredMobiles.Count; i++)
+        //        {
+        //            if (item.Mobile == registeredMobiles[i].Value)
+        //            {
+        //                repeatedMobiles = true;
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    return repeatedMobiles;
+        //}
+
         [NonAction]
-        private bool CheckForRepeatedMobiles(List<TempMobiles> mobiles)
+        private bool checkRepeatedTelPhones(List<TelPhoneType> telPhoneType)
         {
-            bool repeatedMobiles = false;
-            var registeredMobiles = _peoplePropertyService.GetPeoplePrpoertyByMobileNumber((int)Enums.tbasPeopePropertyState.mobile).ToList();
-
-            foreach (var item in mobiles)
-            {
-                for (int i = 0; i < registeredMobiles.Count; i++)
-                {
-                    if (item.Mobile == registeredMobiles[i].Value)
-                    {
-                        repeatedMobiles = true;
-                        break;
-                    }
-                }
-            }
-
-            return repeatedMobiles;
-        }
-
-        [NonAction]
-        private bool CheckForRepeatedTels(List<TempTels> tels)
-        {
-            bool repeatedTel = false;
-            var registeredTels = _peoplePropertyService.GetPeoplePrpoertyByPhonenumber((int)Enums.tbasPeopePropertyState.number).ToList();
-
-            foreach (var item in tels)
-            {
-                for (int i = 0; i < registeredTels.Count; i++)
-                {
-                    if (item.Number == registeredTels[i].Value)
-                    {
-                        repeatedTel = true;
-                        break;
-                    }
-                }
-            }
-
-            return repeatedTel;
+            return _telPhonesService.IsRepeatedTelPhones(telPhoneType);
         }
 
         [HttpPost]
         public ActionResult GetPeopleTelsAndMobiles(int peopleId)
         {
-            string result = string.Empty;
-
-            DataSet ds = GetDataFromSql.LoadStoreProcedureDS(peopleId);
-            List<TempTels> telList = new List<TempTels>();
-            List<TempMobiles> mobileList = new List<TempMobiles>();
-
-            telList = GetDataFromSql.DataTableToList<TempTels>(ds.Tables[1]);
-            mobileList = GetDataFromSql.DataTableToList<TempMobiles>(ds.Tables[0]);
-
-            return Json(new
+            string errorMessage = string.Empty;
+            List<TelPhones> listTelPhones = null;
+            try
             {
-                result = result,
-                telList = telList,
-                mobileList = mobileList,
-            });
+                listTelPhones = _telPhonesService.GetTelPhonesByType(peopleId, (int)Enums.PeopleType.people).ToList();
+
+                return Json(new
+                {
+                    errorMessage = errorMessage,
+                    listTelPhones = listTelPhones,
+                });
+            }
+            catch (Exception ex)
+            {
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
         }
 
         [HttpPost]
@@ -643,6 +588,47 @@ namespace CRM_Core.Controllers
             });
         }
 
+        [HttpPost]
+        public ActionResult GetDropDownSelectedValue(int peopleId,int type)
+        {
+            string errorMessage = string.Empty;
+            string result = string.Empty;
+            List<TelPhones> telPhones = _telPhonesService.GetTelPhonesByType(peopleId, type).ToList();
+            try
+            {
+
+                //phoneTelTypes = (from _tel in tbasTelPhoneTypes
+                //                 join _telPhones in telPhones 
+                //                 on _tel.Id equals _telPhones.TBASPhoneTypesId
+                //                 //into temp
+                //                 //from _temp in temp.DefaultIfEmpty()
+                //                 select new
+                //                 {
+                //                     Title = _tel.Title,
+                //                     Id = _tel.Id,
+                //                     //SelectedItem = _temp != null && _tel.Id == _temp.TBASPhoneTypesId ? true : false ,
+                //                 }).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Title, Value = item.Id.ToString() , Selected = item.SelectedItem }; });
+
+                telPhones = (from _telPhones in telPhones
+                             select new TelPhones
+                             {
+                                 Id = (int)_telPhones.TBASPhoneTypesId,
+                             }
+                             ).OrderBy(item => item.Id).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                result = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation;
+                Utility.RegisterErrorLog(ex, SessionProperty.UserName);
+                return Json(new { errorMessage = UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+            }
+            return Json(new
+            {
+                errorMessage = errorMessage,
+                phoneTelTypes = telPhones,
+            });
+        }
 
     }
     #endregion

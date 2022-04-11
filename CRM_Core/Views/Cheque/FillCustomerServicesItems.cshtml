@@ -1,0 +1,32 @@
+﻿@using System.Data
+@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.CustomViewModel
+
+@model DataGridViewModel<ChequCustomerServiceViewModel>
+
+@{ 
+    string customerName = @ViewBag.customerName;
+    string reservationDate = @ViewBag.reservationDate;
+    string description = @ViewBag.Description;
+}
+
+@{
+
+    @if (Model == null) return;
+    @foreach (var item in Model.Records.ToList())
+    {
+        <tr>
+            <td>@item.ServiceName</td>
+            <td>@item.ClerkName</td>
+            <td>@item.TotalPrice</td>
+            <td>@item.SalonPortion</td>
+            <td>@item.PersonnelPortion</td>
+        </tr>
+    }
+}
+
+<script>
+    var totalPriceCheque = '@ViewBag.totalPriceCheque';
+    mainTotalPrice = totalPriceCheque;
+    calcTotalChequeInfo();
+</script>

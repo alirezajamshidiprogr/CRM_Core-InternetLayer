@@ -147,6 +147,12 @@
   <data name="DoesNotAlllowedToRegisterRepeatedTels" xml:space="preserve">
     <value>یک یا برخی از شماره تلفن های وارد شده تکراری هستند !</value>
   </data>
+  <data name="DoYouWantToLeaveThisForm" xml:space="preserve">
+    <value>قصد خروج از این صفحه را دارید ؟</value>
+  </data>
+  <data name="fillTelPhoneFieldsMessage" xml:space="preserve">
+    <value>فیلد های مورد نیاز را جهت افزودن شماره تلفن یا موبایل وارد نمایید .</value>
+  </data>
   <data name="FillTheEmptyFieldMobiles" xml:space="preserve">
     <value>یک یا برخی از فیلدهای شماره همراه خالی است</value>
   </data>
@@ -165,11 +171,20 @@
   <data name="FromDateAndToDateMenuAccessInNull" xml:space="preserve">
     <value>مقادیر ازتاریخ تا تاریخ را وارد کنید !</value>
   </data>
+  <data name="ManaulCodeIsDuplicated" xml:space="preserve">
+    <value>کد دستی وارد شده شخص قبلا ثبت شده است !</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>خیر</value>
   </data>
+  <data name="NoTelPhoneEnteredForPeople" xml:space="preserve">
+    <value>برای این شخص شماره تلفن وارد نشده آیا میخواهید ادامه دهید ؟</value>
+  </data>
   <data name="OneServiceShouldBeThereAtLeast" xml:space="preserve">
     <value>حداقل یک سرویس باید به مشتری اختصاص داده شود !</value>
+  </data>
+  <data name="PeopleCanNotBeSameAsIntroductionPeople" xml:space="preserve">
+    <value>نام معرف و نام شخص نمی تواند هم نام باشد !</value>
   </data>
   <data name="Question" xml:space="preserve">
     <value>سوال ...</value>
@@ -179,6 +194,12 @@
   </data>
   <data name="TheActionEndedWithSuccess" xml:space="preserve">
     <value>تغییرات با موفقیت ثبت شد </value>
+  </data>
+  <data name="ThePhoneNumberIsDuplicated" xml:space="preserve">
+    <value>شماره تلفن وارد شده تکراری است !</value>
+  </data>
+  <data name="ThereIsDuplicatedTelPhones" xml:space="preserve">
+    <value>یک یا برخی از شماره تلفن ها تکراری است !</value>
   </data>
   <data name="thereIsNotAnyActiveMenu" xml:space="preserve">
     <value>برای کاربر انتخاب شده هیچ منوی فعالی انتخاب نشده است آیا ادامه می دهید ؟</value>

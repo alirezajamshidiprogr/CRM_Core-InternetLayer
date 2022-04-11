@@ -118,7 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddPersonel" xml:space="preserve">
-    <value>ثبت پرسنل</value>
+    <value>ثبت و ویرایش پرسنل</value>
+  </data>
+  <data name="AddPersonnelTimeWork" xml:space="preserve">
+    <value>ثبت ساعت کاری </value>
+  </data>
+  <data name="AddPersonnelVacation" xml:space="preserve">
+    <value>ثبت مرخصی</value>
+  </data>
+  <data name="AgreementType" xml:space="preserve">
+    <value>نوع قرارداد</value>
+  </data>
+  <data name="Bad" xml:space="preserve">
+    <value>بد</value>
   </data>
   <data name="BirthOfPlace" xml:space="preserve">
     <value>محل تولد</value>
@@ -141,8 +153,14 @@
   <data name="EmploymentDate" xml:space="preserve">
     <value>تاریخ استخدام</value>
   </data>
+  <data name="Excellent" xml:space="preserve">
+    <value>عالی</value>
+  </data>
   <data name="FatherName" xml:space="preserve">
     <value>نام پدر</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>خوب</value>
   </data>
   <data name="InsuranceNumber" xml:space="preserve">
     <value>شماره بیمه</value>
@@ -150,17 +168,29 @@
   <data name="IsMaried" xml:space="preserve">
     <value>وضعیت تاهل</value>
   </data>
+  <data name="Medium" xml:space="preserve">
+    <value>متوسط</value>
+  </data>
   <data name="PersonelCode" xml:space="preserve">
     <value>کد پرسنلی</value>
   </data>
   <data name="PersonelName" xml:space="preserve">
     <value>نام پرسنل</value>
   </data>
+  <data name="PersonnelInfromation" xml:space="preserve">
+    <value>اطلاعات پرسنل</value>
+  </data>
+  <data name="PersonnelLastName" xml:space="preserve">
+    <value>نام خانوادگی پرسنل</value>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>موقعیت شغلی</value>
   </data>
   <data name="RegisterTime" xml:space="preserve">
     <value>ثبت ورود/خروج</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>مهارت ها</value>
   </data>
   <data name="SkillType" xml:space="preserve">
     <value>نوع مهارت</value>

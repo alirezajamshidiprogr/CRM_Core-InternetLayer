@@ -219,6 +219,7 @@ namespace UI_Presentation.Controllers
             });
         }
 
+        [HttpPost]
         public ActionResult GetClerks(int peopleId)
         {
             string result = string.Empty;

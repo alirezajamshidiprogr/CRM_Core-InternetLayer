@@ -259,7 +259,7 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to از تاریخ.
+        ///   Looks up a localized string similar to از تاریخ تولد.
         /// </summary>
         public static string FromBirthDay {
             get {
@@ -601,7 +601,7 @@ namespace UI_Presentation.wwwroot.Resources.People {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تا تاریخ.
+        ///   Looks up a localized string similar to تا تاریخ تولد.
         /// </summary>
         public static string ToBirthDay {
             get {
@@ -660,6 +660,15 @@ namespace UI_Presentation.wwwroot.Resources.People {
         public static string WorkTel {
             get {
                 return ResourceManager.GetString("WorkTel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یوتیوب.
+        /// </summary>
+        public static string Youtube {
+            get {
+                return ResourceManager.GetString("Youtube", resourceCulture);
             }
         }
     }

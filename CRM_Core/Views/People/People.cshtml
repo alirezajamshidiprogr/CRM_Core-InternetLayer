@@ -11,12 +11,12 @@
 
     <div class="modal fade" id="form-peopleSearch" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content" style="width:247%; margin-right:-400px;overflow:auto;">
-                <div class="modal-header">
+            <div class="modal-content" style="width:247%; margin-right:-400px;">
+                <div class="modal-header" style="background:#9f9f9f ;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">@UI_Presentation.wwwroot.Resources.People.Title.Intorduction</h4>
+                    <h4 class="modal-title" style="color:#0a032f;">@UI_Presentation.wwwroot.Resources.People.Title.PeopleSearch</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background:#dfdfdf">
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <short-TextBox id="txtNameSearch" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <Icon-Button buttom-class="btn btn-success  btn-radious" icon="bx bx-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="@string.Format("showPeopleList('{0}','{1}')", "false", "isEditMode")"></Icon-Button>
+                            <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.SearchBotton)" id="btnAddEditPeople" on-click-event="@string.Format("showPeopleList('{0}','{1}')", "false", "isEditMode")" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search"></Icon-Button>
                         </div>
                     </div>
                 </div>

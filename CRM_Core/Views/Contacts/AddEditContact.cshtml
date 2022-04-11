@@ -1,55 +1,174 @@
-﻿@{
-    bool isEdit = false;
-    <div class="container" style="padding:8px;">
-        <button type="button" class="btn btn-info btnCollapse" data-toggle="collapse" data-target="#AddEditContact">@UI_Presentation.wwwroot.Resources.People.Title.RegisterNewContact</button>
-        <div id="AddEditContact" class="collapse">
-            <customChild-tag>
-                <customTag-children>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WorkTel " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Fax " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Email " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.HomeAddress " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                    <short-TextBox id="txtName" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description " value="@(isEdit ? string.Empty : string.Empty)"></short-TextBox>
-                   
-                    <form-buttons form-name="People" confirm-button-title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></form-buttons>
-                </customTag-children>
-            </customChild-tag>
-        </div>
-
-        <button type="button" class="btn btn-info btnCollapse" data-toggle="collapse" data-target="#SearchContact">@UI_Presentation.wwwroot.Resources.People.Title.SearchContact</button>
-        <div id="SearchContact" class="collapse in">
-            <customChild-tag>
-                <customTag-children>
-                    <short-TextBox id="txtNameSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name "></short-TextBox>
-                    <short-TextBox id="txtFamilySearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family "></short-TextBox>
-                    <short-TextBox id="txtTelSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel "></short-TextBox>
-                    <short-TextBox id="txtMobileSearch" required="true" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile "></short-TextBox>
-
-                    <Icon-Button buttom-class="btn btn-info  btn-round btnSearchGrid" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="btnOpenEditPeople()"></Icon-Button>
-                </customTag-children>
-            </customChild-tag>
+﻿
+<div class="content-wrapper">
+    <div class="content-header row">
+        <div class="content-header-left col-12 mb-2 mt-1">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h5 class="content-header-title float-left pr-1">@UI_Presentation.wwwroot.Resources.Contact.Title.Contacts</h5>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="content-body">
+        <section id="page-account-settings">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-3 mb-2 mb-md-0 pills-stacked" style="margin-right:-24px;">
+                            <ul class="nav nav-pills flex-column">
+                                <li-ItemVerticalMenu IconImage="bx bx-lock" id="account-pill-password" link="showContactList" menu-title="@UI_Presentation.wwwroot.Resources.Contact.Title.ShowListContact"></li-ItemVerticalMenu>
+                                <li-ItemVerticalMenu IconImage="bx bx-lock" id="account-pill-general" link="GeneralInfoContact" menu-title="@UI_Presentation.wwwroot.Resources.Contact.Title.GeneralInfoContact"></li-ItemVerticalMenu>
+                                <li-ItemVerticalMenu IconImage="bx bx-lock" id="account-pill-connections" link="OtherContactsInfo" menu-title="@UI_Presentation.wwwroot.Resources.Contact.Title.OtherContactsInfo"></li-ItemVerticalMenu>
+                                <li-ItemVerticalMenu IconImage="bx bx-lock" id="dddOtherRelations" link="OtherRelations" menu-title="@UI_Presentation.wwwroot.Resources.Contact.Title.OtherRelations"></li-ItemVerticalMenu>
+                                <li-ItemVerticalMenu IconImage="bx bx-lock" id="account-pill-info" link="VirtualRelations" menu-title="@UI_Presentation.wwwroot.Resources.Contact.Title.VirtualRelations"></li-ItemVerticalMenu>
+                            </ul>
+                        </div>
+                        <div class="col-md-9" style="margin-right:-25px;">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade " id="showContactList" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
+                                                <form novalidate>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="todo-app-list">
+                                                                <div class="todo-fixed-search d-flex justify-content-between align-items-center">
+                                                                    <div class="sidebar-toggle d-block d-lg-none">
+                                                                        <i class="bx bx-menu"></i>
+                                                                    </div>
+                                                                    <fieldset class="form-group position-relative has-icon-left m-0 flex-grow-1">
+                                                                        <input type="text" class="form-control todo-search" id="todo-search" placeholder="@UI_Presentation.wwwroot.Resources.Contact.Title.EnterNameFamilyTelOrMobileContactToSearch">
+                                                                        <div class="form-control-position">
+                                                                            <i class="bx bx-search"></i>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                                <div class="todo-task-list list-group">
+                                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
+                                                                        <table id="table-extended-transactions" class="table mb-0" style="margin-top:5px;">
+                                                                            <thead style="background: #f0eaea;">
+                                                                                <tr>
+                                                                                    <th>@UI_Presentation.wwwroot.Resources.Contact.Title.Image</th>
+                                                                                    <th>@UI_Presentation.wwwroot.Resources.People.Title.Name</th>
+                                                                                    <th>@UI_Presentation.wwwroot.Resources.People.Title.Family</th>
+                                                                                    <th>@UI_Presentation.wwwroot.Resources.People.Title.Tel</th>
+                                                                                    <th>@UI_Presentation.wwwroot.Resources.People.Title.Mobile</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="contactData">
+                                                                                @await Html.PartialAsync("~/Views/Contacts/FillContactsData.cshtml")
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
 
-    <customChild-tag id="contactList">
-        <customTag-children>
-            @await Html.PartialAsync("~/Views/Contacts/FillContactTableData.cshtml")
-        </customTag-children>
-    </customChild-tag>
-}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
 
+                                            <div role="tabpanel" class="tab-pane active" id="GeneralInfoContact" aria-labelledby="account-pill-general" aria-expanded="true">
+                                                <ImageSelector height="64" width="64" image-alt="عکس مخاطب" img-src="../../assets/images/portrait/small/avatar-s-16.jpg"></ImageSelector>
+                                                <form novalidate>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            @Html.Hidden("contactId", null)
+                                                            <short-TextBox id="txtName" required="true" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox>
+                                                            <short-TextBox id="txtFamily" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox>
+                                                            <short-TextBox id="txtTel" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel"></short-TextBox>
+                                                            <short-TextBox id="txtMobile" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile"></short-TextBox>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="OtherContactsInfo" role="tabpanel" aria-labelledby="account-pill-info" aria-expanded="false">
+                                                <form novalidate>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <short-TextBox id="txtFatherName" label-title="@UI_Presentation.wwwroot.Resources.People.Title.FatherName"></short-TextBox>
+                                                            <short-TextBox id="txtJob" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Job"></short-TextBox>
+                                                            <DateTime-TextBox id="txtBirthDay" label-title="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay"></DateTime-TextBox>
+                                                            <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description"></Text-Area>
+                                                            <Text-Address></Text-Address>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="OtherRelations" role="tabpanel" aria-labelledby="account-pill-connections" aria-expanded="false">
+                                                <div class="row">
+                                                    <div class="col-12 my-2">
+                                                        <div data-repeater-item="">
+                                                            <div class="row justify-content-between" id="divPhoneTels" style="margin-right:-32px;">
+                                                                <div class="col-md-10 col-sm-12 form-group TelItems">
+                                                                    <select id="cmbTelType_1" class="form-control" aria-invalid="false" style="width: 24%;float: right;margin-left: 12px;">
+                                                                    </select>
+                                                                    <input class="form-control" id="txtTel_1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel" aria-invalid="false" style="width: 23%;float: right;margin-left: 11px;">
+                                                                    <input class="form-control" id="txtDescription_1" type="text" placeholder="@UI_Presentation.wwwroot.Resources.People.Title.Description" aria-invalid="false" style="width: 48%;">
+                                                                </div>
+                                                                <div class="col-md-2 col-sm-12 form-group">
+                                                                    <a href="#" id="btnAddPhone_1" style="font-size: 2.2em;color: green;" class="bx bxs-plus-circle" onclick="addServiceItemsTelDiv(this,true)"></a>
+                                                                    <a href="#" id="btndeleteItem_1" style="font-size: 2.2em;color:red ;" class="bx bxs-minus-circle" onclick="deleteTelPhonesItemsDiv(this,true)"></a>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade " id="VirtualRelations" role="tabpanel" aria-labelledby="account-pill-social" aria-expanded="false">
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <short-TextBox id="txtEmail" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Email"></short-TextBox>
+                                                            <short-TextBox id="txtWhatsApp" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp"></short-TextBox>
+                                                            <short-TextBox id="txtTelegram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Telegram"></short-TextBox>
+                                                            <short-TextBox id="txtInstagram" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Instagram"></short-TextBox>
+                                                            <short-TextBox id="txtYoutube" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Youtube"></short-TextBox>
+                                                            <short-TextBox id="txtWebSite" label-title="@UI_Presentation.wwwroot.Resources.People.Title.WebSite"></short-TextBox>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
+                                <action-botton botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.RegisterBotton)" id="btnAddEditContact" on-click-event="btnAddEditContact(this)" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"> </action-botton>
+                                <action-botton botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.CancelBotton)" on-click-event="" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></action-botton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script src="~/assets/vendors/js/forms/select/select2.full.min.js"></script>
+<script src="~/assets/vendors/js/forms/validation/jqBootstrapValidation.js"></script>
+<script src="~/assets/vendors/js/extensions/dropzone.min.js"></script>
+<script src="~/assets/js/scripts/pages/page-account-settings.js"></script>
 
 <script>
-    $("#TitleForm").html('@TempData["Title"]');
-    concatColonToLables();
     $(".txtDate").datepicker({
         dateFormat: './dd/mm/yy.html',
         dateFormat: 'yy/mm/dd',
         altField: '#alternate2',
         altFormat: 'DD، d MM yy'
     });
+
+    var txtTelPlaceHolder = '@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel';
+    var txtDescriptionPlaceHolder = '@UI_Presentation.wwwroot.Resources.People.Title.Description';
+    var fillTelPhoneFields = '@UI_Presentation.wwwroot.Resources.Mesages.fillTelPhoneFieldsMessage';
+    getPhoneTelTypes();
+
 </script>

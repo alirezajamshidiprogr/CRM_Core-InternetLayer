@@ -1,0 +1,93 @@
+﻿<div class="card shadow-none p-0 m-0">
+    <div class="card-header border-bottom py-75">
+        <div class="task-header d-flex justify-content-between align-items-center">
+            <span class="dropdown mr-50">
+                <i class="bx bx-paperclip cursor-pointer mr-50"></i>
+                <a href="#" class="dropdown-toggle" id="todo-sidebar-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                </a>
+                <span class="dropdown-menu" aria-labelledby="todo-sidebar-dropdown">
+                    <a href="#" class="dropdown-item">افزودن به پروژه دیگر </a>
+                    <a href="#" class="dropdown-item">ایجاد وظیفه پیگیری</a>
+                    <a href="#" class="dropdown-item">چاپ</a>
+                </span>
+            </span>
+        </div>
+        <button type="button" class="close close-icon">
+            <i class="bx bx-x"></i>
+        </button>
+    </div>
+    <!-- form start -->
+    <form id="compose-form" class="mt-1">
+        <div class="card-content">
+            <div class="card-body py-0 border-bottom">
+                <div class="form-group">
+                    <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.Role.Title.EnterANewRoleItem"></Text-Area>
+                </div>
+                <div class="assigned d-flex justify-content-between">
+                    <div class="form-group d-flex align-items-center mr-1">
+                        <div class="avatar">
+                            <img src="#" class="avatar-user-image d-none" alt="#" width="38" height="38">
+                            <div class="avatar-content">
+                                <i class="bx bx-user font-medium-4"></i>
+                            </div>
+                        </div>
+                        <!-- select2  for user name  -->
+                        <div class="select-box mr-1">
+                            <dropDown id="cmbCategory" all-iswal2-containertems-name="" label-title="@UI_Presentation.wwwroot.Resources.Role.Title.ActionPeople" drop-down-data-bound="null"></dropDown>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex align-items-center position-relative">
+                        <!-- date picker -->
+                        <div class="date-icon mr-50">
+                            <button type="button" class="btn btn-icon btn-outline-secondary round">
+                                <i class="bx bx-calendar-alt"></i>
+                            </button>
+                        </div>
+                        <div class="date-picker">
+                            <DateTime-TextBox id="txtRoleDate" style="width:132px;" label-title="@UI_Presentation.wwwroot.Resources.Role.Title.DataOfToDo"></DateTime-TextBox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body border-bottom task-description">
+                <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.Role.Title.RoleDescription"></Text-Area>
+            </div>
+            <div class="card-body pb-1">
+                <div class="d-flex align-items-center mb-1">
+                    <div class="avatar mr-75">
+                        <img src="../../assets/images/portrait/small/avatar-s-3.jpg" alt="charlie" width="38" height="38">
+                    </div>
+                    <div class="avatar-content">
+                        رضا این وظیفه را ایجاد کرد
+                    </div>
+                    <small class="ml-75 text-muted">13 روز پیش</small>
+                </div>
+                <!-- quill editor for comment -->
+                <div class="snow-container border rounded p-50 ">
+                    <div class="comment-editor mx-75 ql-container ql-snow"><div class="ql-editor ql-blank" data-gramm="false" data-placeholder="یک دیدگاه بنویسید ..." contenteditable="true"><p><br></p></div><div class="ql-clipboard" tabindex="-1" contenteditable="true"></div><div class="ql-tooltip ql-hidden"><a class="ql-preview" target="_blank" href="about:blank"></a><input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a><a class="ql-remove"></a></div></div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-sm btn-primary comment-btn" style="margin: 5px 0px 0px 11px ;">
+                            <span>ارسال</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary update-todo">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- form start end-->
+</div>
+
+<script>
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+    $("#txtMariedDate").prop('disabled', true);        
+</script>

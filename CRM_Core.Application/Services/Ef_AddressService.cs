@@ -33,9 +33,13 @@ namespace CRM_Core.Application.Services
 
         public IQueryable<Address> GetAddressByPeopleId(int peopleId)
         {
-            return FindByCondition(item => item.People.Id == peopleId);
+            return FindByCondition(item => item.RelativeId == peopleId && item.Type == 1 );
         }
 
+        public IQueryable<Address> GetAddressByContactId(int contactId)
+        {
+            return FindByCondition(item => item.RelativeId == contactId && item.Type == 1);
+        }
         public void UpdateAddress(Address address)
         {
             Update(address);

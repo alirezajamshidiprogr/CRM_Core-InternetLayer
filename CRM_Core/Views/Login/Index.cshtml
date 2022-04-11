@@ -37,58 +37,37 @@
             </div>
         </section>
     </div>
-
-    <div class="app-content content">
+    @*background: url('@Url.Content("~/image/login/background.png")');background-repeat:no-repeat;*@
+    <div class="app-content content" style="background: #ecbef2; height: 100%;">
         <div class="content-wrapper">
-            <div class="content-body">
-                <section id="auth-login" class="row flexbox-container">
-                    <div class="col-xl-8 col-11">
-                        <div class="card bg-authentication mb-0">
-                            <div class="row m-0">
-                                <div class="col-md-6 col-12 px-0">
-                                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
-                                        <div class="card-header pb-1">
-                                            <div class="card-title">
-                                                <h4 class="text-center mb-2"> به مشاطه خوش آمدید ...</h4>
-                                            </div>
-                                        </div>
-                                        <div class="card-content">
-                                            <div class="card-body">
-                                                <div class="form-group mb-50">
-                                                    <label class="text-bold-700" for="exampleInputEmail1">@UI_Presentation.wwwroot.Resources.General.Title.UserName</label>
-                                                    <input type="email" class="form-control text-left" id="UserName" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UserName" dir="ltr">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="text-bold-700" for="exampleInputPassword1">@UI_Presentation.wwwroot.Resources.General.Title.Password</label>
-                                                    <input type="password" class="form-control text-left" id="Password" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.Password" dir="ltr">
-                                                </div>
-                                                <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
-                                                    <div class="text-left">
-                                                        <div class="checkbox checkbox-sm">
-                                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                            <label class="checkboxsmall" for="exampleCheck1"><small>مرا به خاطر بسپار</small></label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right line-height-2"><a href="auth-forgot-password.html" class="card-link"><small>رمز عبورتان را فراموش کرده اید؟</small></a></div>
-                                                </div>
-                                                <a class="btn btn-primary glow w-100 position-relative" href="#" onclick="btnLogin()">
-                                                    <input class="btn btn-primary glow w-100 position-relative" type="submit" value="@UI_Presentation.wwwroot.Resources.General.Title.Login" />
-                                                </a>
-                                                <hr>
-                                                <div class="text-center"><small class="mr-25">ورود بدون نام کاربری   </small><a href="auth-register.html"><small> ورود </small></a></div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="content-body" style="height:100%;">
+                <div class="col-md-4 col-12 px-0">
+                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center" style="background: #ead7ec; height:718px !important;">
+                        <div class="card-header pb-1">
+                            <div class="card-title">
+                                <h4 class="text-center mb-2"> به مشاطه خوش آمدید ...</h4>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <img class="img-fluid" src="~/image/login/loginBackground.png" alt="branding logo">
+
+                                <div class="form-group mb-50">
+                                    <label class="text-bold-700" for="exampleInputEmail1">@UI_Presentation.wwwroot.Resources.General.Title.UserName</label>
+                                    <input type="email" class="form-control text-left" id="UserName" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.UserName" dir="ltr">
                                 </div>
-                                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
-                                    <div class="card-content">
-                                        <img class="img-fluid" src="~/assets/images/pages/login.png" alt="branding logo">
-                                    </div>
+                                <div class="form-group">
+                                    <label class="text-bold-700" for="exampleInputPassword1">@UI_Presentation.wwwroot.Resources.General.Title.Password</label>
+                                    <input type="password" class="form-control text-left" id="Password" placeholder="@UI_Presentation.wwwroot.Resources.General.Title.Password" dir="ltr">
                                 </div>
+                                <input class="btn btn-primary glow w-100 position-relative" type="button" onclick="btnLogin()" value="@UI_Presentation.wwwroot.Resources.General.Title.Login" />
+                                <hr>
+                                <div class="text-center"><small class="mr-25"> @UI_Presentation.wwwroot.Resources.General.Title.LoginAsAdmin</small><a href="#"><small> @UI_Presentation.wwwroot.Resources.General.Title.Login </small></a></div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+
             </div>
         </div>
     </div>

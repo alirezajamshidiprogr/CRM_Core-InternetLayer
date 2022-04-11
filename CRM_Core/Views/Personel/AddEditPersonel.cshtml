@@ -1,124 +1,103 @@
-﻿
-<div class="titleForm">@ViewBag.Title</div>
-<br />
+﻿@using System.Web.Helpers
+@using CRM_Core.Infrastructure;
+@using CRM_Core.Entities.Models;
 
-<div class="col-lg-12">
-    <div class="imgPerson">
-        <a href="#" title=@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile> <img style="padding-bottom:5px;" height="143" width="143" src="~/image/ButtonImage/PeopleProfile.png" />@UI_Presentation.wwwroot.Resources.People.Title.SelectPeopleProfile</a>
-    </div>
+@model CRM_Core.Application.ViewModels.Personnel.PersonnelViewModel
+@{ 
+    bool isEdit = false;
+    List<SelectListItem> agreemnettype = ((List<TBASAgreementType>)ViewBag.agreemetType).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.TBASAgreementTypeId ? true : false) : false }; });
 
-    <ul class="nav nav-tabs nav-rtl">
-        <li class="active"><a data-toggle="tab" href="#GeneralInfo">@UI_Presentation.wwwroot.Resources.Personel.Title.Employment </a></li>
-        <li><a data-toggle="tab" href="#PeopleRelations"> @UI_Presentation.wwwroot.Resources.Personel.Title.Dismiss </a> </li>
-        <li><a data-toggle="tab" href="#OtherInfo">@UI_Presentation.wwwroot.Resources.Personel.Title.Documents </a></li>
-    </ul>
+<div class="card-content">
+    <div class="card-body">
+        <FormTitle form_title="@(isEdit ? UI_Presentation.wwwroot.Resources.People.Title.EditPeople: UI_Presentation.wwwroot.Resources.People.Title.AddPeople )"></FormTitle>
+        <ul class="nav nav-tabs mb-2" role="tablist">
+            <li class="nav-item current">
+                <a class="nav-link d-flex align-items-center active" id="account-tab" role="tab" aria-selected="true" aria-controls="account" href="#PeopleInfo" data-toggle="tab">
+                    <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">@UI_Presentation.wwwroot.Resources.Personel.Title.PersonnelInfromation</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center" id="information-tab" role="tab" aria-selected="false" aria-controls="information" href="#information" data-toggle="tab">
+                    <i class="bx bx-info-circle mr-25"></i><span class="d-none d-sm-block">@UI_Presentation.wwwroot.Resources.Personel.Title.Skills</span>
+                </a>
+            </li>
+        </ul>
 
-    <div class="divformControl">
         <div class="tab-content">
-            <div id="GeneralInfo" class="tab-pane fade in active">
-                <table class="tblFields">
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.PersonelCode, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtPersonelCode", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.PersonelCode })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.PersonelName, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtPersonelName", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.PersonelName })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Family, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtFamily", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Family })</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.CertificateNumber, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtCertificateNumber", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.CertificateNumber })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtNationalCode", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.CertificateCode })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.InsuranceNumber, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtInsuranceNumber", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.InsuranceNumber })</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.BirthDay, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtBirthDay", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.BirthDay })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.IsMaried, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtIsMaried", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.IsMaried })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.EmploymentDate, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtEmploymentDate", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.EmploymentDate })</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.SkillType, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtSkillType", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.SkillType })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.Personel.Title.Position, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtPosition", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.Personel.Title.Position })</td>
-                    </tr>
 
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Address, null, new { @class = "labelWidget" }) </td>
-                        <td colspan="6">@Html.TextBox("txtAddress", null, new { @class = "TextArea", style = "width:829px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Address })</td>
-                    </tr>
+            <div class="tab-pane fade active show" id="PeopleInfo" role="tabpanel" aria-labelledby="account-tab">
 
+                @*<Profile-Image profile-title="@(isEdit ? Model.People.FirstName + " - " + Model.People.LastName : string.Empty)" on-click-change=""></Profile-Image>*@
 
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Description, null, new { @class = "labelWidget" }) </td>
-                        <td colspan="6">@Html.TextBox("txtDescription", null, new { @class = "TextArea", style = "width:829px !important;", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Description })</td>
-                    </tr>
-                </table>
+                <form id="peopleForm" novalidate>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            @Html.Hidden("PersonnelId", (int?)ViewBag.PersonnelId)
+                            <short-TextBox id="txtCertificateCode" requeired-message=""  value="@(isEdit ? Model.CertificateCode : string.Empty)" label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.PersonelCode"></short-TextBox>
+                            <short-TextBox id="txtPersonnelName" requeired-message="" value="@(isEdit ? Model.PersonnelName : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.PersonelName"></short-TextBox>
+                            <short-TextBox id="txtPersonnelLastName" requeired-message=""  value="@(isEdit ? Model.PersonnelLastName : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.PersonnelLastName"></short-TextBox>
+                            <short-TextBox id="txtFatherName" requeired-message=""  value="@(isEdit ? Model.PersonnelFatherName : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.FatherName"></short-TextBox>
+                            <dropDown id="cmbAgreementType"  label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.AgreementType" drop-down-data-bound="@agreemnettype"></dropDown>
+                            <DateTime-TextBox id="txtBirthDay"  value="@(isEdit ? Model.P_Birthday : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.People.Title.BirthDay"></DateTime-TextBox>
+                        </div>
 
-            </div>
-            <div id="PeopleRelations" class="tab-pane fade">
-                <table class="tblFields">
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WebSite, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtWebSite", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WebSite, required = "required" })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Telegram, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtTelegram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Telegram })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.WhatsApp, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtWhatsApp", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.WhatsApp })</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Email, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtEmail", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Email })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Instagram, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtInstagram", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.Instagram })</td>
-                    </tr>
-                </table>
+                        <div class="col-12 col-sm-6">
+                            <short-TextBox id="txtCertificateCode" requeired-message="" value="@(isEdit ? Model.CertificateCode : string.Empty)" label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.CertificateNumber"></short-TextBox>
+                            <short-TextBox id="txtTel" requeired-message="" value="@(isEdit ? Model.Tel : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.People.Title.Tel"></short-TextBox>
+                            <short-TextBox id="txtHomeTel" requeired-message="" value="@(isEdit ? Model.HomeTel : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.People.Title.HomeTel"></short-TextBox>
+                            <short-TextBox id="txtMobile" requeired-message="" value="@(isEdit ? Model.Mobile : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.People.Title.Mobile"></short-TextBox>
+                            <short-TextBox id="txtInsuranceNumber" requeired-message="" value="@(isEdit ? Model.InsuranceNumber : string.Empty)"  label-title="@UI_Presentation.wwwroot.Resources.Personel.Title.InsuranceNumber"></short-TextBox>
+                        </div>
 
+                        <div class="col-12">
+                            <short-TextBox id="txtDescription" requeired-message="" value="@(isEdit ? Model.Description : string.Empty)" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description"></short-TextBox>
+                        </div>
+
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1" type="button" id="btnTest" onclick="btnAddEditPersonnel()"> @UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button>
+                            <button class="btn btn-light" type="reset">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button>
+                        </div>
+
+                    </div>
+                </form>
             </div>
 
-            <div id="OtherInfo" class="tab-pane fade">
-                <table class="tblFields">
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.MariedDate, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtMariedDate", null, new { @class = "form-control txtDate", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.MariedDate })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.CertificateCode, null, new { @class = "labelWidget" }) </td>
-                        <td>@Html.TextBox("txtCertificateCode", null, new { @class = "form-control", placeholder = @UI_Presentation.wwwroot.Resources.People.Title.CertificateCode })</td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Province, null, new { @class = "labelWidget" }) </td>
-                        <td><select class="form-control" id="cmbProvince" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
-                    </tr>
-                    <tr>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.City, null, new { @class = "labelWidget" }) </td>
-                        <td><select class="form-control" id="cmbCity" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Potential, null, new { @class = "labelWidget" }) </td>
-                        <td><select class="form-control" id="cmbPotential" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
-                        <td>@Html.Label(@UI_Presentation.wwwroot.Resources.People.Title.Intorduction, null, new { @class = "labelWidget" }) </td>
-                        <td><select class="form-control" id="cmbIntorduction" name="StudentGender"><option> @UI_Presentation.wwwroot.Resources.General.Title.SelectItem </option></select></td>
-                    </tr>
-
-                </table>
-
+            <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
+                <form novalidate="">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table mt-1">
+                                        <thead>
+                                            <tr>
+                                                <th class="specialTd">ServiceId</th>
+                                                <th>@UI_Presentation.wwwroot.Resources.Personel.Title.Skills</th>
+                                                <th>@UI_Presentation.wwwroot.Resources.Personel.Title.Bad</th>
+                                                <th>@UI_Presentation.wwwroot.Resources.Personel.Title.Medium</th>
+                                                <th>@UI_Presentation.wwwroot.Resources.Personel.Title.Good</th>
+                                                <th>@UI_Presentation.wwwroot.Resources.Personel.Title.Excellent</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contactData">
+                                            @await Html.PartialAsync("~/Views/Personel/FillPersonnelSkillsData.cshtml",Model)
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
+</div> }
 
 
-    <table class="tblButons">
-        <tr>
-            <td><button type="button" id="btnAddEditPeople" onclick="btnAddEditPeople()" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button></td>
-            <td><button type="button" id="btnAddEditPeopleContinue" class="btn btn-primary">@UI_Presentation.wwwroot.Resources.Buttons.Title.AddWithContinue</button></td>
-            <td><button type="button" id="btnCloseAddEditCusomter" class="btn btn-danger">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button></td>
-        </tr>
-    </table>
-</div>
-
+<script src="~/assets/js/scripts/forms/validation/form-validation.js"></script>
 
 <script>
-    concatColonToLables();
     $(".txtDate").datepicker({
         dateFormat: './dd/mm/yy.html',
         dateFormat: 'yy/mm/dd',

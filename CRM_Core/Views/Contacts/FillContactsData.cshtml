@@ -1,0 +1,28 @@
+﻿@using System.Data
+@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.CustomViewModel
+
+@model DataGridViewModel<ContactViewModelSearch>
+
+@{
+    string customerName = @ViewBag.customerName;
+    string reservationDate = @ViewBag.reservationDate;
+    string description = @ViewBag.Description;
+}
+
+@{
+
+    @if (Model == null) return;
+    @foreach (var item in Model.Records.ToList())
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.Mobile</td>
+            <td>@item.Tel</td>
+        </tr>
+    }
+}
+
+<script>
+</script>

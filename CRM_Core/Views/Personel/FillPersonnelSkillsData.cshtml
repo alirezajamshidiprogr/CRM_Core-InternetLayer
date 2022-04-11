@@ -1,0 +1,52 @@
+﻿@using CRM_Core.Application.GridViewModels
+@using CRM_Core.Application.ViewModels.Personnel
+@using CRM_Core.Entities.Reservation
+
+@model CRM_Core.Application.ViewModels.Personnel.PersonnelViewModel
+
+@{
+    List<PersonnelSkilsViewModel> pSkillsList = ((List<PersonnelSkilsViewModel>)ViewBag.pSkillsList);
+}
+
+@{
+
+    @if (pSkillsList.Count == 0 ) return;
+    @foreach (var item in pSkillsList)
+    {
+<tr>
+    <td class="specialTd">@item.Id</td>
+    <td>@item.Name</td>
+    <td>
+        <div class="checkbox">
+           @Html.Raw(string.Format("<input class='checkbox-input' id='chbBad' type='checkbox' {0}>", item.Level == 0 ? "checked=\"\"" : string.Empty))
+            <label for="users-checkbox10"></label>
+        </div>
+    </td>
+    <td>
+        <div class="checkbox">
+            @Html.Raw(string.Format("<input class='checkbox-input' id='chbMeduim' type='checkbox' {0}>", item.Level == 1 ? "checked=\"\"" : string.Empty))
+            <label for="users-checkbox10"></label>
+        </div>
+    </td>
+    <td>
+        <div class="checkbox">
+            @Html.Raw(string.Format("<input class='checkbox-input' id='chbGood' type='checkbox' {0}>", item.Level == 2 ? "checked=\"\"" : string.Empty))
+            <label for="users-checkbox10"></label>
+        </div>
+    </td>
+    <td>
+        <div class="checkbox">
+            @Html.Raw(string.Format("<input class='checkbox-input' id='chbExcellent' type='checkbox' {0}>", item.Level == 3 ? "checked=\"\"" : string.Empty))
+            <label for="users-checkbox10"></label>
+        </div>
+    </td>
+</tr>
+    }
+}
+
+<script>
+</script>
+
+
+
+

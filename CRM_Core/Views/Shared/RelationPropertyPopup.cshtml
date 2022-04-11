@@ -1,0 +1,74 @@
+﻿@using UI_Presentation.Models ;
+@using CRM_Core.Entities.Models; 
+
+@{
+    string param = ViewData["param"].ToString();
+    string[] splitParam = param.Split(",");
+    bool isEdit = splitParam[0] != string.Empty ? Convert.ToBoolean(splitParam[0]) : false;
+    int peopleId = isEdit ? Convert.ToInt32(splitParam[1]) : 0;
+    int type = isEdit ? Convert.ToInt32(splitParam[2]) : 0;
+    List<TelPhones> telPhones = TempData["phoneTelTypes"] != null ? ((List<TelPhones>)(TempData["phoneTelTypes"])).ToList() : null;
+    List<SelectListItem> tbasTelPhoneTypes = ((List<TBASPhoneTypes>)TempData["tbasTelPhoneTypes"]).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Title, Value = item.Id.ToString()}; });
+    int counter = 1;
+
+<div class="row">
+    <checkBox id="chbCheckRepeatedTels" style="font-size: 1.05em; color: red;" title="@UI_Presentation.wwwroot.Resources.General.Title.CheckRepeatedTels"></checkBox>
+    <div class="col-12 my-2">
+        <div data-repeater-item="">
+            <div class="row justify-content-between" id="divPhoneTels" style="margin-right:-32px;">
+                @if (isEdit && telPhones.Count > 0)
+                {
+                    @foreach (var item in telPhones)
+                    {
+                        string id_cmbTelType = "cmbTelType_" +counter;
+                        string id_txtTel = "txtTel_" + counter;
+                        string id_txtDescription = "txtDescription_" + counter;
+                        string id_btnAddPhone = "btnAddPhone_" + counter;
+                        string id_btndeleteItem = "btndeleteItem_" + counter;
+                        string id_divRelationsFields = "divRelationsFields_" + counter;
+                        string id_divRelationsBottons = "divRelationsBottons_" + counter;
+
+                            <div id="@id_divRelationsFields" class="col-md-10 col-sm-12 form-group TelItems">
+                                <select-Box id="@id_cmbTelType" style="width: 24%; float: right; margin-left: 12px;" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.SelectItem" drop-down-data-bound="@tbasTelPhoneTypes" ></select-Box>
+                                <inputBox id="@id_txtTel" style="width: 23%; float: right; margin-left: 11px;" place-holder="@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel" value="@item.Value"></inputBox>
+                                <inputBox id="@id_txtDescription" style="width: 48%;" place-holder="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@item.Description"></inputBox>
+                            </div>
+                            <div id="@id_divRelationsBottons" class="col-md-2 col-sm-12 form-group">
+                                <a href="#" id="@id_btnAddPhone" style="font-size: 2.2em;color: green;" class="bx bxs-plus-circle" onclick="addServiceItemsTelDiv(this,true)"></a>
+                                <a href="#" id="@id_btndeleteItem" style="font-size: 2.2em;color:red ;" class="bx bxs-minus-circle" onclick="deleteTelPhonesItemsDiv(this)"></a>
+                            </div>
+
+                        counter += 1;
+                    } 
+                }
+                else
+                {
+                            <div class="col-md-10 col-sm-12 form-group TelItems">
+                                <select-Box id="cmbTelType_1" style="width: 24%; float: right; margin-left: 12px;" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.SelectItem" drop-down-data-bound="@tbasTelPhoneTypes"></select-Box>
+                                <inputBox id="txtTel_1" style="width: 23%; float: right; margin-left: 11px;"  place-holder="@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel" title="@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel"></inputBox>
+                                <inputBox id="txtDescription_1" style="width: 48%;" place-holder="@UI_Presentation.wwwroot.Resources.People.Title.Description" title="@UI_Presentation.wwwroot.Resources.People.Title.Description"></inputBox>
+                            </div>
+                            <div class="col-md-2 col-sm-12 form-group">
+                                <a href="#" id="btnAddPhone_1" style="font-size: 2.2em;color: green;" class="bx bxs-plus-circle" onclick="addServiceItemsTelDiv(this)"></a>
+                                <a href="#" id="btndeleteItem_1" style="font-size: 2.2em;color:red ;" class="bx bxs-minus-circle" onclick="deleteTelPhonesItemsDiv(this)"></a>
+                            </div>
+                }
+            </div>
+            <hr>
+        </div>
+    </div>
+    <hr>
+</div> 
+}
+
+<script>
+    getSelectedDropDownValue('@isEdit', '@peopleId', '@type');
+    duplicatedTelMessage = '@UI_Presentation.wwwroot.Resources.Mesages.ThePhoneNumberIsDuplicated';
+    var txtTelPlaceHolder = '@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel';
+    var txtDescriptionPlaceHolder = '@UI_Presentation.wwwroot.Resources.People.Title.Description';
+    var fillTelPhoneFields = '@UI_Presentation.wwwroot.Resources.Mesages.fillTelPhoneFieldsMessage';
+    var txtTelPlaceHolder = '@UI_Presentation.wwwroot.Resources.Contact.Title.Mobie_Tel';
+    var txtDescriptionPlaceHolder = '@UI_Presentation.wwwroot.Resources.People.Title.Description';
+
+    //fillTelArrayValues('@isEdit', '@counter');
+</script>

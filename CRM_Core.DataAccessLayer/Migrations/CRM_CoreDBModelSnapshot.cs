@@ -41,20 +41,21 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<string>("OtherAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PeopleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Province")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("RelativeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Street")
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.HasIndex("PeopleId");
+                    b.HasKey("Id");
 
                     b.ToTable("Address");
                 });
@@ -97,19 +98,12 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("HomeTel")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int?>("IntroduceId")
                         .HasColumnType("int");
@@ -146,20 +140,9 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<int?>("MarriedType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mobile1")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Mobile2")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Mobile3")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
                     b.Property<string>("P_Birthday")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("P_MariedDate")
                         .HasMaxLength(10)
@@ -183,10 +166,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<int?>("TBASPrefixId")
                         .HasColumnType("int");
-
-                    b.Property<string>("WorkTel")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 
@@ -248,12 +227,15 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("PeopleId")
+                    b.Property<int>("RelativeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Telegram")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("WebSite")
                         .HasMaxLength(200)
@@ -263,9 +245,11 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("YouTube")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.HasIndex("PeopleId");
+                    b.HasKey("Id");
 
                     b.ToTable("PeopleVirtual");
                 });
@@ -376,6 +360,75 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.ToTable("TBASPrefix");
                 });
 
+            modelBuilder.Entity("CRM_Core.Entities.Models.Cheque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("M_EditChequeDate")
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime>("M_RegisterDate")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("P_EditChequeDate")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("P_RegisterDate")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SystemCode")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("TBASPayTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
+
+                    b.HasIndex("TBASPayTypeId");
+
+                    b.ToTable("Cheque");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.ChequeDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ChequeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FinalPriceCheque")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPriceCheque")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChequeId");
+
+                    b.ToTable("ChequeDetails");
+                });
+
             modelBuilder.Entity("CRM_Core.Entities.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -383,35 +436,53 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Emails")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FatherName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Job")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime?>("M_BirthDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("M_ContactEditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_ContactInsertDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Mobile")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("P_BirthDay")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Tel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkTel")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.HasKey("Id");
 
@@ -528,6 +599,187 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserMenu");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Personnel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CertificateCode")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("HomeTel")
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("InsuranceNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("M_Birthday")
+                        .HasMaxLength(10)
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime?>("M_EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_InsertDate")
+                        .HasMaxLength(10)
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Mobile")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("P_Birthday")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonnelFatherName")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("PersonnelLastName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("PersonnelName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("TBASAgreementTypeId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tel")
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TBASAgreementTypeId");
+
+                    b.ToTable("Personnel");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelSkils", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Level")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PersonnelId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TBASServicesId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.HasIndex("TBASServicesId");
+
+                    b.ToTable("PersonnelSkils");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelVation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<TimeSpan>("FromTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<DateTime>("M_EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_VacationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("P_VacationDate")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("PersonnelId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("ToTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<int>("VacationType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("PersonnelVation");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelWorkTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<TimeSpan>("FromTime")
+                        .HasColumnType("time(7)");
+
+                    b.Property<DateTime>("M_EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_WorkTimeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("P_WorkTimeDate")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("PersonnelId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("ToTime")
+                        .HasColumnType("time(7)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("PersonnelWorkTime");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Regions.Region+City", b =>
@@ -857,6 +1109,76 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.ToTable("TransferCosts");
                 });
 
+            modelBuilder.Entity("CRM_Core.Entities.Models.TBASAgreementType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBASAgreementType");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.TBASPhoneTypes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBASPhoneTypes");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.TelPhones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("RelativeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TBASPhoneTypesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TBASPhoneTypesId");
+
+                    b.ToTable("TelPhones");
+                });
+
             modelBuilder.Entity("CRM_Core.Entities.Reservation.ClerkServices", b =>
                 {
                     b.Property<int>("Id")
@@ -868,6 +1190,12 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("PeopleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonnelPortionPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Salary")
                         .HasColumnType("int");
 
                     b.Property<int>("TBASServicesId")
@@ -1193,17 +1521,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CRM_Core.DomainLayer.Address", b =>
-                {
-                    b.HasOne("CRM_Core.DomainLayer.People", "People")
-                        .WithMany()
-                        .HasForeignKey("PeopleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("People");
-                });
-
             modelBuilder.Entity("CRM_Core.DomainLayer.ApplicationUser", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
@@ -1265,15 +1582,34 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Navigation("People");
                 });
 
-            modelBuilder.Entity("CRM_Core.DomainLayer.PeopleVirtual", b =>
+            modelBuilder.Entity("CRM_Core.Entities.Models.Cheque", b =>
                 {
-                    b.HasOne("CRM_Core.DomainLayer.People", "People")
+                    b.HasOne("CRM_Core.Entities.Reservation.Reservation", "Reservation")
                         .WithMany()
-                        .HasForeignKey("PeopleId")
+                        .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("People");
+                    b.HasOne("CRM_Core.Entities.Reservation.TBASPayType", "TBASPayType")
+                        .WithMany()
+                        .HasForeignKey("TBASPayTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("TBASPayType");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.ChequeDetails", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Cheque", "Cheque")
+                        .WithMany()
+                        .HasForeignKey("ChequeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cheque");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.General.ActivityNumber", b =>
@@ -1285,6 +1621,58 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("TBASState");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Personnel", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.TBASAgreementType", "AgreementType")
+                        .WithMany()
+                        .HasForeignKey("TBASAgreementTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AgreementType");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelSkils", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Personnel", "Personnel")
+                        .WithMany("PersonnelSkils")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRM_Core.Entities.Reservation.TBASServices", "TBASServices")
+                        .WithMany()
+                        .HasForeignKey("TBASServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personnel");
+
+                    b.Navigation("TBASServices");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelVation", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personnel");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.PersonnelWorkTime", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personnel");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Models.Regions.Region+City", b =>
@@ -1351,6 +1739,15 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasForeignKey("TBASSalonCostId");
 
                     b.Navigation("TBASSalonCost");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.TelPhones", b =>
+                {
+                    b.HasOne("CRM_Core.Entities.Models.TBASPhoneTypes", "TBASPhoneTypes")
+                        .WithMany()
+                        .HasForeignKey("TBASPhoneTypesId");
+
+                    b.Navigation("TBASPhoneTypes");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Reservation.ClerkServices", b =>
@@ -1451,6 +1848,11 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Models.Personnel", b =>
+                {
+                    b.Navigation("PersonnelSkils");
                 });
 #pragma warning restore 612, 618
         }

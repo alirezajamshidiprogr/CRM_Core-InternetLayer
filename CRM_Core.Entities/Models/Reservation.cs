@@ -59,6 +59,9 @@ namespace CRM_Core.Entities.Reservation
         [Required]
         public People People { get; set; }
         public int PeopleId { get; set; }
+        [Required]
+        public int Salary { get; set; }
+        public int PersonnelPortionPercentage { get; set; }
 
         [Required]
         public bool Acitve { get; set; }

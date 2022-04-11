@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CRM_Core.Entities.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,17 +24,6 @@ namespace CRM_Core.DomainLayer
         [MaxLength(200)]
         public string Job { get; set; }
         [MaxLength(11)]
-        public string HomeTel { get; set; }
-        [MaxLength(11)]
-        public string WorkTel { get; set; }
-        [MaxLength(11)]
-        public string Fax { get; set; }
-        [MaxLength(11)]
-        public string Mobile1 { get; set; }
-        [MaxLength(11)]
-        public string Mobile2 { get; set; }
-        [MaxLength(11)]
-        public string Mobile3 { get; set; }
         public string P_Birthday { get; set; }
         [MaxLength(10)]
         [Column(TypeName = "Date")]
@@ -43,6 +34,7 @@ namespace CRM_Core.DomainLayer
         public DateTime? M_MariedDate { get; set; }
         public DateTime M_InsertDate { get; set; }
         public DateTime? M_EditDate { get; set; }
+        [MaxLength(1500)]
         public string Description { get; set; }
         public int? MarriedType{ get; set; }
 
@@ -61,6 +53,8 @@ namespace CRM_Core.DomainLayer
         public TBASGraduation TBASGraduation { get; set; } 
         public int? TBASIntroductionTypeId { get; set; }
         public TBASIntroductionType TBASIntroductionType { get; set; }
+        [NotMapped]
+        public Address Address { get; set; }
         [Required]
         public bool IsActive { get; set; }
     }
@@ -72,15 +66,16 @@ namespace CRM_Core.DomainLayer
         public string WebSite { get; set; }
         [MaxLength(200)]
         public string Telegram { get; set; }
+        [MaxLength(200)]  
+        public string YouTube { get; set; }
         [MaxLength(200)]
         public string WhatsApp { get; set; }
         [MaxLength(200)]
         public string Email { get; set; }
         [MaxLength(200)]
         public string Instagram { get; set; }
-        [ForeignKey("PeopleId")]
-        public People People { get; set; }
-        public int PeopleId { get; set; }
+        public int RelativeId { get; set; }
+        public int Type { get; set; }
     }
 
     public class Address
@@ -90,6 +85,7 @@ namespace CRM_Core.DomainLayer
         public string Province { get; set; }
         [MaxLength(200)]
         public string City { get; set; }
+
         [MaxLength(200)]
         public string Area { get; set; }
         [MaxLength(400)]
@@ -98,9 +94,14 @@ namespace CRM_Core.DomainLayer
         public string Alley { get; set; }
         public string OtherAddress { get; set; }
 
-        [ForeignKey("PeopleId")]
-        [Required]
-        public People People { get; set; }
+        //[ForeignKey("PeopleId")]
+        //[Required]
+        //public People People { get; set; }
+        public int RelativeId { get; set; }
+        public int Type { get; set; }
+        [NotMapped]
+        public ICollection<People> Student { get; set; }
+
     }
 
     public class TBASGraduation
@@ -109,6 +110,7 @@ namespace CRM_Core.DomainLayer
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+
     }
 
     public class TBASCategory
@@ -117,6 +119,7 @@ namespace CRM_Core.DomainLayer
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+
     }
 
     public class TBASPrefix
@@ -125,6 +128,7 @@ namespace CRM_Core.DomainLayer
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+
     }
 
     public class TBASPotential
@@ -133,6 +137,7 @@ namespace CRM_Core.DomainLayer
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+
     }
 
     public class PeopleProperty
@@ -169,5 +174,7 @@ namespace CRM_Core.DomainLayer
         [Required]
         [MaxLength(200)]
         public string Name{ get; set; }
+
     }
+
 }

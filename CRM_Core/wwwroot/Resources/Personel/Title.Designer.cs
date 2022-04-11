@@ -61,11 +61,47 @@ namespace UI_Presentation.wwwroot.Resources.Personel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ثبت پرسنل.
+        ///   Looks up a localized string similar to ثبت و ویرایش پرسنل.
         /// </summary>
         public static string AddPersonel {
             get {
                 return ResourceManager.GetString("AddPersonel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ثبت ساعت کاری .
+        /// </summary>
+        public static string AddPersonnelTimeWork {
+            get {
+                return ResourceManager.GetString("AddPersonnelTimeWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ثبت مرخصی.
+        /// </summary>
+        public static string AddPersonnelVacation {
+            get {
+                return ResourceManager.GetString("AddPersonnelVacation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع قرارداد.
+        /// </summary>
+        public static string AgreementType {
+            get {
+                return ResourceManager.GetString("AgreementType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to بد.
+        /// </summary>
+        public static string Bad {
+            get {
+                return ResourceManager.GetString("Bad", resourceCulture);
             }
         }
         
@@ -133,11 +169,29 @@ namespace UI_Presentation.wwwroot.Resources.Personel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عالی.
+        /// </summary>
+        public static string Excellent {
+            get {
+                return ResourceManager.GetString("Excellent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام پدر.
         /// </summary>
         public static string FatherName {
             get {
                 return ResourceManager.GetString("FatherName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خوب.
+        /// </summary>
+        public static string Good {
+            get {
+                return ResourceManager.GetString("Good", resourceCulture);
             }
         }
         
@@ -160,6 +214,15 @@ namespace UI_Presentation.wwwroot.Resources.Personel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to متوسط.
+        /// </summary>
+        public static string Medium {
+            get {
+                return ResourceManager.GetString("Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کد پرسنلی.
         /// </summary>
         public static string PersonelCode {
@@ -178,6 +241,24 @@ namespace UI_Presentation.wwwroot.Resources.Personel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اطلاعات پرسنل.
+        /// </summary>
+        public static string PersonnelInfromation {
+            get {
+                return ResourceManager.GetString("PersonnelInfromation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام خانوادگی پرسنل.
+        /// </summary>
+        public static string PersonnelLastName {
+            get {
+                return ResourceManager.GetString("PersonnelLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to موقعیت شغلی.
         /// </summary>
         public static string Position {
@@ -192,6 +273,15 @@ namespace UI_Presentation.wwwroot.Resources.Personel {
         public static string RegisterTime {
             get {
                 return ResourceManager.GetString("RegisterTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مهارت ها.
+        /// </summary>
+        public static string Skills {
+            get {
+                return ResourceManager.GetString("Skills", resourceCulture);
             }
         }
         

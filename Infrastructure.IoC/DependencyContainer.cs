@@ -44,6 +44,14 @@ namespace Infrastructure.IoC
              services.AddScoped<ITBASSalonCostsService, Ef_TBASSalonCostsService>();
              services.AddScoped<IReminderService, Ef_ReminderService>();
              services.AddScoped<IReminderDayDetailsService, Ef_ReminderDayDetailsService>();
+             services.AddScoped<IReservationDetailsService, Ef_ReservationDetailsService>();
+             services.AddScoped<IChequService, Ef_ChequService>();
+             services.AddScoped<ITBASTelPhoneTypesService, Ef_TBASTelPhoneTypesService>();
+             services.AddScoped<ITelPhonesService, Ef_TelPhoneService>();
+             services.AddScoped<IContactService,Ef_ContactService>();
+             services.AddScoped<IPersonnelService, Ef_PersonnelService>();
+             services.AddScoped<ITBASAgreementTypePersonnel, Ef_AgreementTypePersonnelService>();
+             services.AddScoped<IPersonnelSkillsService, Ef_PersonnelSkilsService>();
              //services.AddTransient<IMyRepository, MyRepository>();
 
             return services;

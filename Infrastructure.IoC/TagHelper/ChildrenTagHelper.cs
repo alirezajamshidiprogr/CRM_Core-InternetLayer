@@ -64,4 +64,16 @@ namespace TagHelperSamples.Bootstrap
             output.SuppressOutput();
         }
     }
+
+    //[HtmlTargetElement("tabControll-Items", ParentTag = "tab-controll")]
+    //public class TabControllItemTagHelper : TagHelper
+    //{
+    //    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+    //    {
+    //        var childContent = await output.GetChildContentAsync();
+    //        var tabContext = (TabControllContext)context.Items[typeof(TabControllTagHelper)];
+    //        tabContext.Items = childContent;
+    //        output.SuppressOutput();
+    //    }
+    //}
 }

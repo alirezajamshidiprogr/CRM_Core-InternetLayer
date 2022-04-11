@@ -1,0 +1,152 @@
+﻿@using System.Web.Helpers
+@using CRM_Core.Infrastructure;
+@using CRM_Core.Entities.Reservation;
+
+@model CRM_Core.Application.ViewModels.People.peopleViewModel
+@{
+    var isEdit = false;
+    List<SelectListItem> payType = ((List<SelectListItem>)ViewBag.PayTypeList).ToList();
+
+    <div class="card-content">
+        <div class="card-body">
+            <section class="invoice-view-wrapper" style="">
+                <div class="row">
+                    <!-- invoice view page -->
+                    <div class="col-xl-9 col-md-8 col-12">
+                        <div class="card invoice-print-area">
+                            <div class="card-content">
+                                <div class="card-body pb-0 mx-25">
+                                    <!-- header section -->
+                                    <div class="row line-height-2 mt-n50">
+                                        <div class="col-xl-4 col-md-12 mb-50 mb-xl-0">
+                                            <span class="invoice-number mr-50">@UI_Presentation.wwwroot.Resources.Cheque.Title.ReservationSearch</span>
+                                            <span id="chequeNumber">@ViewBag.ChequeNumber</span>
+                                        </div>
+                                        <div class="col-xl-8 col-md-12">
+                                            <div class="d-flex align-items-center justify-content-xl-end flex-wrap">
+                                                <div class="mr-3">
+                                                    <small class="text-muted">تاریخ تنظیم:</small>
+                                                    <span>@DateTime.Now.ToPersianDate()</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- logo and title -->
+                                    <div class="row my-3">
+                                        <div class="col-sm-4">
+                                            <h4 class="text-primary">صورتحساب</h4>
+                                            <short-TextBox id="txtReservationNumber" requeired-message="" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.ReservationNumber" ></short-TextBox>
+                                            <button class="btn btn-primary btn-block invoice-send-btn" onclick="btnSearchReservation()">
+                                                <i class="bx bx-search"></i>
+                                                <span>@UI_Presentation.wwwroot.Resources.Buttons.Title.Search</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-sm-8" style="margin-top:62px;">
+                                            <p id="reservationId" style="display:none"></p>
+                                            <p id="customerName">@UI_Presentation.wwwroot.Resources.Cheque.Title.CustomerName</p>
+                                            <p id="ReservationRegisterDate">@UI_Presentation.wwwroot.Resources.Cheque.Title.ReservationRegisterDate</p>
+                                            <p id="Description">@UI_Presentation.wwwroot.Resources.People.Title.Description</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="invoice-product-details table-responsive mx-md-25">
+                                    <table class="table table-hover mb-0">
+                                        <thead style="background: #e8e4e4;">
+                                            <tr class="border-0">
+                                                <th scope="col">آیتم</th>
+                                                <th scope="col">پرسنل</th>
+                                                <th scope="col">هزینه</th>
+                                                <th scope="col">سهم سالن</th>
+                                                <th scope="col">سهم پرسنل</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="customerServices">
+                                            @await Html.PartialAsync("~/Views/Cheque/FillCustomerServicesItems.cshtml")
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- invoice subtotal -->
+                                <div class="card-body pt-0 mx-25">
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-4 col-sm-6 mt-75">
+                                            <dropDown onchange-drop-down="calcTotalChequeInfo()" id="cmbPaidType" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType" drop-down-data-bound="@payType"></dropDown>
+                                            <short-TextBox on-change-text-box="calcTotalChequeInfo()" id="txtPaied" value="@(isEdit ? 0 : 0)" required="true" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Paid" ></short-TextBox>
+                                            <short-TextBox on-change-text-box="calcTotalChequeInfo()" id="txtDiscount" value="@(isEdit ? 0 : 0)" required="true" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Discount"></short-TextBox>
+                                        </div>
+                                        <div class="col-8 col-sm-6 d-flex justify-content-end mt-75">
+                                            <div class="invoice-subtotal">
+                                                <div class="invoice-calc d-flex justify-content-between">
+                                                    <span class="invoice-title">@UI_Presentation.wwwroot.Resources.Cheque.Title.Total</span>
+                                                    <span id="totalChequePrice" class="invoice-value"></span>
+                                                </div>
+                                                <div class="invoice-calc d-flex justify-content-between">
+                                                    <span class="invoice-title">@UI_Presentation.wwwroot.Resources.Cheque.Title.Discount</span>
+                                                    <span id="discount" class="invoice-value"></span>
+                                                </div>
+                                                <div class="invoice-calc d-flex justify-content-between">
+                                                    <span class="invoice-title">@UI_Presentation.wwwroot.Resources.Cheque.Title.Paid</span>
+                                                    <span id="Paid" class="invoice-value"></span>
+                                                </div>
+                                                <div class="invoice-calc d-flex justify-content-between">
+                                                    <span class="invoice-title">@UI_Presentation.wwwroot.Resources.Cheque.Title.TotalPrice</span>
+                                                    <span id="totalReminderCheque" class="invoice-value"></span>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- invoice action  -->
+                    <div class="col-xl-3 col-md-4 col-12">
+                        <div class="card invoice-action-wrapper shadow-none border">
+                            <div class="card-body">
+                                <div class="invoice-action-btn">
+                                    <button class="btn btn-primary btn-block invoice-send-btn">
+                                        <i class="bx bx-send"></i>
+                                        <span>ارسال صورتحساب</span>
+                                    </button>
+                                </div>
+                                <div class="invoice-action-btn">
+                                    <button class="btn btn-light-primary btn-block invoice-print">
+                                        <span>چاپ</span>
+                                    </button>
+                                </div>
+                                <div class="invoice-action-btn">
+                                    <a href="app-invoice-edit.html" class="btn btn-light-primary btn-block">
+                                        <span>ویرایش صورتحساب</span>
+                                    </a>
+                                </div>
+                                <div class="invoice-action-btn">
+                                    <button class="btn btn-success btn-block">
+                                        <i class="bx bx-dollar"></i>
+                                        <span>افزودن پرداخت</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div> }
+<script src="~/assets/js/scripts/pages/app-invoice.js"></script>
+<script>
+    //$(".txtDate").datepicker({
+    //    dateFormat: './dd/mm/yy.html',
+    //    dateFormat: 'yy/mm/dd',
+    //    altField: '#alternate2',
+    //    altFormat: 'DD، d MM yy'
+    //});
+
+    //$("#txtMariedDate").prop('disabled', true);
+
+</script>

@@ -132,6 +132,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>لغو</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>پاک کن</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>بستن</value>
   </data>

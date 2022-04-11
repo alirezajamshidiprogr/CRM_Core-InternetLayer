@@ -151,6 +151,24 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to قصد خروج از این صفحه را دارید ؟.
+        /// </summary>
+        public static string DoYouWantToLeaveThisForm {
+            get {
+                return ResourceManager.GetString("DoYouWantToLeaveThisForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فیلد های مورد نیاز را جهت افزودن شماره تلفن یا موبایل وارد نمایید ..
+        /// </summary>
+        public static string fillTelPhoneFieldsMessage {
+            get {
+                return ResourceManager.GetString("fillTelPhoneFieldsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to یک یا برخی از فیلدهای شماره همراه خالی است.
         /// </summary>
         public static string FillTheEmptyFieldMobiles {
@@ -205,6 +223,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد دستی وارد شده شخص قبلا ثبت شده است !.
+        /// </summary>
+        public static string ManaulCodeIsDuplicated {
+            get {
+                return ResourceManager.GetString("ManaulCodeIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خیر.
         /// </summary>
         public static string No {
@@ -214,11 +241,29 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای این شخص شماره تلفن وارد نشده آیا میخواهید ادامه دهید ؟.
+        /// </summary>
+        public static string NoTelPhoneEnteredForPeople {
+            get {
+                return ResourceManager.GetString("NoTelPhoneEnteredForPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حداقل یک سرویس باید به مشتری اختصاص داده شود !.
         /// </summary>
         public static string OneServiceShouldBeThereAtLeast {
             get {
                 return ResourceManager.GetString("OneServiceShouldBeThereAtLeast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام معرف و نام شخص نمی تواند هم نام باشد !.
+        /// </summary>
+        public static string PeopleCanNotBeSameAsIntroductionPeople {
+            get {
+                return ResourceManager.GetString("PeopleCanNotBeSameAsIntroductionPeople", resourceCulture);
             }
         }
         
@@ -246,6 +291,24 @@ namespace UI_Presentation.wwwroot.Resources {
         public static string TheActionEndedWithSuccess {
             get {
                 return ResourceManager.GetString("TheActionEndedWithSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره تلفن وارد شده تکراری است !.
+        /// </summary>
+        public static string ThePhoneNumberIsDuplicated {
+            get {
+                return ResourceManager.GetString("ThePhoneNumberIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یک یا برخی از شماره تلفن ها تکراری است !.
+        /// </summary>
+        public static string ThereIsDuplicatedTelPhones {
+            get {
+                return ResourceManager.GetString("ThereIsDuplicatedTelPhones", resourceCulture);
             }
         }
         

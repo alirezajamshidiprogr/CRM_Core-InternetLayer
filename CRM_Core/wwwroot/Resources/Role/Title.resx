@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionPeople" xml:space="preserve">
+    <value>انجام دهنده</value>
+  </data>
+  <data name="DataOfToDo" xml:space="preserve">
+    <value>تاریخ انجام وظیفه</value>
+  </data>
   <data name="Documents" xml:space="preserve">
     <value>پیوست فایل</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>ایمیل</value>
+  </data>
+  <data name="EnterANewRoleItem" xml:space="preserve">
+    <value>نام یک وظیفه جدید را وارد کنید </value>
   </data>
   <data name="Notification" xml:space="preserve">
     <value>هشدار درون برنامه</value>
@@ -137,6 +146,9 @@
   </data>
   <data name="RelativePersonel" xml:space="preserve">
     <value>پرسنل مرتبط</value>
+  </data>
+  <data name="RoleDescription" xml:space="preserve">
+    <value>توضیح وظیفه را اینجا وارد کنید </value>
   </data>
   <data name="RoleFields" xml:space="preserve">
     <value>اطلاعات کلی</value>

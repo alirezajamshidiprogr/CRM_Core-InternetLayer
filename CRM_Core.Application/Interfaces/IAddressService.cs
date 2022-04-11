@@ -11,6 +11,7 @@ namespace CRM_Core.Application.Interfaces
         IEnumerable<Address> GetAddress();
         IEnumerable<Address> GetAddressById(int addressId);
         IQueryable<Address> GetAddressByPeopleId(int peopleId);
+        IQueryable<Address> GetAddressByContactId(int contactId);
         void UpdateAddress(Address address);
         void AddAddress(Address address); 
 

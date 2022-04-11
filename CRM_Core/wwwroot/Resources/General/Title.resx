@@ -123,6 +123,9 @@
   <data name="ActionMenu" xml:space="preserve">
     <value>عملیات زیر منوها</value>
   </data>
+  <data name="AddCheque" xml:space="preserve">
+    <value>ثبت صورتحساب</value>
+  </data>
   <data name="AddNewProfile" xml:space="preserve">
     <value>افزودن کاربرجدید</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>ورود</value>
+  </data>
+  <data name="LoginAsAdmin" xml:space="preserve">
+    <value>ورود به پنل مدیر</value>
   </data>
   <data name="LoginError" xml:space="preserve">
     <value>خطای ورود </value>

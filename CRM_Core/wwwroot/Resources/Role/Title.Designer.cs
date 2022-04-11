@@ -61,6 +61,24 @@ namespace UI_Presentation.wwwroot.Resources.Role {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to انجام دهنده.
+        /// </summary>
+        public static string ActionPeople {
+            get {
+                return ResourceManager.GetString("ActionPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاریخ انجام وظیفه.
+        /// </summary>
+        public static string DataOfToDo {
+            get {
+                return ResourceManager.GetString("DataOfToDo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پیوست فایل.
         /// </summary>
         public static string Documents {
@@ -75,6 +93,15 @@ namespace UI_Presentation.wwwroot.Resources.Role {
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام یک وظیفه جدید را وارد کنید .
+        /// </summary>
+        public static string EnterANewRoleItem {
+            get {
+                return ResourceManager.GetString("EnterANewRoleItem", resourceCulture);
             }
         }
         
@@ -120,6 +147,15 @@ namespace UI_Presentation.wwwroot.Resources.Role {
         public static string RelativePersonel {
             get {
                 return ResourceManager.GetString("RelativePersonel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توضیح وظیفه را اینجا وارد کنید .
+        /// </summary>
+        public static string RoleDescription {
+            get {
+                return ResourceManager.GetString("RoleDescription", resourceCulture);
             }
         }
         

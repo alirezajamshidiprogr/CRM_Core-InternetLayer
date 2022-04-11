@@ -106,6 +106,15 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to پاک کن.
+        /// </summary>
+        public static string Clear {
+            get {
+                return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بستن.
         /// </summary>
         public static string Close {
