@@ -22,6 +22,7 @@ namespace CRM_Core.Application.Services
         private IPeopleService _peopleService;
         private IChequService _chequeService;
         private string commandText;
+        private string _GetContext;
 
         public Ef_ReservationService(CRM_CoreDB context, IPeopleService peopleService, IPotentialService potentialService,IChequService chequeService) : base(context)
         {
@@ -29,6 +30,7 @@ namespace CRM_Core.Application.Services
             _peopleService = peopleService;
             _potentialService = potentialService;
             _chequeService = chequeService;
+            _GetContext = _connection;
         }
 
         public bool CheckReservationHasAnyHistoryRecord(int reservationId)
@@ -62,7 +64,7 @@ namespace CRM_Core.Application.Services
 
         public DataSet GetReservationByADO(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure)
         {
-            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlConnection conn = new SqlConnection(_GetContext);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = commandText;
@@ -95,7 +97,7 @@ namespace CRM_Core.Application.Services
 
         public DataSet GetReservationDetailsADO_ByID(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true)
         {
-            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlConnection conn = new SqlConnection(_GetContext);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = commandText;

@@ -33,23 +33,23 @@ namespace CRM_Core.Infrastructure
         //        return dataTable;
         //    }
         //}
-        public static DataSet LoadStoreProcedureDS(int peopleId)
-        {
-            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
-            SqlDataAdapter da = new SqlDataAdapter();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "[dbo].[GetPeopleProperty_SearchMobiles]";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PeopleId", peopleId);
-            da.SelectCommand = cmd;
-            DataSet ds = new DataSet();
+        //public static DataSet LoadStoreProcedureDS(int peopleId)
+        //{
+        //    SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+        //    SqlDataAdapter da = new SqlDataAdapter();
+        //    SqlCommand cmd = conn.CreateCommand();
+        //    cmd.CommandText = "[dbo].[GetPeopleProperty_SearchMobiles]";
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    cmd.Parameters.AddWithValue("@PeopleId", peopleId);
+        //    da.SelectCommand = cmd;
+        //    DataSet ds = new DataSet();
 
-            ///conn.Open();
-            da.Fill(ds);
-            ///conn.Close();
+        //    ///conn.Open();
+        //    da.Fill(ds);
+        //    ///conn.Close();
 
-            return ds;
-        }
+        //    return ds;
+        //}
 
         public static List<T> DataTableToList<T>(DataTable dt)
         {

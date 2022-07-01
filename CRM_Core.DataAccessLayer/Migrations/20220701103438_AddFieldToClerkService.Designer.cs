@@ -4,14 +4,16 @@ using CRM_Core.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM_Core.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CRM_CoreDB))]
-    partial class CRM_CoreDBModelSnapshot : ModelSnapshot
+    [Migration("20220701103438_AddFieldToClerkService")]
+    partial class AddFieldToClerkService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1188,6 +1190,12 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<bool>("Acitve")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("M_EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("M_StartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PeopleId")
                         .HasColumnType("int");
 
@@ -1321,27 +1329,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBASServices");
-                });
-
-            modelBuilder.Entity("CRM_Core.Entities.Reservation.TBASYears", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("M_EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("M_StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TBASYears");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

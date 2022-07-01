@@ -93,7 +93,20 @@ namespace CRM_Core.Entities.Reservation
 
         [Required]
         public bool Acitve { get; set; }
+
+        //[Required]
+        public TBASYears TBASYears { get; set; }
+        public int TBASYearsId { get; set; }
+
+
     }
 
+    public class TBASYears
+    {
+        public int ID { get; set; }
+        public int Year { get; set; }
+        public DateTime M_StartDate { get; set; }
+        public DateTime M_EndDate { get; set; }
 
+    }
 }

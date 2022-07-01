@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace CRM_Core.DataAccessLayer.Repositories
 {
@@ -15,7 +16,7 @@ namespace CRM_Core.DataAccessLayer.Repositories
     {
         protected CRM_CoreDB RepositoryContext { get; set; }
         private DbSet<T> _dbSet;
-
+        public string  _connection =  @"Data Source=DESKTOP-3INLH6M\SQLSERVER2019;Initial Catalog=MoshattehDB;Trusted_Connection=True;ConnectRetryCount=0";
 
         public RepositoryBase(CRM_CoreDB repositoryContext)
         {

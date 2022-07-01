@@ -4,14 +4,16 @@ using CRM_Core.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRM_Core.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CRM_CoreDB))]
-    partial class CRM_CoreDBModelSnapshot : ModelSnapshot
+    [Migration("20220701104725_AddTableTBASYears")]
+    partial class AddTableTBASYears
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1200,11 +1202,16 @@ namespace CRM_Core.DataAccessLayer.Migrations
                     b.Property<int>("TBASServicesId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TBASYearsId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PeopleId");
 
                     b.HasIndex("TBASServicesId");
+
+                    b.HasIndex("TBASYearsId");
 
                     b.ToTable("ClerkServices");
                 });
@@ -1783,9 +1790,17 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CRM_Core.Entities.Reservation.TBASYears", "TBASYears")
+                        .WithMany()
+                        .HasForeignKey("TBASYearsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("People");
 
                     b.Navigation("TBASServices");
+
+                    b.Navigation("TBASYears");
                 });
 
             modelBuilder.Entity("CRM_Core.Entities.Reservation.Reservation", b =>

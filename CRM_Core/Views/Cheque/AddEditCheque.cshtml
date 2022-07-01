@@ -55,13 +55,13 @@
             </table>
         </div>
 
-        <div class="row" style="margin-top:15px;">
+        <div class="row" style="margin-top:15px;background: #aca6a6;">
             <div class="col-lg-4">  <dropDown onchange-drop-down="calcTotalChequeInfo()" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.SelectItem" id="cmbPaidType" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.PaidType" drop-down-data-bound="@payType"></dropDown></div>
             <div class="col-lg-4"><short-TextBox on-change-text-box="calcTotalChequeInfo()" id="txtPaied" value="@(isEdit ? 0 : 0)" required="true" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Paid"></short-TextBox></div>
             <div class="col-lg-4"><short-TextBox on-change-text-box="calcTotalChequeInfo()" id="txtDiscount" value="@(isEdit ? 0 : 0)" required="true" requeired-message="@UI_Presentation.wwwroot.Resources.Mesages.ThisFieldIsRequired" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Discount"></short-TextBox></div>
         </div>
 
-        <div class="row" style="margin-top:15px;">
+        <div class="row" style="margin-top:15px;background: #aca6a6;">
             <div class="col-lg-3"><short-TextBox style="opacity:0.7;pointer-events:none;border:1px solid gray ;" id="totalChequePrice" value="@(isEdit ? 0 : 0)" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Total"></short-TextBox> </div>
             <div class="col-lg-3"><short-TextBox style="opacity:0.7;pointer-events:none;border:1px solid gray ;" id="discount" value="@(isEdit ? 0 : 0)" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Discount"></short-TextBox></div>
             <div class="col-lg-3"><short-TextBox style="opacity:0.7;pointer-events:none;border:1px solid gray ;" id="Paid" value="@(isEdit ? 0 : 0)" label-title="@UI_Presentation.wwwroot.Resources.Cheque.Title.Paid"></short-TextBox></div>

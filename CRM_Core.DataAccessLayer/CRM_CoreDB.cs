@@ -3,6 +3,7 @@ using CRM_Core.Entities.Reservation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace CRM_Core.DataAccessLayer
 {
@@ -13,6 +14,7 @@ namespace CRM_Core.DataAccessLayer
     //using CRM_Core.DataLayers.EntityConfigurations;
     //using CRM_Core.Entities;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using static CRM_Core.Entities.Models.Regions.Region;
 
     //public class DBContextFactory : IDesignTimeDbContextFactory<CRM_CoreDB>
@@ -28,10 +30,11 @@ namespace CRM_Core.DataAccessLayer
 
     public class CRM_CoreDB : IdentityDbContext
     {
-     
+
         public CRM_CoreDB(DbContextOptions<CRM_CoreDB> options)
             : base(options)
-        { 
+        {
+            
         }
         // Introduce each Table To DataBase 
         public virtual DbSet<CRM_Core.DomainLayer.People> People { get; set; }
@@ -56,8 +59,9 @@ namespace CRM_Core.DataAccessLayer
         public virtual DbSet<ActivityNumber> ActivityNumber { get; set; }
         public virtual DbSet<TBASState> TBASState { get; set; }
         public virtual DbSet<TBASMenu> TBASMenu { get; set; }
+        public virtual DbSet<TBASYears> TBASYears { get; set; }
         public virtual DbSet<UserMenu> UserMenu { get; set; }
-        public virtual DbSet<SalonInfo> SalonInfo{ get; set; }
+        public virtual DbSet<SalonInfo> SalonInfo { get; set; }
         public virtual DbSet<SalonCosts> SalonCosts { get; set; }
         public virtual DbSet<BillCosts> BillCosts { get; set; }
         public virtual DbSet<TransferCosts> TransferCosts { get; set; }

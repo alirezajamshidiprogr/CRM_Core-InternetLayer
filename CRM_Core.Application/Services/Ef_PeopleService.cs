@@ -18,9 +18,11 @@ namespace CRM_Core.Application.Services
    public class Ef_PeopleService : DataAccessLayer.Repositories.RepositoryBase<People>, IPeopleService
     {
         public CRM_CoreDB _context;
+        public string _GetContext;
         public Ef_PeopleService(CRM_CoreDB context): base(context)
         {
             _context = context;
+            _GetContext = _connection; 
         }
 
         public void AddPeople(People people)
@@ -119,7 +121,7 @@ namespace CRM_Core.Application.Services
         public DataSet GetPeopleDataTable(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true)
         {
 
-            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlConnection conn = new SqlConnection(_GetContext);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = commandText;

@@ -16,10 +16,11 @@ namespace CRM_Core.Application.Services
     public class Ef_SalonCostsService : DataAccessLayer.Repositories.RepositoryBase<SalonCosts>, ISalonCostsService
     {
         public CRM_CoreDB _context;
-
+        private string _GetContext;
         public Ef_SalonCostsService(CRM_CoreDB context) : base(context)
         {
             _context = context;
+            _GetContext = _connection;
         }
 
         public void AddGeneralSalonCosts(SalonCosts salonCost)
@@ -94,7 +95,7 @@ namespace CRM_Core.Application.Services
         public DataSet GetSalonCostsDataTables(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true)
         {
 
-            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlConnection conn = new SqlConnection(_GetContext);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = commandText;

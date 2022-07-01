@@ -43,7 +43,8 @@ namespace CRM_Core
 
             //var con = "Server=.; initial Catalog=MoshattehDB; integrated security=true;";
             
-            var connection = @"Data Source=.;Initial Catalog=MoshattehDB;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Data Source=DESKTOP-3INLH6M\SQLSERVER2019;Initial Catalog=MoshattehDB;Trusted_Connection=True;ConnectRetryCount=0";
+            //var connection = @"Data Source=.;Initial Catalog=MoshattehDB;Trusted_Connection=True;ConnectRetryCount=0";
 
             services.AddDbContext<CRM_CoreDB>
                 (options => options.UseSqlServer(connection, b => b.MigrationsAssembly("CRM_Core.DataAccessLayer")));

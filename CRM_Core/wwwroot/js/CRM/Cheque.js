@@ -99,8 +99,8 @@ function btnselectReservationClick() {
     var reservationID = getValueTableById('ReservationID');
     //var ReservationSystemCode = getValueTableById('ReservationSystemCode');
 
-    if (reservationID > 0) 
-        btnReservationSelectClick(reservationID , 'id')
+    if (reservationID > 0)
+        btnReservationSelectClick(reservationID, 'id')
 }
 
 
@@ -139,6 +139,8 @@ function btnReservationSelectClick(relativeNumber, type) {
             document.getElementById('txtCustomerProperty').innerHTML = result.peopleProperty;
             document.getElementById('txtReservationRegisterDate').innerHTML = result.reservationDate;
             document.getElementById('txtReservationNumber').value = result.reservationSystemCode;
+
+            GetReservationDetatilsInfo(result.reservationId);
         },
         error: function (result) {
             disablePageloadding();
@@ -146,6 +148,34 @@ function btnReservationSelectClick(relativeNumber, type) {
         }
     });
 
+}
+
+function GetReservationDetatilsInfo(reservationId) {
+    $.ajax({
+        type: "POST",
+        url: "/Cheque/FillCustomerServicesItemsData",
+        data: {
+            reservationId: reservationId,
+        },
+        beforeSend: function () {
+            enablePageloadding();
+        },
+        complete: function () {
+            disablePageloadding();
+        },
+        success: function (result) {
+            debugger;
+            if (result.errorMessage != undefined && result.errorMessage != '') {
+                ErrorMessage(result.errorMessage);
+                return;
+            }
+            $('#customerServices').html(result);
+        },
+        error: function (result) {
+            disablePageloadding();
+            ErrorMessage();
+        }
+    });
 }
 //function fillCustomerInfo(customerNameTitle, reservationDateTitle, descriptionTitle,customerName, reservationDate, description) {
 //    debugger;
