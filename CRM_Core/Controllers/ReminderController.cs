@@ -124,10 +124,12 @@ namespace UI_Presentation.Controllers
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
+            bool saveException = false ;
+
             IEnumerable<ReminderViewModelSearch> reminderList = new List<ReminderViewModelSearch>();
             //ModelState["reminder.IsActive"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
             if (!ModelState.IsValid)
-                throw new CustomeException("Model Is Not Valid", true, null);
+                throw new CustomeException("Model Is Not Valid", true, null, ref saveException);
 
             try
             {

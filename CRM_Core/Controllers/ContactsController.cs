@@ -92,12 +92,13 @@ namespace UI_Presentation.Controllers
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
+            bool saveException = false;
             ModelState["contactInfo.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
 
             try
             {
                 if (!ModelState.IsValid)
-                    throw new CustomeException("Model Is Not Valid", true, null);
+                    throw new CustomeException("Model Is Not Valid", true, null, ref saveException);
 
                 if (isEdit)
                 {

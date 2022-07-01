@@ -19,6 +19,16 @@ namespace CRM_Core.Application.Services
             return FindAll();
         }
 
+        public Cheque GetChequeByReservationId(int reservationId)
+        {
+            return FindByConditionFirstOrDefault(item => item.ReservationId == reservationId);
+        }
+
+        public Cheque GetChequeByReservationNubmer(string number)
+        {
+            return FindByConditionFirstOrDefault(item => item.SystemCode == number);
+        }
+
         public IEnumerable<Cheque> GetServiceCustomerByReservationId()
         {
             throw new NotImplementedException();

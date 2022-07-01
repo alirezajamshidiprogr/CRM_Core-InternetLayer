@@ -42,6 +42,7 @@ namespace CRM_Core
             services.AddMvc();
 
             //var con = "Server=.; initial Catalog=MoshattehDB; integrated security=true;";
+            
             var connection = @"Data Source=.;Initial Catalog=MoshattehDB;Trusted_Connection=True;ConnectRetryCount=0";
 
             services.AddDbContext<CRM_CoreDB>

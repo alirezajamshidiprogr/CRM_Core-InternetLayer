@@ -116,6 +116,8 @@ namespace CRM_Core.Infrastructure
             CancelBotton = 2,
             SearchBotton = 3,
             clearBotton = 4,
+            AddBotton = 5,
+            deleteBottn = 6,
         }
 
         public enum PeopleType

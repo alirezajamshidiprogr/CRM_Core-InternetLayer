@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -19,12 +20,27 @@ namespace CRM_Core.Application.Services
         public CRM_CoreDB _context;
         private IPotentialService _potentialService;
         private IPeopleService _peopleService;
+        private IChequService _chequeService;
+        private string commandText;
 
-        public Ef_ReservationService(CRM_CoreDB context, IPeopleService peopleService, IPotentialService potentialService) : base(context)
+        public Ef_ReservationService(CRM_CoreDB context, IPeopleService peopleService, IPotentialService potentialService,IChequService chequeService) : base(context)
         {
             _context = context;
             _peopleService = peopleService;
             _potentialService = potentialService;
+            _chequeService = chequeService;
+        }
+
+        public bool CheckReservationHasAnyHistoryRecord(int reservationId)
+        {
+            bool hasAnyHistoryRecord = false;
+            Reservation reservation = FindByCondition(item => item.Id == reservationId).OrderBy(item=>item.Id).LastOrDefault();
+
+            if (1==1)
+            {
+                hasAnyHistoryRecord = false;
+            }
+            return hasAnyHistoryRecord;
         }
 
         public IEnumerable<Reservation> GetAllReservation()
@@ -41,82 +57,25 @@ namespace CRM_Core.Application.Services
         {
             List<PeopleReservationHistoryInfo> peopleReservationHistoryInfolist = new List<PeopleReservationHistoryInfo>();
             PeopleReservationHistoryInfo peopleReservationHistoryInfo = new PeopleReservationHistoryInfo();
-            ////var reservation = FindAll().ToList();
-            ////var people = _peopleService.GetPeopleById(peopleId).ToList();
-            ////var potential = _potentialService.GetPotentials().ToList();
-
-            //var entity = FindAll().ToList()
-            //                    .Join(
-            //                        _peopleService.GetPeopleById(peopleId).ToList(),
-            //                        r => r.PeopleId,
-            //                        p => p.Id,
-            //                        (r, p) => new { r, p }
-            //                    )
-            //                    .Join(
-            //                        _potentialService.GetPotentials().ToList(),
-            //                        pot => pot.p.TBASPotentialId,
-            //                        potential => potential.Id,
-            //                        (combinedEntry, pot) => new
-            //                        {
-            //                            PeopleType = pot.Name ,
-            //                            Price = combinedEntry.r.Price,
-            //                        }
-            //                    );
-            ////.Where(fullEntry => fullEntry. == peopleId)
-            ////.Take(10);
-            //double totalPrice = 0;
-            //string peopleType = string.Empty;
-            //int countCustomerIncome = 0 ;
-            //foreach (var item in entity.ToList())
-            //{
-            //    totalPrice += item.Price;
-            //    countCustomerIncome += 1;
-            //    peopleType = item.PeopleType;
-            //}
-            //peopleReservationHistoryInfo.CustomerIncomeForSalon = totalPrice.ToString("N0") + "ریال";
-            //peopleReservationHistoryInfo.CountOfBeCustomer = countCustomerIncome.ToString() +  " مراجعه به سالن ";
-            //peopleReservationHistoryInfo.CustomerType = peopleType;
-
             return peopleReservationHistoryInfo;
         }
 
-        public IEnumerable<ReservationViewModel> GetReservationByADO(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure)
+        public DataSet GetReservationByADO(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure)
         {
-            DataTable dt = new DataTable();
-            var cmd = _context.Database.GetDbConnection().CreateCommand();
-            DbParameter[] param = new DbParameter[searchParameter == null ? 0 : searchParameter.Length];
+            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = commandText;
-            cmd.CommandType = isProcedure ? CommandType.StoredProcedure : CommandType.Text;
-
-            if ((searchParameter != null && searchValues != null) && (searchParameter.Length == searchValues.Length && searchParameter.Length > 0))
+            cmd.CommandType = CommandType.StoredProcedure;
+            for (int i = 0; i < searchParameter.Length; i++)
             {
-                DbParameter setParam;
-                for (int i = 0; i < searchParameter.Length; i++)
-                {
-                    setParam = cmd.CreateParameter();
-                    var getTypeSearchValue = searchValues[i] == null ? "String" : searchValues[i].GetType().Name;
-
-                    setParam.ParameterName = searchParameter[i];
-                    if (getTypeSearchValue == "String")
-                        setParam.Value = searchValues[i] == null ? null : searchValues[i].ToString();
-                    else if (getTypeSearchValue == "Int32")
-                        setParam.Value = Convert.ToInt32(searchValues[i]);
-                    else if (getTypeSearchValue == "Boolean")
-                        setParam.Value = Convert.ToBoolean(searchValues[i]);
-                    else if (getTypeSearchValue == "Double")
-                        setParam.Value = Convert.ToBoolean(searchValues[i]);
-                    else if (getTypeSearchValue == "DateTime")
-                        setParam.Value = Convert.ToDateTime(searchValues[i]);
-
-                    param[i] = setParam;
-                    param[i].Value = searchValues[i];
-                }
+                cmd.Parameters.AddWithValue(searchParameter[i], searchValues[i]);
             }
-            cmd.Parameters.AddRange(param);
-            _context.Database.OpenConnection();
-            var dataReader = cmd.ExecuteReader();
-            dt.Load(dataReader);
-            return (MappingUtility333.DataTableToList<ReservationViewModel>(dt)).AsQueryable();
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);
+            return ds;
         }
 
         public IEnumerable<Reservation> GetReservationById(int reservationId)
@@ -124,7 +83,35 @@ namespace CRM_Core.Application.Services
            return FindByCondition(item=>item.Id == reservationId);
         }
 
-        public void insertReservation(Reservation reservation)
+        public Reservation GetReservationByNumber(string number)
+        {
+            return FindByConditionFirstOrDefault(item=>item.SystemCode == number);
+        }
+
+        public IEnumerable<Reservation> GetReservationByParam(int customerId, DateTime reservationDate)
+        {
+            return FindByCondition(item => item.PeopleId == customerId && item.M_ReservationDate == reservationDate && item.IsActive == true);
+        }
+
+        public DataSet GetReservationDetailsADO_ByID(string commandText, string[] searchParameter, object[] searchValues, bool isProcedure = true)
+        {
+            SqlConnection conn = new SqlConnection("Server=.; initial Catalog=MoshattehDB; integrated security=true;");
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = commandText;
+            cmd.CommandType = CommandType.StoredProcedure;
+            for (int i = 0; i < searchParameter.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(searchParameter[i], searchValues[i]);
+            }
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);
+            return ds;
+        }
+
+        public void InsertReservation(Reservation reservation)
         {
             Create(reservation);
         }
@@ -133,5 +120,6 @@ namespace CRM_Core.Application.Services
         {
             Update(reservation);
         }
+
     }
 }

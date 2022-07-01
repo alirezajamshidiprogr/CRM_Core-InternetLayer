@@ -1,0 +1,7 @@
+<LogInfo>
+    <Time>1401-1-23_20-1-56</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at System.Convert.ToDateTime(Object value)
+   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 reservationDetails) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 313</Target>
+    <ErrorMessage>Unable to cast object of type 'System.TimeSpan' to type 'System.IConvertible'.</ErrorMessage>
+</LogInfo>

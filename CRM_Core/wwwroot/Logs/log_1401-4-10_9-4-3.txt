@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1401-4-10_9-4-3</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Nullable`1 reservationId, Boolean isEdit, List`1 reservationDetails, Boolean allowedDuplicatedReservation) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 325</Target>
+    <ErrorMessage>تاریخ نوبت دهی نمیتواند از تاریخ جاری کوچکتر باشد !</ErrorMessage>
+</LogInfo>

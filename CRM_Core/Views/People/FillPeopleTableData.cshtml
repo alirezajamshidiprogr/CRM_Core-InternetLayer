@@ -55,7 +55,14 @@
 
                     }
                     <grid-rows-data visible="false" id="PeopleId" field-value="@item.Id"></grid-rows-data>
-                    <grid-rows-buttons style="width:180px;" is-select-mode="@isSelectedMode ? true : false" on-delete-button-action="btnDeletePeople(this)" on-edit-button-action="btnOpenEditPeople(this)" is-edit-mode="@isEditMode"></grid-rows-buttons>
+                    <grid-rows-buttons style="width:180px;"
+                                       is-select-mode="@isSelectedMode ? true : false"
+                                       on-delete-button-action="btnDeletePeople(this)"
+                                       on-edit-button-action="btnOpenEditPeople(this)"
+                                       is-edit-mode="@isEditMode"
+                                       on-select-button-ation="btnselectPeopleClick()">
+
+                    </grid-rows-buttons>
                     <grid-rows-data width="50" field-value="@rowNum"></grid-rows-data>
                     <grid-rows-data width="226" field-value="@item.FullName"></grid-rows-data>
                     <grid-rows-data width="135" field-value="@item.ManualCode"></grid-rows-data>

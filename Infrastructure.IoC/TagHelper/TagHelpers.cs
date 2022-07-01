@@ -23,18 +23,23 @@ namespace UI_Presentation.Models
         public int BottonType { get; set; }
         public string icon { get; set; }
         public string Title { get; set; }
+        public string Id { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
             if (BottonType == 1 )
-            sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-success' ><i class='bx bx-check-circle' ></i>&nbsp;{3} </button>", "\"" + onClickEvent +"\"", buttomClass, icon, Title);
+            sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-success' id='{1}'><i class='bx bx-check-circle' ></i>&nbsp;{4} </button>", "\"" + onClickEvent +"\"", Id , buttomClass, icon, Title);
             else if (BottonType == 2)
-                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-danger' ><i class='bx bxs-x-circle' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-danger' id='{1}'><i class='bx bxs-x-circle' ></i>&nbsp;{4} </button>", "\"" + onClickEvent + "\"", Id, buttomClass, icon, Title);
             else if (BottonType == 3)
-                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-primary' ><i class='bx bx-search-alt-2' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-primary' id='{1}'><i class='bx bx-search-alt-2' ></i>&nbsp;{4} </button>", "\"" + onClickEvent + "\"", Id, buttomClass, icon, Title);
             else if (BottonType == 4)
-                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-info' ><i class='bx bx-trash' ></i>&nbsp;{3} </button>", "\"" + onClickEvent + "\"", buttomClass, icon, Title);
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-info' id='{1}' ><i class='bx bx-trash' ></i>&nbsp;{4} </button>", "\"" + onClickEvent + "\"", Id, buttomClass, icon, Title);
+            else if (BottonType == 5)
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-primary' id='{1}' ><i class='bx bxs-plus-circle' ></i>&nbsp;{4} </button>", "\"" + onClickEvent + "\"", Id, buttomClass, icon, Title);
+            else if (BottonType == 6)
+                sb.AppendFormat("<button type='button' style='margin-left:7px;' onclick ={0} class ='btn btn-danger' id='{1}'><i class='bx bxs-minus-circle' ></i>&nbsp;{4} </button>", "\"" + onClickEvent + "\"", Id, buttomClass, icon, Title);
 
             output.PreContent.SetHtmlContent(sb.ToString());
         }
@@ -55,11 +60,67 @@ namespace UI_Presentation.Models
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += string.Format("<div class='form-group'> ", Style);
+            html += string.Format("<div class='form-group'> ", "");
             html += string.Format("<div class='controls'> ");
             html += string.Format("<label>{0}</label>", labelTitle);
-            html += string.Format("<input id='{0}' name ='text' class='form-control text-left' dir='ltr' {1}  placeholder='{2}' {3} value='{4}' type='{5}' onchange='{6}' '{7}'>", Id, required ? "required=\"" + string.Empty + "\"" : string.Empty, labelTitle, RequeiredMessage != string.Empty ? "data-validation-required-message=\"" + RequeiredMessage + "\"" : string.Empty, value != string.Empty ? value : string.Empty, InputType == string.Empty ? "text" : InputType, onChangeTextBox,tabIndex != null ? "tabindex=\"" + tabIndex + "\"" : "");
+            html += string.Format("<input id='{0}' name ='text' class='form-control text-left' dir='ltr' {1}  placeholder='{2}' {3} value='{4}' type='{5}' onchange='{6}' '{7}' style=''>", Id, required ? "required=\"" + string.Empty + "\"" : string.Empty, labelTitle, RequeiredMessage != string.Empty ? "data-validation-required-message=\"" + RequeiredMessage + "\"" : string.Empty, value != string.Empty ? value : string.Empty, InputType == string.Empty ? "text" : InputType, onChangeTextBox,tabIndex != null ? "tabindex=\"" + tabIndex + "\"" : "", Style);
             html += "</div>";
+            html += "</div>";
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("TextBox-Botton")]
+    public class TextBoxButton : TagHelper
+    {
+        public string ColClassSize { get; set; }
+        public string labelTitle { get; set; }
+        public string Id { get; set; }
+        public string ButtonId { get; set; }
+        public string ButtonEvent { get; set; }
+        public string onChangeTextBox { get; set; }
+        public string ButtonTitle { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += string.Format("<div class='{0}'>", ColClassSize + "form-group");
+            html += "<div class='controls'>";
+            html += "<label>" + labelTitle + "</label> <div>";
+            html += string.Format("<input id='{0}' name='text' class='form-control text-left' dir='ltr' placeholder='{1}' value='' type='' onchange='' '' ='' style='width: 20%;float: right;border: 1px solid #605d5d;border-radius: 0px 10px 10px 0px;'>",Id,labelTitle);
+            html += string.Format("<button type='button' style='margin-left:7px;background: #605d5d !important;border-radius: 12px 0px 0px 12px !important;' onclick='{0}' class='btn btn-primary' id='{1}'><i class='bx bx-search-alt-2'></i>&nbsp;{2}</button>",ButtonEvent, ButtonId, ButtonTitle);
+            html += "</div></div>";
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
+            var sb = new StringBuilder();
+            sb.AppendFormat(html);
+            output.PreContent.SetHtmlContent(sb.ToString());
+        }
+    }
+
+
+    [HtmlTargetElement("Row-Col")]
+    public class RowCol : TagHelper
+    {
+        public List<int> Cols { get; set; }
+        public List<string> Values { get; set; }
+        public string Ids { get; set; }
+        public string Style { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            string html = string.Empty;
+            html += "<div class='row'>";
+            for (int i = 0; i < Cols.Count; i++)
+            {
+                html += string.Format("<div class='{0}'>", "col-lg-" + Cols[i].ToString());
+                html += string.Format("<p style='{0}' id='{1}'> {2} </p></div>", Style, Ids != null  && i > 0  ? Ids : string.Empty, Values[i].ToString());
+            }
+            
             html += "</div>";
 
             output.TagMode = TagMode.StartTagAndEndTag;
@@ -181,8 +242,9 @@ namespace UI_Presentation.Models
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += string.Format("<input class='form-control' id='{0}' type='text' placeholder='{1}' aria-invalid='false' style='{2}' value='{3}'>", Id,PlaceHolder,Style,Value) ;
+            html += string.Format("<div style='{2}'><input class='form-control' id='{0}' type='text' placeholder='{1}' aria-invalid='false'  value='{3}'></div>", Id,PlaceHolder,Style,Value) ;
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = null;
             var sb = new StringBuilder();
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
@@ -196,12 +258,13 @@ namespace UI_Presentation.Models
         public string Title { get; set; }
         public string Style { get; set; }
         public string AllItemsName { get; set; }
+        public string OnChangeEvent { get; set; }
         public List<SelectListItem> dropDownDataBound { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string html = string.Empty;
-            html += string.Format("<select id='{0}' class='form-control' aria-invalid='false' style='{1}'>" , Id,Style) ;
+            html += string.Format("<div style='{0}'><select id='{1}' onchange={2} class='form-control' aria-invalid='false'>", Style, Id, "\"" + OnChangeEvent + "\"") ;
 
             if (!string.IsNullOrEmpty(AllItemsName))
                 html += string.Format("<option value ='null'>{0}</option>", AllItemsName);
@@ -216,9 +279,10 @@ namespace UI_Presentation.Models
                 }
             }
 
-            html += "</select>";
+            html += "</select></div>";
             output.TagMode = TagMode.StartTagAndEndTag;
             var sb = new StringBuilder();
+            output.TagName = null;
             sb.AppendFormat(html);
             output.PreContent.SetHtmlContent(sb.ToString());
         }

@@ -1,50 +1,85 @@
-﻿
+﻿@{
+    List<SelectListItem> reservationStatus = ViewBag.reservationStatus;
+    List<SelectListItem> chequeStateus = ViewBag.chequeStateus;
 
-@{
+    <div class="modal fade" id="form-reservationSearch" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:247%; margin-right:-400px;">
+                <div class="modal-header" style="background:#9f9f9f ;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:#0a032f;">@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch</h4>
+                </div>
+                <div class="modal-body" style="background:#dfdfdf">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <short-TextBox id="txtcustomerName" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerName"></short-TextBox>
+                            <short-TextBox id="txtCustomerFamily" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerFamily"></short-TextBox>
+                            <DateTime-TextBox id="txtFromReservationDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromReservationDate"></DateTime-TextBox>
+                            <DateTime-TextBox id="txtToReservationDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToReservationDate"></DateTime-TextBox>
+                        </div>
 
+                        <div class="col-12 col-sm-6">
+                            <short-TextBox id="txtReservationSystemCode" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSystemCode"></short-TextBox>
+                            <short-TextBox id="txtPeopleSystemCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox>
+                            <dropDown id="cmbExpiredStatus" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationStatus" drop-down-data-bound="reservationStatus"></dropDown>
+                            <dropDown id="cmbHasCheque" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.HasCheque" drop-down-data-bound="chequeStateus"></dropDown>
+                        </div>
 
-    <modal bodystyle="height:200px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="form-reservationSearch">
-        <modal-body>
-            <short-TextBox id="txtcustomerName" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerName"></short-TextBox>
-            <short-TextBox id="txtCustomerFamily" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerFamily"></short-TextBox>
-            <short-TextBox id="cmbServiceType" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ServiceType"></short-TextBox>
-            <short-TextBox is-date-type="true" id="txtDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date"></short-TextBox>
-            <short-TextBox id="txtFromTime" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder"></short-TextBox>
-            <short-TextBox id="txtToTime" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder"></short-TextBox>
-            <short-TextBox id="txtReservationSystemCode" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSystemCode"></short-TextBox>
-            <customChild-tag style="text-align: left;">
-                <customTag-children>
-                    <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="@string.Format("showReservationList('{0}','{1}')","false","isEditMode")"></Icon-Button>
-                </customTag-children>
-            </customChild-tag>
-        </modal-body>
-
-        <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
-    </modal>
-
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.SearchBotton)" id="btnReservationSearch" on-click-event="showReservationList(this,false,false)" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search"></Icon-Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br />
     <search-header>
         <Search-Botton>
-            <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showReservationList()"></Icon-Button>
             <modal-buttom modal-id="form-reservationSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
         </Search-Botton>
 
-        <Search-TextBox>
-            <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("showReservationList('{0}','{1}')","true","isEditMode")"> </Search-Grid-TextBox>
-        </Search-TextBox>
+        @*<Search-TextBox>
+                <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("showReservationList('{0}')", "true")"> </Search-Grid-TextBox>
+            </Search-TextBox>*@
     </search-header>
 
-    <customChild-tag id="ReservationList">
-        <customTag-children>
-            @await Html.PartialAsync("~/Views/Reservation/FillReservationTableData.cshtml")
-        </customTag-children>
-    </customChild-tag>
+    <div id="ReservationList">
+        @await Html.PartialAsync("~/Views/Reservation/FillReservationTableData.cshtml")
+    </div>
+   
+    @*<modal bodystyle="height:200px" title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSearch" id="form-reservationSearch">
+            <modal-body>
+
+                <short-TextBox id="txtFromTime" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder"></short-TextBox>
+                <short-TextBox id="txtToTime" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder"></short-TextBox>
+                <short-TextBox id="txtReservationSystemCode" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSystemCode"></short-TextBox>
+                <customChild-tag style="text-align: left;">
+                    <customTag-children>
+                        <Icon-Button buttom-class="btn btn-success  btn-radious" icon="fa fa-search" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search" on-click-event="@string.Format("showReservationList('{0}','{1}')","false","isEditMode")"></Icon-Button>
+                    </customTag-children>
+                </customChild-tag>
+            </modal-body>
+
+            <modal-footer dismiss-text="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></modal-footer>
+        </modal>
+
+        <br />
+        <search-header>
+            <Search-Botton>
+                <Icon-Button buttom-class="btn btn-success btn-round btnSearchGrid" icon="icon-plus" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add" on-click-event="showReservationList()"></Icon-Button>
+                <modal-buttom modal-id="form-reservationSearch" title=" @UI_Presentation.wwwroot.Resources.General.Title.Search"></modal-buttom>
+            </Search-Botton>
+
+            <Search-TextBox>
+                <Search-Grid-TextBox placeholder="@UI_Presentation.wwwroot.Resources.People.Title.FullName" on-click-action="@string.Format("showReservationList('{0}','{1}')","true","isEditMode")"> </Search-Grid-TextBox>
+            </Search-TextBox>
+        </search-header>*@
+
 
 }
 
 <script>
-    concatColonToLables();
-
     $(".txtDate").datepicker({
         dateFormat: './dd/mm/yy.html',
         dateFormat: 'yy/mm/dd',

@@ -358,11 +358,38 @@ namespace UI_Presentation.wwwroot.Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اطلاعات پایه .
+        /// </summary>
+        public static string GeneralInfo {
+            get {
+                return ResourceManager.GetString("GeneralInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اطلاعات سالن.
         /// </summary>
         public static string GeneralSalonInfo {
             get {
                 return ResourceManager.GetString("GeneralSalonInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دارد.
+        /// </summary>
+        public static string Has {
+            get {
+                return ResourceManager.GetString("Has", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ندارد.
+        /// </summary>
+        public static string HasNot {
+            get {
+                return ResourceManager.GetString("HasNot", resourceCulture);
             }
         }
         

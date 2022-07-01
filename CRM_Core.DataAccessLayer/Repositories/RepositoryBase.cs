@@ -31,6 +31,11 @@ namespace CRM_Core.DataAccessLayer.Repositories
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
             return _dbSet.Where(expression);
+        } 
+        
+        public T FindByConditionFirstOrDefault(Expression<Func<T, bool>> expression)
+        {
+            return _dbSet.Where(expression).FirstOrDefault();
         }
 
         public void Create(T entity)

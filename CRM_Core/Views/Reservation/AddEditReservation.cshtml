@@ -1,36 +1,26 @@
-﻿<link href="~/js/PersianCalendar/TimePicker/jquery.timeselector.css" rel="stylesheet" />
+﻿@*<link href="~/js/PersianCalendar/TimePicker/jquery.timeselector.css" rel="stylesheet" />*@
 
 @using CRM_Core.Infrastructure;
 @using CRM_Core.Entities.Reservation
 
 @model CRM_Core.Entities.Reservation.Reservation
 
-@{ int? peopleId = ViewBag.peopleId == null ? 0 : (int)ViewBag.peopleId;
+@{
     bool isEdit = ViewBag.isEdit == null ? false : (bool)ViewBag.isEdit;
-    List<SelectListItem> payType = ((List<TBASPayType>)ViewBag.payTypeItems).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Name.ToString(), Value = item.Id.ToString(), Selected = isEdit ? (item.Id == Model.PeopleId ? true : false) : false }; });
-
 
     <div class="card-content">
         <div class="card-body">
-            <FormTitle form_title="@(isEdit ? UI_Presentation.wwwroot.Resources.People.Title.EditPeople: UI_Presentation.wwwroot.Resources.People.Title.AddPeople )"></FormTitle>
+            <FormTitle form_title="@(isEdit ? UI_Presentation.wwwroot.Resources.Reservation.Title.EditReservation: UI_Presentation.wwwroot.Resources.Reservation.Title.AddReservation )"></FormTitle>
             <ul class="nav nav-tabs mb-2" role="tablist">
-                <li class="nav-item current">
-                    <a class="nav-link d-flex align-items-center active" id="account-tab" role="tab" aria-selected="true" aria-controls="account" href="#ReservationInfo" data-toggle="tab">
-                        <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" id="information-tab" role="tab" aria-selected="false" aria-controls="information" href="#intorduction" data-toggle="tab">
-                        <i class="bx bx-info-circle mr-25"></i><span class="d-none d-sm-block">@UI_Presentation.wwwroot.Resources.People.Title.Intorduction</span>
-                    </a>
-                </li>
+                <tab-Item-li title="@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople" href="ReservationInfo" class-name="bx bxs-calendar"></tab-Item-li>
+                <tab-Item-li title="@UI_Presentation.wwwroot.Resources.Reservation.Title.SelectCustomer" href="intorduction" class-name="bx bxs-user-voice mr-25"></tab-Item-li>
             </ul>
 
             <div class="tab-content">
 
                 <div class="tab-pane fade active show" id="ReservationInfo" role="tabpanel" aria-labelledby="account-tab">
 
-                    <Profile-Image profile-title="@(isEdit ? Model.People.FirstName + " - " + Model.People.LastName : string.Empty)" on-click-change=""></Profile-Image>
+                    @*<Profile-Image profile-title="@(isEdit ? Model.People.FirstName + " - " + Model.People.LastName : string.Empty)" on-click-change=""></Profile-Image>*@
 
                     <form id="reservationForm" novalidate>
                         <div class="row">
@@ -43,92 +33,40 @@
                                 <DateTime-TextBox id="txtOrderDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" value="@(isEdit ? Model.P_ReservationDate : string.Empty)"></DateTime-TextBox>
                             </div>
 
-                            <div class="col-6 col-sm-3">
-
-                            </div>
-
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">
-                                            @UI_Presentation.wwwroot.Resources.Reservation.Title.ServicesListeCustomer
-                                        </h4>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div id="divServices" data-recmbPersonnelpeater-list="group-a">
-                                                <div data-repeater-item="" id="divId_1">
-                                                    <div class="row justify-content-between">
-                                                        <div class="col-md-2 col-sm-12 form-group">
-                                                            <label for="cmbPersonnel">@UI_Presentation.wwwroot.Resources.General.Title.Personel</label>
-                                                            <select id="cmbPersonnel_1" onchange="fillServiceByPersonnel(this,true)"  class="form-control">
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group">
-                                                            <label for="cmbServieces">@UI_Presentation.wwwroot.Resources.Reservation.Title.Services</label>
-                                                            <select id="cmbServieces_1" onchange="fillServiceByPersonnel(this,false)" class="form-control">
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group">
-                                                            <label for="txtFromTime">@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder</label>
-                                                            <input class="form-control time" id="txtFromTime_1" type="text" name="time" onchange="onTimeChageText(this,'FromTime')">
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group">
-                                                            <label for="txtToTime">@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder</label>
-                                                            <input class="form-control time" id="txtToTime_1" type="text" name="time" onchange="onTimeChageText(this,'ToTime')">
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group">
-                                                            <label for="chbCustomerState">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType </label>
-                                                            <fieldset>
-                                                                <div class="checkbox checkbox-primary checkbox-glow">
-                                                                    <input type="checkbox" id="chbCustomerState_1" onchange="changeStateCustomer(this)">
-                                                                    <label for="chbCustomerState_1">@UI_Presentation.wwwroot.Resources.Reservation.Title.IsPersonalCustomer</label>
-                                                                </div>
-                                                            </fieldset>
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
-                                                            <button id="btndeleteItem1" class="btn btn-danger text-nowrap px-1" data-repeater-delete="" onclick="deleteServiceItemsDiv(this,true)" type="button">
-                                                            <i class="bx bx-x"></i>@UI_Presentation.wwwroot.Resources.Buttons.Title.Delete</button>
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col p-0">
-                                                    <button class="btn btn-primary" data-repeater-create="" onclick="addServiceItemsDiv()" type="button">
-                                                        <i class="bx bx-plus"></i>@UI_Presentation.wwwroot.Resources.Buttons.Title.New</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            @if (isEdit)
+                            {
+                                <div class="col-6 col-sm-3">
+                                    <short-TextBox id="txtReservationSystemCode" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSystemCode" value="@(isEdit ? Model.SystemCode : string.Empty)"></short-TextBox>
                                 </div>
+                            }
+
+                            <div id="customerServices" style="width:100% !important;">
+                                @await Html.PartialAsync("~/Views/Reservation/EditCustomerServicePopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1},{2}", isEdit.ToString(), ((int?)ViewBag.PeopleID).ToString(), ((int)Enums.PeopleType.people).ToString()) } })
                             </div>
 
                             <div class="col-12">
                                 <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
                             </div>
-
-                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                <button class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1" type="button" onclick="btnAddEditReservation('@UI_Presentation.wwwroot.Resources.Mesages.ForThisCustomerHasNotRegisterAnyIntroducePeople')"> @UI_Presentation.wwwroot.Resources.Buttons.Title.Add</button>
-                                <button class="btn btn-light" type="reset">@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel</button>
-                            </div>
-
                         </div>
                     </form>
                 </div>
 
                 <div class="tab-pane fade" id="intorduction" role="tabpanel" aria-labelledby="information-tab">
                     <div class="card-body">
-                        @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.People).ToString(), peopleId.ToString()) } })
+                        @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.Reservation).ToString(), Model.PeopleId.ToString()) } })
                     </div>
+                </div>
+                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                    <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.RegisterBotton)" id="btnAddEditPeople" on-click-event="btnAddEditReservation(this,'@UI_Presentation.wwwroot.Resources.Mesages.ForThisCustomerHasNotRegisterAnyIntroducePeople')" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></Icon-Button>
+                    <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.CancelBotton)" id="btnCancel" on-click-event="btnActionCancelClick(this,'@UI_Presentation.wwwroot.Resources.Mesages.DoYouWantToLeaveThisForm')" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></Icon-Button>
                 </div>
             </div>
         </div>
-    </div> }
+    </div>
+}
 
 @*<script src="~/js/jquery-1.12.4.min.js"></script>
-<script src="~/js/PersianCalendar/TimePicker/jquery.timeselector.js"></script>*@
+    <script src="~/js/PersianCalendar/TimePicker/jquery.timeselector.js"></script>*@
 @*<script src="~/assets/js/scripts/forms/validation/form-validation.js"></script>*@
 
 <script>
@@ -149,6 +87,9 @@
     var customerEmptyMessage = '@UI_Presentation.wwwroot.Resources.Mesages.AddPeopleToRegisterReservation';
     var fillThisAddedServiceItem = '@UI_Presentation.wwwroot.Resources.Mesages.FillThisAddedServiceItem';
     var oneServiceShouldBeThere = '@UI_Presentation.wwwroot.Resources.Mesages.OneServiceShouldBeThereAtLeast';
+    var AreYouSureToDeleteCustomerService = '@UI_Presentation.wwwroot.Resources.Mesages.AreYouSureToDeleteCustomerService';
+    var TheEnterTimeHourIsNotValid = '@UI_Presentation.wwwroot.Resources.Mesages.TheEnterTimeHourIsNotValid';
     getPersonnel();
+    counter = 1;
     getServices();
 </script>

@@ -1155,7 +1155,6 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -1218,7 +1217,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1243,11 +1243,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
 
                     b.Property<string>("SystemCode")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("TBASPayTypeId")
-                        .HasColumnType("int");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -1263,7 +1260,8 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClerkServicesId")
+                    b.Property<int?>("ClerkServicesId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("FromTime")
@@ -1789,7 +1787,7 @@ namespace CRM_Core.DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("CRM_Core.Entities.Reservation.Reservation", "Reservation")
-                        .WithMany()
+                        .WithMany("ReservationDetails")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1853,6 +1851,11 @@ namespace CRM_Core.DataAccessLayer.Migrations
             modelBuilder.Entity("CRM_Core.Entities.Models.Personnel", b =>
                 {
                     b.Navigation("PersonnelSkils");
+                });
+
+            modelBuilder.Entity("CRM_Core.Entities.Reservation.Reservation", b =>
+                {
+                    b.Navigation("ReservationDetails");
                 });
 #pragma warning restore 612, 618
         }

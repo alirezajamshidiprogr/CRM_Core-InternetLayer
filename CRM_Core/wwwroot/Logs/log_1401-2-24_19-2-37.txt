@@ -1,0 +1,8 @@
+<LogInfo>
+    <Time>1401-2-24_19-2-37</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at UI_Presentation.Controllers.ReservationController.AddEditReservation(Nullable`1 reservationId, Boolean isEdit)</Target>
+    <ErrorMessage>Column 'isSalonCustomer' does not belong to table Table2.</ErrorMessage>
+</LogInfo>

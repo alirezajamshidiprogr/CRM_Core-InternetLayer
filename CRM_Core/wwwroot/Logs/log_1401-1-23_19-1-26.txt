@@ -1,0 +1,16 @@
+<LogInfo>
+    <Time>1401-1-23_19-1-26</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(DbContext _, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at CRM_Core.DataAccessLayer.Repositories.RepositoryBase`1.SaveChanges() in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.DataAccessLayer\Repositories\RepositoryBase.cs:line 54
+   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 reservationDetails) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 318</Target>
+    <ErrorMessage>An error occurred while updating the entries. See the inner exception for details.</ErrorMessage>
+</LogInfo>

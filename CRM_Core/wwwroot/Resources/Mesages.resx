@@ -123,6 +123,9 @@
   <data name="AnErrorHasAccuredInTheOperation" xml:space="preserve">
     <value>متاسفانه برنامه با خطا مواجه شد ، لطفا با پشتیبانی تماس بگیرید.</value>
   </data>
+  <data name="AreYouSureToDeleteCustomerService" xml:space="preserve">
+    <value>آیا از حذف این سرویس به مشتری اطمینان دارید ؟</value>
+  </data>
   <data name="ClickForUpload" xml:space="preserve">
     <value>برای آپلود کلیک کنید</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="ForThisMenuThereAreSomeActiveSubMenu" xml:space="preserve">
     <value>برای منوی انتخاب شده یک یا چند زیر منو فعال است ابتدا زیر منوها را غیر فعال کنید!</value>
   </data>
+  <data name="ForThisReservationHasRegisterdCheque" xml:space="preserve">
+    <value>برای این نوبت دهی قبلا  صورتحساب به ثبت رسیده است</value>
+  </data>
   <data name="FromDateAndToDateMenuAccessInNull" xml:space="preserve">
     <value>مقادیر ازتاریخ تا تاریخ را وارد کنید !</value>
   </data>
@@ -195,14 +201,26 @@
   <data name="TheActionEndedWithSuccess" xml:space="preserve">
     <value>تغییرات با موفقیت ثبت شد </value>
   </data>
+  <data name="TheEnterTimeHourIsNotValid" xml:space="preserve">
+    <value>ساعت و زمان وارد شده صحیح نیست</value>
+  </data>
+  <data name="TheEnterTimeIsNotValid" xml:space="preserve">
+    <value>فرمت زمان وارد شده صحیح نیست !</value>
+  </data>
   <data name="ThePhoneNumberIsDuplicated" xml:space="preserve">
     <value>شماره تلفن وارد شده تکراری است !</value>
+  </data>
+  <data name="ThereIsAReservationOnThisDateForThisCustomer" xml:space="preserve">
+    <value>برای این مشتری در این تاریخ نوبت دهی شده است آیا میخواهید ادامه دهید ؟</value>
   </data>
   <data name="ThereIsDuplicatedTelPhones" xml:space="preserve">
     <value>یک یا برخی از شماره تلفن ها تکراری است !</value>
   </data>
   <data name="thereIsNotAnyActiveMenu" xml:space="preserve">
     <value>برای کاربر انتخاب شده هیچ منوی فعالی انتخاب نشده است آیا ادامه می دهید ؟</value>
+  </data>
+  <data name="ThereIsRecordHistoryForThisReservationRecordHistory" xml:space="preserve">
+    <value>برای این نوبت دهی سابقه وجود دارد و قابل ویرایش و حذف نیست </value>
   </data>
   <data name="ThisActionIsNotRestore" xml:space="preserve">
     <value>این عملیات برگشت پذیر نیست...</value>

@@ -1,0 +1,18 @@
+<LogInfo>
+    <Time>1401-2-7_22-2-16</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at Microsoft.EntityFrameworkCore.Query.RelationalQueryableMethodTranslatingExpressionVisitor.TranslateLastOrDefault(ShapedQueryExpression source, LambdaExpression predicate, Type returnType, Boolean returnDefault)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.&lt;&gt;c__DisplayClass9_0`1.&lt;Execute&gt;b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.Execute[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.LastOrDefault[TSource](IQueryable`1 source)
+   at CRM_Core.Application.Services.Ef_ReservationService.CheckReservationHasAnyHistoryRecord(Int32 reservationId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core.Application\Services\Ef_ReservationService.cs:line 36
+   at UI_Presentation.Controllers.ReservationController.DeleteReservation(Int32 reservationId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 163</Target>
+    <ErrorMessage>Queries performing 'LastOrDefault' operation must have a deterministic sort order. Rewrite the query to apply an 'OrderBy' clause on the sequence before calling 'LastOrDefault'.</ErrorMessage>
+</LogInfo>

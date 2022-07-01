@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1401-2-27_17-2-37</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Nullable`1 reservationId, Boolean isEdit, List`1 reservationDetails, Boolean allowedDuplicatedReservation) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ReservationController.cs:line 305</Target>
+    <ErrorMessage>نوبت های منقضی شده قابل ویرایش نیستند </ErrorMessage>
+</LogInfo>

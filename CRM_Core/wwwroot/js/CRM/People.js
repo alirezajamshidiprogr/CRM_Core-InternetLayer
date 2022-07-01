@@ -40,7 +40,7 @@ function btnShowPeopleList() {
         url: "/People/Index",
         data: {},
         success: function (data) {
-            showPeopleList(true, 'isEditMode');
+            //showPeopleList(true, 'isEditMode');
             disablePageloadding();
             $("#formContainer").html(data);
             showPeopleList(true, 'isEditMode');
@@ -53,7 +53,6 @@ function btnShowPeopleList() {
 }
 
 function showPeopleList(quickSearch, state) {
-    debugger;
     enablePageloadding();
     if (quickSearch == 'true')
         var txtSearchValue = $("#txt-search").val();
@@ -464,7 +463,7 @@ function btnShowPeoplePopupClick(buttonTitle) {
     });
 }
 
-function selectPeople() {
+function btnselectPeopleClick() {
     var peopleId = getValueTableById('PeopleId');
     if (peopleId > 0) {
         $(document).ready(function () {

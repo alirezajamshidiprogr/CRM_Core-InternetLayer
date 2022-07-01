@@ -282,7 +282,7 @@
                             <a href="#" onclick="btnOpenEditPeople()"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Edit">ثبت</span></a>
                         </li>
                         <li>
-                            <a href="#" onclick="btnShowPeopleList()"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="List">لیست</span></a>
+                            <a href="#" onclick="btnShowPeopleList(this)"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="List">لیست</span></a>
                         </li>
                         <li>
                             <a href="page-users-view.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="View">مشاهده</span></a>
@@ -296,7 +296,7 @@
                             <a href="#" onclick="btnOpenEditReservation()"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Edit">@UI_Presentation.wwwroot.Resources.General.Title.AddReservation</span></a>
                         </li>
                         <li>
-                            <a href="page-users-list.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="List">لیست</span></a>
+                            <a href="#" onclick="btnShowPeopleServicesList(this)"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="List">@UI_Presentation.wwwroot.Resources.General.Title.ReservationList</span></a>
                         </li>
                         <li>
                             <a href="page-users-view.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="View">مشاهده</span></a>
@@ -352,9 +352,36 @@
                 <li class=" nav-item">
                     <a href="app-file-manager.html"><i class="menu-livicon" data-icon="save"></i><span class="menu-title" data-i18n="File Manager">مدیریت فایل</span></a>
                 </li>
+
                 <li class=" navigation-header">
-                    <span>رابط کاربری</span>
+                    <span> اطلاعات پایه </span>
                 </li>
+                <li class=" nav-item">
+                    <a href="#"><i class="menu-livicon" data-icon="share"></i><span class="menu-title" data-i18n="Miscellaneous">@UI_Presentation.wwwroot.Resources.General.Title.GeneralInfo</span></a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="#" onclick="btnOpenEditPersonnel(this)" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Coming Soon">@UI_Presentation.wwwroot.Resources.Reservation.Title.AddServiceToPersonnel</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Error">خطا</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a href="error-404.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="404">404</span></a>
+                                </li>
+                                <li>
+                                    <a href="error-500.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="500">500</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="page-not-authorized.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Not Authorized">دسترسی غیرمجاز</span></a>
+                        </li>
+                        <li>
+                            <a href="page-maintenance.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Maintenance">تعمیرات</span></a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class=" nav-item">
                     <a href="#"><i class="menu-livicon" data-icon="retweet"></i><span class="menu-title" data-i18n="Content">محتوا</span></a>
                     <ul class="menu-content">
@@ -596,31 +623,6 @@
                         </li>
                         <li>
                             <a href="auth-lock-screen.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Lock Screen">قفل صفحه</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" nav-item">
-                    <a href="#"><i class="menu-livicon" data-icon="share"></i><span class="menu-title" data-i18n="Miscellaneous">متفرقه</span></a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="page-coming-soon.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Coming Soon">به زودی</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Error">خطا</span></a>
-                            <ul class="menu-content">
-                                <li>
-                                    <a href="error-404.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="404">404</span></a>
-                                </li>
-                                <li>
-                                    <a href="error-500.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="500">500</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="page-not-authorized.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Not Authorized">دسترسی غیرمجاز</span></a>
-                        </li>
-                        <li>
-                            <a href="page-maintenance.html" target="_blank"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Maintenance">تعمیرات</span></a>
                         </li>
                     </ul>
                 </li>
@@ -1062,6 +1064,7 @@
     <script src="~/js/CRM/Role.js"></script>
     <script src="~/js/CRM/Contact.js"></script>
     <script src="~/js/CRM/Personel.js"></script>
+    <script src="~/js/CRM/Baseinfo.js"></script>
 
     <script>
         var deleteMessageQuestion = '@UI_Presentation.wwwroot.Resources.Mesages.DeleteMessageQuestion';

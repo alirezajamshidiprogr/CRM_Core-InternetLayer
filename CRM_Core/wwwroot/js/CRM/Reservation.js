@@ -1,16 +1,21 @@
 ﻿var salonServices = null;
 var personnels = [];
-var counter = 1;
+var counterReservationReservation = 1;
 var fillThisAddedServiceItem = ''
 var oneServiceShouldBeThere = ''
+var AreYouSureToDeleteCustomerService;
+var cmbServiceOptions = '';
+var TheEnterTimeHourIsNotValid = '';
+var isEditCustomerService = false;
+var isEditReservation = false;
+var allowedDuplicatedReservation = false;
 
 function btnOpenEditReservation() {
-    var reservationId = getValueTableById('ReservationId');
+    var reservationId = getValueTableById('ReservationID');
     var isEdit = false;
     if (reservationId > 0)
         isEdit = true;
 
-    enablePageloadding();
     $.ajax({
         type: "POST",
         url: "/Reservation/AddEditReservation",
@@ -18,8 +23,17 @@ function btnOpenEditReservation() {
             reservationId: reservationId,
             isEdit: isEdit,
         },
-        success: function (data) {
+        beforeSend: function () {
+            enablePageloadding();
+        },
+        complete: function () {
             disablePageloadding();
+        },
+        success: function (data) {
+            if (data.errorMessage != '' && data.errorMessage != undefined) {
+                ErrorMessage(data.errorMessage);
+                return;
+            }
             $("#formContainer").html(data);
         },
         error: function (httpRequest, textStatus, errorThrown) {
@@ -28,18 +42,18 @@ function btnOpenEditReservation() {
     });
 }
 
-function btnAddEditReservation(fillMandatoroyMessage) {
+function btnAddEditReservation(e, fillMandatoroyMessage) {
     var introducId = $("#PeopleSelector_Id")[0].innerText;
 
     if (introducId == '') {
         ErrorMessage(customerEmptyMessage);
         return;
     }
-   
+
     var customerServices = new Array();
     var reservationId = $('#ReservationId').val();
 
-    for (var i = 1; i <= counter; i++) {
+    for (var i = 1; i <= counterReservation; i++) {
         Id = reservationId;
         var peopleSelector_Id = $("#PeopleSelector_Id")[0].innerText;
         var txtOrderDate = $('#txtOrderDate').val();
@@ -50,10 +64,10 @@ function btnAddEditReservation(fillMandatoroyMessage) {
         var isSalonCustomer;
         let elem = "chbCustomerState_" + i;
         if (document.getElementById(elem).hasAttribute("checked"))
-            isSalonCustomer = true ;
+            isSalonCustomer = true;
         else
-            isSalonCustomer = false ;
-        customerServices.push({ CustomerId: peopleSelector_Id, P_ReservationDate: txtOrderDate, ClerkServicesId: txtServices, isSalonCustomer: isSalonCustomer, FromTime: txtfromTime, ToTime: txttoTime, Description:txtDescription });
+            isSalonCustomer = false;
+        customerServices.push({ CustomerId: peopleSelector_Id, P_ReservationDate: txtOrderDate, ClerkServicesId: txtServices, isSalonCustomer: isSalonCustomer, FromTime: txtfromTime, ToTime: txttoTime, Description: txtDescription });
     }
 
     var isEdit = false;
@@ -67,15 +81,44 @@ function btnAddEditReservation(fillMandatoroyMessage) {
         data: {
             isEdit: isEdit,
             reservationDetails: customerServices,
+            reservationId: reservationId,
+            allowedDuplicatedReservation: allowedDuplicatedReservation ,
+        },
+        beforeSend: function () {
+            EnableProcess(e, true);
+        },
+        complete: function () {
+            EnableProcess(e, false);
+            hasIntroduction = false;
+            validTelMobile = false;
         },
         success: function (result) {
-            debugger;
             if (result.errorMessage != '' && result.errorMessage != undefined) {
                 ErrorMessage(result.errorMessage);
                 return;
             }
+            debugger;
+            if (!allowedDuplicatedReservation && result.isQuestionMessage != '' && result.isQuestionMessage != undefined) {
+                swal({
+                    title: question,
+                    text: result.message,
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#f44336',
+                    cancelButtonColor: '#777',
+                    confirmButtonText: yesTitle,
+                    cancelButtonText: noTitle
+                }).then(function () {
+                    allowedDuplicatedReservation = true;
+                    btnAddEditReservation(e, fillMandatoroyMessage);
+                },
+                ).catch(swal.noop);
+                return;
+            }
 
             SuccessMessage(result.message);
+            counterReservation = 1;
+            ShowDashboard(e);
         },
         error: function (result) {
             ErrorMessage();
@@ -83,24 +126,28 @@ function btnAddEditReservation(fillMandatoroyMessage) {
     });
 }
 
-function showReservationList(quickSearch, state) {
-    enablePageloadding();
+function showReservationList(e, quickSearch,isSelectMode) {
+    debugger;
     var reservation = '';
 
-    if (quickSearch == 'true')
+    if (quickSearch)
         var txtSearchValue = $("#txt-search").val();
-    else
+    else 
         reservation = {
             CustomerFirstName: $("#txtcustomerName").val(),
             CustomerFamily: $("#txtCustomerFamily").val(),
-            TBASServiceId: $("#cmbServiceType").val(),
-            Date: $("#txtDate").val(),
-            ReservationSystemCode: $("#txtFromTime").val(),
-            FromTime: $("#txtToTime").val(),
-            ToTime: $("#txtReservationSystemCode").val(),
+            FromReservationDate: $("#txtFromReservationDate").val(),
+            ToReservationDate: $("#txtToReservationDate").val(),
+            SystemCode: $("#txtReservationSystemCode").val(),
+            PeopleCode: $("#txtPeopleSystemCode").val(),
+            IsExpired: document.getElementById("cmbExpiredStatus").value,
+            HasCheque: document.getElementById("cmbHasCheque").value,
             PageNumber: pageNumber,
         };
+    GetReservationData(quickSearch, txtSearchValue, reservation, isSelectMode);
+}
 
+function GetReservationData(quickSearch, txtSearchValue, reservation,isSelectMode) {
     $.ajax({
         type: "POST",
         url: "/Reservation/FillReservationTableData",
@@ -108,36 +155,46 @@ function showReservationList(quickSearch, state) {
             quickSearch: quickSearch,
             fullName: txtSearchValue,
             searchParams: reservation,
-            state: state
+            isSelectMode: isSelectMode == '' || isSelectMode == undefined ? false : isSelectMode ,
+        },
+        beforeSend: function () {
+            enablePageloadding();
+        },
+        complete: function () {
+            disablePageloadding();
         },
         success: function (result) {
             if (result.errorMessage != undefined) {
                 ErrorMessage(result.errorMessage);
                 return;
             }
-            disablePageloadding();
             $('#ReservationList').html(result);
             $('#form-reservationSearch').modal('hide');
         },
-        error: function () {
+        error: function (result) {
             disablePageloadding();
             ErrorMessage();
         }
     });
 }
 
-function btnShowPeopleServicesList() {
-    enablePageloadding();
+function btnShowPeopleServicesList(e) {
     $.ajax({
         type: "GET",
         url: "/Reservation/Index",
         data: {},
-        success: function (data) {
-            disablePageloadding();
-            $("#formContainer").html(data);
+        beforeSend: function () {
+            enablePageloadding();
         },
-        error: function (httpRequest, textStatus, errorThrown) {
+        complete: function () {
             disablePageloadding();
+        },
+        success: function (data) {
+            showReservationList(e,true);
+            $("#formContainer").html(data);
+
+        },
+        error: function (result) {
             ErrorMessage();
         }
     });
@@ -170,34 +227,37 @@ function getCallbackPeopleSelect() {
 }
 
 function btnDeleteReservation() {
-    var reservationId = getValueTableById('ReservationId');
+    var reservationId = getValueTableById('ReservationID');
     swal({
         title: deleteMessageQuestion,
-        text: thisActionIsNotRestore,
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#f44336',
         cancelButtonColor: '#777',
-        confirmButtonText: confirmDeleteMessage
+        confirmButtonText: confirmDeleteMessage,
+        cancelButtonText: noTitle
     }).then(function () {
-        enablePageloadding();
         $.ajax({
             type: "POST",
             url: "/Reservation/DeleteReservation",
             data: {
                 reservationId: reservationId,
             },
+            beforeSend: function () {
+                enablePageloadding();
+            },
+            complete: function () {
+                disablePageloadding();
+            },
             success: function (result) {
-                if (result.result != '') {
-                    ErrorMessage(result.result);
+                if (result.errorMessage != '') {
+                    ErrorMessage(result.errorMessage);
                     return;
                 }
-                disablePageloadding();
                 SuccessMessage(result.message);
-                showPeopleList(true);
+                showReservationList(e,true);
             },
             error: function (result) {
-                disablePageloadding();
                 ErrorMessage();
             }
         });
@@ -227,17 +287,22 @@ function getPersonnel() {
 }
 
 function fillPersonnelCombo(selectedValue) {
-    var comboBox = document.getElementById("cmbPersonnel_" + counter);
-    comboBox.innerHTML = '';
-    for (var j = 0; j < personnels.length; j++) {
-        var option = document.createElement("option");
-        option.value = personnels[j].value;
-        option.text = personnels[j].text;
-        if (selectedValue == personnels[j].value)
-            option.setAttribute('selected', 'selected');
-        comboBox.appendChild(option);
-    }
+    if (isEditCustomerService && isEditReservation == 'True' ) return;
+    else {
+        if (counterReservation == "0")
+            counterReservation = 1; 
 
+        var comboBox = document.getElementById("cmbPersonnel_" + counterReservation);
+        comboBox.innerHTML = '';
+        for (var j = 0; j < personnels.length; j++) {
+            var option = document.createElement("option");
+            option.value = personnels[j].value;
+            option.text = personnels[j].text;
+            if (selectedValue == personnels[j].value)
+                option.setAttribute('selected', 'selected');
+            comboBox.appendChild(option);
+        }
+    }
 }
 
 function getServices() {
@@ -273,7 +338,6 @@ function fillServiceByPersonnel(e, isOnchangecmbPersonnel) {
     var comboBox = document.getElementById("cmbServieces_" + result);
     $("#cmbServieces_" + result).html("");
     for (var j = 0; j < salonServices.length; j++) {
-        debugger;
         if (salonServices[j].personnelId == parseInt(personnelId) || salonServices[j].personnelId == null) {
             var option = document.createElement("option");
             option.value = salonServices[j].clerkServiceId;
@@ -285,73 +349,91 @@ function fillServiceByPersonnel(e, isOnchangecmbPersonnel) {
         }
     }
 
-    if (isOnchangecmbPersonnel)
+    if (isOnchangecmbPersonnel && !isEditCustomerService)
         fillPersonnelCombo(e.value);
 }
 
 function addServiceItemsDiv() {
-    var txtfromTime = $('txtFromTime_' + counter).val(); 
-    var txttoTime = $('txtToTime_' + counter).val(); 
-    var txtServices = document.getElementById("cmbServieces_" + counter).value;   
-    var txtPersonnel = document.getElementById("cmbPersonnel_" + counter).value ; 
+    var txtfromTime = $('txtFromTime_' + counterReservation).val();
+    var txttoTime = $('txtToTime_' + counterReservation).val();
+    var txtServices = document.getElementById("cmbServieces_" + counterReservation).value;
+    var txtPersonnel = document.getElementById("cmbPersonnel_" + counterReservation).value;
 
-    if (txtfromTime == '' || txttoTime == '' || (txtServices == '' || txtServices == 0 ) || (txtPersonnel == '' || txtPersonnel  == 'null' )) {
+    if (txtfromTime == '' || txttoTime == '' || (txtServices == '' || txtServices == 0) || (txtPersonnel == '' || txtPersonnel == 'null')) {
         ErrorMessage(fillThisAddedServiceItem);
         return;
     }
 
-    counter += 1;
+
+    var txtfromTime = document.getElementById("txtFromTime_" + counterReservation);
+    txtfromTime.setAttribute("value", $("#txtFromTime_" + counterReservation).val());
+    var txttoTime = document.getElementById("txtToTime_" + counterReservation);
+    txttoTime.setAttribute("value", $("#txtToTime_" + counterReservation).val());
+
+    if (!ValidHhMmTime(txtfromTime.value) || !ValidHhMmTime(txttoTime.value)) {
+        ErrorMessage('TheEnterTimeHourIsNotValid');
+        return;
+    }
+
+
+    var cmbServiceValue = document.getElementById("cmbServieces_" + counterReservation).value;
+    cmbServiceOptions = document.getElementById("cmbServieces_" + counterReservation).options;
+    var optionCmbService = new Array();
+    for (var i = 0; i < cmbServiceOptions.length; i++) {
+        optionCmbService.push({ value: cmbServiceOptions[i].value, text: cmbServiceOptions[i].text });
+    }
+
+    var comboBox = document.getElementById("cmbServieces_" + counterReservation);
+    $("#cmbServieces_" + counterReservation).html("");
+    for (var j = 0; j < optionCmbService.length; j++) {
+        var option = document.createElement("option");
+        option.value = optionCmbService[j].value;
+        option.text = optionCmbService[j].text;
+        if (optionCmbService[j].value == cmbServiceValue)
+            option.setAttribute('selected', 'selected');
+
+        comboBox.appendChild(option);
+    }
+    counterReservation = parseInt(counterReservation) + 1;
     var parentDiv = document.getElementById("divServices");
-    var divId = "divItem_" + counter;
-    var cmbPersonnelId = 'cmbPersonnel_' + counter;
-    var cmbServiceId = 'cmbServieces_' + counter;
-    var txtFromTime = 'txtFromTime_' + counter;
-    var txtToTime = 'txtToTime_' + counter;
-    var chbCustomerState = 'chbCustomerState_' + counter;
-    var chbCustomerState = 'chbCustomerState_' + counter;
-    var btndeleteItemId = 'btndeleteItem_' + counter;
+    var divId = "divItem_" + counterReservation;
+    var cmbPersonnelId = 'cmbPersonnel_' + counterReservation;
+    var cmbServiceId = 'cmbServieces_' + counterReservation;
+    var txtFromTime = 'txtFromTime_' + counterReservation;
+    var txtToTime = 'txtToTime_' + counterReservation;
+    var chbCustomerState = 'chbCustomerState_' + counterReservation;
+    var btndeleteItemId = 'btndeleteItem_' + counterReservation;
 
     var html = `<div id='${divId}' data-repeater-item=''>
-                <div class='row justify-content-between' >
-                <div class='col-md-2 col-sm-12 form-group'>
-                <label for='personnel'>پرسنل</label>
-                <select id='${cmbPersonnelId}' onchange='fillServiceByPersonnel(this,true)' class='form-control'>
-                </select>
-                </div>
-                <div class='col-md-2 col-sm-12 form-group'>
-                <label for='cmbServiceId'>خدمات</label>
-                <select id='${cmbServiceId}' onchange='fillServiceByPersonnel(this,false)' class='form-control'>
-                </select>
-                </div>
-                <div class='col-md-2 col-sm-12 form-group'>
-                <label for='txtFromTime'>از ساعت</label>
-                <input class='form-control time' id='${txtFromTime}' type='text' name='time' onchange="onTimeChageText(this,'FromTime')" autocomplete="off">
-                </div>
-                <div class='col-md-2 col-sm-12 form-group'>
-                <label for='txtFromTime'>تاساعت</label>
-                <input class='form-control time' id='${txtToTime}' type='text' name='time'  onchange="onTimeChageText(this,'ToTime')" autocomplete="off">
-                </div>
-                <div class='col-md-2 col-sm-12 form-group'>
+                <div class="row justify-content-between">
+                <div style="width:17%; float: right; margin-left: 12px;"><select id='${cmbPersonnelId}' onchange="fillServiceByPersonnel(this,true)" class="form-control" aria-invalid="false"></select></div>
+                <div style="width:17%; float: right; margin-left: 12px;"><select  id='${cmbServiceId}' onchange="" class="form-control" aria-invalid="false"></select></div>
+                <div style="width: 8%; float: right; margin-left: 11px;"><input class="form-control" id='${txtFromTime}' type="text" placeholder="از ساعت" aria-invalid="false" value=""></div>
+                <div style="width: 8%; float: right; margin-left: 11px;"><input class="form-control" id='${txtToTime}' type="text" placeholder="تا ساعت" aria-invalid="false" value=""></div>
+                <div class="col-md-2 col-sm-12 form-group">
                 <label for='txtToTime'>نوع مشتری</label>
                 <fieldset>
                 <div class="checkbox checkbox-primary checkbox-glow">
-                <input type='checkbox' id='${chbCustomerState}' onchange="changeStateCustomer(this)">
+                <input type="checkbox" id='${chbCustomerState}' onchange="changeStateCustomer(this)">
                 <label for='${chbCustomerState}'>مشتری شخصی</label>
                 </div>
                 </fieldset>
                 </div>
-                <div class='col-md-2 col-sm-12 form-group d-flex align-items-center pt-2'>
-                <button id='${btndeleteItemId}' class='btn btn-danger text-nowrap px-1' data-repeater-delete='' type='button' onclick='deleteServiceItemsDiv(this)'>
-                <i class='bx bx-x'></i>حذف</button>
+                <div id="id_divRelationsBottons" class="col-md-3 col-sm-12 form-group">
+                <icon-button id="btnAddService"><button type="button" style="margin-left:7px;" onclick="addServiceItemsDiv()" class="btn btn-primary"><i class="bx bxs-plus-circle"></i>&nbsp;افزودن </button></icon-button>
+                <icon-button><button id=${btndeleteItemId} type="button" style="margin-left:7px;" onclick="deleteServiceItemsDiv(this)" class="btn btn-danger"><i class="bx bxs-minus-circle"></i>&nbsp;حذف </button></icon-button>
                 </div>
                 </div>
                 <hr>
-</div>`;
+                </div>`;
 
-
-
+    isEditCustomerService = false;
+    // یه تابع بنوس قبل از اینکه اد کنه سلیکت ایندکس قبلی ها را تشخیص بده و صفر نکنه 
     parentDiv.innerHTML += html;
     fillPersonnelCombo();
+
+
+    //   fillServiceByPersonnel(null, null, cmbServiceOptions)
 }
 
 function changeStateCustomer(e) {
@@ -368,18 +450,31 @@ function deleteServiceItemsDiv(e, isFirstDiv) {
         return;
     }
 
-    let value = e.id.indexOf("_");
-    let result = e.id.substr(value + 1, 2);
-    var divServices = document.getElementById("divServices");
-    var divChild = document.getElementById("divItem_" + result);
+    swal({
+        title: question,
+        text: 'آیا از حذف این سرویس به مشتری اطمینان دارید ؟',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#f44336',
+        cancelButtonColor: '#777',
+        confirmButtonText: yesTitle,
+        cancelButtonText: noTitle
+    }).then(function () {
+        let value = e.id.indexOf("_");
+        let result = e.id.substr(value + 1, 2);
+        var divServices = document.getElementById("divServices");
+        var divChild = document.getElementById("divItem_" + result);
 
-    for (var i = 0; i < divServices.childNodes.length; i++) {
-        if (divServices.childNodes[i].id == divChild.id) {
-            divServices.removeChild(divServices.childNodes[i]);
-            counter -= 1;
-            break;
+        for (var i = 0; i < divServices.childNodes.length; i++) {
+            if (divServices.childNodes[i].id == divChild.id) {
+                divServices.removeChild(divServices.childNodes[i]);
+                counterReservation -= 1;
+                break;
+            }
         }
-    }
+    },
+    ).catch(swal.noop);
+    return;
 }
 
 function onTimeChageText(e, state) {

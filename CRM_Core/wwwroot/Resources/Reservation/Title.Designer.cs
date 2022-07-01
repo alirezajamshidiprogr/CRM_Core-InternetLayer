@@ -70,6 +70,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تخصیص سرویس به پرسنل.
+        /// </summary>
+        public static string AddServiceToPersonnel {
+            get {
+                return ResourceManager.GetString("AddServiceToPersonnel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کارمند.
         /// </summary>
         public static string Clerk {
@@ -124,7 +133,7 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تاریخ.
+        ///   Looks up a localized string similar to تاریخ نوبت دهی.
         /// </summary>
         public static string Date {
             get {
@@ -169,6 +178,42 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to صورت حساب.
+        /// </summary>
+        public static string HasCheque {
+            get {
+                return ResourceManager.GetString("HasCheque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فاقد صورت حساب.
+        /// </summary>
+        public static string HasNotCheque {
+            get {
+                return ResourceManager.GetString("HasNotCheque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to منقضی شده.
+        /// </summary>
+        public static string IsExpired {
+            get {
+                return ResourceManager.GetString("IsExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دارای اعتبار.
+        /// </summary>
+        public static string IsNotExpired {
+            get {
+                return ResourceManager.GetString("IsNotExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مشتری شخصی.
         /// </summary>
         public static string IsPersonalCustomer {
@@ -205,11 +250,29 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد نوبت دهی دستی.
+        /// </summary>
+        public static string ReservationManualCode {
+            get {
+                return ResourceManager.GetString("ReservationManualCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to جستجوی نوبت دهی.
         /// </summary>
         public static string ReservationSearch {
             get {
                 return ResourceManager.GetString("ReservationSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to وضعیت نوبت .
+        /// </summary>
+        public static string ReservationStatus {
+            get {
+                return ResourceManager.GetString("ReservationStatus", resourceCulture);
             }
         }
         
@@ -228,6 +291,15 @@ namespace UI_Presentation.wwwroot.Resources.Reservation {
         public static string SalonService {
             get {
                 return ResourceManager.GetString("SalonService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to انتخاب مشتری.
+        /// </summary>
+        public static string SelectCustomer {
+            get {
+                return ResourceManager.GetString("SelectCustomer", resourceCulture);
             }
         }
         

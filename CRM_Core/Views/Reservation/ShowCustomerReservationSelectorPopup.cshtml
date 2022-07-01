@@ -1,0 +1,19 @@
+﻿@{ 
+    ViewData["isSelectMode"] = true;
+
+}
+
+<div class="row">
+    <div class="col-lg-2">
+       <short-TextBox id="txtSearchReservationSystemCode" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationSystemCode"></short-TextBox> 
+       <short-TextBox id="txtSearchCustomerCode" label-title="@UI_Presentation.wwwroot.Resources.People.Title.SystemCode"></short-TextBox> 
+       <short-TextBox id="txtCustomerName" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Name"></short-TextBox> 
+       <short-TextBox id="txtCustomerFamily" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Family"></short-TextBox> 
+    </div>
+    <div class="col-lg-10"  id="ReservationList">>
+        @await Html.PartialAsync("~/Views/Reservation/FillReservationTableData.cshtml")
+    </div>
+    <div class="col-lg-12">
+        <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.SearchBotton)" id="btnReservationSearch" on-click-event="btnReservationSearch(this)" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Search"></Icon-Button>
+    </div>
+</div>

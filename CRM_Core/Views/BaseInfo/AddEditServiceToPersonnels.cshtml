@@ -1,0 +1,87 @@
+﻿@*<link href="~/js/PersianCalendar/TimePicker/jquery.timeselector.css" rel="stylesheet" />*@
+
+@using CRM_Core.Infrastructure;
+@using CRM_Core.Entities.Reservation
+
+@model CRM_Core.Entities.Reservation.Reservation
+
+@{
+    bool isEdit = ViewBag.isEdit == null ? false : (bool)ViewBag.isEdit;
+
+    <div class="card-content">
+        <div class="card-body">
+            <FormTitle form_title="@(isEdit ? UI_Presentation.wwwroot.Resources.Reservation.Title.EditReservation: UI_Presentation.wwwroot.Resources.Reservation.Title.AddReservation )"></FormTitle>
+            <ul class="nav nav-tabs mb-2" role="tablist">
+                <tab-Item-li title="@UI_Presentation.wwwroot.Resources.People.Title.GeneralInfoPeople" href="ReservationInfo" class-name="bx bxs-calendar"></tab-Item-li>
+                <tab-Item-li title="@UI_Presentation.wwwroot.Resources.Reservation.Title.SelectCustomer" href="intorduction" class-name="bx bxs-user-voice mr-25"></tab-Item-li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane fade active show" id="ReservationInfo" role="tabpanel" aria-labelledby="account-tab">
+
+                    @*<Profile-Image profile-title="@(isEdit ? Model.People.FirstName + " - " + Model.People.LastName : string.Empty)" on-click-change=""></Profile-Image>*@
+
+                    <form id="reservationForm" novalidate>
+                        <div class="row">
+                            <div class="col-12">
+                                <FormTitle form_title="@UI_Presentation.wwwroot.Resources.Reservation.Title.ReservationInfo"></FormTitle>
+                            </div>
+
+                            <div class="col-6 col-sm-3">
+                                @Html.Hidden("ReservationId", Model.Id)
+                                <DateTime-TextBox id="txtOrderDate" label-title="@UI_Presentation.wwwroot.Resources.Reservation.Title.Date" value="@(isEdit ? Model.P_ReservationDate : string.Empty)"></DateTime-TextBox>
+                            </div>
+
+                            <div id="customerServices" style="width:100% !important; ">
+                                @await Html.PartialAsync("~/Views/Reservation/EditCustomerServicePopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1},{2}", isEdit.ToString(), ((int?)ViewBag.PeopleID).ToString(), ((int)Enums.PeopleType.people).ToString()) } })
+                            </div>
+
+                            <div class="col-12">
+                                <Text-Area id="txtDescription" label-title="@UI_Presentation.wwwroot.Resources.People.Title.Description" value="@(isEdit ? Model.Description : string.Empty)"></Text-Area>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="intorduction" role="tabpanel" aria-labelledby="information-tab">
+                    <div class="card-body">
+                        @await Html.PartialAsync("~/Views/People/ShowPeopleSelectorPopup.cshtml", null, new ViewDataDictionary(ViewData) { { "param", string.Format("{0},{1}", ((int)Enums.states.Reservation).ToString(), Model.PeopleId.ToString()) } })
+                    </div>
+                </div>
+                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                    <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.RegisterBotton)" id="btnAddEditPeople" on-click-event="btnAddEditReservation(this,'@UI_Presentation.wwwroot.Resources.Mesages.ForThisCustomerHasNotRegisterAnyIntroducePeople')" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Add"></Icon-Button>
+                    <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.CancelBotton)" id="btnCancel" on-click-event="btnActionCancelClick(this,'@UI_Presentation.wwwroot.Resources.Mesages.DoYouWantToLeaveThisForm')" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Cancel"></Icon-Button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+@*<script src="~/js/jquery-1.12.4.min.js"></script>
+<script src="~/js/PersianCalendar/TimePicker/jquery.timeselector.js"></script>*@
+@*<script src="~/assets/js/scripts/forms/validation/form-validation.js"></script>*@
+
+<script>
+    $(".txtDate").datepicker({
+        dateFormat: './dd/mm/yy.html',
+        dateFormat: 'yy/mm/dd',
+        altField: '#alternate2',
+        altFormat: 'DD، d MM yy'
+    });
+
+    //$(function () {
+    //    $('[name="time"]').timeselector({
+    //        step: 1
+    //    })
+    //});
+</script>
+<script>
+    var customerEmptyMessage = '@UI_Presentation.wwwroot.Resources.Mesages.AddPeopleToRegisterReservation';
+    var fillThisAddedServiceItem = '@UI_Presentation.wwwroot.Resources.Mesages.FillThisAddedServiceItem';
+    var oneServiceShouldBeThere = '@UI_Presentation.wwwroot.Resources.Mesages.OneServiceShouldBeThereAtLeast';
+    var AreYouSureToDeleteCustomerService = '@UI_Presentation.wwwroot.Resources.Mesages.AreYouSureToDeleteCustomerService';
+    var TheEnterTimeHourIsNotValid = '@UI_Presentation.wwwroot.Resources.Mesages.TheEnterTimeHourIsNotValid';
+    getPersonnel();
+    getServices();
+</script>

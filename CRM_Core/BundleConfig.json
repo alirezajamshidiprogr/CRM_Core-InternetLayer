@@ -62,6 +62,7 @@
       "wwwroot/js/CRM/Contact.js",
       "wwwroot/js/Login/Login.js",
       "wwwroot/js/CRM/Management.js",
+      "wwwroot/js/CRM/BaseInfo.js",
       "wwwroot/js/PersianCalendar/js/persian-datepicker.js",
       "wwwroot/js/PersianCalendar/js/DateTimePicker.js"
     ],

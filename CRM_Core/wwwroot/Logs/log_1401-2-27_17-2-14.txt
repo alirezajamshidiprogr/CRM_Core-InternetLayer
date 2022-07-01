@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1401-2-27_17-2-14</Time>
+    <UserInfo>alireza</UserInfo>
+    <Target>   at UI_Presentation.Controllers.ReservationController.AddEditReservationMethod(Boolean isEdit, List`1 reservationDetails, Boolean allowedDuplicatedReservation)</Target>
+    <ErrorMessage>نوبت های منقضی شده قابل ویرایش نیستند </ErrorMessage>
+</LogInfo>

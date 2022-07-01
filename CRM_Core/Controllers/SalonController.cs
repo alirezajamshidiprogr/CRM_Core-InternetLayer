@@ -189,8 +189,9 @@ namespace UI_Presentation.Controllers
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
+            bool saveException = false;
             if (!ModelState.IsValid)
-                throw new CustomeException("Model Is Not Valid", true, null);
+                throw new CustomeException("Model Is Not Valid", true, null, ref saveException);
 
             try
             {
@@ -234,8 +235,10 @@ namespace UI_Presentation.Controllers
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
+            bool saveException = false;
+
             if (!ModelState.IsValid)
-                throw new CustomeException("Model Is Not Valid", true, null);
+                throw new CustomeException("Model Is Not Valid", true, null, ref saveException);
 
             try
             {

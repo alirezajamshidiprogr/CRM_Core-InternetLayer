@@ -292,6 +292,8 @@ namespace CRM_Core.Controllers
         {
             string message = string.Empty;
             string errorMessage = string.Empty;
+            bool saveException = false ;
+
             ModelState["people.Id"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
            
             if (ModelState["people.MarriedType"].ValidationState.ToString() == "Invalid")
@@ -316,13 +318,13 @@ namespace CRM_Core.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    throw new CustomeException("Model Is Not Valid", true, null);
+                    throw new CustomeException("Model Is Not Valid", true, null,ref saveException);
 
                 if ((!isEdit && _peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0))
-                    throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage);
+                    throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage,ref saveException);
 
                 if (checkRepeatedTels && checkRepeatedTelPhones(otherRelationShips))
-                    throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles, UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones, true, null, ref errorMessage);
+                    throw new CustomeException(UI_Presentation.wwwroot.Resources.Mesages.DoesNotAlllowedToRegisterRepeatedMobiles, UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones, true, null, ref errorMessage, ref saveException);
 
                 people.M_Birthday = people.P_Birthday != null ? people.P_Birthday.ToDateTime() : (DateTime?)null;
                 people.M_MariedDate = people.P_MariedDate != null ? people.P_MariedDate.ToDateTime() : (DateTime?)null;
@@ -330,7 +332,7 @@ namespace CRM_Core.Controllers
                 if (isEdit)
                 {
                     if (people.Id == people.IntroduceId) // PEOPLE_ID CAN NOT BE SAME AS INTRODUCE ID 
-                        throw new CustomeException("PeopleID CanNot Be Same As IntroduceId...", UI_Presentation.wwwroot.Resources.Mesages.PeopleCanNotBeSameAsIntroductionPeople, true, null,ref errorMessage);
+                        throw new CustomeException("PeopleID CanNot Be Same As IntroduceId...", UI_Presentation.wwwroot.Resources.Mesages.PeopleCanNotBeSameAsIntroductionPeople, true, null,ref errorMessage, ref saveException);
 
                     PeopleVirtual peopleVirtualOld = _peopleVirtualService.GetPeopleVirtualByPeopleId(people.Id).FirstOrDefault();
                     Address addressOld = _addressService.GetAddressByPeopleId(people.Id).FirstOrDefault();
@@ -338,7 +340,7 @@ namespace CRM_Core.Controllers
 
                     People getManualCodePeople = _peopleService.GetPeopleByManualCode(people.ManualCode).OrderBy(item=>item.Id).LastOrDefault();
                     if ((getManualCodePeople != null  && getManualCodePeople.Id != people.Id && _peopleService.GetPeopleByManualCode(people.ManualCode).Count() > 0))
-                        throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage);
+                        throw new CustomeException("ManualCode Is Exists In Table People...", UI_Presentation.wwwroot.Resources.Mesages.ManaulCodeIsDuplicated, true, null, ref errorMessage, ref saveException);
 
 
                     if (peopleVirtualOld != null)
@@ -396,7 +398,7 @@ namespace CRM_Core.Controllers
                         _telPhonesService.DeleteTelPhones(getTelPhones);
 
                         if (checkRepeatedTels && checkRepeatedTelPhones(otherRelationShips))
-                            throw new CustomeException("There Is Duplicated Tel Phones ", UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones , true, null, ref errorMessage);
+                            throw new CustomeException("There Is Duplicated Tel Phones ", UI_Presentation.wwwroot.Resources.Mesages.ThereIsDuplicatedTelPhones , true, null, ref errorMessage, ref saveException);
 
                         _telPhonesService.AddTelPhones(otherRelationShips, people.Id, (int)Enums.PeopleType.people);
                     }
@@ -441,7 +443,7 @@ namespace CRM_Core.Controllers
             catch (Exception ex)
             {
                 Utility.RegisterErrorLog(ex, SessionProperty.UserName);
-                return Json(new { errorMessage = errorMessage != null ? errorMessage : UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
+                return Json(new { errorMessage = errorMessage != null && errorMessage != string.Empty ? errorMessage : UI_Presentation.wwwroot.Resources.Mesages.AnErrorHasAccuredInTheOperation });
             }
 
             return Json(new { message = message, errorMessage = errorMessage });

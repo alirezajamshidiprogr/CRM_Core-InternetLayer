@@ -1,0 +1,131 @@
+﻿@using UI_Presentation.Models ;
+@using CRM_Core.Entities.Models;
+
+@{
+    bool isEdit = ViewBag.isEdit == null ? false : (bool)ViewBag.isEdit;
+    List<SelectListItem> selectedListItemClerkService = new List<SelectListItem>();
+    List<SelectListItem> personnels = new List<SelectListItem>();
+    List<TempClerkService> services = new List<TempClerkService>();
+    List<TempReservationDetails> reservationDetails = new List<TempReservationDetails>();
+    if (isEdit)
+    {
+        personnels = ((List<SelectListItem>)ViewBag.personnels).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Text, Value = item.Value }; });
+        services = ((List<TempClerkService>)ViewBag.services).ToList();
+        reservationDetails = ((List<TempReservationDetails>)ViewBag.reservationDetails).ToList();
+    }
+
+    int rowNum = 0;
+    string divId = string.Empty;
+    string cmbPersonnelName = string.Empty;
+    string cmbServiecesName = string.Empty;
+    string txtFromTimeName = string.Empty;
+    string txtToTimeName = string.Empty;
+    string chbCustomerStateName = string.Empty;
+    string btnDeleteService = string.Empty;
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    @UI_Presentation.wwwroot.Resources.Reservation.Title.ServicesListeCustomer
+                </h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="divServices" data-recmbPersonnelpeater-list="group-a">
+                   @if (isEdit)
+                   {
+                        @foreach (var reservationDetail in reservationDetails)
+                        {
+                            rowNum += 1;
+                            divId = "divItem_" + rowNum.ToString();
+                            cmbPersonnelName = "cmbPersonnel_" + rowNum.ToString();
+                            cmbServiecesName = "cmbServieces_" + rowNum.ToString();
+                            txtFromTimeName = "txtFromTime_" + rowNum.ToString();
+                            txtToTimeName = "txtToTime_" + rowNum.ToString();
+                            chbCustomerStateName = "chbCustomerState_" + rowNum.ToString();
+                            btnDeleteService = "btndeleteItem_" + rowNum.ToString();
+
+                            selectedListItemClerkService.Clear();
+                            List<TempClerkService> tempClerkService = services.Where(item => item.PersonnelId == reservationDetail.CustomerId).ToList();
+                            for (int i = 0; i < tempClerkService.Count; i++)
+                                selectedListItemClerkService.Add(new SelectListItem { Text = tempClerkService[i].ServiceName.ToString(), Value = tempClerkService[i].ClerkServiceId.ToString(), Selected = tempClerkService[i].TbasServiceId == reservationDetail.ClerkServicesId ? true : false });
+
+                            <div data-repeater-item="" id="@divId">
+                                <div class="row justify-content-between">
+                                    <select-Box id="@cmbPersonnelName" style="width:17%; float: right; margin-left: 12px;" on-change-event="fillServiceByPersonnel(this,true)" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.SelectItem" drop-down-data-bound="((List<SelectListItem>)ViewBag.personnels).ToList().ConvertAll(item => { return new SelectListItem() { Text = item.Text, Value = item.Value, Selected = isEdit ? (item.Value == reservationDetail.CustomerId.ToString() ? true : false) : false }; })"></select-Box>
+                                    <select-Box id="@cmbServiecesName" style="width:17%; float: right; margin-left: 12px;" all-items-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Services" drop-down-data-bound="selectedListItemClerkService"></select-Box>
+                                    <inputBox id="@txtFromTimeName" style="width: 8%; float: right; margin-left: 11px;" place-holder="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder" value="@reservationDetail.FromTime"></inputBox>
+                                    <inputBox id="@txtToTimeName" style="width: 8%; float: right; margin-left: 11px;" place-holder="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder" value="@reservationDetail.ToTime"></inputBox>
+
+                                    <div class="col-md-2 col-sm-12 form-group">
+                                        <label for="chbCustomerState">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType </label>
+                                        <fieldset>
+                                            <div class="checkbox checkbox-primary checkbox-glow">
+                                                @if (reservationDetail.isSalonCustomer)
+                                                {
+                                                    <input type="checkbox" id="@chbCustomerStateName" onchange="changeStateCustomer(this)" checked="">
+                                                }
+                                                else
+                                                {
+                                                     <input type="checkbox" id="@chbCustomerStateName" onchange="changeStateCustomer(this)">
+                                                }
+                                                <label for="@chbCustomerStateName">@UI_Presentation.wwwroot.Resources.Reservation.Title.IsPersonalCustomer</label>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div id="id_divRelationsBottons" class="col-md-3 col-sm-12 form-group">
+                                        <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.AddBotton)" id="btnAddService" on-click-event="addServiceItemsDiv()" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.AddItem"></Icon-Button>
+                                        <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.deleteBottn)" id="@btnDeleteService" on-click-event="deleteServiceItemsDiv(this)" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Delete"></Icon-Button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        }
+                    }
+                         else
+                         {
+                             <div data-repeater-item="" id="divId_1">
+                                 <div class="row justify-content-between">
+                                     <select-Box id="cmbPersonnel_1" style="width:17%; float: right; margin-left: 12px;" on-change-event="fillServiceByPersonnel(this,true)" all-items-name="@UI_Presentation.wwwroot.Resources.General.Title.Personel" drop-down-data-bound="null"></select-Box>
+                                     <select-Box id="cmbServieces_1" style="width:17%; float: right; margin-left: 12px;" all-items-name="@UI_Presentation.wwwroot.Resources.Reservation.Title.Services"></select-Box>
+                                     <inputBox id="txtFromTime_1" style="width: 8%; float: right; margin-left: 11px;" place-holder="@UI_Presentation.wwwroot.Resources.Reservation.Title.FromTimeOrder" value=""></inputBox>
+                                     <inputBox id="txtToTime_1" style="width: 8%; float: right; margin-left: 11px;" place-holder="@UI_Presentation.wwwroot.Resources.Reservation.Title.ToTimeOrder" value=""></inputBox>
+
+                                     <div class="col-md-2 col-sm-12 form-group">
+                                         <label for="chbCustomerState">@UI_Presentation.wwwroot.Resources.Reservation.Title.CustomerType </label>
+                                         <fieldset>
+                                             <div class="checkbox checkbox-primary checkbox-glow">
+                                                 <input type="checkbox" id="chbCustomerState_1" onchange="changeStateCustomer(this)">
+                                                 <label for="chbCustomerState_1">@UI_Presentation.wwwroot.Resources.Reservation.Title.IsPersonalCustomer</label>
+                                             </div>
+                                         </fieldset>
+                                     </div>
+
+                                     <div id="id_divRelationsBottons" class="col-md-3 col-sm-12 form-group">
+                                         <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.AddBotton)" id="btnAddService" on-click-event="addServiceItemsDiv()" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.AddItem"></Icon-Button>
+                                         <Icon-Button botton-type="(int)(@CRM_Core.Infrastructure.Enums.ButtonType.deleteBottn)" id="btnDeleteService" on-click-event="deleteServiceItemsDiv(this)" title="@UI_Presentation.wwwroot.Resources.Buttons.Title.Delete"></Icon-Button>
+                                     </div>
+                                 </div>
+                                 <hr>
+                             </div>
+                         }
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var isEditForm = '@isEdit' ;
+    if (isEditForm) {
+        isEditCustomerService = true;
+        counterReservation = '@rowNum';
+        getPersonnel();
+        getServices();
+    }
+     isEditReservation = isEditForm;
+    
+</script>

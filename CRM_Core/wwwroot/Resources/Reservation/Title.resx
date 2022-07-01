@@ -120,6 +120,9 @@
   <data name="AddReservation" xml:space="preserve">
     <value>افزودن نوبت دهی </value>
   </data>
+  <data name="AddServiceToPersonnel" xml:space="preserve">
+    <value>تخصیص سرویس به پرسنل</value>
+  </data>
   <data name="Clerk" xml:space="preserve">
     <value>کارمند</value>
   </data>
@@ -139,7 +142,7 @@
     <value>نوع مشتری</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>تاریخ</value>
+    <value>تاریخ نوبت دهی</value>
   </data>
   <data name="EditReservation" xml:space="preserve">
     <value>ویرایش نوبت دهی</value>
@@ -153,6 +156,18 @@
   <data name="FromTimeOrder" xml:space="preserve">
     <value>از ساعت</value>
   </data>
+  <data name="HasCheque" xml:space="preserve">
+    <value>صورت حساب</value>
+  </data>
+  <data name="HasNotCheque" xml:space="preserve">
+    <value>فاقد صورت حساب</value>
+  </data>
+  <data name="IsExpired" xml:space="preserve">
+    <value>منقضی شده</value>
+  </data>
+  <data name="IsNotExpired" xml:space="preserve">
+    <value>دارای اعتبار</value>
+  </data>
   <data name="IsPersonalCustomer" xml:space="preserve">
     <value>مشتری شخصی</value>
   </data>
@@ -165,14 +180,23 @@
   <data name="ReservationInfo" xml:space="preserve">
     <value>اطلاعات نوبت دهی</value>
   </data>
+  <data name="ReservationManualCode" xml:space="preserve">
+    <value>کد نوبت دهی دستی</value>
+  </data>
   <data name="ReservationSearch" xml:space="preserve">
     <value>جستجوی نوبت دهی</value>
+  </data>
+  <data name="ReservationStatus" xml:space="preserve">
+    <value>وضعیت نوبت </value>
   </data>
   <data name="ReservationSystemCode" xml:space="preserve">
     <value>کد سیستمی نوبت</value>
   </data>
   <data name="SalonService" xml:space="preserve">
     <value>خدمات سالن</value>
+  </data>
+  <data name="SelectCustomer" xml:space="preserve">
+    <value>انتخاب مشتری</value>
   </data>
   <data name="Services" xml:space="preserve">
     <value>خدمات</value>

@@ -79,6 +79,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آیا از حذف این سرویس به مشتری اطمینان دارید ؟.
+        /// </summary>
+        public static string AreYouSureToDeleteCustomerService {
+            get {
+                return ResourceManager.GetString("AreYouSureToDeleteCustomerService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برای آپلود کلیک کنید.
         /// </summary>
         public static string ClickForUpload {
@@ -214,6 +223,15 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای این نوبت دهی قبلا  صورتحساب به ثبت رسیده است.
+        /// </summary>
+        public static string ForThisReservationHasRegisterdCheque {
+            get {
+                return ResourceManager.GetString("ForThisReservationHasRegisterdCheque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مقادیر ازتاریخ تا تاریخ را وارد کنید !.
         /// </summary>
         public static string FromDateAndToDateMenuAccessInNull {
@@ -295,11 +313,38 @@ namespace UI_Presentation.wwwroot.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ساعت و زمان وارد شده صحیح نیست.
+        /// </summary>
+        public static string TheEnterTimeHourIsNotValid {
+            get {
+                return ResourceManager.GetString("TheEnterTimeHourIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فرمت زمان وارد شده صحیح نیست !.
+        /// </summary>
+        public static string TheEnterTimeIsNotValid {
+            get {
+                return ResourceManager.GetString("TheEnterTimeIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شماره تلفن وارد شده تکراری است !.
         /// </summary>
         public static string ThePhoneNumberIsDuplicated {
             get {
                 return ResourceManager.GetString("ThePhoneNumberIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to برای این مشتری در این تاریخ نوبت دهی شده است آیا میخواهید ادامه دهید ؟.
+        /// </summary>
+        public static string ThereIsAReservationOnThisDateForThisCustomer {
+            get {
+                return ResourceManager.GetString("ThereIsAReservationOnThisDateForThisCustomer", resourceCulture);
             }
         }
         
@@ -318,6 +363,15 @@ namespace UI_Presentation.wwwroot.Resources {
         public static string thereIsNotAnyActiveMenu {
             get {
                 return ResourceManager.GetString("thereIsNotAnyActiveMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to برای این نوبت دهی سابقه وجود دارد و قابل ویرایش و حذف نیست .
+        /// </summary>
+        public static string ThereIsRecordHistoryForThisReservationRecordHistory {
+            get {
+                return ResourceManager.GetString("ThereIsRecordHistoryForThisReservationRecordHistory", resourceCulture);
             }
         }
         

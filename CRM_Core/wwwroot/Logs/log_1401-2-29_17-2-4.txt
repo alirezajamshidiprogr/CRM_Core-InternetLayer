@@ -1,0 +1,6 @@
+<LogInfo>
+    <Time>1401-2-29_17-2-4</Time>
+    <UserInfo />
+    <Target>   at UI_Presentation.Controllers.ChequeController.FillCustomerServicesItemsData(Int32 reservationId) in C:\Users\Alireza\Desktop\CRM_Core InternetLayer\CRM_Core\Controllers\ChequeController.cs:line 103</Target>
+    <ErrorMessage>Object reference not set to an instance of an object.</ErrorMessage>
+</LogInfo>

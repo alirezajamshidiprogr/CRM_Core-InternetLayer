@@ -79,7 +79,7 @@ namespace UI_Presentation.wwwroot.Resources.Buttons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اضافه کن.
+        ///   Looks up a localized string similar to افزودن.
         /// </summary>
         public static string AddItem {
             get {

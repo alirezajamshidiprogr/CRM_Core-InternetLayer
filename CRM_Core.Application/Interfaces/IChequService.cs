@@ -9,5 +9,8 @@ namespace CRM_Core.Application.Interfaces
     {
         IEnumerable<Cheque> GetServiceCustomerByReservationId();
         IEnumerable<Cheque> getAllCheque();
+
+        Cheque GetChequeByReservationId(int reservationId);
+        Cheque GetChequeByReservationNubmer(string number);
     }
 }

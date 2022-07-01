@@ -718,3 +718,16 @@ function btnActionCancelClick(e,questionMessage) {
         ).catch(swal.noop);
         return;
 }
+
+function ValidHhMmTime(inputField) {
+    var isValidHhMm = false;
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField);
+
+    if (isValid) {
+        isValidHhMm = true;
+    } else {
+        isValidHhMm = false;
+    }
+
+    return isValidHhMm;
+}

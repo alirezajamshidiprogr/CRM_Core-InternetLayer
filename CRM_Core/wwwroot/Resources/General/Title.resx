@@ -216,8 +216,17 @@
   <data name="FromDate" xml:space="preserve">
     <value>از تاریخ</value>
   </data>
+  <data name="GeneralInfo" xml:space="preserve">
+    <value>اطلاعات پایه </value>
+  </data>
   <data name="GeneralSalonInfo" xml:space="preserve">
     <value>اطلاعات سالن</value>
+  </data>
+  <data name="Has" xml:space="preserve">
+    <value>دارد</value>
+  </data>
+  <data name="HasNot" xml:space="preserve">
+    <value>ندارد</value>
   </data>
   <data name="IncomeReport" xml:space="preserve">
     <value>گزارش درآمد</value>
